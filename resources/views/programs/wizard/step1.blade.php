@@ -24,17 +24,17 @@
                 </table>
             </div>
 
-            
+
 
             <div class="card">
-                
+
 
                 <div class="card-body">
-                    
-                    <p class="card-text text-muted">Program-level learning outcomes (PLOs) are the knowledge, skills and attributes that students are expected to attain by the end of a program of study. 
+
+                    <p class="card-text text-muted">Program-level learning outcomes (PLOs) are the knowledge, skills and attributes that students are expected to attain by the end of a program of study.
                         You can add, edit and delete program outcomes. <strong>It is recommended that a program has 6 - 8 PLOs max</strong>. You can also add program outcome categories to group outcomes (optional).
                     </p>
-         
+
                     <div id="ploCategory" class="card">
                         <div class="card-header">
                             <b>Program Learning Outcome Categories</b>
@@ -47,7 +47,7 @@
                                         <th colspan="2">There are no program learning outcome categories set for this program project.</th>
                                     </tr>
                                 @else
-                                   
+
                                     @foreach($ploCategories as $category)
                                         <tr>
                                             <td>
@@ -71,7 +71,7 @@
                                                     <div class="modal-dialog modal-lg" role="document">
                                                         <div class="modal-content">
                                                             <div class="modal-header">
-                                                                <h5 class="modal-title" id="editCategoryModalLabel">Edit 
+                                                                <h5 class="modal-title" id="editCategoryModalLabel">Edit
                                                                     Program Learning Outcome Category</h5>
                                                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                                     <span aria-hidden="true">&times;</span>
@@ -87,10 +87,10 @@
 
                                                                     <div class="form-group row">
                                                                         <label for="category" class="col-md-4 col-form-label text-md-right">Category Name</label>
-                            
+
                                                                         <div class="col-md-8">
                                                                         <input id="category" type="text" class="form-control @error('category') is-invalid @enderror" name="category" value="{{$category->plo_category}}" autofocus>
-                            
+
                                                                             @error('category')
                                                                             <span class="invalid-feedback" role="alert">
                                                                                 <strong>{{ $message }}</strong>
@@ -116,7 +116,7 @@
 
                                     @endforeach
 
-                                    
+
                                 @endif
                             </table>
                         </div>
@@ -176,7 +176,7 @@
                         </div>
                         <div class="card-body">
 
-                                @if(count($plos)<1) 
+                                @if(count($plos)<1)
                                     <table class="table table-sm table-borderless">
                                         <tr class="table-active">
                                             <th colspan="2">There are no program learning outcomes for this program project.</th>
@@ -239,16 +239,16 @@
 
                                                                         <div class="form-group row">
                                                                             <label for="title" class="col-md-4 col-form-label text-md-right">Short Phrase</label>
-                        
+
                                                                             <div class="col-md-8">
                                                                                 <input id="title" type="text" class="form-control @error('title') is-invalid @enderror" name="title" value="{{$plo->plo_shortphrase}}" autofocus>
-                        
+
                                                                                 @error('title')
                                                                                     <span class="invalid-feedback" role="alert">
                                                                                         <strong>{{ $message }}</strong>
                                                                                     </span>
                                                                                 @enderror
-                        
+
                                                                                 <small class="form-text text-muted">
                                                                                     Having a short phrase helps with data visualization at the end of this process <b>(4 words max)</b>.
                                                                                 </small>
@@ -266,7 +266,7 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                           
+
                                                 </td>
                                             </tr>
                                         </table>
@@ -292,14 +292,14 @@
                                                                             @csrf
                                                                             {{method_field('DELETE')}}
                                                                             <input type="hidden" class="form-check-input" name="program_id" value={{$program->program_id}}>
-            
+
                                                                             <button type="submit" style="width:60px" class="btn btn-danger btn-sm ">Delete</button>
                                                                         </form>
-            
+
                                                                         <button type="button" class="btn btn-secondary btn-sm float-right" data-toggle="modal" style="width:60px; " data-target="#editPLOModal{{$plo->pl_outcome_id}}">
                                                                             Edit
                                                                         </button>
-            
+
                                                                         <!-- Modal -->
                                                                         <div class="modal fade" id="editPLOModal{{$plo->pl_outcome_id}}" tabindex="-1" role="dialog" aria-labelledby="editPLOModalLabel" aria-hidden="true">
                                                                             <div class="modal-dialog modal-lg" role="document">
@@ -310,20 +310,20 @@
                                                                                             <span aria-hidden="true">&times;</span>
                                                                                         </button>
                                                                                     </div>
-            
+
                                                                                     <form method="POST" action="{{ action('ProgramLearningOutcomeController@update', $plo->pl_outcome_id) }}">
                                                                                         @csrf
                                                                                         {{method_field('PUT')}}
-            
+
                                                                                         <div class="modal-body">
-            
+
                                                                                             <div class="form-group row">
                                                                                                 <label for="plo" class="col-md-4 col-form-label text-md-right">Program Learning Outcome</label>
-            
+
                                                                                                 <div class="col-md-8">
                                                                                                     <textarea id="plo" class="form-control" @error('plo') is-invalid @enderror rows="3" name="plo" required autofocus>{{$plo->pl_outcome}}
                                                                                                     </textarea>
-            
+
                                                                                                     @error('plo')
                                                                                                         <span class="invalid-feedback" role="alert">
                                                                                                             <strong>{{ $message }}</strong>
@@ -331,31 +331,31 @@
                                                                                                     @enderror
                                                                                                 </div>
                                                                                             </div>
-            
+
                                                                                             <div class="form-group row">
                                                                                                 <label for="title" class="col-md-4 col-form-label text-md-right">Short Phrase</label>
-                                        
+
                                                                                                 <div class="col-md-8">
                                                                                                     <input id="title" type="text" class="form-control @error('title') is-invalid @enderror" name="title" value="{{$plo->plo_shortphrase}}" autofocus>
-                                        
+
                                                                                                     @error('title')
                                                                                                         <span class="invalid-feedback" role="alert">
                                                                                                             <strong>{{ $message }}</strong>
                                                                                                         </span>
                                                                                                     @enderror
-                                        
+
                                                                                                     <small class="form-text text-muted">
                                                                                                         Having a short phrase helps with data visualization at the end of this process <b>(4 words max)</b>.
                                                                                                     </small>
                                                                                                 </div>
                                                                                             </div>
-            
+
                                                                                             @if(count($ploCategories)>0)
                                                                                                 <div class="form-group row">
                                                                                                     <label for="category" class="col-md-4 col-form-label text-md-right">PLO Category</label>
-            
+
                                                                                                     <div class="col-md-8">
-                                                        
+
                                                                                                         <select class="custom-select" name="category" id="category" required autofocus>
                                                                                                             @foreach($ploCategories as $c)
                                                                                                                 @if($c->plo_category == $category->plo_category)
@@ -366,7 +366,7 @@
                                                                                                             @endforeach
                                                                                                             <option value="">None</option>
                                                                                                         </select>
-            
+
                                                                                                         @error('category')
                                                                                                             <span class="invalid-feedback" role="alert">
                                                                                                                 <strong>{{ $message }}</strong>
@@ -375,9 +375,9 @@
                                                                                                     </div>
                                                                                                 </div>
                                                                                             @endif
-            
+
                                                                                             <input type="hidden" class="form-check-input" name="program_id" value={{$program->program_id}}>
-            
+
                                                                                         </div>
                                                                                         <div class="modal-footer">
                                                                                             <button type="button" class="btn btn-secondary col-2 btn-sm" data-dismiss="modal">Close</button>
@@ -394,7 +394,7 @@
                                                     </table>
                                                 </div>
                                             </div>
-                                        
+
                                         @endforeach
 
                                         <div class="card">
@@ -457,16 +457,16 @@
 
                                                                                         <div class="form-group row">
                                                                                             <label for="title" class="col-md-4 col-form-label text-md-right">Short Phrase</label>
-                                        
+
                                                                                             <div class="col-md-8">
                                                                                                 <input id="title" type="text" class="form-control @error('title') is-invalid @enderror" name="title" value="{{$plo->plo_shortphrase}}" autofocus>
-                                        
+
                                                                                                 @error('title')
                                                                                                     <span class="invalid-feedback" role="alert">
                                                                                                         <strong>{{ $message }}</strong>
                                                                                                     </span>
                                                                                                 @enderror
-                                        
+
                                                                                                 <small class="form-text text-muted">
                                                                                                     Having a short phrase helps with data visualization at the end of this process <b>(4 words max)</b>.
                                                                                                 </small>
@@ -478,7 +478,7 @@
                                                                                                 <label for="category" class="col-md-4 col-form-label text-md-right">PLO Category</label>
 
                                                                                                 <div class="col-md-8">
-                                                        
+
                                                                                                     <select class="custom-select" name="category" id="category" required autofocus>
                                                                                                         <option selected hidden disabled>Choose...</option>
                                                                                                         @foreach($ploCategories as $c)
@@ -486,7 +486,7 @@
                                                                                                         @endforeach
                                                                                                         <option value="">None</option>
                                                                                                     </select>
-                                                                                                    
+
                                                                                                     @error('category')
                                                                                                         <span class="invalid-feedback" role="alert">
                                                                                                             <strong>{{ $message }}</strong>
@@ -507,25 +507,25 @@
                                                                             </div>
                                                                         </div>
                                                                     </div>
-                                                            
+
                                                                 </td>
                                                             </tr>
                                                         @endif
                                                     @endforeach
                                                 </table>
-                                                
+
                                             </div>
                                         </div>
-                                        
+
                                     @endif
                                 @endif
-                            
+
                         </div>
                         <div class="card-footer">
                             <button type="button" class="btn btn-primary btn-sm col-2 mt-3 float-right" data-toggle="modal" data-target="#addPLOModal">
                                 ＋ Add PLO
                             </button>
-        
+
                             <!-- Modal -->
                             <div class="modal fade" id="addPLOModal" tabindex="-1" role="dialog"
                                 aria-labelledby="addPLOModalLabel" aria-hidden="true">
@@ -537,19 +537,20 @@
                                                 <span aria-hidden="true">&times;</span>
                                             </button>
                                         </div>
-        
+
                                         <form method="POST" action="{{ action('ProgramLearningOutcomeController@store') }}">
                                             @csrf
-        
+
                                             <div class="modal-body">
-        
+
                                                 <div class="form-group row">
                                                     <label for="plo" class="col-md-4 col-form-label text-md-right">Program Learning Outcome</label>
-        
+
                                                     <div class="col-md-8">
-                                                        <textarea id="plo" class="form-control" @error('plo') is-invalid @enderror rows="3" name="plo" required autofocus>
+                                                        <textarea id="plo" class="form-control" @error('plo') is-invalid @enderror rows="3" name="plo" required autofocus
+                                                        placeholder="Illustat...">
                                                         </textarea>
-        
+
                                                         @error('plo')
                                                         <span class="invalid-feedback" role="alert">
                                                             <strong>{{ $message }}</strong>
@@ -557,31 +558,32 @@
                                                         @enderror
                                                     </div>
                                                 </div>
-        
+
                                                 <div class="form-group row">
                                                     <label for="title" class="col-md-4 col-form-label text-md-right">Short Phrase</label>
-        
+
                                                     <div class="col-md-8">
-                                                        <input id="title" type="text" class="form-control @error('title') is-invalid @enderror" name="title" autofocus>
-        
+                                                        <input id="title" type="text" class="form-control @error('title') is-invalid @enderror" name="title" autofocus
+                                                        placeholder="Integrate...">
+
                                                         @error('title')
                                                         <span class="invalid-feedback" role="alert">
                                                             <strong>{{ $message }}</strong>
                                                         </span>
                                                         @enderror
-        
+
                                                         <small class="form-text text-muted">
                                                             Having a short phrase helps with data visualization at the end of this process <b>(4 words max)</b>.
                                                         </small>
                                                     </div>
                                                 </div>
-        
+
                                                 @if(count($ploCategories)>0)
                                                     <div class="form-group row">
                                                         <label for="category" class="col-md-4 col-form-label text-md-right">PLO Category</label>
-        
+
                                                         <div class="col-md-8">
-                                                        
+
                                                             <select class="custom-select" name="category" id="category" required autofocus>
                                                                 <option selected hidden disabled>Choose...</option>
                                                                 @foreach($ploCategories as $c)
@@ -589,7 +591,7 @@
                                                                 @endforeach
                                                                 <option value="">None</option>
                                                             </select>
-        
+
                                                             @error('category')
                                                                 <span class="invalid-feedback" role="alert">
                                                                     <strong>{{ $message }}</strong>
@@ -598,10 +600,10 @@
                                                         </div>
                                                     </div>
                                                 @endif
-        
+
                                                 <input type="hidden" class="form-check-input" name="program_id"
                                                     value={{$program->program_id}}>
-        
+
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary col-2 btn-sm"
@@ -613,11 +615,11 @@
                                 </div>
                             </div>
                         </div>
-                    </div>     
+                    </div>
 
                 </div>
-       
-                <div class="card-footer"> 
+
+                <div class="card-footer">
 
                     <a href="{{route('programWizard.step2', $program->program_id)}}"><button
                             class="btn btn-sm btn-primary mt-3 col-3 float-right">Mapping Scale ➡</button></a>
@@ -632,12 +634,12 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
-  
+
       $("form").submit(function () {
         // prevent duplicate form submissions
         $(this).find(":submit").attr('disabled', 'disabled');
         $(this).find(":submit").html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>');
-  
+
       });
     });
   </script>

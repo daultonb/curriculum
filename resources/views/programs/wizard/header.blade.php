@@ -48,10 +48,10 @@
 
                                                 <div class="col-md-8">
                                                     <select id='faculty' class="custom-select" name="faculty" required>
-                                                        @for($i =0; $i<count($faculties) ; $i++) 
+                                                        @for($i =0; $i<count($faculties) ; $i++)
                                                             @if($faculties[$i]==$program->faculty)
                                                                 <option value="{{$program->faculty}}" selected>{{$program->faculty}}</option>
-                                                            @else 
+                                                            @else
                                                                 <option value="{{$faculties[$i]}}">{{$faculties[$i]}} </option>
                                                             @endif
                                                         @endfor
@@ -70,7 +70,7 @@
 
                                                 <div class="col-md-8">
                                                     <select id='department' class="custom-select" name="department" required>
-                                                        @for($i =0; $i<count($departments) ; $i++) 
+                                                        @for($i =0; $i<count($departments) ; $i++)
                                                             @if($departments[$i]==$program->department)
                                                                 <option value="{{$program->department}}" selected>{{$program->department}}</option>
                                                             @else
@@ -90,7 +90,7 @@
                                             <div class="form-group row">
                                                 <label for="Level" class="col-md-2 col-form-label text-md-right">Level</label>
                                                 <div class="col-md-6">
-                                                    @for($i =0; $i<3 ; $i++) 
+                                                    @for($i =0; $i<3 ; $i++)
                                                         @if($levels[$i]==$program->level)
                                                             <div class="form-check ">
                                                                 <label class="form-check-label">
@@ -130,7 +130,7 @@
                 <div class="col">
                     <!-- Assign instructor button  -->
                     <button type="button" class="btn btn-outline-primary btn-sm float-right" style="width:200px" data-toggle="modal" data-target="#addCollaboratorModal">Add Collaborators</button>
-        
+
                     <!-- Modal -->
                     <div class="modal fade" id="addCollaboratorModal" tabindex="-1" role="dialog" aria-labelledby="addCollaboratorModalLabel" aria-hidden="true">
                         <div class="modal-dialog modal-lg" role="document">
@@ -145,17 +145,17 @@
                                     <p class="form-text text-muted">Collaborators can see and edit the course. Collaborators must first register with this web application to be added to a course.
                                         By adding a collaborator, a verification email will be sent to their email address.
                                         </p>
-        
+
                                     <table class="table table-borderless">
-        
+
                                             @if(count($programUsers)===1)
                                                 <tr class="table-active">
                                                     <th colspan="2">You have not added any collaborators to this course
-                                                    </th> 
+                                                    </th>
                                                 </tr>
-        
+
                                             @else
-        
+
                                                 <tr class="table-active">
                                                     <th colspan="2">Collaborators</th>
                                                 </tr>
@@ -167,7 +167,7 @@
                                                                 <form action="{{route('programUser.destroy', [$admin->program_id, $admin->user_id])}}" method="POST" class="float-left">
                                                                     @csrf
                                                                     {{method_field('DELETE')}}
-                                    
+
                                                                     <button type="submit" class="btn btn-danger btn-sm ">Unassign</button>
                                                                 </form>
                                                             </td>
@@ -176,12 +176,12 @@
                                                     @endif
 
                                                 @endforeach
-                                            
-        
+
+
                                             @endif
                                     </table>
                                 </div>
-        
+
                                 <form method="POST" action="{{ action('ProgramUserController@store') }}">
                                     @csrf
 
@@ -209,9 +209,9 @@
                                     </div>
                                 </form>
                             </div>
-        
-        
-        
+
+
+
                         </div>
                     </div>
                 </div>
@@ -219,18 +219,43 @@
 
             <div class="row">
                 <div class="col">
-                    <form action="{{route('programs.destroy', $program->program_id)}}" method="POST" class="float-right">
-                        @csrf
-                        {{method_field('DELETE')}}
+                    <button type="button" style="width:200px" class="btn btn-danger btn-sm float-right"
+                    data-toggle="modal" data-target="#deleteConfirmation">Delete Entire Program</button>
 
-                        <button type="submit" style="width:200px" class="btn btn-danger btn-sm ">Delete Entire Program</button>
-                    </form>
+                    <!-- Delete Confirmation Modal -->
+                    <div class="modal fade" id="deleteConfirmation" tabindex="-1" role="dialog" aria-labelledby="deleteConfirmation" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Delete Confirmation</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+
+                                <div class="modal-body">
+                                Are you sure you want to delete {{$program->program}} program ?
+                                </div>
+
+                                <form action="{{route('programs.destroy', $program->program_id)}}" method="POST" class="float-right">
+                                    @csrf
+                                    {{method_field('DELETE')}}
+
+                                    <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                    <button type="submit" class="btn btn-danger">Delete</button>
+                                    </div>
+                                </form>
+
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-  
+
         </div>
 
-        
+
     </div>
 
 </div>

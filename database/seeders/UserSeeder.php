@@ -25,15 +25,15 @@ class UserSeeder extends Seeder
         $userRole = Role::where('role','user')->first();
 
         $admin = User::create([
-            'name' => 'Muizz Admin',
-            'email' => 'abdelmuizz.yusuf@hotmail.com',
-            'password' => Hash::make('password'), 
+            'name' => 'Jeffrey Admin',
+            'email' => 'jeffrey.luo@ubc.ca',
+            'password' => Hash::make('password'),
         ]);
 
         $user = User::create([
-            'name' => 'Muizz User',
-            'email' => 'abdelmuizz.yusuf@gmail.com',
-            'password' => Hash::make('password'), 
+            'name' => 'Jeffrey User',
+            'email' => 'luozhengjiafei@gmail.com',
+            'password' => Hash::make('password'),
         ]);
 
 

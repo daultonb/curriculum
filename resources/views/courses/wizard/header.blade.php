@@ -34,7 +34,7 @@
                                             <div class="col-md-8">
                                                 <input id="course_code" type="text" pattern="[A-Za-z]{4}" class="form-control @error('course_code') is-invalid @enderror" value="{{$course->course_code}}"
                                                     name="course_code" required autofocus>
-        
+
                                                 @error('course_code')
                                                     <span class="invalid-feedback" role="alert">
                                                         <strong>{{ $message }}</strong>
@@ -91,7 +91,7 @@
                     <!-- Assign instructor button  -->
                     <button type="button" class="btn btn-outline-primary btn-sm float-right" style="width:200px"
                         data-toggle="modal" data-target="#assignInstructorModal">Add Collaborators</button>
-        
+
                     <!-- Modal -->
                     <div class="modal fade" id="assignInstructorModal" tabindex="-1" role="dialog"
                         aria-labelledby="assignInstructorModalLabel" aria-hidden="true">
@@ -108,17 +108,17 @@
                                     <p class="form-text text-muted">Collaborators can see and edit the course. Collaborators must first register with this web application to be added to a course.
                                         By adding a collaborator, a verification email will be sent to their email address.
                                         </p>
-        
+
                                     <table class="table table-borderless">
-        
+
                                             @if(count($courseUsers)===1)
                                                 <tr class="table-active">
                                                     <th colspan="2">You have not added any collaborators to this course
-                                                    </th> 
+                                                    </th>
                                                 </tr>
-        
+
                                             @else
-        
+
                                                 <tr class="table-active">
                                                     <th colspan="2">Collaborators</th>
                                                 </tr>
@@ -138,21 +138,21 @@
                                                         </tr>
                                                     @endif
                                                 @endforeach
-                                            
-        
+
+
                                             @endif
                                     </table>
                                 </div>
-        
+
                                 <form method="POST" action="{{route('courses.assign', $course->course_id)}}">
                                     @csrf
                                     <div class="modal-body">
                                         <div class="form-group row">
                                             <label for="email" class="col-md-3 col-form-label text-md-right">Collaborator Email</label>
-        
+
                                             <div class="col-md-7">
                                                 <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" autofocus>
-        
+
                                                 @error('program')
                                                     <span class="invalid-feedback" role="alert">
                                                         <strong>{{ $message }}</strong>
@@ -160,9 +160,9 @@
                                                 @enderror
                                             </div>
                                         </div>
-        
+
                                         <input type="hidden" class="form-input" name="program_id" value="{{$course->program_id}}">
-        
+
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary col-2 btn-sm" data-dismiss="modal">Close</button>
@@ -170,9 +170,9 @@
                                     </div>
                                 </form>
                             </div>
-        
-        
-        
+
+
+
                         </div>
                     </div>
                 </div>
@@ -180,20 +180,46 @@
 
             <div class="row">
                 <div class="col">
-                    <form action="{{route('courses.destroy', $course->course_id)}}" method="POST">
-                        @csrf
-                        {{method_field('DELETE')}}
-                        <input type="hidden" class="form-check-input " name="program_id"
-                            value={{$course->program_id}}>
-        
-                        <button type="submit" style="width:200px" class="btn btn-danger btn-sm float-right">Delete Course</button>
-                    </form>
+                        <button type="button" style="width:200px" class="btn btn-danger btn-sm float-right"
+                        data-toggle="modal" data-target="#deleteConfirmation" >Delete Course</button>
+
+                    <!-- Delete Confirmation Modal -->
+                    <div class="modal fade" id="deleteConfirmation" tabindex="-1" role="dialog" aria-labelledby="deleteConfirmation" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="deleteConfirmation">Delete Confirmation</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+
+                                <div class="modal-body">
+                                Are you sure you want to delete {{$course->course_code }} {{$course->course_num}} ?
+                                </div>
+
+                                <form action="{{route('courses.destroy', $course->course_id)}}" method="POST">
+                                    @csrf
+                                    {{method_field('DELETE')}}
+                                    <input type="hidden" class="form-check-input " name="program_id"
+                                        value={{$course->program_id}}>
+
+                                    <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                    <button type="submit" class="btn btn-danger">Delete</button>
+                                    </div>
+
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             </div>
-  
+
         </div>
 
-        
+
     </div>
 
 </div>

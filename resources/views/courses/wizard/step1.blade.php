@@ -55,7 +55,7 @@
                             <div class="col">
                                 <table class="table table-borderless">
 
-                                    @if(count($l_outcomes)<1) 
+                                    @if(count($l_outcomes)<1)
                                         <tr class="table-active">
                                             <th colspan="3">There are no course learning outcomes or competencies set for this course.</th>
                                         </tr>
@@ -66,7 +66,7 @@
                                         <tr class="table-active">
                                             <th colspan="2">Course Learning Outcomes or Competencies</th>
                                         </tr>
-                                      
+
                                             @foreach($l_outcomes as $l_outcome)
 
                                             <tr>
@@ -85,7 +85,7 @@
                                                     <button type="button" style="width:60px;" class="btn btn-secondary btn-sm float-right" data-toggle="modal" data-target="#editLearningOutcomeModal{{$l_outcome->l_outcome_id}}">
                                                         Edit
                                                     </button>
-                                
+
                                                     <!-- Modal -->
                                                     <div class="modal fade" id="editLearningOutcomeModal{{$l_outcome->l_outcome_id}}" tabindex="-1" role="dialog"
                                                         aria-labelledby="editLearningOutcomeModalLabel" aria-hidden="true">
@@ -98,33 +98,40 @@
                                                                         <span aria-hidden="true">&times;</span>
                                                                     </button>
                                                                 </div>
-                                
+
                                                                 <form method="POST" action="{{ route('lo.update', $l_outcome->l_outcome_id) }}">
                                                                     @csrf
                                                                     {{method_field('PUT')}}
                                                                     <div class="modal-body">
-                                                                        
+
                                                                         <div class="form-group row">
-                                                                            <label for="l_outcome" class="col-md-4 col-form-label text-md-center">Course Learning Outcome</label>
-                                
+                                                                            <label for="l_outcome" class="col-md-4 col-form-label text-md-center">Course Learning Outcome (CLO) or Competency</label>
+
                                                                             <div class="col-md-8">
                                                                                 <textarea id="l_outcome" class="form-control" @error('l_outcome') is-invalid @enderror rows="3" name="l_outcome" required autofocus>{{$l_outcome->l_outcome}}
                                                                                 </textarea>
-                                        
+
                                                                                 @error('l_outcome')
                                                                                 <span class="invalid-feedback" role="alert">
                                                                                     <strong>{{ $message }}</strong>
                                                                                 </span>
                                                                                 @enderror
+
+                                                                                <small class="form-text text-muted">
+                                                                                    <a href="https://tips.uark.edu/using-blooms-taxonomy/" target="_blank"><strong>Click here</strong></a>
+                                                                                    for tips to write effective CLOs
+                                                                                </small>
+
                                                                             </div>
+
                                                                         </div>
 
                                                                         <div class="form-group row">
                                                                             <label for="title" class="col-md-4 col-form-label text-md-right">Short Phrase</label>
-                                
+
                                                                             <div class="col-md-8">
                                                                                 <input id="title" type="text" class="form-control @error('title') is-invalid @enderror" name="title" value="{{$l_outcome->clo_shortphrase}}" autofocus>
-                                
+
                                                                                 @error('title')
                                                                                 <span class="invalid-feedback" role="alert">
                                                                                     <strong>{{ $message }}</strong>
@@ -133,13 +140,20 @@
 
                                                                                 <small class="form-text text-muted">
                                                                                     Having a short phrase helps with data visualization at the end of this process <strong>(4 words max)</strong>.
-                                                                                  </small>
+                                                                                </small>
 
                                                                             </div>
                                                                         </div>
-                                
+
+                                                                        <div style="col-md-8">
+                                                                            <p>Bloom’s Taxonomy can help you identify the targeted level of knowledge/skill attainment for each CLO</p>
+                                                                            <img src="https://cpb-us-e1.wpmucdn.com/wordpressua.uark.edu/dist/a/315/files/2013/09/Blooms_Taxonomy_pyramid_cake-style-use-with-permission.jpg"
+                                                                            style="max-width: 100%; max-height: 100%">
+                                                                            <p>Image created by Jessica Shabatura , retrieved from https://tips.uark.edu/using-blooms-taxonomy/</P>
+                                                                        </div>
+
                                                                         <input type="hidden" name="course_id" value="{{$course->course_id}}">
-                                
+
                                                                     </div>
                                                                     <div class="modal-footer">
                                                                         <button type="button" class="btn btn-secondary col-2 btn-sm" data-dismiss="modal">Close</button>
@@ -156,7 +170,7 @@
 
                                             @endforeach
 
-                                        
+
 
                                     @endif
                                 </table>
@@ -186,16 +200,23 @@
                                     @csrf
                                     <div class="modal-body">
                                         <div class="form-group row">
-                                            <label for="l_outcome" class="col-md-4 col-form-label text-md-center">Course Learning Outcome</label>
+                                            <label for="l_outcome" class="col-md-4 col-form-label text-md-center">Course Learning Outcome (CLO) or Competency</label>
 
                                             <div class="col-md-8">
-                                                <textarea id="l_outcome" class="form-control" @error('l_outcome') is-invalid @enderror rows="3" name="l_outcome" required autofocus></textarea>
-        
+                                                <textarea id="l_outcome" class="form-control" @error('l_outcome') is-invalid @enderror
+                                                rows="3" name="l_outcome" required autofocus placeholder="Develop..."></textarea>
+
                                                 @error('l_outcome')
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $message }}</strong>
                                                 </span>
                                                 @enderror
+
+                                                <small class="form-text text-muted">
+                                                    <a href="https://tips.uark.edu/using-blooms-taxonomy/" target="_blank"><strong>Click here</strong></a>
+                                                    for tips to write effective CLOs
+                                                </small>
+
                                             </div>
                                         </div>
 
@@ -203,7 +224,8 @@
                                             <label for="title" class="col-md-4 col-form-label text-md-right">Short Phrase</label>
 
                                             <div class="col-md-8">
-                                                <input id="title" type="text" class="form-control @error('title') is-invalid @enderror" name="title" autofocus>
+                                                <input id="title" type="text" class="form-control @error('title') is-invalid @enderror"
+                                                name="title" autofocus placeholder="Experiment...">
 
                                                 @error('title')
                                                 <span class="invalid-feedback" role="alert">
@@ -213,8 +235,16 @@
 
                                                 <small class="form-text text-muted">
                                                     Having a short phrase helps with data visualization at the end of this process <strong>(4 words max)</strong>.
-                                                </small> 
+                                                </small>
                                             </div>
+
+                                            <div style="col-md-8; text-align: center; margin-top:20px">
+                                                <strong style="font-size:110%">Bloom’s Taxonomy can help you identify the targeted level of knowledge/skill attainment for each CLO</strong>
+                                                <img src="https://cpb-us-e1.wpmucdn.com/wordpressua.uark.edu/dist/a/315/files/2013/09/Blooms_Taxonomy_pyramid_cake-style-use-with-permission.jpg"
+                                                style="max-width: 90%; max-height: 100%; margin-top:10px">
+                                                <small class="form-text text-muted">Image created by Jessica Shabatura , retrieved from https://tips.uark.edu/using-blooms-taxonomy/</P>
+                                            </div>
+
                                         </div>
 
                                         <input type="hidden" name="course_id" value="{{$course->course_id}}">
@@ -232,7 +262,7 @@
                 </div>
 
                 <div class="card-footer">
-                    
+
                     <a href="{{route('courseWizard.step2', $course->course_id)}}">
                         <button class="btn btn-sm btn-primary mt-3 col-3 float-right">Student Assessment Methods ➡</button>
                     </a>
@@ -247,12 +277,12 @@
 </div>
 <script type="text/javascript">
     $(document).ready(function () {
-  
+
       $("form").submit(function () {
         // prevent duplicate form submissions
         $(this).find(":submit").attr('disabled', 'disabled');
         $(this).find(":submit").html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>');
-  
+
       });
     });
   </script>

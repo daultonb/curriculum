@@ -10,6 +10,7 @@ class AssessmentMethod extends Model
     use HasFactory;
 
     protected $primaryKey ='a_method_id';
+    protected $fillable = ['a_method','weight'];
 
     public function learningOutcomes(){
         return $this->belongsToMany('App\Models\LearningOutcome')->using('App\Models\OutcomeAssessment');

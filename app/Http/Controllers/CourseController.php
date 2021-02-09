@@ -39,7 +39,7 @@ class CourseController extends Controller
         // $courses = Course::all();
         // $programs = Program::all();
         $user = User::where('id', Auth::id())->first();
-    
+
         $activeCourses = User::join('course_users', 'users.id', '=', 'course_users.user_id')
                 ->join('courses', 'course_users.course_id', '=', 'courses.course_id')
                 ->join('programs', 'courses.program_id', '=', 'programs.program_id')
@@ -55,7 +55,7 @@ class CourseController extends Controller
                 ->get();
 
         return view('courses.index')->with('user', $user)->with('activeCourses', $activeCourses)->with('archivedCourses', $archivedCourses);
-        
+
     }
 
     /**
@@ -120,7 +120,7 @@ class CourseController extends Controller
 
             return redirect()->route('courses.index');
         }
-        
+
     }
 
     /**
@@ -157,7 +157,7 @@ class CourseController extends Controller
                                 ->join('learning_outcomes', 'outcome_maps.l_outcome_id', '=', 'learning_outcomes.l_outcome_id' )
                                 ->select('outcome_maps.map_scale_value','outcome_maps.pl_outcome_id','program_learning_outcomes.pl_outcome','outcome_maps.l_outcome_id', 'learning_outcomes.l_outcome')
                                 ->where('learning_outcomes.course_id','=',$course_id)->get();
-        
+
 
         return view('courses.summary')->with('course', $course)
                                         ->with('program', $program)
@@ -209,16 +209,16 @@ class CourseController extends Controller
         $course->course_code = strtoupper($request->input('course_code'));
         $course->course_title = $request->input('course_title');
         $course->required = $request->input('required');
-        
+
         if($course->save()){
             $request->session()->flash('success', 'Course updated');
         }else{
             $request->session()->flash('error', 'There was an error updating the course');
         }
 
-        return redirect()->back();   
-        
-       
+        return redirect()->back();
+
+
     }
 
     /**
@@ -233,7 +233,7 @@ class CourseController extends Controller
         $c = Course::where('course_id', $course_id)->first();
         $type = $c->type;
         $program_id = $c->program_id;
-        
+
         if($c->delete()){
             $request->session()->flash('success','Course has been deleted');
         }else{
@@ -261,7 +261,7 @@ class CourseController extends Controller
     //     }else if($c->status == 1){
     //         $c->status = -1;
     //     }
-        
+
     //     if($c->save()){
     //         $request->session()->flash('success','Course status has been updated');
     //     }else{
@@ -276,7 +276,7 @@ class CourseController extends Controller
         //
         $c = Course::where('course_id', $course_id)->first();
         $c->status = 1;
-        
+
         if($c->save()){
             $request->session()->flash('success','Your answers have	been submitted successfully');
         }else{
@@ -284,15 +284,15 @@ class CourseController extends Controller
         }
 
         return redirect()->route('courses.index');
-    }  
+    }
 
     public function outcomeDetails(Request $request, $course_id)
     {
         //
         $l_outcomes = LearningOutcome::where('course_id', $course_id)->get();
 
-    
-       
+
+
         foreach($l_outcomes as $l_outcome){
             $i = $l_outcome->l_outcome_id;
 
@@ -304,14 +304,14 @@ class CourseController extends Controller
                 $arr=$request->input('l_activities');
                 $l_outcome->learningActivities()->detach();
                 $l_outcome->learningActivities()->sync($arr[$i]);
-                
+
             }else{
 
                 $l_outcome->learningActivities()->detach();
             }
 
         }
-       
+
         foreach($l_outcomes as $l_outcome){
             $i = $l_outcome->l_outcome_id;
 
@@ -323,7 +323,7 @@ class CourseController extends Controller
                 $arr=$request->input('a_methods');
                 $l_outcome->assessmentMethods()->detach();
                 $l_outcome->assessmentMethods()->sync($arr[$i]);
-                
+
             }else{
 
                 $l_outcome->assessmentMethods()->detach();
@@ -365,7 +365,7 @@ class CourseController extends Controller
 
         $pdf = PDF::loadView('courses.download', compact('course','program','l_outcomes','pl_outcomes','l_activities','a_methods','outcomeActivities', 'outcomeAssessments', 'outcomeMaps','mappingScales', 'ploCategories')) ;
         return $pdf->download('summary.pdf');
-                                        
+
     }
 
 }

@@ -32,8 +32,8 @@
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
-                    <img src="{{ asset('img/UBC-logo-2018-crest-blue-rgb72-resized.png') }}" alt="UBC crest logo">
-                    {{ config('app.name', 'Laravel') }}
+                    <img src="{{ asset('img/UBC-logo-2018-crest-blue-rgb72-resized.png') }}" alt="UBC crest logo" style="margin-right: 25px">
+                    <strong style="color: rgb(47, 93, 124); font-family: Arial, Helvetica, sans-serif">{{ config('app.name', 'Laravel') }}</strong>
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
@@ -42,7 +42,7 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
-                        
+
                     </ul>
 
                     <!-- Right Side Of Navbar -->
@@ -60,13 +60,13 @@
                             @endif
                         @else
 
-                            <li class="nav-item">                            
+                            <li class="nav-item">
                                 <a class="nav-link" href="{{ route('programs.index') }}">My Programs</a>
                             </li>
-                            <li class="nav-item">                            
+                            <li class="nav-item">
                                 <a class="nav-link" href="{{ route('courses.index') }}">My Courses</a>
                             </li>
-                            <!-- <li class="nav-item">                            
+                            <!-- <li class="nav-item">
                                 <a class="nav-link" href="{{ url('/home') }}">Dashboard</a>
                             </li> -->
                             <li class="nav-item dropdown">
@@ -86,10 +86,10 @@
                                             System Administrator
                                         </a>
                                     @endcan
-                                        
-                                   
-                                    
-                                    
+
+
+
+
 
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                         @csrf
@@ -105,7 +105,7 @@
             <main class="py-4">
                 @include('partials.alerts')
                 @yield('content')
-                
+
             </main>
         </div>
     </div>
