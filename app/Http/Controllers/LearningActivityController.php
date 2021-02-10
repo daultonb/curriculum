@@ -17,7 +17,7 @@ class LearningActivityController extends Controller
     {
         $this->middleware(['auth', 'verified']);
     }
-    
+
     public function index()
     {
         //
@@ -46,16 +46,33 @@ class LearningActivityController extends Controller
             'l_activity'=> 'required',
             ]);
 
-        $la = new LearningActivity;
-        $la->l_activity = $request->input('l_activity');
-        $la->course_id = $request->input('course_id');
-        
-        if($la->save()){
-            $request->session()->flash('success', 'New teaching/learning activity added');
-        }else{
-            $request->session()->flash('error', 'There was an error adding the teaching/learning activity');
+        $course_id = $request->input('course_id');
+        $activities = $request->input('l_activity');
+        $existFlag = false;
+
+        if($activities_id = $request->input('l_activity_id')){
+            $size = count($activities_id);
+            $i = 0;
+            $existFlag = true;
         }
-        
+
+        foreach($activities as $activity) {
+                if( $existFlag == true && $i < $size) {
+                    LearningActivity::where('l_activity_id', $activities_id[$i])->first()->update(array('l_activity'=>$activity));
+                    $i++;
+                    $request->session()->flash('success', 'Teaching/learning activity modified');
+                }else{
+                    $la = new LearningActivity;
+                    $la->l_activity = $activity;
+                    $la->course_id = $course_id;
+                    if($la->save()){
+                        $request->session()->flash('success', 'New teaching/learning activity added');
+                    }else{
+                        $request->session()->flash('error', 'There was an error adding the teaching/learning activity');
+                    }
+                }
+        }
+
         return redirect()->route('courseWizard.step3', $request->input('course_id'));
     }
 
@@ -110,7 +127,7 @@ class LearningActivityController extends Controller
             $request->session()->flash('success','Teaching/learning activity has been deleted');
         }else{
             $request->session()->flash('error', 'There was an error deleting the teaching/learning activity');
-        } 
+        }
         return redirect()->route('courseWizard.step3', $request->input('course_id'));
     }
 }

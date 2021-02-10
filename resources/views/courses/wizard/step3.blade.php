@@ -5,7 +5,7 @@
     <div class="row justify-content-center">
         <div class="col-md-12">
             @include('courses.wizard.header')
-            
+
             <!-- progress bar -->
             <div>
                 <table class="table table-borderless text-center table-sm" style="table-layout: fixed; width: 100%">
@@ -51,117 +51,82 @@
                     <div id="admins">
                         <div class="row">
                             <div class="col">
-                                <table class="table table-borderless">
+                                <table class="table table-borderless" id="l_activity_table">
 
-                                    @if(count($l_activities)<1) 
+                                    @if(count($l_activities)<1)
                                         <tr class="table-active">
                                             <th colspan="2">There are no teaching and learning activities set for this course.</th>
                                         </tr>
 
-
                                     @else
-
                                         <tr class="table-active">
                                             <th colspan="2">Teaching and Learning Activities</th>
                                         </tr>
-                                       
+
                                             @foreach($l_activities as $l_activity)
 
                                             <tr>
-                                                <td>{{$l_activity->l_activity}}</td>
+                                                <td>
+                                                    <input list="l_activities" name="l_activity[]" id="l_activity{{$l_activity->l_activity_id}}" form="l_activity_form"
+                                                    class="form-control" type="text" placeholder="Choose from the dropdown list or type your own" value="{{$l_activity->l_activity}}" required autofocus style="white-space: pre">
+                                                        <datalist id="l_activities">
+                                                            <option value="Discussion">
+                                                            <option value="Gallery walk">
+                                                            <option value="Group discussion">
+                                                            <option value="Group work">
+                                                            <option value="Guest Speaker">
+                                                            <option value="Independent study">
+                                                            <option value="Issue-based inquiry">
+                                                            <option value="Jigsaw">
+                                                            <option value="Journals and learning logs">
+                                                            <option value="Lab">
+                                                            <option value="Lecture">
+                                                            <option value="Literature response">
+                                                            <option value="Mind map">
+                                                            <option value="Poll">
+                                                            <option value="Portfolio development">
+                                                            <option value="Problem-solving">
+                                                            <option value="Reflection piece">
+                                                            <option value="Role-playing">
+                                                            <option value="Service learning">
+                                                            <option value="Seminar">
+                                                            <option value="Sorting">
+                                                            <option value="Think-pair-share">
+                                                            <option value="Tutorial">
+                                                            <option value="Venn diagram">
+                                                        </datalist>
+
+                                                    <input type="hidden" name="l_activity_id[]" value="{{$l_activity->l_activity_id}}" form="l_activity_form">
+                                                </td>
+
                                                 <td>
                                                     <form action="{{route('la.destroy', $l_activity->l_activity_id)}}" method="POST" class="float-right">
                                                         @csrf
                                                         {{method_field('DELETE')}}
                                                         <input type="hidden" name="course_id" value="{{$course->course_id}}">
-                                                        <button type="submit" style="width:60px;" class="btn btn-danger btn-sm">Delete</button>
+                                                        <button type="submit" style="width:60px;" class="btn btn-danger btn-sm float-right">Delete</button>
                                                     </form>
                                                 </td>
                                             </tr>
-
                                             @endforeach
-
-                                        
-
-                                    @endif
+                                        @endif
                                 </table>
-                            </div>
 
+                            </div>
                         </div>
                     </div>
 
-                    <button type="button" class="btn btn-primary btn-sm col-3 mt-3 float-right" data-toggle="modal" data-target="#addActivityModal">
+                    <form method="POST" id="l_activity_form" action="{{ action('LearningActivityController@store') }}">
+                        @csrf
+                        <button type="submit" class="btn btn-primary mt-3 float-left">
+                            Save
+                        </button>
+                        <input type="hidden" name="course_id" value="{{$course->course_id}}" form="l_activity_form">
+                    </form>
+
+                    <button type="button" class="btn btn-primary btn-sm col-3 mt-3 float-right" id="btnAdd">
                         ＋ Add Teaching and Learning Activity
                     </button>
-
-                    <!-- Modal -->
-                    <div class="modal fade" id="addActivityModal" tabindex="-1" role="dialog"
-                        aria-labelledby="addActivityModalLabel" aria-hidden="true">
-                        <div class="modal-dialog modal-lg" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="addActivityModalLabel">Add Teaching and Learning Activity
-                                    </h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-
-                                <form method="POST" action="{{ action('LearningActivityController@store') }}">
-                                    @csrf
-                                    <div class="modal-body">
-                                        <div class="form-group row">
-                                            <label for="l_activity" class="col-md-5 col-form-label text-md-center">Teaching and Learning Activity</label>
-
-                                            <div class="col-md-7">
-                                                <input list="l_activities" id="l_activity" type="text" class="form-control @error('l_activity') is-invalid @enderror" name="l_activity" placeholder="Choose from the dropdown list or type your own" required autofocus>
-                                                <datalist id="l_activities" >
-                                                    <option value="Discussion">
-                                                    <option value="Gallery walk">
-                                                    <option value="Group discussion">
-                                                    <option value="Group work">
-                                                    <option value="Guest Speaker">
-                                                    <option value="Independent study">
-                                                    <option value="Issue-based inquiry">
-                                                    <option value="Jigsaw">
-                                                    <option value="Journals and learning logs">
-                                                    <option value="Lab">
-                                                    <option value="Lecture">
-                                                    <option value="Literature response">
-                                                    <option value="Mind map">
-                                                    <option value="Poll">
-                                                    <option value="Portfolio development">
-                                                    <option value="Problem-solving">
-                                                    <option value="Reflection piece">
-                                                    <option value="Role-playing">
-                                                    <option value="Service learning">
-                                                    <option value="Seminar">
-                                                    <option value="Sorting">
-                                                    <option value="Think-pair-share">
-                                                    <option value="Tutorial">
-                                                    <option value="Venn diagram">
-                                                   
-                                                </datalist>
-
-                                                @error('l_activity')
-                                                <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $message }}</strong>
-                                                </span>
-                                                @enderror
-                                            </div>
-                                        </div>
-
-                                        <input type="hidden" name="course_id" value="{{$course->course_id}}">
-
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary col-2 btn-sm" data-dismiss="modal">Close</button>
-                                        <button type="submit" class="btn btn-primary col-2 btn-sm">Add</button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
 
                 </div>
 
@@ -173,23 +138,65 @@
                         <button class="btn btn-sm btn-primary mt-3 col-3 float-right">Course Outcome Mapping ➡</button>
                     </a>
                 </div>
-
-
             </div>
         </div>
-
-
-    </div>
+   </div>
 </div>
-<script type="text/javascript">
+
+<script>
+
     $(document).ready(function () {
-  
+
       $("form").submit(function () {
         // prevent duplicate form submissions
         $(this).find(":submit").attr('disabled', 'disabled');
         $(this).find(":submit").html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>');
-  
+
       });
+
+      $('#btnAdd').click(function() {
+            add();
+      });
+
     });
+
+    function add() {
+        var container = $('#l_activity_table');
+        var rowCount = $('#l_activity_table tr').length;
+            var element =
+            `<tr>
+                <td>
+                    <input list="l_new_activities`+ rowCount +`" name="l_activity[]" id="l_new_activity`+ rowCount +` " form="l_activity_form"
+                    type="text" class="form-control" required autofocus placeholder="Choose from the dropdown list or type your own">
+                        <datalist id="l_new_activities`+ rowCount +`">
+                            <option value="Discussion">
+                            <option value="Gallery walk">
+                            <option value="Group discussion">
+                            <option value="Group work">
+                            <option value="Guest Speaker">
+                            <option value="Independent study">
+                            <option value="Issue-based inquiry">
+                            <option value="Jigsaw">
+                            <option value="Journals and learning logs">
+                            <option value="Lab">
+                            <option value="Lecture">
+                            <option value="Literature response">
+                            <option value="Mind map">
+                            <option value="Poll">
+                            <option value="Portfolio development">
+                            <option value="Problem-solving">
+                            <option value="Reflection piece">
+                            <option value="Role-playing">
+                            <option value="Service learning">
+                            <option value="Seminar">
+                            <option value="Sorting">
+                            <option value="Think-pair-share">
+                            <option value="Tutorial">
+                            <option value="Venn diagram">
+                        </datalist>
+                    </td>
+                </tr>`;
+            container.append(element);
+    }
   </script>
 @endsection

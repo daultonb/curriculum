@@ -45,24 +45,46 @@ class AssessmentMethodController extends Controller
             'a_method'=> 'required',
             'weight'=> 'required',
             ]);
-        
-        $totalWeight = AssessmentMethod::where('course_id', $request->input('course_id'))->sum('weight');
-        if($totalWeight + $request->input('weight') > 100){
-            return redirect()->route('courseWizard.step2', $request->input('course_id'))->with('error', 'The total weight of all assessments will exceed 100%');
+
+        $weights = $request->input("weight");
+        $methods =  $request->input("a_method");
+        $course_id = $request->input('course_id');
+        $i = 0;
+        $newMethodFlag = false;
+
+        if($method_ids = $request->input('a_method_id')) {
+            $size = count($method_ids);
+            $newMethodFlag = true;
         }
 
-        $am = new AssessmentMethod;
-        $am->a_method = $request->input('a_method');
-        $am->weight = $request->input('weight');
-        $am->course_id = $request->input('course_id');
-        
-        if($am->save()){
-            $request->session()->flash('success', 'New student assessment method saved');
-        }else{
-            $request->session()->flash('error', 'There was an error adding the student assessment method');
+        $sum = 0;
+        foreach($weights as $weight){
+            $sum += $weight;
+            if($sum > 100){
+                return redirect()->route('courseWizard.step2', $request->input('course_id'))->with('error', 'The total weight of all assessments will exceed 100%');
+            }
         }
-        
-        
+
+        foreach ($methods as $method) {
+            if($newMethodFlag == true && $i < $size){
+                $am = AssessmentMethod::where('a_method_id', $method_ids[$i])->first();
+                $am->update(array('a_method' => $method,'weight'=> $weights[$i]));
+                $i++;
+                $request->session()->flash('success', 'Student assessment method modified');
+            }else{
+                $am = new AssessmentMethod;
+                $am->a_method = $method;
+                $am->weight = $weights[$i];
+                $am->course_id = $course_id;
+                $i++;
+                if($am->save()){
+                    $request->session()->flash('success', 'New student assessment method saved');
+                }else{
+                    $request->session()->flash('error', 'There was an error adding the student assessment method');
+                }
+            }
+        }
+
         return redirect()->route('courseWizard.step2', $request->input('course_id'));
     }
 
@@ -86,7 +108,7 @@ class AssessmentMethodController extends Controller
     public function edit($assessmentMethod)
     {
         //
-    
+
     }
 
     /**
@@ -103,7 +125,7 @@ class AssessmentMethodController extends Controller
             'a_method'=> 'required',
             'weight'=> 'required',
             ]);
-        
+
         $am = AssessmentMethod::where('a_method_id', $a_method_id)->first();
 
         $totalWeight = AssessmentMethod::where('course_id', $request->input('course_id'))->sum('weight');
@@ -111,19 +133,19 @@ class AssessmentMethodController extends Controller
             return redirect()->route('courseWizard.step2', $request->input('course_id'))->with('error', 'The total weight of all assessments will exceed 100%');
         }
 
-        
+
         $am->a_method = $request->input('a_method');
         $am->weight = $request->input('weight');
         //$am->course_id = $request->input('course_id');
-        
-        
+
+
         if($am->save()){
             $request->session()->flash('success', 'Student assessment method updated');
         }else{
             $request->session()->flash('error', 'There was an error updating the student assessment method');
         }
-        
-        
+
+
         return redirect()->route('courseWizard.step2', $request->input('course_id'));
     }
 
@@ -146,5 +168,5 @@ class AssessmentMethodController extends Controller
         }
         return redirect()->route('courseWizard.step2', $course_id);
     }
-    
+
 }

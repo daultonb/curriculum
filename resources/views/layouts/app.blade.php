@@ -26,6 +26,12 @@
 
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 
+    <style>
+        input::-webkit-calender-picker-indicator{
+            opacity: 100;
+        }
+    </style>
+
 </head>
 <body>
     <div id="app">

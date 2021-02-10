@@ -8592,9 +8592,12 @@
 <body>
 
     <div>
+        <!--
         <div>
             <img src="{{ asset('img/UBC-logo-2018-fullsig-blue-rgb72.png') }}" alt="UBC logo">
         </div>
+        -->
+
         <div class="mt-2 mb-3">
             <p class="float-right">{{date("Y-m-d")}}</p>
             <h1>Course Summary</h1>
@@ -8605,7 +8608,7 @@
             <p class="text-muted">Level: {{$program->level}}</p>
 
         </div>
-        
+
 
         <table style="margin-top:15px; table-layout: fixed; border-collapse: collapse; width: 100%;" class="table">
             <tr>
@@ -8616,7 +8619,7 @@
                     <p>The course learning outcomes or competencies used in this course are listed below.</p>
                     <table class="table table-bordered table-sm  mt-3">
 
-                        @if(count($l_outcomes)<1) 
+                        @if(count($l_outcomes)<1)
                             <tr>
                                 <th style="background-color: #e3e3e3;" class="table-light">There are no course learning outcomes set for this course.</th>
                             </tr>
@@ -8627,7 +8630,7 @@
                                 <th style="background-color: #e3e3e3;" class="table-light"></th>
                                 <th style="background-color: #e3e3e3;" class="table-light">Course Learning Outcomes or Competencies</th>
                             </tr>
-                            @for($i = 0; $i < count($l_outcomes); $i++) 
+                            @for($i = 0; $i < count($l_outcomes); $i++)
                                 <tr>
                                     <td style="width:5%">{{$i+1}}</td>
                                     <td>
@@ -8643,8 +8646,8 @@
                     </table>
                 </td>
             </tr>
-        </table>    
-            
+        </table>
+
         <div>
             <table style="margin-top:15px; page-break-before: always;" class="table">
                 <tr>
@@ -8655,7 +8658,7 @@
                         <p>Student assessment methods used in this course are listed below.</p>
                         <table class="table table-bordered table-sm  mt-3">
 
-                            @if(count($a_methods)<1) 
+                            @if(count($a_methods)<1)
                                 <tr>
                                     <th style="background-color: #e3e3e3;" class="table-light">There are no student assessment methods set for this course.</th>
                                 </tr>
@@ -8667,7 +8670,7 @@
                                     <th style="background-color: #e3e3e3;" class="table-light">Student Assesment Methods</th>
                                     <th style="background-color: #e3e3e3;" class="table-light">Weight</th>
                                 </tr>
-                                @for($i = 0; $i < count($a_methods); $i++) 
+                                @for($i = 0; $i < count($a_methods); $i++)
                                     <tr>
                                         <td style="width:5%">{{$i+1}}</td>
                                         <td>{{$a_methods[$i]->a_method}}</td>
@@ -8694,7 +8697,7 @@
 
                         <table class="table table-bordered table-sm mt-3">
 
-                            @if(count($l_activities)<1) 
+                            @if(count($l_activities)<1)
                                 <tr>
                                     <th style="background-color: #e3e3e3;">There are no teaching and learning activities set for this course.</th>
                                 </tr>
@@ -8704,7 +8707,7 @@
                                     <th style="background-color: #e3e3e3;" class="table-light"></th>
                                     <th style="background-color: #e3e3e3;" class="table-light">Teaching and Learning Activities</th>
                                 </tr>
-                                @for($i=0; $i<count($l_activities); $i++) 
+                                @for($i=0; $i<count($l_activities); $i++)
                                     <tr>
                                         <td style="width:5%">{{$i+1}}</td>
                                         <td>{{$l_activities[$i]->l_activity}}</td>
@@ -8729,7 +8732,7 @@
 
                         <table class="table table-bordered table-sm mt-3">
 
-                            @if(count($l_outcomes)<1) 
+                            @if(count($l_outcomes)<1)
                                 <tr>
                                     <th style="background-color: #e3e3e3;" class="table-light">There are no course learning outcomes set for this course.</th>
                                 </tr>
@@ -8742,7 +8745,7 @@
                                     <th class="table-light">Student Assessment Method</th>
                                     <th class="table-light">Teaching and Learning Activity</th>
                                 </tr>
-                                @for($i = 0; $i < count($l_outcomes); $i++)                               
+                                @for($i = 0; $i < count($l_outcomes); $i++)
                                     <tr>
                                         <td style="width:5%" >{{$i+1}}</td>
                                         <td>{{$l_outcomes[$i]->l_outcome}}</td>
@@ -8781,10 +8784,10 @@
                 <tr>
                     @if($course->program_id == 1 ?? $course->program_id == 2 ?? $course->program_id == 3 )
                         <th style="background-color: #999999;">BC {{$program->program}} (in lieu of PLOs)</th>
-                    @else 
+                    @else
                         <th style="background-color: #999999;">{{$program->program}}: Program Learning Outcomes or Competencies</th>
                     @endif
-                    
+
                 </tr>
                 <tr>
                     <td style="padding-left: 24px; padding-right: 24px">
@@ -8792,7 +8795,7 @@
 
                         <table class="table table-bordered table-sm mt-3">
 
-                            @if(count($pl_outcomes)<1) 
+                            @if(count($pl_outcomes)<1)
                                 <tr>
                                     <th style="background-color: #e3e3e3;" class="table-light">There are no program learning outcomes set for this course.</th>
                                 </tr>
@@ -8806,7 +8809,7 @@
                                         <th style="background-color: #e3e3e3;" class="table-light">PLO Category</th>
                                     @endif
                                 </tr>
-                                @for($i = 0; $i < count($pl_outcomes); $i++) 
+                                @for($i = 0; $i < count($pl_outcomes); $i++)
                                     <tr>
                                         <td style="width:5%">{{$i+1}}</td>
                                         <td>
@@ -8832,7 +8835,7 @@
             </table>
         </div>
 
-        <div style="max-width:100%">       
+        <div style="max-width:100%">
             <table style="margin-top:15px; page-break-before: always;" class="table">
                 <tr>
                     <th style="background-color: #999999;">{{$course->course_code}}{{$course->course_num}}: Outcome Maps</th>
@@ -8863,7 +8866,7 @@
                                     @endforeach
                                 </tbody>
                             </table>
-                                    
+
                         @else
 
                             <table class="table table-bordered table-sm">
@@ -8881,7 +8884,7 @@
 
                         <table class="table table-bordered table-sm mt-3">
 
-                            @if(count($outcomeMaps)<1) 
+                            @if(count($outcomeMaps)<1)
                                 <tr>
                                     <th style="background-color: #e3e3e3;" class="table-light">Course learning outcomes have not been mapped to program learning outcomes for this course.</th>
                                 </tr>
@@ -8894,7 +8897,7 @@
                                 </tr>
                                 <tr>
                                     <td style="height:50px"></td>
-                                    @for($i = 0; $i < count($pl_outcomes); $i++) 
+                                    @for($i = 0; $i < count($pl_outcomes); $i++)
                                         <td>
                                             PLO {{$i+1}}
                                         </td>
@@ -8902,18 +8905,18 @@
                                     @endfor
                                 </tr>
 
-                                @for($i = 0; $i < count($l_outcomes); $i++) 
+                                @for($i = 0; $i < count($l_outcomes); $i++)
                                     <tr>
                                         <td style="height:50px">
-                                            
+
                                             CLO {{$i+1}}
-                                            
+
                                         </td>
 
-                                        @for($j = 0; $j < count($pl_outcomes); $j++) 
+                                        @for($j = 0; $j < count($pl_outcomes); $j++)
                                             @foreach ($outcomeMaps as $om)
                                                 @if( $om->pl_outcome_id == $pl_outcomes[$j]->pl_outcome_id && $om->l_outcome_id == $l_outcomes[$i]->l_outcome_id )
-                                            
+
                                                     <td @foreach($mappingScales as $ms) @if($ms->abbreviation == $om->map_scale_value) style="background-color:{{$ms->colour}}" @endif @endforeach class="text-center align-middle" >
                                                         {{$om->map_scale_value}}
                                                     </td>
@@ -8935,10 +8938,10 @@
 
 
             </table>
-        </div>   
-        
+        </div>
+
     </div>
-    
+
 </body>
 
 </html>
