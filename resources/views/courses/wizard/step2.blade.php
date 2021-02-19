@@ -34,7 +34,7 @@
 
                         <tr>
                             <td>Course Learning Outcomes</td>
-                            <td>Student Assesment Methods</td>
+                            <td>Student Assessment Methods</td>
                             <td>Teaching and Learning Activities</td>
                             <td>Course Outcome Mapping</td>
                             <td>Program Outcome Mapping</td>
@@ -66,13 +66,13 @@
                                             <th colspan="2">Weight</th>
                                         </tr>
 
+
                                             @foreach($a_methods as $a_method)
 
                                             <tr>
                                                 <td>
                                                     <input list="a_methods{{$a_method->a_method_id}}" id="a_method{{$a_method->a_method_id}}" type="text" class="form-control @error('a_method') is-invalid @enderror"
-                                                    name="a_method[]" type= "weight" value = "{{$a_method->a_method}}" placeholder="Choose from the dropdown list or type your own" form="a_method_form" required autofocus
-                                                >
+                                                    name="a_method[]" value = "{{$a_method->a_method}}" placeholder="Choose from the dropdown list or type your own" form="a_method_form" required autofocus>
                                                     <datalist id="a_methods{{$a_method->a_method_id}}">
                                                         <option value="Annotated bibliography">
                                                         <option value="Assignment">
@@ -111,11 +111,12 @@
                                                         <option value="Term/research paper">
                                                         <option value="Thesis statement">
                                                     </datalist>
+                                                </td>
 
                                                     <input type="hidden" name="a_method_id[]" value="{{$a_method->a_method_id}}" form="a_method_form">
                                                     <td style="display: flex">
                                                         <input id="a_method_weight{{$a_method->a_method_id}}" type="number" step=".1" form="a_method_form" style="width:auto"
-                                                        class="form-control @error('weight') is-invalid @enderror" value="{{$a_method->weight}}" name="weight[]" min="1" max="100" required autofocus>
+                                                        class="form-control @error('weight') is-invalid @enderror" value="{{$a_method->weight}}" name="weight[]" min="0" max="100" required autofocus>
                                                         <label for="a_method_weight{{$a_method->a_method_id}}" style="font-size: medium; margin-top:5px;margin-left:5px"><strong>%</strong></label>
                                                     </td>
 
@@ -134,7 +135,7 @@
 
                                             <tr>
                                                 <td><b>TOTAL</b></td>
-                                                <td><b>{{$totalWeight}}%</b></td>
+                                                <td style="padding-left:20px"><b id="sum">{{$totalWeight}}%</b></td>
                                             </tr>
 
                                     @endif
@@ -146,13 +147,13 @@
 
                     <form method="POST" id="a_method_form" action="{{ action('AssessmentMethodController@store') }}">
                         @csrf
-                        <button type="submit" class="btn btn-primary mt-3 float-left">
+                        <button type="submit" class="btn btn-primary mt-3 float-right" id="btnSave" style="margin-right:15px ">
                             Save
                         </button>
                         <input type="hidden" name="course_id" value="{{$course->course_id}}" form="a_method_form">
                     </form>
 
-                    <button type="button" class="btn btn-primary btn-sm col-3 mt-3 float-right" id="btnAdd">
+                    <button type="button" class="btn btn-primary btn-sm col-3 mt-3 float-left" id="btnAdd" style="margin-left: 12px">
                         ＋ Add Student Assessment Method
                     </button>
 
@@ -183,6 +184,11 @@
 
       $('#btnAdd').click(function() {
             add();
+      });
+
+      $("input[name='weight[]']").on('change', function() {
+        var total = calculateTotal();
+        $('#sum').text(total + '%');
       });
 
     });
@@ -233,6 +239,7 @@
                             <option value="Term/research paper">
                             <option value="Thesis statement">
                         </datalist>
+                        </td>
                         <td style="display: flex">
                             <input id="a_new_method_weight`+rowCount+`" type="number" step=".1" form="a_method_form" style="width:auto"
                             class="form-control @error('weight') is-invalid @enderror" name="weight[]" min="1" max="100" required autofocus>
@@ -242,5 +249,14 @@
                 </tr>`;
             container.prev().after(element);
     }
+
+    function calculateTotal() {
+        var sum = 0;
+        $("input[name = 'weight[]']").each(function() {
+            sum += Number($(this).val());
+        });
+        return sum;
+    }
+
   </script>
 @endsection
