@@ -2252,6 +2252,11 @@ select.form-control:focus::-ms-value {
   border-radius: 0.3rem;
 }
 
+.form-control, .form-control:focus{
+    box-shadow: none;
+    outline: none;
+}
+
 select.form-control[size],
 select.form-control[multiple] {
   height: auto;
@@ -10897,5 +10902,84 @@ a.text-dark:focus {
     color: inherit;
     border-color: #dee2e6;
   }
+}
+
+input::-webkit-calendar-picker-indicator {
+    opacity: 100;
+}
+
+.flex-container {
+    display: flex;
+    flex-direction: row;
+    width: 800px;
+    flex-flow: row wrap;
+    margin-bottom: 85px;
+    margin-top:50px;
+}
+
+.flex-container > div {
+    font-size: 13px;
+    flex: 0 1 calc(16.66% - 8px);
+    margin: 4px;
+    padding: 10px;
+    text-align: center;
+}
+
+.box:nth-child(11) {
+    margin-top: 25px;
+    margin-bottom: -25px;
+}
+.box:nth-child(10) {
+    margin-top: 50px;
+    margin-bottom: -50px;
+}
+.box:nth-child(9) {
+    margin-top: 75px;
+    margin-bottom: -75px;
+}
+.box:nth-child(8) {
+    margin-top: 100px;
+    margin-bottom: -100px;
+}
+
+.box:nth-child(7) {
+    margin-top: 125px;
+    margin-bottom: -125px;
+}
+
+.box:nth-child(5) {
+    margin-top: 25px;
+    margin-bottom: -25px;
+}
+
+.box:nth-child(4) {
+    margin-top: 50px;
+    margin-bottom: -50px;
+}
+
+.box:nth-child(3) {
+    margin-top: 75px;
+    margin-bottom: -75px;
+}
+
+.box:nth-child(2) {
+    margin-top: 100px;
+    margin-bottom: -100px;
+}
+
+.box:nth-child(1) {
+    margin-top: 125px;
+    margin-bottom: -125px;
+}
+
+.CLO_example{
+    color: #6495ED;
+    font-weight: bold;
+}
+
+datalist {
+    position:absolute;
+    background-color: lightgrey;
+    font-family: sans-serif;
 }
 

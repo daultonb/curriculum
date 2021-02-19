@@ -67,9 +67,9 @@
 
                                             <tr>
                                                 <td>
-                                                    <input list="l_activities" name="l_activity[]" id="l_activity{{$l_activity->l_activity_id}}" form="l_activity_form"
-                                                    class="form-control" type="text" placeholder="Choose from the dropdown list or type your own" value="{{$l_activity->l_activity}}" required autofocus style="white-space: pre">
-                                                        <datalist id="l_activities">
+                                                    <input list="" name="l_activity[]" id="l_activity{{$l_activity->l_activity_id}}" form="l_activity_form"
+                                                    class="form-control" type="text" type= "method" placeholder="Choose from the dropdown list or type your own" value="{{$l_activity->l_activity}}" required autofocus style="white-space: pre">
+                                                        <datalist id="l_activities" class="l_activities" >
                                                             <option value="Discussion">
                                                             <option value="Gallery walk">
                                                             <option value="Group discussion">
@@ -95,6 +95,7 @@
                                                             <option value="Tutorial">
                                                             <option value="Venn diagram">
                                                         </datalist>
+                                                    </td>
 
                                                     <input type="hidden" name="l_activity_id[]" value="{{$l_activity->l_activity_id}}" form="l_activity_form">
                                                 </td>
@@ -118,13 +119,13 @@
 
                     <form method="POST" id="l_activity_form" action="{{ action('LearningActivityController@store') }}">
                         @csrf
-                        <button type="submit" class="btn btn-primary mt-3 float-left">
+                        <button type="submit" class="btn btn-primary mt-3 float-right" id="btnSave" style="margin-right:15px">
                             Save
                         </button>
                         <input type="hidden" name="course_id" value="{{$course->course_id}}" form="l_activity_form">
                     </form>
 
-                    <button type="button" class="btn btn-primary btn-sm col-3 mt-3 float-right" id="btnAdd">
+                    <button type="button" class="btn btn-primary btn-sm col-3 mt-3 float-left" id="btnAdd" style="margin-left: 12px">
                         ＋ Add Teaching and Learning Activity
                     </button>
 
@@ -198,5 +199,7 @@
                 </tr>`;
             container.append(element);
     }
+
+
   </script>
 @endsection

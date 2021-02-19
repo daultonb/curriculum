@@ -58,9 +58,10 @@ class AssessmentMethodController extends Controller
         }
 
         $sum = 0;
-        foreach($weights as $weight){
+        foreach($weights as $weight) {
             $sum += $weight;
-            if($sum > 100){
+            if($sum > 100) {
+
                 return redirect()->route('courseWizard.step2', $request->input('course_id'))->with('error', 'The total weight of all assessments will exceed 100%');
             }
         }
@@ -71,7 +72,8 @@ class AssessmentMethodController extends Controller
                 $am->update(array('a_method' => $method,'weight'=> $weights[$i]));
                 $i++;
                 $request->session()->flash('success', 'Student assessment method modified');
-            }else{
+
+            }else {
                 $am = new AssessmentMethod;
                 $am->a_method = $method;
                 $am->weight = $weights[$i];
