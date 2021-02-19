@@ -6,7 +6,7 @@
         <h1>Courses </h1>
     <p class="form-text text-muted">See below the courses you have mapped using this tool (under Completed Courses) and those you are still working on (Active Courses).
         </p>
-    <p class="form-text text-primary font-weight-bold"><i>Note:</i>  If you are ideating/evaluating a program, go to "My Programs". 
+    <p class="form-text text-primary font-weight-bold"><i>Note:</i>  If you are ideating/evaluating a program, go to "My Programs".
         This section should only be used for courses that you are not associating with a specific program.</p>
 
 
@@ -29,6 +29,7 @@
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
+
                     <form id="createCourse" method="POST" action="{{ action('CourseController@store') }}">
                         @csrf
                         <div class="modal-body">
@@ -73,8 +74,8 @@
                             </div>
 
                             <div class="form-group row">
-                                <label for="course_title" class="col-md-3 col-form-label text-md-right">Course
-                                    Title</label>
+                                <label for="course_title" class="col-md-3 col-form-label text-md-right">
+                                    Course Title</label>
 
                                 <div class="col-md-8">
                                     <input id="course_title" type="text"
@@ -86,6 +87,82 @@
                                         <strong>{{ $message }}</strong>
                                     </span>
                                     @enderror
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="course_title" class="col-md-3 col-form-label text-md-right">Year and Semester</label>
+
+                                <div class="col-md-3">
+                                    <select id="course_semester" class="form-control @error('course_semester') is-invalid @enderror"
+                                        name="course_semester" required autofocus>
+                                        <option value="W1">Winter Term 1</option>
+                                        <option value="W2">Winter Term 2</option>
+                                        <option value="S1">Summer Term 1</option>
+                                        <option value="S2">Summer Term 2</option>
+
+                                    @error('course_semester')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                    </select>
+                                </div>
+
+                                <div class="col-md-2 float-right">
+                                    <select id="course_year" class="form-control @error('course_year') is-invalid @enderror"
+                                    name="course_year" required autofocus>
+                                        <option value="2021">2021</option>
+                                        <option value="2020">2020</option>
+                                        <option value="2019">2019</option>
+                                        <option value="2018">2018</option>
+                                        <option value="2017">2017</option>
+                                        <option value="2016">2016</option>
+
+                                    @error('course_year')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                    </select>
+                                </div>
+
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="course_section" class="col-md-3 col-form-label text-md-right">Course
+                                    Section</label>
+
+                                <div class="col-md-4">
+                                    <input id="course_section" type="text"
+                                        class="form-control @error('course_section') is-invalid @enderror"
+                                        name="course_section" required autofocus>
+
+                                    @error('course_section')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="delivery_modality" class="col-md-3 col-form-label text-md-right">Course
+                                    Status</label>
+
+                                <div class="col-md-2 float-right">
+                                    <select id="delivery_modality" class="form-control @error('delivery_modality') is-invalid @enderror"
+                                    name="delivery_modality" required autofocus>
+                                        <option value="O">online</option>
+                                        <option value="I">in-person</option>
+                                        <option value="B">blended</option>
+
+                                    @error('delivery_modality')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                    </select>
                                 </div>
                             </div>
 
@@ -130,7 +207,7 @@
         <b>Active Courses:</b> <span class="form-text text-muted"> Courses you are working on.</span>
     </div>
     @if(count($activeCourses)>0)
-    
+
 
     <div class="card-body">
         <p class="form-text text-muted">To edit a course from this list, click on its title.</p>
@@ -145,18 +222,19 @@
                         @foreach($activeCourses as $course)
                             @if($course->program_id == 1 ?? $course->program_id == 2 ?? $course->program_id == 3 )
                                 <tr class="border">
-                                    <td><a href="{{route('courseWizard.step1', $course->course_id)}}">{{$course->course_code}}{{$course->course_num}}
+                                    <td><a href="{{route('courseWizard.step1', $course->course_id)}}">{{$course->year}} {{$course->semester}}
+                                        {{$course->course_code}}{{$course->course_num}} {{$course->section}}
                                         - {{$course->course_title}} </a></td>
 
                                     <td>❗In Progress</td>
-        
+
                                 </tr>
                             @endif
                         @endforeach
-        
+
                     </tbody>
                 </table>
-                
+
             </div>
         </div>
 
@@ -170,18 +248,19 @@
                         @foreach($activeCourses as $course)
                             @if($course->program_id !== 1 ?? $course->program_id !== 2 ?? $course->program_id !== 3 )
                                 <tr class="border">
-                                    <td><a href="{{route('courseWizard.step1', $course->course_id)}}">{{$course->course_code}}{{$course->course_num}}
+                                    <td><a href="{{route('courseWizard.step1', $course->course_id)}}">{{$course->year}} {{$course->semester}}
+                                        {{$course->course_code}}{{$course->course_num}} {{$course->section}}
                                         - {{$course->course_title}} </a></td>
                                     <td>{{$course->program}} <br>{{$course->faculty}} <br>{{$course->department}} <br> {{$course->level}} </td>
                                     <td>❗In Progress</td>
-            
+
                                 </tr>
                             @endif
                         @endforeach
-        
+
                     </tbody>
                 </table>
-                
+
             </div>
         </div>
     </div>
@@ -217,14 +296,15 @@
             <tbody>
                 @foreach($archivedCourses as $course)
                 <tr class="border">
-                    <td>{{$course->course_code}}{{$course->course_num}} - {{$course->course_title}}</td>
+                    <td>{{$course->year}} {{$course->semester}}
+                        {{$course->course_code}}{{$course->course_num}} {{$course->section}} - {{$course->course_title}}</td>
 
                     @if($course->program_id !== 1 ?? $course->program_id !== 2 ?? $course->program_id !== 3 )
                         <td>{{$course->program}} <br>{{$course->faculty}} <br> {{$course->level}} </td>
                     @else
                         <td></td>
                     @endif
-                    
+
                     <td>
                         <a class="btn btn-secondary btn-sm" style="width:60px"
                             href="{{route('courses.edit', $course->course_id)}}" role="button">Edit</a>
@@ -264,7 +344,7 @@
 
 <script type="text/javascript">
     $(document).ready(function() {
-    
+
         $("form").submit(function () {
     // prevent duplicate form submissions
         $(this).find(":submit").attr('disabled', 'disabled');

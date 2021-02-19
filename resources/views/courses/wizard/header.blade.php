@@ -1,7 +1,7 @@
 <div class="mt-2 mb-5">
     <div class="row">
         <div class="col">
-            <h3>Course: {{$course->course_code}}{{$course->course_num}}</h3>
+            <h3>Course: {{$course->year}} {{$course->semester}} {{$course->course_code}}{{$course->course_num}} {{$course->section}}</h3>
             <h5 class="text-muted">{{$course->course_title}}</h5>
         </div>
         <div class="col">
@@ -71,6 +71,81 @@
                                                     <strong>{{ $message }}</strong>
                                                 </span>
                                                 @enderror
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group row">
+                                            <label for="course_semester" class="col-md-2 col-form-label text-md-right">Year & Semester</label>
+
+                                            <div class="col-md-3">
+                                                <select id="course_semester" class="form-control @error('course_semester') is-invalid @enderror"
+                                                    name="course_semester" required autofocus>
+                                                    <option value="W1">Winter Term 1</option>
+                                                    <option value="W2">Winter Term 2</option>
+                                                    <option value="S1">Summer Term 1</option>
+                                                    <option value="S2">Summer Term 2</option>
+
+                                                @error('course_semester')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                                @enderror
+                                                </select>
+                                            </div>
+
+                                            <div class="col-md-2 float-right">
+                                                <select id="course_year" class="form-control @error('course_year') is-invalid @enderror"
+                                                name="course_year" required autofocus>
+                                                    <option value="2021">2021</option>
+                                                    <option value="2020">2020</option>
+                                                    <option value="2019">2019</option>
+                                                    <option value="2018">2018</option>
+                                                    <option value="2017">2017</option>
+                                                    <option value="2016">2016</option>
+
+                                                @error('course_year')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                                @enderror
+                                                </select>
+                                            </div>
+
+                                        </div>
+
+                                        <div class="form-group row">
+                                            <label for="course_section" class="col-md-2 col-form-label text-md-right">Course
+                                                Section</label>
+
+                                            <div class="col-md-4">
+                                                <input id="course_section" type="text"
+                                                    class="form-control @error('course_section') is-invalid @enderror"
+                                                    name="course_section" required autofocus>
+
+                                                @error('course_section')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                                @enderror
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group row">
+                                            <label for="delivery_modality" class="col-md-2 col-form-label text-md-right">Delivery Modality</label>
+
+                                            <div class="col-md-3 float-right">
+                                                <select id="delivery_modality" class="form-control @error('delivery_modality') is-invalid @enderror"
+                                                name="delivery_modality" required autofocus>
+                                                    <option value="O">online</option>
+                                                    <option value="I">in-person</option>
+                                                    <option value="B">blended</option>
+
+                                                @error('delivery_modality')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                                @enderror
+                                                </select>
                                             </div>
                                         </div>
 

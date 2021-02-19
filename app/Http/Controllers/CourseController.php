@@ -43,14 +43,16 @@ class CourseController extends Controller
         $activeCourses = User::join('course_users', 'users.id', '=', 'course_users.user_id')
                 ->join('courses', 'course_users.course_id', '=', 'courses.course_id')
                 ->join('programs', 'courses.program_id', '=', 'programs.program_id')
-                ->select('courses.program_id','courses.course_code', 'courses.course_id','courses.course_num','courses.course_title', 'courses.status','programs.program', 'programs.faculty', 'programs.department','programs.level')
+                ->select('courses.program_id','courses.course_code','courses.delivery_modality','courses.semester','courses.year','courses.section',
+                'courses.course_id','courses.course_num','courses.course_title', 'courses.status','programs.program', 'programs.faculty', 'programs.department','programs.level')
                 ->where('course_users.user_id','=',Auth::id())->where('courses.status','=', -1)
                 ->get();
 
         $archivedCourses = User::join('course_users', 'users.id', '=', 'course_users.user_id')
                 ->join('courses', 'course_users.course_id', '=', 'courses.course_id')
                 ->join('programs', 'courses.program_id', '=', 'programs.program_id')
-                ->select('courses.program_id','courses.course_code', 'courses.course_id','courses.course_num','courses.course_title', 'courses.status','programs.program', 'programs.faculty', 'programs.department','programs.level')
+                ->select('courses.program_id','courses.course_code','courses.delivery_modality','courses.semester','courses.year','courses.section',
+                'courses.course_id','courses.course_num','courses.course_title', 'courses.status','programs.program', 'programs.faculty', 'programs.department','programs.level')
                 ->where('course_users.user_id','=',Auth::id())->where('courses.status','=', 1)
                 ->get();
 
@@ -91,6 +93,12 @@ class CourseController extends Controller
         $course->status = -1;
         $course->required = $request->input('required');
         $course->type = $request->input('type');
+
+        $course->delivery_modality = $request->input('delivery_modality');
+        $course->year = $request->input('course_year');
+        $course->semester = $request->input('course_semester');
+        $course->section = $request->input('course_section');
+
 
         if($request->input('type') == 'assigned'){
 
@@ -209,6 +217,11 @@ class CourseController extends Controller
         $course->course_code = strtoupper($request->input('course_code'));
         $course->course_title = $request->input('course_title');
         $course->required = $request->input('required');
+
+        $course->delivery_modality = $request->input('delivery_modality');
+        $course->year = $request->input('course_year');
+        $course->semester = $request->input('course_semester');
+        $course->section = $request->input('course_section');
 
         if($course->save()){
             $request->session()->flash('success', 'Course updated');
