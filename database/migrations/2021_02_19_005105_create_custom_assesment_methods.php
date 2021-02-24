@@ -14,8 +14,11 @@ class CreateCustomAssesmentMethods extends Migration
     public function up()
     {
         Schema::create('custom_assesment_methods', function (Blueprint $table) {
-            $table->id();
+            $table->string('a_custom_method');
+            $table->unsignedBigInteger('user_id');
             $table->timestamps();
+
+
         });
     }
 

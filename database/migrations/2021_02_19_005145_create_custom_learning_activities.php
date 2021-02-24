@@ -14,8 +14,10 @@ class CreateCustomLearningActivities extends Migration
     public function up()
     {
         Schema::create('custom_learning_activities', function (Blueprint $table) {
-            $table->id();
+            $table->string('a_custom_method');
+            $table->unsignedBigInteger('user_id');
             $table->timestamps();
+
         });
     }
 

@@ -1,4 +1,5 @@
-@import url(https://fonts.googleapis.com/css?family=Nunito);@charset "UTF-8";
+@import url(https://fonts.googleapis.com/css?family=Nunito);
+@charset "UTF-8";
 
 /*!
  * Bootstrap v4.5.2 (https://getbootstrap.com/)
@@ -10920,9 +10921,9 @@ input::-webkit-calendar-picker-indicator {
 .flex-container > div {
     font-size: 13px;
     flex: 0 1 calc(16.66% - 8px);
-    margin: 4px;
-    padding: 10px;
-    text-align: center;
+    margin: 3px;
+    padding: 5px;
+    text-align: left;
 }
 
 .box:nth-child(11) {

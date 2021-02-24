@@ -32,7 +32,7 @@ class UpdateCoursesTable extends Migration
             $table->dropColumn('section');
             $table->dropColumn('semester');
             $table->dropColumn('year');
-            $table->dropColumn('course_status');
+            $table->dropColumn('delivery_modality');
         });
     }
 }

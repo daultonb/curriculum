@@ -1,18 +1,30 @@
 <div class="mt-2 mb-5">
     <div class="row">
         <div class="col">
-            <h3>Course: {{$course->year}} {{$course->semester}} {{$course->course_code}}{{$course->course_num}} {{$course->section}}</h3>
+            <h3>Course: {{$course->year}} {{$course->semester}} {{$course->course_code}}{{$course->course_num}} - {{$course->section}}</h3>
             <h5 class="text-muted">{{$course->course_title}}</h5>
+            <h5>Delivery modality:
+            @switch($course->delivery_modality)
+                @case('O')
+                    Online
+                    @break
+                @case('B')
+                    Blended
+                    @break
+                @default
+                    In-person
+            @endswitch
+            </h5>
         </div>
-        <div class="col">
 
+        <div class="col">
             <div class="row">
                 <div class="col">
                     <!-- Edit button -->
                     <button type="button" class="btn btn-secondary btn-sm float-right" style="width:200px" data-toggle="modal" data-target="#editCourseModal{{$course->course_id}}">
                         Edit Course Information
                     </button>
-                    <!-- Modal -->
+                    <!-- Edit Course Modal -->
                     <div class="modal fade" id="editCourseModal{{$course->course_id}}" tabindex="-1" role="dialog" aria-labelledby="editCourseModalLabel"aria-hidden="true">
                         <div class="modal-dialog modal-lg" role="document">
                             <div class="modal-content">
@@ -29,7 +41,7 @@
 
                                     <div class="modal-body">
                                         <div class="form-group row">
-                                            <label for="course_code" class="col-md-2 col-form-label text-md-right">Course Code</label>
+                                            <label for="course_code" class="col-md-3 col-form-label text-md-right">Course Code</label>
 
                                             <div class="col-md-8">
                                                 <input id="course_code" type="text" pattern="[A-Za-z]{4}" class="form-control @error('course_code') is-invalid @enderror" value="{{$course->course_code}}"
@@ -47,7 +59,7 @@
                                         </div>
 
                                         <div class="form-group row">
-                                            <label for="course_num" class="col-md-2 col-form-label text-md-right">Course Number</label>
+                                            <label for="course_num" class="col-md-3 col-form-label text-md-right">Course Number</label>
 
                                             <div class="col-md-8">
                                                 <input id="course_num" type="number" class="form-control @error('course_num') is-invalid @enderror" name="course_num" value="{{$course->course_num}}" required autofocus>
@@ -61,7 +73,7 @@
                                         </div>
 
                                         <div class="form-group row">
-                                            <label for="course_title" class="col-md-2 col-form-label text-md-right">Course Title</label>
+                                            <label for="course_title" class="col-md-3 col-form-label text-md-right">Course Title</label>
 
                                             <div class="col-md-8">
                                                 <input id="course_title" type="text" class="form-control @error('course_title') is-invalid @enderror" name="course_title" value="{{$course->course_title}}" required autofocus>
@@ -75,7 +87,7 @@
                                         </div>
 
                                         <div class="form-group row">
-                                            <label for="course_semester" class="col-md-2 col-form-label text-md-right">Year & Semester</label>
+                                            <label for="course_semester" class="col-md-3 col-form-label text-md-right">Year and Semester</label>
 
                                             <div class="col-md-3">
                                                 <select id="course_semester" class="form-control @error('course_semester') is-invalid @enderror"
@@ -114,13 +126,13 @@
                                         </div>
 
                                         <div class="form-group row">
-                                            <label for="course_section" class="col-md-2 col-form-label text-md-right">Course
+                                            <label for="course_section" class="col-md-3 col-form-label text-md-right">Course
                                                 Section</label>
 
                                             <div class="col-md-4">
                                                 <input id="course_section" type="text"
                                                     class="form-control @error('course_section') is-invalid @enderror"
-                                                    name="course_section" required autofocus>
+                                            name="course_section" value= {{$course->section}} required autofocus>
 
                                                 @error('course_section')
                                                 <span class="invalid-feedback" role="alert">
@@ -131,7 +143,7 @@
                                         </div>
 
                                         <div class="form-group row">
-                                            <label for="delivery_modality" class="col-md-2 col-form-label text-md-right">Delivery Modality</label>
+                                            <label for="delivery_modality" class="col-md-3 col-form-label text-md-right">Delivery Modality</label>
 
                                             <div class="col-md-3 float-right">
                                                 <select id="delivery_modality" class="form-control @error('delivery_modality') is-invalid @enderror"
@@ -270,7 +282,7 @@
                                 </div>
 
                                 <div class="modal-body">
-                                Are you sure you want to delete {{$course->course_code }} {{$course->course_num}} ?
+                                Are you sure you want to delete {{$course->course_code}} {{$course->course_num}} ?
                                 </div>
 
                                 <form action="{{route('courses.destroy', $course->course_id)}}" method="POST">

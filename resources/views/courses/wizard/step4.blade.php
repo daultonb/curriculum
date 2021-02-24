@@ -5,7 +5,7 @@
     <div class="row justify-content-center">
         <div class="col-md-12">
             @include('courses.wizard.header')
-            
+
             <!-- progress bar -->
             <div>
                 <table class="table table-borderless text-center table-sm" style="table-layout: fixed; width: 100%">
@@ -33,7 +33,7 @@
 
                         <tr>
                             <td>Course Learning Outcomes</td>
-                            <td>Student Assesment Methods</td>
+                            <td>Student Assessment Methods</td>
                             <td>Teaching and Learning Activities</td>
                             <td>Course Outcome Mapping</td>
                             <td>Program Outcome Mapping</td>
@@ -44,7 +44,7 @@
             </div>
 
             <div class="card">
-                
+
 
                 <div class="card-body">
 
@@ -52,7 +52,7 @@
                             <div class="col">
 
 
-                                @if(count($l_outcomes)<1) 
+                                @if(count($l_outcomes)<1)
                                     <table class="table table-borderless">
                                         <tr class="table-active">
                                             <th colspan="2">There are no course learning outcomes set for this course.</th>
@@ -61,20 +61,20 @@
 
                                 @else
 
-                                    
+
 
 
                                     <div class="card mt-1">
-                                        @if(count($l_activities)<1 && count($a_methods)<1) 
+                                        @if(count($l_activities)<1 && count($a_methods)<1)
                                             <table class="table table-borderless">
                                                 <tr class="table-active">
                                                     <th colspan="2">There are no teaching/learning activities and assessment methods set for
                                                     this course</th>
                                                 </tr>
                                             </table>
-                                        @else 
-                                            
-                                                
+                                        @else
+
+
                                             <div class="card-body">
                                                 <div class="container mb-3">
                                                     <p class="form-text text-muted">This section is key for the exercise of mapping a course, from a constructive alignment perspective.
@@ -95,9 +95,9 @@
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-                                                            @for($i = 0; $i < count($l_outcomes); $i++) 
+                                                            @for($i = 0; $i < count($l_outcomes); $i++)
                                                                 <tr>
-                                                                    
+
                                                                     <td scope="row"><b>{{$i+1}} .</b> {{$l_outcomes[$i]->l_outcome}}</td>
                                                                     <td>
                                                                         @foreach ($a_methods as $a_method)
@@ -105,7 +105,7 @@
                                                                                 <label class="form-check-label">
                                                                                 <input type="checkbox" class="form-check-input" name="a_methods[{{$l_outcomes[$i]->l_outcome_id}}][]" value="{{$a_method->a_method_id}}"  @if($l_outcomes[$i]->assessmentMethods->contains($a_method->a_method_id)) checked=checked @endif>
                                                                                 {{$a_method->a_method}}
-                                                            
+
                                                                                 </label>
                                                                             </div>
                                                                         @endforeach
@@ -116,31 +116,31 @@
                                                                                 <label class="form-check-label">
                                                                                 <input type="checkbox" class="form-check-input" name="l_activities[{{$l_outcomes[$i]->l_outcome_id}}][]" value="{{$l_activity->l_activity_id}}"  @if($l_outcomes[$i]->learningActivities->contains($l_activity->l_activity_id)) checked=checked @endif>
                                                                                 {{$l_activity->l_activity}}
-                                                            
+
                                                                                 </label>
                                                                             </div>
                                                                             @endforeach
                                                                     </td>
-                                                                    
+
                                                                 </tr>
                                                             @endfor
                                                         </tbody>
                                                     </table>
-                                                
+
                                                     <button type="submit" class="btn btn-primary btn-sm float-right col-2">Save</button>
 
                                                 </form>
                                             </div>
-                                                
-                                            
+
+
                                         @endif
                                     </div>
-                                    
+
 
                                 @endif
-                                    
+
                             </div>
-                            
+
 
                         </div>
 
@@ -159,7 +159,7 @@
 
             </div>
 
-            
+
 
         </div>
     </div>
@@ -168,12 +168,12 @@
 </div>
 <script type="text/javascript">
     $(document).ready(function () {
-  
+
       $("form").submit(function () {
         // prevent duplicate form submissions
         $(this).find(":submit").attr('disabled', 'disabled');
         $(this).find(":submit").html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>');
-  
+
       });
     });
   </script>

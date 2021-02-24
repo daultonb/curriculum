@@ -19,7 +19,7 @@
             </div>
         </div>
 
-        <!-- Modal -->
+        <!-- Create Course Modal -->
         <div class="modal fade" id="createCourseModal" tabindex="-1" role="dialog" aria-labelledby="createCourseModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
@@ -150,7 +150,7 @@
                                 <label for="delivery_modality" class="col-md-3 col-form-label text-md-right">Course
                                     Status</label>
 
-                                <div class="col-md-2 float-right">
+                                <div class="col-md-3 float-right">
                                     <select id="delivery_modality" class="form-control @error('delivery_modality') is-invalid @enderror"
                                     name="delivery_modality" required autofocus>
                                         <option value="O">online</option>

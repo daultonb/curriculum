@@ -34,7 +34,7 @@
 
                         <tr>
                             <td>Course Learning Outcomes</td>
-                            <td>Student Assesment Methods</td>
+                            <td>Student Assessment Methods</td>
                             <td>Teaching and Learning Activities</td>
                             <td>Course Outcome Mapping</td>
                             <td>Program Outcome Mapping</td>

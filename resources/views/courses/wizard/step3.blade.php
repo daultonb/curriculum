@@ -33,7 +33,7 @@
 
                         <tr>
                             <td>Course Learning Outcomes</td>
-                            <td>Student Assesment Methods</td>
+                            <td>Student Assessment Methods</td>
                             <td>Teaching and Learning Activities</td>
                             <td>Course Outcome Mapping</td>
                             <td>Program Outcome Mapping</td>
@@ -67,9 +67,9 @@
 
                                             <tr>
                                                 <td>
-                                                    <input list="" name="l_activity[]" id="l_activity{{$l_activity->l_activity_id}}" form="l_activity_form"
-                                                    class="form-control" type="text" type= "method" placeholder="Choose from the dropdown list or type your own" value="{{$l_activity->l_activity}}" required autofocus style="white-space: pre">
-                                                        <datalist id="l_activities" class="l_activities" >
+                                                    <input list="l_activities{{$l_activity->l_activity_id}}" name="l_activity[]" id="l_activity{{$l_activity->l_activity_id}}" form="l_activity_form" class="form-control" type="text"
+                                                    type= "method" placeholder="Choose from the dropdown list or type your own" value="{{$l_activity->l_activity}}" required autofocus style="white-space: pre">
+                                                        <datalist id="l_activities{{$l_activity->l_activity_id}}" >
                                                             <option value="Discussion">
                                                             <option value="Gallery walk">
                                                             <option value="Group discussion">

@@ -66,6 +66,9 @@ class AssessmentMethodController extends Controller
             }
         }
 
+        //store the custom assessment method
+
+
         foreach ($methods as $method) {
             if($newMethodFlag == true && $i < $size){
                 $am = AssessmentMethod::where('a_method_id', $method_ids[$i])->first();
@@ -89,6 +92,7 @@ class AssessmentMethodController extends Controller
 
         return redirect()->route('courseWizard.step2', $request->input('course_id'));
     }
+
 
     /**
      * Display the specified resource.

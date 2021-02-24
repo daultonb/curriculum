@@ -135,7 +135,7 @@
 
                                             <tr>
                                                 <td><b>TOTAL</b></td>
-                                                <td style="padding-left:20px"><b id="sum">{{$totalWeight}}%</b></td>
+                                                <td style="padding-left:25px"><b id="sum">{{$totalWeight}}%</b></td>
                                             </tr>
 
                                     @endif
@@ -147,7 +147,7 @@
 
                     <form method="POST" id="a_method_form" action="{{ action('AssessmentMethodController@store') }}">
                         @csrf
-                        <button type="submit" class="btn btn-primary mt-3 float-right" id="btnSave" style="margin-right:15px ">
+                        <button type="submit" class="btn btn-primary mt-3 float-right" id="btnSave" style="margin-right:15px; ">
                             Save
                         </button>
                         <input type="hidden" name="course_id" value="{{$course->course_id}}" form="a_method_form">
@@ -182,11 +182,13 @@
 
       });
 
+      //add a new assesment method
       $('#btnAdd').click(function() {
             add();
       });
 
-      $("input[name='weight[]']").on('change', function() {
+      // dynamic update for the total grade
+      $(document).on('change',"input[name='weight[]']", function() {
         var total = calculateTotal();
         $('#sum').text(total + '%');
       });
@@ -201,50 +203,49 @@
                 <td>
                     <input list="a_new_methods`+rowCount+`" name= "a_method[]" id="a_new_method`+rowCount+`" type="text" class="form-control
                     @error('a_method') is-invalid @enderror" name="a_method" form="a_method_form" placeholder="Choose from the dropdown list or type your own" required autofocus>
-                        <datalist id="a_new_methods`+rowCount+`">
-                            <option value="Annotated bibliography">
-                            <option value="Assignment">
-                            <option value="Attendance">
-                            <option value="Brochure, poster">
-                            <option value="Case analysis">
-                            <option value="Debate">
-                            <option value="Diagram/chart">
-                            <option value="Dialogue">
-                            <option value="Essay">
-                            <option value="Exam">
-                            <option value="Fill in the blank test">
-                            <option value="Group discussion">
-                            <option value="Lab/field notes">
-                            <option value="Letter">
-                            <option value="Literature review">
-                            <option value="Mathematical problem">
-                            <option value="Materials and methods plan">
-                            <option value="Multimedia or slide presentation">
-                            <option value="Multiple-choice test">
-                            <option value="News or feature story">
-                            <option value="Oral report">
-                            <option value="Outline">
-                            <option value="Participation">
-                            <option value="Project">
-                            <option value="Project plan">
-                            <option value="Poem">
-                            <option value="Play">
-                            <option value="Quiz">
-                            <option value="Research proposal">
-                            <option value="Review of book, play, exhibit">
-                            <option value="Rough draft or freewrite">
-                            <option value="Social media post">
-                            <option value="Summary">
-                            <option value="Technical or scientific report">
-                            <option value="Term/research paper">
-                            <option value="Thesis statement">
-                        </datalist>
-                        </td>
-                        <td style="display: flex">
-                            <input id="a_new_method_weight`+rowCount+`" type="number" step=".1" form="a_method_form" style="width:auto"
-                            class="form-control @error('weight') is-invalid @enderror" name="weight[]" min="1" max="100" required autofocus>
-                            <label for="a_new_method_weight`+rowCount+`" style="font-size: medium; margin-top:5px;margin-left:5px"><strong>%</strong></label>
-                        </td>
+                    <datalist id="a_new_methods`+rowCount+`">
+                        <option value="Annotated bibliography">
+                        <option value="Assignment">
+                        <option value="Attendance">
+                        <option value="Brochure, poster">
+                        <option value="Case analysis">
+                        <option value="Debate">
+                        <option value="Diagram/chart">
+                        <option value="Dialogue">
+                        <option value="Essay">
+                        <option value="Exam">
+                        <option value="Fill in the blank test">
+                        <option value="Group discussion">
+                        <option value="Lab/field notes">
+                        <option value="Letter">
+                        <option value="Literature review">
+                        <option value="Mathematical problem">
+                        <option value="Materials and methods plan">
+                        <option value="Multimedia or slide presentation">
+                        <option value="Multiple-choice test">
+                        <option value="News or feature story">
+                        <option value="Oral report">
+                        <option value="Outline">
+                        <option value="Participation">
+                        <option value="Project">
+                        <option value="Project plan">
+                        <option value="Poem">
+                        <option value="Play">
+                        <option value="Quiz">
+                        <option value="Research proposal">
+                        <option value="Review of book, play, exhibit">
+                        <option value="Rough draft or freewrite">
+                        <option value="Social media post">
+                        <option value="Summary">
+                        <option value="Technical or scientific report">
+                        <option value="Term/research paper">
+                        <option value="Thesis statement">
+                    </datalist>
+                </td>
+                    <td style="display: flex">
+                        <input id="a_new_method_weight`+rowCount+`" type="number" step=".1" form="a_method_form" style="width:auto"
+                        class="form-control @error('weight') is-invalid @enderror" value = 0 name="weight[]" min="0" max="100" required autofocus>
+                        <label for="a_new_method_weight`+rowCount+`" style="font-size: medium; margin-top:5px;margin-left:5px"><strong>%</strong></label>
                     </td>
                 </tr>`;
             container.prev().after(element);
