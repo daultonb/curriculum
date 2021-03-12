@@ -67,13 +67,13 @@
                                         </tr>
 
 
-                                            @foreach($a_methods as $a_method)
+                                            @foreach($a_methods as $index=>$a_method)
 
                                             <tr>
                                                 <td>
-                                                    <input list="a_methods{{$a_method->a_method_id}}" id="a_method{{$a_method->a_method_id}}" type="text" class="form-control @error('a_method') is-invalid @enderror"
+                                                    <input list="a_methods{{$index}}" id="a_method{{$a_method->a_method_id}}" type="text" class="form-control @error('a_method') is-invalid @enderror"
                                                     name="a_method[]" value = "{{$a_method->a_method}}" placeholder="Choose from the dropdown list or type your own" form="a_method_form" required autofocus>
-                                                    <datalist id="a_methods{{$a_method->a_method_id}}">
+                                                    <datalist id="a_methods{{$index}}" name="a_methods">
                                                         <option value="Annotated bibliography">
                                                         <option value="Assignment">
                                                         <option value="Attendance">
@@ -110,6 +110,13 @@
                                                         <option value="Technical or scientific report">
                                                         <option value="Term/research paper">
                                                         <option value="Thesis statement">
+
+                                                        @if(isset($custom_methods))
+                                                        @foreach($custom_methods as $method)
+                                                            <option value={{$method->custom_methods}}>
+                                                        @endforeach
+                                                        @endif
+
                                                     </datalist>
                                                 </td>
 
@@ -175,6 +182,7 @@
 <script type="text/javascript">
     $(document).ready(function () {
 
+      sortDropdown();
       $("form").submit(function () {
         // prevent duplicate form submissions
         $(this).find(":submit").attr('disabled', 'disabled');
@@ -185,6 +193,10 @@
       //add a new assesment method
       $('#btnAdd').click(function() {
             add();
+            var sortedDropdown = sortDropdown();
+            var rowCount = calculateRow();
+            var datalist = $("#l_activities" + rowCount);
+            datalist.empty().append(sortedDropdown);
       });
 
       // dynamic update for the total grade
@@ -193,17 +205,34 @@
         $('#sum').text(total + '%');
       });
 
+      // Ajax save custom assessment methods
+      $('#btnSave').click(function(){
+          var custom = filterCustom();
+          if(custom.length > 0){
+            $.ajax({
+                type: "POST",
+                url: "/ajax/custom_methods",
+                data: {custom_methods : custom},
+                headers: {
+                    'X-CSRF-Token': '{{ csrf_token() }}',
+                },
+            }).done(function(msg) {
+                console.log(msg);
+            });
+        }
+        });
+
     });
 
+    //Add a new row of assesment method
     function add() {
-        var container = $('#a_method_table').find("tr:last");
-        var rowCount = $('#a_method_table tr').length;
+        var rowCount = calculateRow();
             var element =
             `<tr>
                 <td>
-                    <input list="a_new_methods`+rowCount+`" name= "a_method[]" id="a_new_method`+rowCount+`" type="text" class="form-control
+                    <input list="a_methods`+rowCount+`" name= "a_method[]" id="a_new_method`+rowCount+`" type="text" class="form-control
                     @error('a_method') is-invalid @enderror" name="a_method" form="a_method_form" placeholder="Choose from the dropdown list or type your own" required autofocus>
-                    <datalist id="a_new_methods`+rowCount+`">
+                    <datalist id="a_methods`+rowCount+`" name="a_methods">
                         <option value="Annotated bibliography">
                         <option value="Assignment">
                         <option value="Attendance">
@@ -240,6 +269,13 @@
                         <option value="Technical or scientific report">
                         <option value="Term/research paper">
                         <option value="Thesis statement">
+
+                        @if(isset($custom_methods))
+                        @foreach($custom_methods as $method)
+                            <option value={{$method->custom_methods}}>
+                        @endforeach
+                        @endif
+
                     </datalist>
                 </td>
                     <td style="display: flex">
@@ -248,15 +284,91 @@
                         <label for="a_new_method_weight`+rowCount+`" style="font-size: medium; margin-top:5px;margin-left:5px"><strong>%</strong></label>
                     </td>
                 </tr>`;
-            container.prev().after(element);
+
+            if($('#sum').length === 0){
+                var container = $('#a_method_table');
+                container.append(element);
+            }else{
+                var container = $('#a_method_table').find("tr:last");
+                container.prev().after(element);
+            }
     }
 
+
+    // Dynamic finds total
     function calculateTotal() {
         var sum = 0;
         $("input[name = 'weight[]']").each(function() {
             sum += Number($(this).val());
         });
         return sum;
+    }
+
+    //Calculate the row count
+    function calculateRow() {
+        var rowCount;
+        if(document.getElementById("sum") !== null){
+            rowCount = $('#a_method_table tr').length-2;
+        }else{
+            rowCount = $('#a_method_table tr').length-1;
+        }
+        return rowCount;
+    }
+
+    //  Finds all custom user learning activites
+    function filterCustom(){
+        var custom = [];
+        var inputArray = $('input[name^="a_method[]"]').map(function(idx,elem){
+            return $(elem).val();
+        }).get();
+
+        var datalist = $('datalist[name^="a_methods"]:first option').map(function(idx,elem){
+            return $(elem).val();
+        }).get();
+
+        for(var i=0;i<inputArray.length;i++){
+            if(!datalist.includes(inputArray[i])){
+                custom.push(inputArray[i]);
+            }
+        }
+        return custom;
+    }
+
+
+    // Sort drop alphabeticlly
+    function sortDropdown(){
+        var datalist = $('datalist[name^="a_methods"]:first option').map(function(idx,elem){
+            return $(elem).val();
+        }).get();
+
+        var sortedDropdown = [];
+        var sortedDatalist = sort(datalist);
+        for(var i =0, n = sortedDatalist.length;i<n;i++){
+            sortedDropdown.push("<option value='" + sortedDatalist[i] + "'>")
+        }
+
+        var rowCount;
+        if(document.getElementById("sum") !== null){
+            rowCount = $('#a_method_table tr').length-2;
+        }else{
+            rowCount = $('#a_method_table tr').length-1;
+        }
+
+        sortedDropdown.join();
+
+        for(var i = 0;i<rowCount;i++) {
+            var datalist = $("#a_methods" + i);
+            datalist.empty().append(sortedDropdown);
+        }
+    }
+
+    function sort(datalist) {
+        datalist.sort(function(string_1,string_2) {
+            if(string_1 < string_2){return -1;}
+            if(string_1 > string_2){return 1;}
+            return 0;
+        });
+        return datalist;
     }
 
   </script>

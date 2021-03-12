@@ -89,7 +89,7 @@
                                                     <table class="table table-bordered" style="table-layout: fixed; width: 100%">
                                                         <thead>
                                                             <tr>
-                                                                <th>Course Learning Outcomes or Comptencies</th>
+                                                                <th>Course Learning Outcomes or Competencies</th>
                                                                 <th>Student Assessment Methods</th>
                                                                 <th>Teaching and Learning Activities</th>
                                                             </tr>

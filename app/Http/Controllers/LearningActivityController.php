@@ -48,8 +48,6 @@ class LearningActivityController extends Controller
 
         $course_id = $request->input('course_id');
         $activities = $request->input('l_activity');
-        return $activities;
-
         $existFlag = false;
 
         if($activities_id = $request->input('l_activity_id')){
@@ -77,7 +75,6 @@ class LearningActivityController extends Controller
 
         return redirect()->route('courseWizard.step3', $request->input('course_id'));
     }
-
 
     /**
      * Display the specified resource.

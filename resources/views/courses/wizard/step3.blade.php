@@ -63,13 +63,13 @@
                                             <th colspan="2">Teaching and Learning Activities</th>
                                         </tr>
 
-                                            @foreach($l_activities as $l_activity)
+                                            @foreach($l_activities as $index => $l_activity)
 
                                             <tr>
                                                 <td>
-                                                    <input list="l_activities{{$l_activity->l_activity_id}}" name="l_activity[]" id="l_activity{{$l_activity->l_activity_id}}" form="l_activity_form" class="form-control" type="text"
+                                                    <input list="l_activities{{$index}}" name="l_activity[]" id="l_activity{{$l_activity->l_activity_id}}" form="l_activity_form" class="form-control" type="text"
                                                     type= "method" placeholder="Choose from the dropdown list or type your own" value="{{$l_activity->l_activity}}" required autofocus style="white-space: pre">
-                                                        <datalist id="l_activities{{$l_activity->l_activity_id}}" >
+                                                        <datalist id="l_activities{{$index}}" name="l_activities" >
                                                             <option value="Discussion">
                                                             <option value="Gallery walk">
                                                             <option value="Group discussion">
@@ -94,6 +94,12 @@
                                                             <option value="Think-pair-share">
                                                             <option value="Tutorial">
                                                             <option value="Venn diagram">
+
+                                                            @if(isset($custom_activities))
+                                                            @foreach($custom_activities as $activity)
+                                                                <option value={{$activity->custom_activities}}>
+                                                            @endforeach
+                                                            @endif
                                                         </datalist>
                                                     </td>
 
@@ -125,6 +131,8 @@
                         <input type="hidden" name="course_id" value="{{$course->course_id}}" form="l_activity_form">
                     </form>
 
+                    <button id="btnTest">Sort</button>
+
                     <button type="button" class="btn btn-primary btn-sm col-3 mt-3 float-left" id="btnAdd" style="margin-left: 12px">
                         ＋ Add Teaching and Learning Activity
                     </button>
@@ -145,9 +153,9 @@
 </div>
 
 <script>
-
     $(document).ready(function () {
 
+     sortDropdown();
       $("form").submit(function () {
         // prevent duplicate form submissions
         $(this).find(":submit").attr('disabled', 'disabled');
@@ -155,21 +163,44 @@
 
       });
 
+      //add a new learning outcomes
       $('#btnAdd').click(function() {
-            add();
+        add();
+        var sortedDropdown = sortDropdown();
+        var rowCount = $('#l_activity_table tr').length - 2;
+        var datalist = $("#l_activities" + rowCount);
+        datalist.empty().append(sortedDropdown);
       });
+
+      // Ajax save custom learning activities
+      $('#btnSave').click(function(){
+          var custom = filterCustom();
+          if(custom.length > 0){
+            $.ajax({
+                type: "POST",
+                url: "/ajax/custom_activities",
+                data: {custom_activities : custom},
+                headers: {
+                    'X-CSRF-Token': '{{ csrf_token() }}',
+                },
+            }).done(function(msg) {
+                console.log(msg);
+            });
+        }
+        });
 
     });
 
+    //Add a new row of assesment method
     function add() {
         var container = $('#l_activity_table');
-        var rowCount = $('#l_activity_table tr').length;
+        var rowCount = $('#l_activity_table tr').length - 1;
             var element =
             `<tr>
                 <td>
-                    <input list="l_new_activities`+ rowCount +`" name="l_activity[]" id="l_new_activity`+ rowCount +` " form="l_activity_form"
+                    <input list="l_activities`+ rowCount +`" name="l_activity[]" id="l_new_activity`+ rowCount +` " form="l_activity_form"
                     type="text" class="form-control" required autofocus placeholder="Choose from the dropdown list or type your own">
-                        <datalist id="l_new_activities`+ rowCount +`">
+                        <datalist id="l_activities`+ rowCount +`" name="l_activities">
                             <option value="Discussion">
                             <option value="Gallery walk">
                             <option value="Group discussion">
@@ -194,10 +225,68 @@
                             <option value="Think-pair-share">
                             <option value="Tutorial">
                             <option value="Venn diagram">
+
+                            @if(isset($custom_activities))
+                            @foreach($custom_activities as $activity)
+                                <option value={{$activity->custom_activities}}>
+                            @endforeach
+                            @endif
                         </datalist>
                     </td>
                 </tr>`;
+
             container.append(element);
+    }
+
+    //  Finds all custom user learning activites
+    function filterCustom(){
+        var custom = [];
+
+        var inputArray = $('input[name^="l_activity[]"]').map(function(idx,elem){
+            return $(elem).val();
+        }).get();
+
+        var datalist = $('datalist[name^="l_activities"]:first option').map(function(idx,elem){
+            return $(elem).val();
+        }).get();
+
+        for(var i=0;i<inputArray.length;i++){
+            if(!datalist.includes(inputArray[i])){
+                custom.push(inputArray[i]);
+            }
+        }
+        return custom;
+    }
+
+
+    // Sort drop alphabeticlly
+    function sortDropdown(){
+        var datalist = $('datalist[name^="l_activities"]:first option').map(function(idx,elem){
+            return $(elem).val();
+        }).get();
+
+        var sortedDropdown = [];
+        var sortedDatalist = sort(datalist);
+        for(var i =0, n = sortedDatalist.length;i<n;i++){
+            sortedDropdown.push("<option value='" + sortedDatalist[i] + "'>")
+        }
+
+        var rowCount = $('#l_activity_table tr').length - 1;
+        sortedDropdown.join();
+
+        for(var i = 0;i<rowCount;i++) {
+            var datalist = $("#l_activities" + i);
+            datalist.empty().append(sortedDropdown);
+        }
+    }
+
+    function sort(datalist) {
+        datalist.sort(function(string_1,string_2) {
+            if(string_1 < string_2){return -1;}
+            if(string_1 > string_2){return 1;}
+            return 0;
+        });
+        return datalist;
     }
 
 

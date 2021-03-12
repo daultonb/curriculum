@@ -10921,8 +10921,8 @@ input::-webkit-calendar-picker-indicator {
 .flex-container > div {
     font-size: 13px;
     flex: 0 1 calc(16.66% - 8px);
-    margin: 3px;
-    padding: 5px;
+    margin: 3.8px;
+    padding: 7px;
     text-align: left;
 }
 
@@ -10982,5 +10982,9 @@ datalist {
     position:absolute;
     background-color: lightgrey;
     font-family: sans-serif;
+}
+
+.vertical{
+    writing-mode: vertical-rl;
 }
 

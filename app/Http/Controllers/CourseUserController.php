@@ -24,7 +24,7 @@ class CourseUserController extends Controller
     {
         $this->middleware(['auth', 'verified']);
     }
-    
+
     public function index()
     {
         //
@@ -45,15 +45,17 @@ class CourseUserController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
-     */ 
+     */
     public function store(Request $request, $course_id)
     {
         //
-        
-        $this->validate($request, [
+
+        $validator = $this->validate($request, [
             'email'=> 'required',
             'email'=> 'exists:users,email',
             ]);
+
+
 
         $course = Course::where('course_id',$course_id)->first();
         $user = User::where('email', $request->input('email'))->first();
@@ -68,10 +70,10 @@ class CourseUserController extends Controller
             ['course_id' => $course_id , 'user_id' => $user->id ]
         );
 
-         
+
         if($course->save()){
             Mail::to($user->email)->send(new NotifyInstructorMail());
-        
+
             $request->session()->flash('success', 'Course '.$course->course_code.''.$course->course_num.' successfully assigned to '.$user->email);
         }else{
             $request->session()->flash('error', 'There was an error assigning the course');
@@ -83,10 +85,10 @@ class CourseUserController extends Controller
         if($course->type == "assigned"){
             return redirect()->route('programWizard.step3', $request->input('program_id'));
         }else{
-            return redirect()->back();   
+            return redirect()->back();
         }
 
-        
+
     }
 
     /**
@@ -121,7 +123,7 @@ class CourseUserController extends Controller
     public function update(Request $request, CourseUser $courseUser)
     {
         //
-        
+
     }
 
     /**
@@ -133,11 +135,11 @@ class CourseUserController extends Controller
     public function destroy(Request $request, $course_id)
     {
         //
-        
+
         $course = Course::where('course_id',$course_id)->first();
-        
+
         $user = User::where('email', $request->input('email'))->first();
-        
+
         $courseUser = CourseUser::where('course_id', $course_id)->where('user_id',$user->id);
 
         if($courseUser->delete()){
@@ -156,7 +158,7 @@ class CourseUserController extends Controller
         if($course->type == "assigned"){
             return redirect()->route('programWizard.step3', $request->input('program_id'));
         }else{
-            return redirect()->back();   
+            return redirect()->back();
         }
 
     }

@@ -18,6 +18,7 @@ class UpdateCoursesTable extends Migration
             $table->char('semester')->length(2)->after('course_num');
             $table->integer('year')->length(4)->after('course_num');
             $table->char('delivery_modality')->length(1)->after('course_num');
+            $table->string('course_num')->length(30)->change();
         });
     }
 
@@ -33,6 +34,7 @@ class UpdateCoursesTable extends Migration
             $table->dropColumn('semester');
             $table->dropColumn('year');
             $table->dropColumn('delivery_modality');
+            $table->unsignedBigInteger('course_num')->change();
         });
     }
 }

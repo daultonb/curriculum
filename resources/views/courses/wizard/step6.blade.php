@@ -45,9 +45,13 @@
 
             <div class="card ">
 
-                <a href="{{route('courses.pdf', $course->course_id)}}">
-                    <button class="btn btn-sm btn-primary mt-3 mb-3 col-3 float-right mr-5"> Download PDF ⭳ </button>
-                </a>
+                <div>
+                    <a href="{{route('courses.pdf', $course->course_id)}}">
+                        <button class="btn btn-sm btn-primary mt-3 mb-3 col-3 float-right mr-5" onclick="{{route('courses.pdf', $course->course_id)}}">
+                            Download PDF ⭳
+                        </button>
+                    </a>
+                </div>
 
                 <p class="ml-5 mr-5 form-text text-muted">You	can	review	and	download the answers you entered during	the	process	of	mapping
                     the	course.	Based on this review, you might	want to	revisit	some steps	and	edit the

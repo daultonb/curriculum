@@ -57,6 +57,7 @@ class AssessmentMethodController extends Controller
             $newMethodFlag = true;
         }
 
+        /*
         $sum = 0;
         foreach($weights as $weight) {
             $sum += $weight;
@@ -65,7 +66,7 @@ class AssessmentMethodController extends Controller
                 return redirect()->route('courseWizard.step2', $request->input('course_id'))->with('error', 'The total weight of all assessments will exceed 100%');
             }
         }
-
+        */
         //store the custom assessment method
 
 
