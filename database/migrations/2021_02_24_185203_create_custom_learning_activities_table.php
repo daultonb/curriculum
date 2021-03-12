@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateCustomAssesmentMethods extends Migration
+class CreateCustomLearningActivitiesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,10 @@ class CreateCustomAssesmentMethods extends Migration
      */
     public function up()
     {
-        Schema::create('custom_assesment_methods', function (Blueprint $table) {
-            $table->string('a_custom_method');
-            $table->unsignedBigInteger('user_id');
+        Schema::create('custom_learning_activities', function (Blueprint $table) {
+            $table->bigIncrements('custom_activity_id');
+            $table->string('custom_activities');
             $table->timestamps();
-
-
         });
     }
 
@@ -29,6 +27,6 @@ class CreateCustomAssesmentMethods extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('custom_assesment_methods');
+        Schema::dropIfExists('custom_learning_activities');
     }
 }

@@ -8896,21 +8896,33 @@
                                     <th style="background-color: #e3e3e3;" class="table-light" colspan="{{count($pl_outcomes)}}">Program Learning Outcomes</th>
                                 </tr>
                                 <tr>
-                                    <td style="height:50px"></td>
+                                    <td style="max-width:0; height: 50px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"></td>
                                     @for($i = 0; $i < count($pl_outcomes); $i++)
-                                        <td>
-                                            PLO {{$i+1}}
-                                        </td>
 
-                                    @endfor
+                                    <td style="height:0; vertical-align: bottom; text-align: left;">
+                                        <span style="writing-mode: vertical-rl;">
+                                            @if(isset($pl_outcomes[$i]->plo_shortphrase))
+                                                {{$pl_outcomes[$i]->plo_shortphrase}}
+                                            @else
+                                                PLO {{$i+1}}
+                                            @endif
+
+                                        </span>
+                                    </td>
+
+                                @endfor
                                 </tr>
 
                                 @for($i = 0; $i < count($l_outcomes); $i++)
                                     <tr>
-                                        <td style="height:50px">
-
-                                            CLO {{$i+1}}
-
+                                        <td style="max-width:0; height: 50px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                                            <span>
+                                            @if(isset($l_outcomes[$i]->clo_shortphrase))
+                                                {{$i+1}}. {{$l_outcomes[$i]->clo_shortphrase}}
+                                            @else
+                                                CLO {{$i+1}}
+                                            @endif
+                                            </span>
                                         </td>
 
                                         @for($j = 0; $j < count($pl_outcomes); $j++)

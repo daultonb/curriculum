@@ -62,7 +62,7 @@
                                             <label for="course_num" class="col-md-3 col-form-label text-md-right">Course Number</label>
 
                                             <div class="col-md-8">
-                                                <input id="course_num" type="number" class="form-control @error('course_num') is-invalid @enderror" name="course_num" value="{{$course->course_num}}" required autofocus>
+                                                <input id="course_num" type="text" class="form-control @error('course_num') is-invalid @enderror" name="course_num" value="{{$course->course_num}}" required autofocus>
 
                                                 @error('course_num')
                                                     <span class="invalid-feedback" role="alert">
@@ -92,10 +92,10 @@
                                             <div class="col-md-3">
                                                 <select id="course_semester" class="form-control @error('course_semester') is-invalid @enderror"
                                                     name="course_semester" required autofocus>
-                                                    <option value="W1">Winter Term 1</option>
-                                                    <option value="W2">Winter Term 2</option>
-                                                    <option value="S1">Summer Term 1</option>
-                                                    <option value="S2">Summer Term 2</option>
+                                                    <option @if($course->semester === "W1") selected @endif value="W1">Winter Term 1</option>
+                                                    <option @if($course->semester === "W2") selected @endif value="W2">Winter Term 2</option>
+                                                    <option @if($course->semester === "S1") selected @endif value="S1">Summer Term 1</option>
+                                                    <option @if($course->semester === "S2") selected @endif value="S2">Summer Term 2</option>
 
                                                 @error('course_semester')
                                                 <span class="invalid-feedback" role="alert">
@@ -108,12 +108,11 @@
                                             <div class="col-md-2 float-right">
                                                 <select id="course_year" class="form-control @error('course_year') is-invalid @enderror"
                                                 name="course_year" required autofocus>
-                                                    <option value="2021">2021</option>
-                                                    <option value="2020">2020</option>
-                                                    <option value="2019">2019</option>
-                                                    <option value="2018">2018</option>
-                                                    <option value="2017">2017</option>
-                                                    <option value="2016">2016</option>
+                                                    <option @if($course->year === 2021) selected @endif value="2021">2021</option>
+                                                    <option @if($course->year === 2020) selected @endif value="2020">2020</option>
+                                                    <option @if($course->year === 2019) selected @endif value="2019">2019</option>
+                                                    <option @if($course->year === 2018) selected @endif value="2018">2018</option>
+                                                    <option @if($course->year === 2017) selected @endif value="2017">2017</option>
 
                                                 @error('course_year')
                                                 <span class="invalid-feedback" role="alert">
@@ -132,7 +131,7 @@
                                             <div class="col-md-4">
                                                 <input id="course_section" type="text"
                                                     class="form-control @error('course_section') is-invalid @enderror"
-                                            name="course_section" value= {{$course->section}} required autofocus>
+                                            name="course_section" required autofocus value= {{$course->section}}>
 
                                                 @error('course_section')
                                                 <span class="invalid-feedback" role="alert">
@@ -148,9 +147,9 @@
                                             <div class="col-md-3 float-right">
                                                 <select id="delivery_modality" class="form-control @error('delivery_modality') is-invalid @enderror"
                                                 name="delivery_modality" required autofocus>
-                                                    <option value="O">online</option>
-                                                    <option value="I">in-person</option>
-                                                    <option value="B">blended</option>
+                                                    <option @if($course->delivery_modality === 'O') selected @endif value="O">online</option>
+                                                    <option @if($course->delivery_modality === 'I') selected @endif value="I">in-person</option>
+                                                    <option @if($course->delivery_modality === 'B') selected @endif value="B">blended</option>
 
                                                 @error('delivery_modality')
                                                 <span class="invalid-feedback" role="alert">
@@ -193,7 +192,8 @@
                                 </div>
                                 <div class="card-body">
                                     <p class="form-text text-muted">Collaborators can see and edit the course. Collaborators must first register with this web application to be added to a course.
-                                        By adding a collaborator, a verification email will be sent to their email address.
+                                        By adding a collaborator, a verification email will be sent to their email address.If your collaborator is not registered with this web yet,
+                                        use the "Registration invite" feature to invite them. <a href="{{ url('/invite') }}">re-direct htere</a>
                                         </p>
 
                                     <table class="table table-borderless">

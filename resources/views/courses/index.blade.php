@@ -61,7 +61,7 @@
                                     Number</label>
 
                                 <div class="col-md-8">
-                                    <input id="course_num" type="number"
+                                    <input id="course_num" type="text"
                                         class="form-control @error('course_num') is-invalid @enderror" name="course_num"
                                         required autofocus>
 
@@ -147,8 +147,9 @@
                             </div>
 
                             <div class="form-group row">
-                                <label for="delivery_modality" class="col-md-3 col-form-label text-md-right">Course
-                                    Status</label>
+                                <label for="delivery_modality" class="col-md-3 col-form-label text-md-right">
+                                    Delivery Modality
+                                </label>
 
                                 <div class="col-md-3 float-right">
                                     <select id="delivery_modality" class="form-control @error('delivery_modality') is-invalid @enderror"

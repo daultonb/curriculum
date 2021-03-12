@@ -1,7 +1,9 @@
 <?php
 
+use App\Models\Invite;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
+use App\Mail\Invitation;
 
 /*
 |--------------------------------------------------------------------------
@@ -35,11 +37,14 @@ Route::get('/courses/{course}/summary','CourseController@show')->name('courses.s
 Route::post('/courses/{course}/outcomeDetails','CourseController@outcomeDetails')->name('courses.outcomeDetails');
 Route::get('/courses/{course}/pdf','CourseController@pdf')->name('courses.pdf');
 
+
 Route::resource('/lo','LearningOutcomeController')->only(['store','update','edit', 'destroy']);
 
 Route::resource('/plo','ProgramLearningOutcomeController');
 
 Route::resource('/la','LearningActivityController');
+Route::post('/ajax/custom_activities','CustomLearningActivitiesController@store' );
+Route::post('/ajax/custom_methods','CustomAssessmentMethodsController@store' );
 
 Route::resource('/am','AssessmentMethodController');
 
@@ -65,5 +70,15 @@ Route::get('/courseWizard/{course}/step3','CourseWizardController@step3')->name(
 Route::get('/courseWizard/{course}/step4','CourseWizardController@step4')->name('courseWizard.step4');
 Route::get('/courseWizard/{course}/step5','CourseWizardController@step5')->name('courseWizard.step5');
 Route::get('/courseWizard/{course}/step6','CourseWizardController@step6')->name('courseWizard.step6');
+
+// invatation route
+Route::get('/invite', 'InviteController@requestInvitation')->name('requestInvitation');
+
+Route::get('/inviteMail',function(){
+    return new Invitation();
+});
+
+Route::post('/invitations','InviteController@store')->name('storeInvitation');
+
 
 Auth::routes();

@@ -11,6 +11,8 @@ use App\Models\ProgramLearningOutcome;
 use App\Models\Course;
 use App\Models\LearningOutcome;
 use App\Models\AssessmentMethod;
+use App\Models\Custom_assessment_methods;
+use App\Models\Custom_learning_activities;
 use App\Models\OutcomeAssessment;
 use App\Models\LearningActivity;
 use App\Models\OutcomeActivity;
@@ -29,17 +31,17 @@ class CourseWizardController extends Controller
 
     // public function step0($course_id)
     // {
-       
+
     //     $course =  Course::where('course_id', $course_id)->first();
     //     $user = User::where('id',Auth::id())->first();
     //     $courseUsers = Course::join('course_users','courses.course_id',"=","course_users.course_id")
     //                             ->join('users','course_users.user_id',"=","users.id")
     //                             ->select('users.email')
     //                             ->where('courses.course_id','=',$course_id)->get();
-        
+
 
     //     return view('courses.wizard.step0')->with('course', $course)->with('courseUsers', $courseUsers)->with('user', $user);
-        
+
     // }
 
 
@@ -75,11 +77,11 @@ class CourseWizardController extends Controller
 
         return view('courses.wizard.step1')->with('l_outcomes', $l_outcomes)->with('course', $course)->with('courseUsers', $courseUsers)->with('user', $user)
                                         ->with('lo_count',$lo_count)->with('am_count', $am_count)->with('la_count', $la_count)->with('oAct', $oAct)->with('oAss', $oAss)->with('outcomeMaps', $outcomeMaps);
-        
+
     }
 
     public function step2($course_id)
-    {   
+    {
         //for header
         $user = User::where('id',Auth::id())->first();
         $courseUsers = Course::join('course_users','courses.course_id',"=","course_users.course_id")
@@ -103,27 +105,28 @@ class CourseWizardController extends Controller
                                 ->join('learning_outcomes', 'outcome_maps.l_outcome_id', '=', 'learning_outcomes.l_outcome_id' )
                                 ->select('outcome_maps.map_scale_value','outcome_maps.pl_outcome_id','program_learning_outcomes.pl_outcome','outcome_maps.l_outcome_id', 'learning_outcomes.l_outcome')
                                 ->where('learning_outcomes.course_id','=',$course_id)->count();
-        
+
         //
         $a_methods = AssessmentMethod::where('course_id', $course_id)->get();
+        $custom_methods = Custom_assessment_methods::select('custom_methods')->get();
         $totalWeight = AssessmentMethod::where('course_id', $course_id)->sum('weight');
         $course =  Course::where('course_id', $course_id)->first();
 
-        return view('courses.wizard.step2')->with('a_methods', $a_methods)->with('course', $course)->with("totalWeight", $totalWeight)->with('courseUsers', $courseUsers)->with('user', $user)
+        return view('courses.wizard.step2')->with('a_methods', $a_methods)->with('course', $course)->with("totalWeight", $totalWeight)->with('courseUsers', $courseUsers)->with('user', $user)->with('custom_methods',$custom_methods)
                                         ->with('lo_count',$lo_count)->with('am_count', $am_count)->with('la_count', $la_count)->with('oAct', $oAct)->with('oAss', $oAss)->with('outcomeMaps', $outcomeMaps);
-        
-        
+
+
     }
 
     public function step3($course_id)
-    {   
+    {
         //for header
         $user = User::where('id',Auth::id())->first();
         $courseUsers = Course::join('course_users','courses.course_id',"=","course_users.course_id")
                                 ->join('users','course_users.user_id',"=","users.id")
                                 ->select('users.email')
                                 ->where('courses.course_id','=',$course_id)->get();
-        
+
         //for progress bar
         $lo_count = LearningOutcome::where('course_id', $course_id)->count();
         $am_count = AssessmentMethod::where('course_id', $course_id)->count();
@@ -143,11 +146,12 @@ class CourseWizardController extends Controller
         //
 
         $l_activities = LearningActivity::where('course_id', $course_id)->get();
+        $custom_activities = Custom_learning_activities::select('custom_activities')->get();
         $course =  Course::where('course_id', $course_id)->first();
 
-        return view('courses.wizard.step3')->with('l_activities', $l_activities)->with('course', $course)->with('courseUsers', $courseUsers)->with('user', $user)
+        return view('courses.wizard.step3')->with('l_activities', $l_activities)->with('course', $course)->with('courseUsers', $courseUsers)->with('user', $user)->with('custom_activities',$custom_activities)
                                         ->with('lo_count',$lo_count)->with('am_count', $am_count)->with('la_count', $la_count)->with('oAct', $oAct)->with('oAss', $oAss)->with('outcomeMaps', $outcomeMaps);
-        
+
     }
 
     public function step4($course_id)
@@ -174,7 +178,7 @@ class CourseWizardController extends Controller
                                 ->join('learning_outcomes', 'outcome_maps.l_outcome_id', '=', 'learning_outcomes.l_outcome_id' )
                                 ->select('outcome_maps.map_scale_value','outcome_maps.pl_outcome_id','program_learning_outcomes.pl_outcome','outcome_maps.l_outcome_id', 'learning_outcomes.l_outcome')
                                 ->where('learning_outcomes.course_id','=',$course_id)->count();
-        
+
         //
         $l_outcomes = LearningOutcome::where('course_id', $course_id)->get();
         $course =  Course::where('course_id', $course_id)->first();
@@ -193,7 +197,7 @@ class CourseWizardController extends Controller
                                 ->join('users','course_users.user_id',"=","users.id")
                                 ->select('users.email')
                                 ->where('courses.course_id','=',$course_id)->get();
-        
+
         //for progress bar
         $lo_count = LearningOutcome::where('course_id', $course_id)->count();
         $am_count = AssessmentMethod::where('course_id', $course_id)->count();
@@ -210,7 +214,7 @@ class CourseWizardController extends Controller
                                 ->join('learning_outcomes', 'outcome_maps.l_outcome_id', '=', 'learning_outcomes.l_outcome_id' )
                                 ->select('outcome_maps.map_scale_value','outcome_maps.pl_outcome_id','program_learning_outcomes.pl_outcome','outcome_maps.l_outcome_id', 'learning_outcomes.l_outcome')
                                 ->where('learning_outcomes.course_id','=',$course_id)->count();
-        
+
         //
         $l_outcomes = LearningOutcome::where('course_id', $course_id)->get();
         $course =  Course::where('course_id', $course_id)->first();
@@ -219,21 +223,21 @@ class CourseWizardController extends Controller
         $mappingScales = MappingScale::join('mapping_scale_programs', 'mapping_scales.map_scale_id', "=", 'mapping_scale_programs.map_scale_id')
                             ->where('mapping_scale_programs.program_id', $course->program_id)->get();
 
-        
+
 
         return view('courses.wizard.step5')->with('l_outcomes', $l_outcomes)->with('course', $course)->with('pl_outcomes',$pl_outcomes)->with('mappingScales', $mappingScales)->with('courseUsers', $courseUsers)->with('user', $user)
                                         ->with('lo_count',$lo_count)->with('am_count', $am_count)->with('la_count', $la_count)->with('oAct', $oAct)->with('oAss', $oAss)->with('outcomeMaps', $outcomeMaps);
     }
 
     public function step6($course_id)
-    {   
+    {
         //for header
         $user = User::where('id',Auth::id())->first();
         $courseUsers = Course::join('course_users','courses.course_id',"=","course_users.course_id")
                                 ->join('users','course_users.user_id',"=","users.id")
                                 ->select('users.email')
                                 ->where('courses.course_id','=',$course_id)->get();
-        
+
         //for progress bar
         $lo_count = LearningOutcome::where('course_id', $course_id)->count();
         $am_count = AssessmentMethod::where('course_id', $course_id)->count();
@@ -277,7 +281,7 @@ class CourseWizardController extends Controller
                                 ->join('learning_outcomes', 'outcome_maps.l_outcome_id', '=', 'learning_outcomes.l_outcome_id' )
                                 ->select('outcome_maps.map_scale_value','outcome_maps.pl_outcome_id','program_learning_outcomes.pl_outcome','outcome_maps.l_outcome_id', 'learning_outcomes.l_outcome')
                                 ->where('learning_outcomes.course_id','=',$course_id)->get();
-        
+
 
         return view('courses.wizard.step6')->with('course', $course)
                                         ->with('program', $program)
@@ -304,7 +308,7 @@ class CourseWizardController extends Controller
     //     $course =  Course::where('course_id', $course_id)->first();
 
     //     return view('courses.wizard.step7')->with('course', $course)->with('courseUsers', $courseUsers)->with('user', $user);
-                                        
+
     // }
 
 
@@ -337,7 +341,7 @@ class CourseWizardController extends Controller
     public function store(Request $request)
     {
         //
-        
+
     }
 
     /**
