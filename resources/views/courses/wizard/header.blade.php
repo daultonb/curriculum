@@ -192,7 +192,8 @@
                                 </div>
                                 <div class="card-body">
                                     <p class="form-text text-muted">Collaborators can see and edit the course. Collaborators must first register with this web application to be added to a course.
-                                        By adding a collaborator, a verification email will be sent to their email address.If your collaborator is not registered with this web yet,
+                                        By adding a collaborator, a verification email will be sent to their email address.
+                                        If your collaborator is not registered with this website yet,
                                         use the "Registration invite" feature to invite them. <a href="{{ url('/invite') }}">re-direct htere</a>
                                         </p>
 

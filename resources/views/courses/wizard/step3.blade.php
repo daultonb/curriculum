@@ -131,8 +131,6 @@
                         <input type="hidden" name="course_id" value="{{$course->course_id}}" form="l_activity_form">
                     </form>
 
-                    <button id="btnTest">Sort</button>
-
                     <button type="button" class="btn btn-primary btn-sm col-3 mt-3 float-left" id="btnAdd" style="margin-left: 12px">
                         ＋ Add Teaching and Learning Activity
                     </button>
@@ -282,8 +280,8 @@
 
     function sort(datalist) {
         datalist.sort(function(string_1,string_2) {
-            if(string_1 < string_2){return -1;}
-            if(string_1 > string_2){return 1;}
+            if(string_1.toLowerCase() < string_2.toLowerCase()){return -1;}
+            if(string_1.toLowerCase() > string_2.toLowerCase()){return 1;}
             return 0;
         });
         return datalist;

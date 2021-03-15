@@ -1,9 +1,8 @@
 @component('mail::message')
 
-# You have been assigned a course to map
+# You have been assigned as a collaborator to a  course.
 
-A fellow instructor has assigned a course to you through the UBC Curriculum Alignment Tool. Please log in to see the course and make edits under the “My Courses” section.
-
+Please log in to see and edit the course/prgram by clicking on th below button.
 @component('mail::button', ['url' => 'https://curriculum.ok.ubc.ca/login'])
 Log In
 @endcomponent

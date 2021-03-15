@@ -364,8 +364,8 @@
 
     function sort(datalist) {
         datalist.sort(function(string_1,string_2) {
-            if(string_1 < string_2){return -1;}
-            if(string_1 > string_2){return 1;}
+            if(string_1.toLowerCase() < string_2.toLowerCase()){return -1;}
+            if(string_1.toLowerCase() > string_2.toLowerCase()){return 1;}
             return 0;
         });
         return datalist;
