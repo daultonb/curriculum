@@ -135,7 +135,6 @@
                     <button type="button" class="btn btn-primary btn-sm col-3 mt-3 float-left" id="btnAdd" style="margin-left: 12px">
                         ＋ Add Teaching and Learning Activity
                     </button>
-
                 </div>
 
                 <div class="card-footer">

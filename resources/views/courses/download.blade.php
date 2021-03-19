@@ -8603,7 +8603,7 @@
             <h1>Course Summary</h1>
             <p><b>Course: {{$course->year}} {{$course->semester}} {{$course->course_code}}{{$course->course_num}} {{$course->section}}
             - {{$course->course_title}}</b></p>
-            <p><b>Delivery_modality:
+            <p><b>Delivery modality:
             @switch($course->delivery_modality)
                 @case('O')
                     Online
