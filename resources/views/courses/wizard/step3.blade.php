@@ -68,7 +68,8 @@
                                             <tr>
                                                 <td>
                                                     <input list="l_activities{{$index}}" name="l_activity[]" id="l_activity{{$l_activity->l_activity_id}}" form="l_activity_form" class="form-control" type="text"
-                                                    type= "method" placeholder="Choose from the dropdown list or type your own" value="{{$l_activity->l_activity}}" required autofocus style="white-space: pre">
+                                                    type= "method" placeholder="Choose from the dropdown list or type your own" value="{{$l_activity->l_activity}}" required autofocus style="white-space: pre"
+                                                    spellcheck="true">
                                                         <datalist id="l_activities{{$index}}" name="l_activities" >
                                                             <option value="Discussion">
                                                             <option value="Gallery walk">
@@ -198,7 +199,7 @@
                 <td>
                     <input list="l_activities`+ rowCount +`" name="l_activity[]" id="l_new_activity`+ rowCount +` " form="l_activity_form"
                     type="text" class="form-control" required autofocus placeholder="Choose from the dropdown list or type your own">
-                        <datalist id="l_activities`+ rowCount +`" name="l_activities">
+                        <datalist id="l_activities`+ rowCount +`" name="l_activities" spellcheck="true">
                             <option value="Discussion">
                             <option value="Gallery walk">
                             <option value="Group discussion">

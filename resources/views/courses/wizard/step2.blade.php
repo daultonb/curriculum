@@ -73,7 +73,7 @@
                                                 <td>
                                                     <input list="a_methods{{$index}}" id="a_method{{$a_method->a_method_id}}" type="text" class="form-control @error('a_method') is-invalid @enderror"
                                                     name="a_method[]" value = "{{$a_method->a_method}}" placeholder="Choose from the dropdown list or type your own" form="a_method_form" required autofocus>
-                                                    <datalist id="a_methods{{$index}}" name="a_methods">
+                                                    <datalist id="a_methods{{$index}}" name="a_methods" spellcheck="true">
                                                         <option value="Annotated bibliography">
                                                         <option value="Assignment">
                                                         <option value="Attendance">
@@ -232,7 +232,7 @@
                 <td>
                     <input list="a_methods`+rowCount+`" name= "a_method[]" id="a_new_method`+rowCount+`" type="text" class="form-control
                     @error('a_method') is-invalid @enderror" name="a_method" form="a_method_form" placeholder="Choose from the dropdown list or type your own" required autofocus>
-                    <datalist id="a_methods`+rowCount+`" name="a_methods">
+                    <datalist id="a_methods`+rowCount+`" name="a_methods" spellcheck="true">
                         <option value="Annotated bibliography">
                         <option value="Assignment">
                         <option value="Attendance">

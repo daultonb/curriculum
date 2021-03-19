@@ -60,12 +60,21 @@
                             @endif
                         @else
 
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('programs.index') }}">My Programs</a>
+                        <li class="nav-item">
+                        <a class="nav-link" href="{{ route('home')}}">Home</a>
+                        </li>
+
+                            <li class="nav-item dropdown dropdown_1">
+                                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">Menu</a>
+                                    <div class="dropdown-menu dropdown-menu-left" aria-labelledby="navbarDropdown">
+                                        <a class="dropdown-item" href="{{ route('programs.index') }}">My Programs</a>
+                                        <a class="dropdown-item" href="{{ route('courses.index') }}">My Courses</a>
+                                        <a class="dropdown-item" href="{{ route('requestInvitation') }}">
+                                            Registration invite
+                                        </a>
+                                    </div>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('courses.index') }}">My Courses</a>
-                            </li>
+
                             <!-- <li class="nav-item">
                                 <a class="nav-link" href="{{ url('/home') }}">Dashboard</a>
                             </li> -->
@@ -86,10 +95,6 @@
                                             System Administrator
                                         </a>
                                     @endcan
-
-
-
-
 
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                         @csrf
@@ -112,3 +117,11 @@
 
 </body>
 </html>
+
+<script>
+    $(function() {
+        $(".dropdown_1").hover(
+            $(this).find(".dropdown_menu_1").dropdown("toggle");
+        );
+    });
+</script>

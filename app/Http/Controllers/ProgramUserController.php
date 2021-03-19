@@ -24,12 +24,12 @@ class ProgramUserController extends Controller
     {
         $this->middleware(['auth', 'verified']);
     }
-    
+
     public function index()
     {
         //
     }
- 
+
     /**
      * Show the form for creating a new resource.
      *
@@ -53,13 +53,13 @@ class ProgramUserController extends Controller
             'email'=> 'required',
             'email'=> 'exists:users,email',
             ]);
-        
+
         $user = User::where('email', $request->input('email'))->first();
 
         // $pu = new ProgramUser;
         // $pu->program_id = $request->input('program_id');
         // $pu->user_id = $user->id;
-       
+
 
         $pu = DB::table('program_users')->updateOrInsert(
             ['program_id' => $request->input('program_id'), 'user_id' => $user->id ]
@@ -68,9 +68,9 @@ class ProgramUserController extends Controller
         if($user->save()){
             Mail::to($user->email)->send(new NotifyProgramAdminMail());
 
-            $request->session()->flash('success', 'Administrator added');
+            $request->session()->flash('success', 'Collabarator added');
         }else{
-            $request->session()->flash('error', 'There was an error adding the administrator');
+            $request->session()->flash('error', 'There was an error adding the Collabarator');
         }
 
         return redirect()->back();
@@ -120,7 +120,7 @@ class ProgramUserController extends Controller
     {
         //
         $pu = ProgramUser::where('program_id', $program_id)->where('user_id', $user_id);
-        
+
         if($pu->delete()){
             $request->session()->flash('success','Administrator has been deleted');
         }else{
@@ -128,6 +128,6 @@ class ProgramUserController extends Controller
         }
 
         return redirect()->back();
-    
+
     }
 }

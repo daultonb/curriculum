@@ -5,7 +5,7 @@
     <div class="row justify-content-center">
         <div class="col-md-12">
             @include('programs.wizard.header')
-            
+
             <!-- progress bar -->
             <div>
                 <table class="table table-borderless text-center table-sm" style="table-layout: fixed; width: 100%">
@@ -34,7 +34,7 @@
                             <div class="col">
                                 <table class="table table-borderless">
 
-                                    @if(count($courses)<1) 
+                                    @if(count($courses)<1)
                                         <tr class="table-active">
                                             <th colspan="2">There are no courses for this program project.</th>
                                         </tr>
@@ -48,10 +48,10 @@
                                             <th>Status</th>
                                             <th width="30%"></th>
                                         </tr>
-                                        
+
                                             @foreach($courses as $course)
                                                 <tr>
-                                                    <td>{{$course->course_code}}{{$course->course_num}} -
+                                                    <td>{{$course->year}} {{$course->semester}} {{$course->course_code}}{{$course->course_num}} -
                                                         {{$course->course_title}}
                                                         <p class="form-text text-muted">@if($course->required == 1)Required @elseif($course->required == -1) Not Required @endif</p>
                                                     </td>
@@ -70,7 +70,7 @@
                                                         @endif
                                                     </td>
                                                     <td>
-                                                        
+
                                                         <!-- Delete button -->
                                                         <form action="{{route('courses.destroy', $course->course_id)}}" method="POST" class="float-right ml-2">
                                                             @csrf
@@ -78,7 +78,7 @@
                                                             <input type="hidden" class="form-check-input " name="program_id" value={{$program->program_id}}>
                                                             <button style="width:60px" type="submit" class="btn btn-danger btn-sm">Delete</button>
                                                         </form>
-                                                        
+
                                                         <!-- Edit button -->
                                                         <button type="button" style="width:60px" class="btn btn-secondary btn-sm float-right ml-2" data-toggle="modal" data-target="#editCourseModal{{$course->course_id}}">
                                                             Edit
@@ -109,7 +109,7 @@
 
                                                                             <div class="form-group row">
                                                                                 <label for="course_code"
-                                                                                    class="col-md-2 col-form-label text-md-right">Course
+                                                                                    class="col-md-3 col-form-label text-md-right">Course
                                                                                     Code</label>
 
                                                                                 <div class="col-md-8">
@@ -117,7 +117,7 @@
                                                                                         pattern="[A-Za-z]{4}"
                                                                                 class="form-control @error('course_code') is-invalid @enderror" value="{{$course->course_code}}"
                                                                                         name="course_code" required autofocus>
-                                                
+
                                                                                     @error('course_code')
                                                                                     <span class="invalid-feedback" role="alert">
                                                                                         <strong>{{ $message }}</strong>
@@ -131,11 +131,11 @@
 
                                                                             <div class="form-group row">
                                                                                 <label for="course_num"
-                                                                                    class="col-md-2 col-form-label text-md-right">Course
+                                                                                    class="col-md-3 col-form-label text-md-right">Course
                                                                                     Number</label>
 
                                                                                 <div class="col-md-8">
-                                                                                    <input id="course_num" type="number"
+                                                                                    <input id="course_num" type="text"
                                                                                         class="form-control @error('course_num') is-invalid @enderror"
                                                                                         name="course_num"
                                                                                         value="{{$course->course_num}}"
@@ -152,7 +152,7 @@
 
                                                                             <div class="form-group row">
                                                                                 <label for="course_title"
-                                                                                    class="col-md-2 col-form-label text-md-right">Course
+                                                                                    class="col-md-3 col-form-label text-md-right">Course
                                                                                     Title</label>
 
                                                                                 <div class="col-md-8">
@@ -172,10 +172,84 @@
                                                                             </div>
 
                                                                             <div class="form-group row">
+                                                                                <label for="course_semester" class="col-md-3 col-form-label text-md-right">Year and Semester</label>
+
+                                                                                <div class="col-md-3">
+                                                                                    <select id="course_semester" class="form-control @error('course_semester') is-invalid @enderror"
+                                                                                        name="course_semester" required autofocus>
+                                                                                        <option @if($course->semester === "W1") selected @endif value="W1">Winter Term 1</option>
+                                                                                        <option @if($course->semester === "W2") selected @endif value="W2">Winter Term 2</option>
+                                                                                        <option @if($course->semester === "S1") selected @endif value="S1">Summer Term 1</option>
+                                                                                        <option @if($course->semester === "S2") selected @endif value="S2">Summer Term 2</option>
+
+                                                                                    @error('course_semester')
+                                                                                    <span class="invalid-feedback" role="alert">
+                                                                                        <strong>{{ $message }}</strong>
+                                                                                    </span>
+                                                                                    @enderror
+                                                                                    </select>
+                                                                                </div>
+
+                                                                                <div class="col-md-2 float-right">
+                                                                                    <select id="course_year" class="form-control @error('course_year') is-invalid @enderror"
+                                                                                    name="course_year" required autofocus>
+                                                                                        <option @if($course->year === 2021) selected @endif value="2021">2021</option>
+                                                                                        <option @if($course->year === 2020) selected @endif value="2020">2020</option>
+                                                                                        <option @if($course->year === 2019) selected @endif value="2019">2019</option>
+                                                                                        <option @if($course->year === 2018) selected @endif value="2018">2018</option>
+                                                                                        <option @if($course->year === 2017) selected @endif value="2017">2017</option>
+
+                                                                                    @error('course_year')
+                                                                                    <span class="invalid-feedback" role="alert">
+                                                                                        <strong>{{ $message }}</strong>
+                                                                                    </span>
+                                                                                    @enderror
+                                                                                    </select>
+                                                                                </div>
+
+                                                                            </div>
+
+                                                                            <div class="form-group row">
+                                                                                <label for="course_section" class="col-md-3 col-form-label text-md-right">Course
+                                                                                    Section</label>
+
+                                                                                <div class="col-md-4">
+                                                                                    <input id="course_section" type="text"
+                                                                                        class="form-control @error('course_section') is-invalid @enderror"
+                                                                                name="course_section" required autofocus value= {{$course->section}}>
+
+                                                                                    @error('course_section')
+                                                                                    <span class="invalid-feedback" role="alert">
+                                                                                        <strong>{{ $message }}</strong>
+                                                                                    </span>
+                                                                                    @enderror
+                                                                                </div>
+                                                                            </div>
+
+                                                                            <div class="form-group row">
+                                                                                <label for="delivery_modality" class="col-md-3 col-form-label text-md-right">Delivery Modality</label>
+
+                                                                                <div class="col-md-3 float-right">
+                                                                                    <select id="delivery_modality" class="form-control @error('delivery_modality') is-invalid @enderror"
+                                                                                    name="delivery_modality" required autofocus>
+                                                                                        <option @if($course->delivery_modality === 'O') selected @endif value="O">online</option>
+                                                                                        <option @if($course->delivery_modality === 'I') selected @endif value="I">in-person</option>
+                                                                                        <option @if($course->delivery_modality === 'B') selected @endif value="B">blended</option>
+
+                                                                                    @error('delivery_modality')
+                                                                                    <span class="invalid-feedback" role="alert">
+                                                                                        <strong>{{ $message }}</strong>
+                                                                                    </span>
+                                                                                    @enderror
+                                                                                    </select>
+                                                                                </div>
+                                                                            </div>
+
+                                                                            <div class="form-group row">
                                                                                 <label for="required"
-                                                                                    class="col-md-2 col-form-label text-md-right">Required</label>
+                                                                                    class="col-md-3 col-form-label text-md-right">Required</label>
                                                                                 <div class="col-md-6">
-                                                                                    
+
                                                                                         @if($course->required == -1)
                                                                                             <div class="form-check ">
                                                                                                 <label class="form-check-label">
@@ -219,7 +293,7 @@
                                                                                         @endif
                                                                                         <small class="form-text text-muted">
                                                                                             Is this course required by the program?
-                                                                                        </small>    
+                                                                                        </small>
                                                                                 </div>
                                                                             </div>
 
@@ -239,13 +313,13 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                
+
                                                         <!-- Assign instructor button  -->
                                                         <button type="button" style="width:120px" class="btn btn-outline-primary btn-sm ml-2 float-right" data-toggle="modal" data-target="#assignInstructorModal{{$course->course_id}}">
                                                            Assign Instructor
                                                         </button>
 
-                                                        <!-- Modal --> 
+                                                        <!-- Modal -->
                                                         <div class="modal fade" id="assignInstructorModal{{$course->course_id}}" tabindex="-1" role="dialog" aria-labelledby="assignInstructorModalLabel" aria-hidden="true">
                                                             <div class="modal-dialog modal-lg" role="document">
                                                                 <div class="modal-content">
@@ -256,18 +330,18 @@
                                                                         </button>
                                                                     </div>
                                                                     <div class="container">
-                                                                        <p class="form-text text-muted"> 
+                                                                        <p class="form-text text-muted">
                                                                             Instructors can see and edit the course (not the program). Instructors must first register with this web application to be assigned to a course.
-                                                                            By adding an instructor, a verification email will be sent to their email address. <Strong>You can assign the course to yourself by clicking "Assign to Self"</Strong>.  
+                                                                            By adding an instructor, a verification email will be sent to their email address. <Strong>You can assign the course to yourself by clicking "Assign to Self"</Strong>.
                                                                         </p>
                                                                         <table class="table table-borderless">
-                                
+
                                                                             <tr class="table-active">
                                                                                 <th colspan="2">Instructor</th>
                                                                             </tr>
                                                                             <div>
                                                                                 @foreach($courseUsers as $instructor)
-                                                                            
+
                                                                                     @if($course->course_id == $instructor->course_id)
                                                                                         <tr>
                                                                                             <td>{{$instructor->email}}</td>
@@ -278,14 +352,14 @@
                                                                                                     <input type="hidden" class="form-check-input" name="program_id" value="{{$course->program_id}}">
                                                                                                     <input type="hidden" class="form-check-input" name="email" value="{{$instructor->email}}">
                                                                                                     <button type="submit"class="btn btn-danger btn-sm">Unassign</button>
-                                                                                                </form>   
+                                                                                                </form>
                                                                                             </td>
                                                                                         </tr>
                                                                                     @endif
                                                                                 @endforeach
                                                                             </div>
-                                
-                                                                        </table>    
+
+                                                                        </table>
                                                                     </div>
 
                                                                     <form method="POST" action="{{route('courses.assign', $course->course_id)}}">
@@ -314,7 +388,7 @@
 
                                                                         </div>
                                                                         <div class="modal-footer">
-                                                                    
+
                                                                             <button type="button" class="btn btn-secondary col-2 btn-sm" data-dismiss="modal">Close</button>
                                                                             <button type="submit" class="btn btn-primary col-2 btn-sm">Assign</button>
                                                                         </form>
@@ -330,9 +404,9 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        
+
                                                     </td>
-                                                    
+
                                                 </tr>
 
                                             @endforeach
@@ -369,14 +443,14 @@
 
                                         <div class="form-group row">
                                             <label for="course_code"
-                                                class="col-md-2 col-form-label text-md-right">Course Code</label>
+                                                class="col-md-3 col-form-label text-md-right">Course Code</label>
 
                                                 <div class="col-md-8">
                                                     <input id="course_code" type="text"
                                                         pattern="[A-Za-z]{4}"
-                                                class="form-control @error('course_code') is-invalid @enderror" 
+                                                class="form-control @error('course_code') is-invalid @enderror"
                                                         name="course_code" required autofocus>
-                
+
                                                     @error('course_code')
                                                     <span class="invalid-feedback" role="alert">
                                                         <strong>{{ $message }}</strong>
@@ -389,11 +463,11 @@
                                         </div>
 
                                         <div class="form-group row">
-                                            <label for="course_num" class="col-md-2 col-form-label text-md-right">Course
+                                            <label for="course_num" class="col-md-3 col-form-label text-md-right">Course
                                                 Number</label>
 
                                             <div class="col-md-8">
-                                                <input id="course_num" type="number"
+                                                <input id="course_num" type="text"
                                                     class="form-control @error('course_num') is-invalid @enderror"
                                                     name="course_num" required autofocus>
 
@@ -407,7 +481,7 @@
 
                                         <div class="form-group row">
                                             <label for="course_title"
-                                                class="col-md-2 col-form-label text-md-right">Course Title</label>
+                                                class="col-md-3 col-form-label text-md-right">Course Title</label>
 
                                             <div class="col-md-8">
                                                 <input id="course_title" type="text"
@@ -423,9 +497,86 @@
                                         </div>
 
                                         <div class="form-group row">
-                                            <label for="required" class="col-md-2 col-form-label text-md-right">Required</label>
+                                            <label for="course_title" class="col-md-3 col-form-label text-md-right">Year and Semester</label>
+
+                                            <div class="col-md-3">
+                                                <select id="course_semester" class="form-control @error('course_semester') is-invalid @enderror"
+                                                    name="course_semester" required autofocus>
+                                                    <option value="W1">Winter Term 1</option>
+                                                    <option value="W2">Winter Term 2</option>
+                                                    <option value="S1">Summer Term 1</option>
+                                                    <option value="S2">Summer Term 2</option>
+
+                                                @error('course_semester')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                                @enderror
+                                                </select>
+                                            </div>
+
+                                            <div class="col-md-2 float-right">
+                                                <select id="course_year" class="form-control @error('course_year') is-invalid @enderror"
+                                                name="course_year" required autofocus>
+                                                    <option value="2021">2021</option>
+                                                    <option value="2020">2020</option>
+                                                    <option value="2019">2019</option>
+                                                    <option value="2018">2018</option>
+                                                    <option value="2017">2017</option>
+                                                    <option value="2016">2016</option>
+
+                                                @error('course_year')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                                @enderror
+                                                </select>
+                                            </div>
+
+                                        </div>
+
+                                        <div class="form-group row">
+                                            <label for="course_section" class="col-md-3 col-form-label text-md-right">Course
+                                                Section</label>
+
+                                            <div class="col-md-4">
+                                                <input id="course_section" type="text"
+                                                    class="form-control @error('course_section') is-invalid @enderror"
+                                                    name="course_section" required autofocus>
+
+                                                @error('course_section')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                                @enderror
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group row">
+                                            <label for="delivery_modality" class="col-md-3 col-form-label text-md-right">
+                                                Delivery Modality
+                                            </label>
+
+                                            <div class="col-md-3 float-right">
+                                                <select id="delivery_modality" class="form-control @error('delivery_modality') is-invalid @enderror"
+                                                name="delivery_modality" required autofocus>
+                                                    <option value="O">online</option>
+                                                    <option value="I">in-person</option>
+                                                    <option value="B">blended</option>
+
+                                                @error('delivery_modality')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                                @enderror
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group row">
+                                            <label for="required" class="col-md-3 col-form-label text-md-right">Required</label>
                                             <div class="col-md-6">
-                            
+
                                               <div class="form-check ">
                                                 <label class="form-check-label">
                                                   <input type="radio" class="form-check-input" name="required" value="1" >
@@ -440,7 +591,7 @@
                                               </div>
                                               <small class="form-text text-muted">
                                                 Is this course required by the program?
-                                            </small>   
+                                            </small>
                                             </div>
                                           </div>
 
@@ -475,12 +626,12 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
-  
+
       $("form").submit(function () {
         // prevent duplicate form submissions
         $(this).find(":submit").attr('disabled', 'disabled');
         $(this).find(":submit").html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>');
-  
+
       });
     });
   </script>

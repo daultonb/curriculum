@@ -8601,7 +8601,20 @@
         <div class="mt-2 mb-3">
             <p class="float-right">{{date("Y-m-d")}}</p>
             <h1>Course Summary</h1>
-            <p><b>Course: {{$course->course_code}}{{$course->course_num}} - {{$course->course_title}}</b></p>
+            <p><b>Course: {{$course->year}} {{$course->semester}} {{$course->course_code}}{{$course->course_num}} {{$course->section}}
+            - {{$course->course_title}}</b></p>
+            <p><b>Delivery_modality:
+            @switch($course->delivery_modality)
+                @case('O')
+                    Online
+                    @break
+                @case('B')
+                    Blended
+                    @break
+                @default
+                    In-person
+            @endswitch
+            </b></p>
             <p><b>Program Project: {{$program->program}}</b></p>
             <p class="text-muted">Faculty/School: {{$program->faculty}}</p>
             <p class="text-muted">Department: {{$program->department}}</p>
@@ -8892,17 +8905,19 @@
                             @else
 
                                 <tr>
-                                    <th style="background-color: #e3e3e3;" class="table-light">Course Outcomes</th>
-                                    <th style="background-color: #e3e3e3;" class="table-light" colspan="{{count($pl_outcomes)}}">Program Learning Outcomes</th>
+                                    <th style="background-color: #e3e3e3;" class="table-light">
+                                        <span style="font-size: 80%">Course Outcomes</span></th>
+                                    <th style="background-color: #e3e3e3;" class="table-light" colspan="{{count($pl_outcomes)}}">
+                                        <span style="font-size: 80%">Program Learning Outcomes</span></th>
                                 </tr>
                                 <tr>
                                     <td style="max-width:0; height: 50px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"></td>
                                     @for($i = 0; $i < count($pl_outcomes); $i++)
 
                                     <td style="height:0; vertical-align: bottom; text-align: left;">
-                                        <span style="writing-mode: vertical-rl;">
+                                        <span @if(count($pl_outcomes) <=4) style="font-size: 100%;"@elseif(count($pl_outcomes)<= 6) style="font-size: 80%;"@else style="font-size:70%" @endif>
                                             @if(isset($pl_outcomes[$i]->plo_shortphrase))
-                                                {{$pl_outcomes[$i]->plo_shortphrase}}
+                                            {{$i+1}}.{{$pl_outcomes[$i]->plo_shortphrase}}
                                             @else
                                                 PLO {{$i+1}}
                                             @endif
@@ -8916,7 +8931,7 @@
                                 @for($i = 0; $i < count($l_outcomes); $i++)
                                     <tr>
                                         <td style="max-width:0; height: 50px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
-                                            <span>
+                                            <span style= "font-size: 80%;">
                                             @if(isset($l_outcomes[$i]->clo_shortphrase))
                                                 {{$i+1}}. {{$l_outcomes[$i]->clo_shortphrase}}
                                             @else
@@ -8930,7 +8945,11 @@
                                                 @if( $om->pl_outcome_id == $pl_outcomes[$j]->pl_outcome_id && $om->l_outcome_id == $l_outcomes[$i]->l_outcome_id )
 
                                                     <td @foreach($mappingScales as $ms) @if($ms->abbreviation == $om->map_scale_value) style="background-color:{{$ms->colour}}" @endif @endforeach class="text-center align-middle" >
+                                                        <span @if($om->map_scale_value == 'A') style="color:white" @endif>
+                                                        @if($om->map_scale_value !== "N/A")
                                                         {{$om->map_scale_value}}
+                                                        @endif
+                                                        </span>
                                                     </td>
 
                                                 @endif
