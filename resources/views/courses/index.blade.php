@@ -4,7 +4,7 @@
 <div class="row justify-content-center">
     <div class="col-md-12">
         <h1>Courses </h1>
-    <p class="form-text text-muted">See below the courses you have mapped using this tool (under Completed Courses) and those you are still working on (Active Courses).
+    <p class="form-text text-muted">See below the courses you have mapped using this tool (under Completed Courses) and those you are still working on (In Progress Courses).
         </p>
     <p class="form-text text-primary font-weight-bold"><i>Note:</i>  If you are ideating/evaluating a program, go to "My Programs".
         This section should only be used for courses that you are not associating with a specific program.</p>
@@ -205,7 +205,7 @@
 
 <div class="card mb-5 mt-5">
     <div class="card-header">
-        <b>Active Courses:</b> <span class="form-text text-muted"> Courses you are working on.</span>
+        <b>In Progress Courses:</b> <span class="form-text text-muted"> Courses you are working on.</span>
     </div>
     @if(count($activeCourses)>0)
 

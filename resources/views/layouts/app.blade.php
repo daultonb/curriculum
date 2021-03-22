@@ -64,6 +64,10 @@
                         <a class="nav-link" href="{{ route('home')}}">Home</a>
                         </li>
 
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('about')}}">About</a>
+                        </li>
+
                             <li class="nav-item dropdown dropdown_1">
                                 <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">Menu</a>
                                     <div class="dropdown-menu dropdown-menu-left" aria-labelledby="navbarDropdown">
@@ -117,11 +121,3 @@
 
 </body>
 </html>
-
-<script>
-    $(function() {
-        $(".dropdown_1").hover(
-            $(this).find(".dropdown_menu_1").dropdown("toggle");
-        );
-    });
-</script>
