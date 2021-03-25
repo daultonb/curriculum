@@ -72,12 +72,36 @@
                                                     <td>
 
                                                         <!-- Delete button -->
-                                                        <form action="{{route('courses.destroy', $course->course_id)}}" method="POST" class="float-right ml-2">
-                                                            @csrf
-                                                            {{method_field('DELETE')}}
-                                                            <input type="hidden" class="form-check-input " name="program_id" value={{$program->program_id}}>
-                                                            <button style="width:60px" type="submit" class="btn btn-danger btn-sm">Delete</button>
-                                                        </form>
+                                                        <button style="width:60px" type="submit" class="btn btn-danger btn-sm float-right ml-2" data-toggle="modal" data-target="#deleteConfirmationCourse">Delete</button>
+
+                                                        <!-- Delete Confirmation Modal -->
+                                                        <div class="modal fade" id="deleteConfirmationCourse" tabindex="-1" role="dialog" aria-labelledby="deleteConfirmationCourse" aria-hidden="true">
+                                                            <div class="modal-dialog" role="document">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <h5 class="modal-title" id="exampleModalLabel">Delete Confirmation</h5>
+                                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                            <span aria-hidden="true">&times;</span>
+                                                                        </button>
+                                                                    </div>
+
+                                                                    <div class="modal-body">
+                                                                    Are you sure you want to delete {{$course->course_code . ' ' . $course->course_num}} ?
+                                                                    </div>
+
+                                                                    <form action="{{route('courses.destroy', $course->course_id)}}" method="POST" class="float-right ml-2">
+                                                                        @csrf
+                                                                        {{method_field('DELETE')}}
+                                                                        <input type="hidden" class="form-check-input " name="program_id" value={{$program->program_id}}>
+                                                                        <div class="modal-footer">
+                                                                        <button style="width:60px" type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Cancel</button>
+                                                                        <button style="width:60px" type="submit" class="btn btn-danger btn-sm">Delete</button>
+                                                                        </div>
+                                                                    </form>
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
 
                                                         <!-- Edit button -->
                                                         <button type="button" style="width:60px" class="btn btn-secondary btn-sm float-right ml-2" data-toggle="modal" data-target="#editCourseModal{{$course->course_id}}">
@@ -421,7 +445,10 @@
                     <div class="row">
                         <div class="col">
                             <button type="button" class="btn btn-primary btn-sm col-2 mt-2 float-right" data-toggle="modal" data-target="#createCourseModal">
-                                ＋ Add Course
+                                ＋ Add New Course
+                            </button>
+                            <button type="button" class="btn btn-primary btn-sm col-2 mt-2 float-right" data-toggle="modal" data-target="#addCourseModal" style="margin-right: 10px">
+                                ＋ Add Exist Course
                             </button>
                         </div>
                     </div>
@@ -439,7 +466,6 @@
                                 <form method="POST" action="{{ action('CourseController@store') }}">
                                     @csrf
                                     <div class="modal-body">
-
 
                                         <div class="form-group row">
                                             <label for="course_code"
@@ -610,6 +636,37 @@
                         </div>
                     </div>
 
+                     <!-- Add existing course Modal -->
+                    <div class="modal fade" id="addCourseModal" tabindex="-1" role="dialog" aria-labelledby="createCourseModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-lg" role="document" style="width:1250px;">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="createCourseModalLabel">Add Existing Course</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+
+                                <form method="POST" action="{{route('courses.copy', $program->program_id)}}">
+                                    @csrf
+                                    <div class="modal-body">
+                                        @foreach($existCourses as $index => $course)
+                                            <input type="checkbox" name="course_id[]" id= "course{{$index}}" value={{$course->course_id}}>
+                                            <label for="course{{$index}}">Course: {{$course->year}} {{$course->semester}} {{$course->course_code}}{{$course->course_num}} - {{$course->section}}
+                                        @endforeach
+                                    </div>
+
+                                    <input type="hidden" name="program_id" value="{{$program->program_id}}">
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary col-1 btn-sm"
+                                            data-dismiss="modal">Close</button>
+                                        <button type="submit" class="btn btn-primary col-1 btn-sm">Add</button>
+                                    </div>
+
+                                </form>
+                            </div>
+                        </div>
+                    </div>
 
                 </div>
 

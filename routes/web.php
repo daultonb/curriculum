@@ -66,6 +66,8 @@ Route::get('/programWizard/{program}/step2','ProgramWizardController@step2')->na
 Route::get('/programWizard/{program}/step3','ProgramWizardController@step3')->name('programWizard.step3');
 Route::get('/programWizard/{program}/step4','ProgramWizardController@step4')->name('programWizard.step4');
 
+Route::post('/programWizard/{program}/step3/copy', 'CourseController@copy')->name('courses.copy');
+
 Route::get('/courseWizard/{course}/step1','CourseWizardController@step1')->name('courseWizard.step1');
 Route::get('/courseWizard/{course}/step2','CourseWizardController@step2')->name('courseWizard.step2');
 Route::get('/courseWizard/{course}/step3','CourseWizardController@step3')->name('courseWizard.step3');
