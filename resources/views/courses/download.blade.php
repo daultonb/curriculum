@@ -8601,9 +8601,9 @@
         <div class="mt-2 mb-3">
             <p class="float-right">{{date("Y-m-d")}}</p>
             <h1>Course Summary</h1>
-            <p><b>Course: {{$course->year}} {{$course->semester}} {{$course->course_code}}{{$course->course_num}} {{$course->section}}
-            - {{$course->course_title}}</b></p>
-            <p><b>Delivery modality:
+            <p><b>Course:</b> {{$course->year}} {{$course->semester}} {{$course->course_code}}{{$course->course_num}} {{$course->section}}
+            - {{$course->course_title}}</p>
+            <p><b>Delivery modality:</b>
             @switch($course->delivery_modality)
                 @case('O')
                     Online
@@ -8614,22 +8614,21 @@
                 @default
                     In-person
             @endswitch
-            </b></p>
-            <p><b>Program Project: {{$program->program}}</b></p>
-            <p class="text-muted">Faculty/School: {{$program->faculty}}</p>
-            <p class="text-muted">Department: {{$program->department}}</p>
-            <p class="text-muted">Level: {{$program->level}}</p>
+            </p>
+            <p><b>Program Project:</b> {{$program->program}}</p>
+            <p class="text-muted"><b>Faculty/School:</b> {{$program->faculty}}</p>
+            <p class="text-muted"><b>Department:</b> {{$program->department}}</p>
+            <p class="text-muted"><b>Level: </b>{{$program->level}}</p>
 
         </div>
 
 
         <table style="margin-top:15px; table-layout: fixed; border-collapse: collapse; width: 100%;" class="table">
             <tr>
-                <th style="background-color: #999999;">{{$course->course_code}}{{$course->course_num}}: Course Learning Outcomes/Competencies</th>
+                <th style="background-color: rgba(100,149,237, .8)">{{$course->course_code}}{{$course->course_num}}: Course Learning Outcomes/Competencies</th>
             </tr>
             <tr >
                 <td style="padding-left: 24px; padding-right: 24px">
-                    <p>The course learning outcomes or competencies used in this course are listed below.</p>
                     <table class="table table-bordered table-sm  mt-3">
 
                         @if(count($l_outcomes)<1)
@@ -8641,13 +8640,16 @@
 
                             <tr>
                                 <th style="background-color: #e3e3e3;" class="table-light"></th>
+                                <th style="background-color: #e3e3e3;" class="table-light">Title</th>
                                 <th style="background-color: #e3e3e3;" class="table-light">Course Learning Outcomes or Competencies</th>
                             </tr>
                             @for($i = 0; $i < count($l_outcomes); $i++)
                                 <tr>
                                     <td style="width:5%">{{$i+1}}</td>
+                                    <td width="20%">
+                                        {{$l_outcomes[$i]->clo_shortphrase}}
+                                    </td>
                                     <td>
-                                        <b>{{$l_outcomes[$i]->clo_shortphrase}}</b><br>
                                         {{$l_outcomes[$i]->l_outcome}}
 
                                     </td>
@@ -8662,13 +8664,12 @@
         </table>
 
         <div>
-            <table style="margin-top:15px; page-break-before: always;" class="table">
+            <table style="margin-top:15px;" class="table">
                 <tr>
-                    <th style="background-color: #999999;">{{$course->course_code}}{{$course->course_num}}: Student Assessment Methods</th>
+                    <th style="background-color: rgba(100,149,237, .8)">{{$course->course_code}}{{$course->course_num}}: Student Assessment Methods</th>
                 </tr>
                 <tr>
                     <td style="padding-left: 24px; padding-right: 24px">
-                        <p>Student assessment methods used in this course are listed below.</p>
                         <table class="table table-bordered table-sm  mt-3">
 
                             @if(count($a_methods)<1)
@@ -8700,14 +8701,12 @@
         </div>
 
         <div>
-            <table style="margin-top:15px;" class="table">
+            <table style="margin-top:15px; page-break-before: always;" class="table">
                 <tr>
-                    <th style="background-color: #999999;">{{$course->course_code}}{{$course->course_num}}: Teaching and Learning Activities</th>
+                    <th style="background-color: rgba(100,149,237, .8)">{{$course->course_code}}{{$course->course_num}}: Teaching and Learning Activities</th>
                 </tr>
                 <tr>
                     <td style="padding-left: 24px; padding-right: 24px">
-                        <p>Teaching and Learning Activities description goes here.</p>
-
                         <table class="table table-bordered table-sm mt-3">
 
                             @if(count($l_activities)<1)
@@ -8736,9 +8735,9 @@
         </div>
 
         <div>
-            <table style="margin-top:15px; page-break-before: always;" class="table">
+            <table style="margin-top:15px;" class="table">
                 <tr>
-                    <th style="background-color: #999999;">{{$course->course_code}}{{$course->course_num}}: Curriculum Alignment Table</th>
+                    <th style="background-color: rgba(100,149,237, .8)">{{$course->course_code}}{{$course->course_num}}: Curriculum Alignment Table</th>
                 </tr>
                 <tr>
                     <td style="padding-left: 24px; padding-right: 24px">
@@ -8796,9 +8795,9 @@
             <table style="margin-top:15px; page-break-before: always;" class="table">
                 <tr>
                     @if($course->program_id == 1 ?? $course->program_id == 2 ?? $course->program_id == 3 )
-                        <th style="background-color: #999999;">BC {{$program->program}} (in lieu of PLOs)</th>
+                        <th style="background-color: rgba(100,149,237, .8)">BC {{$program->program}} (in lieu of PLOs)</th>
                     @else
-                        <th style="background-color: #999999;">{{$program->program}}: Program Learning Outcomes or Competencies</th>
+                        <th style="background-color: rgba(100,149,237, .8)">{{$program->program}}: Program Learning Outcomes or Competencies</th>
                     @endif
 
                 </tr>
@@ -8851,12 +8850,11 @@
         <div style="max-width:100%">
             <table style="margin-top:15px; page-break-before: always;" class="table">
                 <tr>
-                    <th style="background-color: #999999;">{{$course->course_code}}{{$course->course_num}}: Outcome Maps</th>
+                    <th style="background-color: rgba(100,149,237, .8);">{{$course->course_code}}{{$course->course_num}}: Curriculum Map</th>
                 </tr>
                 <tr>
                     <td style="padding-left: 24px; padding-right: 24px">
                         @if(count($mappingScales)>0)
-                            <p>The following are the mapping scale levels used to indicate the degree to which a program-level learning outcome is addressed by a particular course outcome.</p>
                             <table class="table table-bordered table-sm">
                                 <thead>
                                     <tr>
@@ -8892,9 +8890,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td style="padding-left: 24px; padding-right: 24px">
-                        <p>This chart shows the alignment of course outcomes to program-level learning outcomes (or Ministry Standards).</p>
-
+                    <td style="padding-left: 2px; padding-right: 3px">
                         <table class="table table-bordered table-sm mt-3">
 
                             @if(count($outcomeMaps)<1)
@@ -8906,9 +8902,9 @@
 
                                 <tr>
                                     <th style="background-color: #e3e3e3;" class="table-light">
-                                        <span style="font-size: 80%">Course Outcomes</span></th>
+                                        <span style="font-size: 80%">Course Learning Outcomes/Competencies</span></th>
                                     <th style="background-color: #e3e3e3;" class="table-light" colspan="{{count($pl_outcomes)}}">
-                                        <span style="font-size: 80%">Program Learning Outcomes</span></th>
+                                        <span style="font-size: 80%">Program Learning Outcomes/Competencies</span></th>
                                 </tr>
                                 <tr>
                                     <td style="max-width:0; height: 50px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"></td>
@@ -8930,8 +8926,9 @@
 
                                 @for($i = 0; $i < count($l_outcomes); $i++)
                                     <tr>
-                                        <td style="max-width:0; height: 50px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
-                                            <span style= "font-size: 80%;">
+                                        <td style="max-width:0; height: auto; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;min-width: 8em;
+                                        max-width: 8em;">
+                                            <span style= "font-size: 78%;" width="15%">
                                             @if(isset($l_outcomes[$i]->clo_shortphrase))
                                                 {{$i+1}}. {{$l_outcomes[$i]->clo_shortphrase}}
                                             @else

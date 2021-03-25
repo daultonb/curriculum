@@ -50,6 +50,7 @@ class LearningActivityController extends Controller
         $activities = $request->input('l_activity');
         $existFlag = false;
 
+        //count how many existing learning activities
         if($activities_id = $request->input('l_activity_id')){
             $size = count($activities_id);
             $i = 0;

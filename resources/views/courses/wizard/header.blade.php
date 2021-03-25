@@ -293,8 +293,8 @@
                                         value={{$course->program_id}}>
 
                                     <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                                    <button type="submit" class="btn btn-danger">Delete</button>
+                                        <button style="width:60px" type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Cancel</button>
+                                        <button style="width:60px" type="submit" class="btn btn-danger btn-sm">Delete</button>
                                     </div>
 
                                 </form>
