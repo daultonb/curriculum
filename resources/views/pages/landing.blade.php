@@ -9,10 +9,10 @@
                 <p class="lead">Course and program planning platform at UBCO</p>
                 <hr class="my-4">
                 <p>Plan, review and align courses and programs using online curriculum mapping tool. </p>
-                 <p class="lead">
+                <p class="lead">
                     <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
                 </p>
-             </div>
+            </div>
         </div>
     </div> -->
 
@@ -35,12 +35,27 @@
             <div class="jumbotron">
                 <h1 class="display-4">Curriculum Alignment Tool (CAT)</h1>
                 <p class="lead">This web application aims to support instructors to ideate, evaluate or create new programs and courses from a <a href="https://www.heacademy.ac.uk/sites/default/files/resources/id477_aligning_teaching_for_constructing_learning.pdf" target="_blank"><strong>constructive alignment</strong></a> perspective.</p>
+                <ul>
+                    <li class="lead">Overview</li>
+                    <ul>
+                        <li class="lead">Support instructors with the <strong> ideation of a new program or redesign of an existing one,</strong> by allowing them to map program learning outcomes to the learning outcomes of required and non-required courses for the program</li>
+                        <li class="lead">Support instructors with the <strong>evaluation of courses</strong> from a constructive alignment perspective and backward design approach. That is, by looking at the alignment across course learning outcomes, assessment methods, and teaching and learning activities.</li>
+                        <li class="lead">Support the ideation phase of <strong>creating a new course</strong> by identifying course learning outcomes, assessment strategies, and teaching and learning methods.</li>
+                    </ul>
+                    <li class="lead">How to use this website</li>
+                </ul>
+                <p class="lead">In order to use this website, users must have identified the course or program learning outcomes. The below information should also be available for better results:</p>
+                <ol>
+                    <li class="lead">Assessment methods (e.g. quizzes, oral presentation, research paper, etc.)</li>
+                    <li class="lead">Teaching and learning activities (e.g. lecture, problem-based learning, lab, tutorial, discussion, etc.)</li>
+                </ol>
+                <p class="lead">Be ready to input this information when prompted by the website. The website will walk you through a series of steps ending with a summary of your curriculum alignment at the course or program level. The information you input can be modified at any time.</p>
                 <!-- <hr class="my-4">
                 <p>Plan, review and align courses and programs using online curriculum mapping tool. </p>
-                 <p class="lead">
+                <p class="lead">
                     <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
                 </p> -->
-             </div>
+            </div>
         </div>
     </div>
 
@@ -54,32 +69,32 @@
             </p>
             <div class="card-deck">
                 <div class="card">
-                  <div class="card-body">
+                <div class="card-body">
 
 
                     <p class="card-text"><strong >IDEATION </strong>of a new program. It allows instructors to map program learning outcomes (PLOs) to course learning outcomes (CLOs) of required and non-required courses for the program. </p>
 
-                  </div>
+                </div>
                 </div>
                 <div class="card">
 
-                  <div class="card-body">
+                <div class="card-body">
 
 
                     <p class="card-text"><strong>EVALUATION</strong> of existing courses or programs by looking at the alignment across learning outcomes, assessment methods, and teaching and learning activities.</p>
 
-                  </div>
+                </div>
                 </div>
                 <div class="card">
 
-                  <div class="card-body">
+                <div class="card-body">
 
 
                     <p class="card-text"><strong>CREATION</strong> of a new course by identifying course learning outcomes, assessment strategies, and teaching and learning methods.</p>
 
-                  </div>
                 </div>
-              </div>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -87,7 +102,7 @@
         <div class="col-md-12 bg-primary">
             <div class="my-5">
 
-               <div class="container">
+            <div class="container">
                 <div class="row">
                     <!-- <div class="col-md">
                         <h1>1. <p class="lead">Create a new program project</p></h1>
