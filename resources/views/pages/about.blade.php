@@ -2,6 +2,8 @@
 
 @section('content')
 <link href=" {{ asset('css/about.css') }}" rel="stylesheet" type="text/css" >
+<!-- linking to the js file (if we can do another way, this is not necessary-->
+<link href=" {{ asset('js/about.js') }}" type="text/javascript">
 
 <!-- Code can goes down here -->
 
@@ -12,7 +14,10 @@
             <h1 style="text-align:center;">About</h1>
 
         </div>
-        <!--
+        <!-- 
+            
+        This code the same as the first <summary> but using the code from the site Laura asked me to replicate, would be useful if we need to pull the ubc clf stylesheet over.
+
         <div class="ok-accordion-wrapper">
                 <div id="ok-accordion-1" class="ok-accordion ok-accordion-blue">
                     <div class="accordion-group">
@@ -39,8 +44,9 @@
             <ul>
                 <li>
                     <details>
-                        <summary><h3>What is Curriculum Mapping</h3></summary>
-                        <div class= "summary-body">
+                        <!-- This is the basic layout. accordion-header should be have the onClick() function set to toggle the toggle div's innerHTML in the about.js file (see path above)-->
+                        <summary class="accordion-header"><h3>What is Curriculum Mapping</h3><div class="toggle">&#9660;</div></summary>
+                        <div class= "accordion-body">
                             <p>Curriculum mapping is an instrument to evaluate the alignment of learning objectives to academic strategies at educational institutions. The mapping process is an effective way to - </p>
                             <ul>
                                 <li>“make learning and teaching more meaningful to students and teachers” (Lam and Tsui, 2016); </li>
@@ -56,7 +62,7 @@
                 </li>
                 <li>
                     <details>
-                        <summary><h3>Benefits of Curriculum Mapping</h3></summary>
+                        <summary class="accordion-header"><h3>Benefits of Curriculum Mapping</h3><div class="toggle">&#9660;</div></summary>
                         <div class= "summary-body">
                             <ul>
                                 <li><strong>Improve student learning:</strong> Curriculum mapping helps faculty use evidence-based information, see relationships between course and overall program goals, and learning outcomes; </li>
@@ -69,7 +75,7 @@
                 </li>
                 <li?>
                     <details>
-                        <summary><h3>How to get the best out of this tool?</h3></summary>
+                        <summary class="accordion-header"><h3>How to get the best out of this tool?</h3><div class="toggle">&#9660;</div></summary>
                         <div class= "summary-body">
                             <p>This customizable online tool is a vehicle to curriculum mapping and alignment. The information presented after completing the tool’s wizard should allow instructors and departments make informed decisions to enhance the course/program as well as the overall student experience and learning.</p>
                             <p>To get the best results from using this tool, it is suggested that: </p>
@@ -126,7 +132,7 @@
                 </li>
                 <li>
                     <details>
-                        <summary><h3>Testimonials</h3></summary>
+                        <summary class="accordion-header"><h3>Testimonials</h3><div class="toggle">&#9660;</div></summary>
                         <div class= "summary-body">
                             <ul>
                                 <li>From users</li>
@@ -136,7 +142,7 @@
                 </li>
                 <li>
                     <details>
-                        <summary><h3>FAQ</h3></summary>
+                        <summary class="accordion-header"><h3>FAQ</h3><div class="toggle">&#9660;</div></summary>
                         <div class= "summary-body">
                             <ul>
                                 <li>Can I use this mapping website if I don’t have all course details?</li>
@@ -161,7 +167,7 @@
                 </li>
                 <li>
                     <details>
-                        <summary><h3>References and Literature</h3></summary>
+                        <summary class="accordion-header"><h3>References and Literature</h3><div class="toggle">&#9660;</div></summary>
                         <div class= "summary-body">
                             <ul>
                                 <li>Al-Eyd, G., et al. (2018). Curriculum mapping as a tool to facilitate curriculum development: a new School of Medicine experience, BMC Med. Educ., vol. 18, no. 1, p. 185 </li>
@@ -179,7 +185,7 @@
                 </li>  
                 <li>
                     <details>
-                        <summary><h3>Contributors</h3></summary>
+                        <summary class="accordion-header"><h3>Contributors</h3><div class="toggle">&#9660;</div></summary>
                         <div class= "summary-body">
                             <ul>
                                 <li>Funded by the UBC Okanagan Office of the Provost and Vice President Academic and supported by: </li>
@@ -210,13 +216,6 @@
     </div>
 </div>
 
-
-
-
-
-<script>
-
-</script>
 
 <!-- End here -->
 @endsection
