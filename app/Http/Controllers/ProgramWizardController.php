@@ -113,15 +113,27 @@ class ProgramWizardController extends Controller
 
         $existCourses = Course::whereIn('program_id', ['1','2','3'])->get();
 
+        foreach($courses as $course){
+            foreach($existCourses as $index => $existCourse) {
+                if( $course->course_code == $existCourse->course_code && $course->delivery_modality == $existCourse->delivery_modality &&
+                $course->course_num == $existCourse->course_num && $course->year == $existCourse->year &&
+                $course->semester == $existCourse->semester && $course->section == $existCourse->section &&
+                $course->course_title == $existCourse->course_title ) {
+                    unset($existCourses[$index]);
+                }
+            }
+        }
+
         $courseUsers = Course::join('course_users','courses.course_id',"=","course_users.course_id")
                                 ->join('users','course_users.user_id',"=","users.id")
                                 ->select('users.email', 'course_users.course_id')
                                 ->where('courses.program_id','=',$program_id)->get();
 
         //progress bar
-        $ploCount = ProgramLearningOutcome::where('program_id', $program_id)->count();;
+        $ploCount = ProgramLearningOutcome::where('program_id', $program_id)->count();
         $msCount = MappingScale::join('mapping_scale_programs', 'mapping_scales.map_scale_id', "=", 'mapping_scale_programs.map_scale_id')
                                     ->where('mapping_scale_programs.program_id', $program_id)->count();
+
         $courseCount = count($courses);
 
 

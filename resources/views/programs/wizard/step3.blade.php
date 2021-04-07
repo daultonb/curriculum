@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+
 <div>
     <div class="row justify-content-center">
         <div class="col-md-12">
@@ -25,10 +26,8 @@
             </div>
 
             <div class="card">
-
                 <div class="card-body">
                     <p class="form-text text-muted">Input the required and non-required courses for this program (to the best of your knowledge). <strong>All courses need to have at least one assigned instructor to be mapped to a program.</strong></p>
-
                     <div id="courses">
                         <div class="row">
                             <div class="col">
@@ -603,7 +602,7 @@
                                             <label for="required" class="col-md-3 col-form-label text-md-right">Required</label>
                                             <div class="col-md-6">
 
-                                              <div class="form-check ">
+                                              <div class="form-check">
                                                 <label class="form-check-label">
                                                   <input type="radio" class="form-check-input" name="required" value="1" >
                                                   Required
@@ -636,7 +635,7 @@
                         </div>
                     </div>
 
-                     <!-- Add existing course Modal -->
+                     <!-- Add existing course Modal ( Drag and drop effect)-->
                     <div class="modal fade" id="addCourseModal" tabindex="-1" role="dialog" aria-labelledby="createCourseModalLabel" aria-hidden="true">
                         <div class="modal-dialog modal-lg" role="document" style="width:1250px;">
                             <div class="modal-content">
@@ -647,23 +646,54 @@
                                     </button>
                                 </div>
 
-                                <form method="POST" action="{{route('courses.copy', $program->program_id)}}">
-                                    @csrf
-                                    <div class="modal-body">
-                                        @foreach($existCourses as $index => $course)
-                                            <input type="checkbox" name="course_id[]" id= "course{{$index}}" value={{$course->course_id}}>
-                                            <label for="course{{$index}}">Course: {{$course->year}} {{$course->semester}} {{$course->course_code}}{{$course->course_num}} - {{$course->section}}
-                                        @endforeach
+                                    <div class="modal-body" style="height: auto;">
+
+                                        <p style="width:45%;text-align:left;"> Course not related with this program</p>
+                                        <div class="drag_container" style="height:275px;float: left;overflow: auto;">
+                                            @foreach($existCourses as $index => $course)
+
+
+                                            <div class="draggable" draggable="true">
+                                                <input type="hidden" name="course_id[]" id= "course{{$index}}" value={{$course->course_id}}>
+                                                <label for="course{{$index}}" class="dragItem">
+                                                Course: {{$course->year}} {{$course->semester}} {{$course->course_code}} {{$course->course_num}} - {{$course->section}}
+                                                </label>
+                                                <div class="form-check" style="padding-left:2.00rem;">
+                                                    <label class="form-check-label">
+                                                        <input type="radio" class="form-check-input" name="require{{$course->course_id}}" value="1" required>
+                                                        Required
+                                                    </label>
+                                                </div>
+                                                <div class="form-check" style="padding-left:2.00rem">
+                                                    <label class="form-check-label" >
+                                                        <input type="radio" class="form-check-input" name="require{{$course->course_id}}" value="-1">
+                                                        Not Required
+                                                    </label>
+                                                </div>
+                                                <small class="form-text text-muted" style="padding-left:0.50rem">
+                                                Is this course required by the program?
+                                                </small>
+                                            </div>
+
+                                            @endforeach
+                                        </div>
+
+
+                                        <form method="POST" id="addExistCourse" action="{{route('courses.copy', $program->program_id)}}">
+                                        @csrf
+
+                                        <div class="drag_container" style="height:275px;float: right;overflow: auto;">
+                                        </div>
+                                        <input type="hidden" value= {{count($existCourses)}} name="count">
+                                        <input type="hidden" name="program_id" value="{{$program->program_id}}">
+                                        </form>
                                     </div>
 
-                                    <input type="hidden" name="program_id" value="{{$program->program_id}}">
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary col-1 btn-sm"
                                             data-dismiss="modal">Close</button>
-                                        <button type="submit" class="btn btn-primary col-1 btn-sm">Add</button>
+                                        <button type="submit" class="btn btn-primary col-1 btn-sm" form="addExistCourse">Add</button>
                                     </div>
-
-                                </form>
                             </div>
                         </div>
                     </div>
@@ -681,7 +711,7 @@
     </div>
 </div>
 
-<script type="text/javascript">
+<script type="application/javascript" src="{{ asset('js/drag_drop.js') }}">
     $(document).ready(function () {
 
       $("form").submit(function () {
