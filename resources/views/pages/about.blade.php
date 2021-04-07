@@ -2,8 +2,6 @@
 
 @section('content')
 
-
-
 <!-- Code can goes down here -->
 
 <div class="container">
@@ -15,10 +13,6 @@
 
     </div>
 </div>
-
-
-
-
 
 <script>
 

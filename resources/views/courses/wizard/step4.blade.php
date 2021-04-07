@@ -77,8 +77,9 @@
 
                                             <div class="card-body">
                                                 <div class="container mb-3">
-                                                    <p class="form-text text-muted">This section is key for the exercise of mapping a course, from a constructive alignment perspective.
-                                                    Carefully review the Course Learning Outcomes/Competencies you have identified, and take the time to select the assessment methods and teaching and learning activities that align with each of them.</p>
+                                                    <p class="form-text text-muted">Review CLOs/competencies you have identified, and map assessment methods to teaching
+                                                        and learning activities to initiate curriculum alignment.
+                                                    </p>
                                                     <span class="form-text text-primary font-weight-bold">Note: Remember to click save once you are done. </span>
 
                                                 </div>

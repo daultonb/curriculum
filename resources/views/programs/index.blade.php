@@ -7,7 +7,7 @@
     <h1>Programs</h1>
     <p class="form-text text-muted">See below the programs you have mapped using this tool. </p>
     <p class="form-text text-primary font-weight-bold"><i>Note:</i> If you are ideating/evaluating a course that is not
-      associated with a specific program, use the "My Courses" tab instead.</p>
+      associated with a specific program, use the <a href="/courses">"My Courses"</a> tab instead.</p>
 
 
 

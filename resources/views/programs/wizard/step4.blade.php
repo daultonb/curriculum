@@ -5,7 +5,7 @@
     <div class="row justify-content-center">
         <div class="col-md-12">
             @include('programs.wizard.header')
-              
+
             <!-- progress bar -->
             <div>
                 <table class="table table-borderless text-center table-sm" style="table-layout: fixed; width: 100%">
@@ -25,18 +25,18 @@
             </div>
 
             <div class="card">
- 
+
                 <div class="card-header">
-                    <b>Begin Mapping Program</b> 
+                    <b>Begin Mapping Program</b>
                 </div>
 
                 <div class="card-body">
-                    
+
                     <p>
-                        You have successfully created a program! Now, the courses can be mapped to this program. Assigned instructors can now map their course to this program, using their course(s) learning outcomes and this program-level learning outcomes.
-                        If you have assigned a course to yourself, go to "My courses" tab to start mapping the course to this program.
+                       You have successfully created a program! Now, you can map courses to this program. You can also assign collaborators to this program.
+                       Go to "My courses" in the Menu (or Dashboard) tab to start ampping a course to this program.
                     </p>
-                    
+
                     <div class="text-center">
                         <a href="{{ route('courses.index') }}">
                             <button class="btn btn-outline-success btn-sm col-4">Go to My Courses To Begin Mapping ➡</button>
@@ -58,12 +58,12 @@
 </div>
 <script type="text/javascript">
     $(document).ready(function () {
-  
+
       $("form").submit(function () {
         // prevent duplicate form submissions
         $(this).find(":submit").attr('disabled', 'disabled');
         $(this).find(":submit").html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>');
-  
+
       });
     });
   </script>

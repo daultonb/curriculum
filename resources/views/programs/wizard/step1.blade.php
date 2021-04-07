@@ -54,13 +54,42 @@
                                                 {{$category->plo_category}}
                                             </td>
                                             <td style="width:15%">
-                                                <form action="{{route('ploCategory.destroy', $category->plo_category_id)}}" method="POST" class="float-right ml-2">
-                                                    @csrf
-                                                    {{method_field('DELETE')}}
-                                                    <input type="hidden" class="form-check-input" name="program_id" value={{$program->program_id}}>
 
-                                                    <button type="submit" style="width:60px" class="btn btn-danger btn-sm ">Delete</button>
-                                                </form>
+                                                <button type="button" style="width:60px;float: right;margin-left:10px" class="btn btn-danger btn-sm "
+                                                data-toggle="modal" data-target="#deleteCategories{{$category->plo_category_id}}">Delete</button>
+
+                                                <!-- Delete Confirmation Modal -->
+                                                <div class="modal fade" id="deleteCategories{{$category->plo_category_id}}" tabindex="-1" role="dialog" aria-labelledby="deleteCategories{{$category->plo_category_id}}" aria-hidden="true">
+                                                    <div class="modal-dialog" role="document">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title">Delete Confirmation</h5>
+                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                    <span aria-hidden="true">&times;</span>
+                                                                </button>
+                                                            </div>
+
+                                                            <div class="modal-body">
+                                                            Are you sure you want to delete {{$category->plo_category}}?
+                                                            </div>
+
+                                                            <form action="{{route('ploCategory.destroy', $category->plo_category_id)}}" method="POST">
+                                                                @csrf
+                                                                {{method_field('DELETE')}}
+                                                                <input type="hidden" class="form-check-input " name="program_id"
+                                                                    value={{$program->program_id}}>
+
+                                                                <div class="modal-footer">
+                                                                    <button style="width:60px" type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Cancel</button>
+                                                                    <button style="width:60px" type="submit" class="btn btn-danger btn-sm">Delete</button>
+                                                                </div>
+
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+
 
                                                 <button type="button" class="btn btn-secondary btn-sm float-right" data-toggle="modal" style="width:60px;" data-target="#editCategoryModal{{$category->plo_category_id}}">
                                                     Edit
@@ -193,13 +222,40 @@
                                                     {{$plo->pl_outcome}}
                                                 </td>
                                                 <td style="width:15%">
-                                                    <form action="{{route('plo.destroy', $plo->pl_outcome_id)}}" method="POST" class="float-right ml-2">
-                                                        @csrf
-                                                        {{method_field('DELETE')}}
-                                                        <input type="hidden" class="form-check-input" name="program_id" value={{$program->program_id}}>
 
-                                                        <button type="submit" style="width:60px" class="btn btn-danger btn-sm ">Delete</button>
-                                                    </form>
+                                                    <button type="submit" style="width:60px" class="btn btn-danger btn-sm"
+                                                    data-toggle="modal" data-target="#deletePLO{{$category->plo_category_id}}">Delete</button>
+
+                                                    <!-- Confirmation Model -->
+                                                    <div class="modal fade" id="deletePLO{{$category->plo_category_id}}" tabindex="-1" role="dialog" aria-labelledby="deletePLO{{$category->plo_category_id}}" aria-hidden="true">
+                                                        <div class="modal-dialog" role="document">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <h5 class="modal-title">Delete Confirmation</h5>
+                                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                        <span aria-hidden="true">&times;</span>
+                                                                    </button>
+                                                                </div>
+
+                                                                <div class="modal-body">
+                                                                Are you sure you want to delete {{$category->plo_category}}?
+                                                                </div>
+
+                                                                <form action="{{route('plo.destroy', $plo->pl_outcome_id)}}" method="POST">
+                                                                    @csrf
+                                                                    {{method_field('DELETE')}}
+                                                                    <input type="hidden" class="form-check-input " name="program_id"
+                                                                        value={{$program->program_id}}>
+
+                                                                    <div class="modal-footer">
+                                                                        <button style="width:60px" type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Cancel</button>
+                                                                        <button style="width:60px" type="submit" class="btn btn-danger btn-sm">Delete</button>
+                                                                    </div>
+
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                    </div>
 
                                                     <button type="button" class="btn btn-secondary btn-sm float-right" data-toggle="modal" style="width:60px; " data-target="#editPLOModal{{$plo->pl_outcome_id}}">
                                                         Edit
@@ -288,13 +344,41 @@
                                                                         {{$plo->pl_outcome}}
                                                                     </td>
                                                                     <td style="width:15%">
-                                                                        <form action="{{route('plo.destroy', $plo->pl_outcome_id)}}" method="POST" class="float-right ml-2">
-                                                                            @csrf
-                                                                            {{method_field('DELETE')}}
-                                                                            <input type="hidden" class="form-check-input" name="program_id" value={{$program->program_id}}>
 
-                                                                            <button type="submit" style="width:60px" class="btn btn-danger btn-sm ">Delete</button>
-                                                                        </form>
+                                                                        <button type="submit" style="width:60px;float:right;margin-left:10px" class="btn btn-danger btn-sm"
+                                                                        data-toggle="modal" data-target="#deletePLO{{$category->plo_category_id}}">Delete</button>
+
+                                                                        <!-- Confirmation Model -->
+                                                                        <div class="modal fade" id="deletePLO{{$category->plo_category_id}}" tabindex="-1" role="dialog" aria-labelledby="deletePLO{{$category->plo_category_id}}" aria-hidden="true">
+                                                                            <div class="modal-dialog" role="document">
+                                                                                <div class="modal-content">
+                                                                                    <div class="modal-header">
+                                                                                        <h5 class="modal-title">Delete Confirmation</h5>
+                                                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                                            <span aria-hidden="true">&times;</span>
+                                                                                        </button>
+                                                                                    </div>
+
+                                                                                    <div class="modal-body">
+                                                                                    Are you sure you want to delete {{$plo->pl_outcome}}?
+                                                                                    </div>
+
+                                                                                    <form action="{{route('plo.destroy', $plo->pl_outcome_id)}}" method="POST">
+                                                                                        @csrf
+                                                                                        {{method_field('DELETE')}}
+                                                                                        <input type="hidden" class="form-check-input " name="program_id"
+                                                                                            value={{$program->program_id}}>
+
+                                                                                        <div class="modal-footer">
+                                                                                            <button style="width:60px" type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Cancel</button>
+                                                                                            <button style="width:60px" type="submit" class="btn btn-danger btn-sm">Delete</button>
+                                                                                        </div>
+
+                                                                                    </form>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+
 
                                                                         <button type="button" class="btn btn-secondary btn-sm float-right" data-toggle="modal" style="width:60px; " data-target="#editPLOModal{{$plo->pl_outcome_id}}">
                                                                             Edit
@@ -548,7 +632,7 @@
 
                                                     <div class="col-md-8">
                                                         <textarea id="plo" class="form-control" @error('plo') is-invalid @enderror rows="3" name="plo" required autofocus
-                                                        placeholder="Illustat...">
+                                                        placeholder="Illustrate...">
                                                         </textarea>
 
                                                         @error('plo')

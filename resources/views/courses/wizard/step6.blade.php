@@ -53,9 +53,8 @@
                     </a>
                 </div>
 
-                <p class="ml-5 mr-5 form-text text-muted">You	can	review	and	download the answers you entered during	the	process	of	mapping
-                    the	course.	Based on this review, you might	want to	revisit	some steps	and	edit the
-                    information	you	supplied.You can also click finish and submit your summary	to	complete the mapping of	your course.</p>
+                <p class="ml-5 mr-5 form-text text-muted">You can review	and	download the mapped course here. To edit information, select from the numbeered tabs above.
+                    Click finish only when you have completed the mapping process.</p>
 
 
 
@@ -374,8 +373,11 @@
                                         @for($j = 0; $j < count($pl_outcomes); $j++)
                                             @foreach ($outcomeMaps as $om)
                                                 @if( $om->pl_outcome_id == $pl_outcomes[$j]->pl_outcome_id && $om->l_outcome_id == $l_outcomes[$i]->l_outcome_id )
-                                                    <td @foreach($mappingScales as $ms) @if($ms->abbreviation == $om->map_scale_value) style="background-color:{{$ms->colour}}" @endif @endforeach class="text-center align-middle" >{{$om->map_scale_value}}</td>
-
+                                                    <td @foreach($mappingScales as $ms) @if($ms->abbreviation == $om->map_scale_value) style="background-color:{{$ms->colour}}" @endif @endforeach class="text-center align-middle" >
+                                                        <span @if($om->map_scale_value == 'A') style="color:white" @endif>
+                                                            {{$om->map_scale_value}}
+                                                        </span>
+                                                    </td>
                                                 @endif
                                             @endforeach
 
