@@ -18,7 +18,9 @@ use App\Models\LearningActivity;
 use App\Models\OutcomeActivity;
 use App\Models\MappingScale;
 use App\Models\PLOCategory;
+use APP\Models\Custom_program_learning_outcomes;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class CourseWizardController extends Controller
 {
@@ -223,10 +225,14 @@ class CourseWizardController extends Controller
         $mappingScales = MappingScale::join('mapping_scale_programs', 'mapping_scales.map_scale_id', "=", 'mapping_scale_programs.map_scale_id')
                             ->where('mapping_scale_programs.program_id', $course->program_id)->get();
 
-
+        $optional_wefs = DB::table('Custom_program_learning_outcomes')->where('custom_program_name','World Economic Forum 2020')->get();
+        $optional_udls = DB::table('Custom_program_learning_outcomes')->where('custom_program_name','UDL Guidelines')->get();
+        $optional_maes = DB::table('Custom_program_learning_outcomes')->where('custom_program_name','Ministry of Advanced Education,Skills and Training')->get();
+        $optional_ucps = DB::table('Custom_program_learning_outcomes')->where('custom_program_name',"UBC's Climate Priorities")->get();
 
         return view('courses.wizard.step5')->with('l_outcomes', $l_outcomes)->with('course', $course)->with('pl_outcomes',$pl_outcomes)->with('mappingScales', $mappingScales)->with('courseUsers', $courseUsers)->with('user', $user)
-                                        ->with('lo_count',$lo_count)->with('am_count', $am_count)->with('la_count', $la_count)->with('oAct', $oAct)->with('oAss', $oAss)->with('outcomeMaps', $outcomeMaps);
+                                        ->with('lo_count',$lo_count)->with('am_count', $am_count)->with('la_count', $la_count)->with('oAct', $oAct)->with('oAss', $oAss)->with('outcomeMaps', $outcomeMaps)
+                                        ->with('optional_wefs',$optional_wefs)->with('optional_udls',$optional_udls)->with('optional_maes',$optional_maes)->with('optional_ucps',$optional_ucps);
     }
 
     public function step6($course_id)

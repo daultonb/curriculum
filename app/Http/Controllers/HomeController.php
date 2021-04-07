@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -23,6 +25,22 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('pages.home');
+        $user = User::where('id', Auth::id())->first();
+
+        $activeCourses = User::join('course_users', 'users.id', '=', 'course_users.user_id')
+                ->join('courses', 'course_users.course_id', '=', 'courses.course_id')
+                ->join('programs', 'courses.program_id', '=', 'programs.program_id')
+                ->select('courses.program_id','courses.course_code','courses.delivery_modality','courses.semester','courses.year','courses.section',
+                'courses.course_id','courses.course_num','courses.course_title', 'courses.status','programs.program', 'programs.faculty', 'programs.department','programs.level')
+                ->where('course_users.user_id','=',Auth::id())->where('courses.status','=', -1)
+                ->get();
+
+                $programs = User::join('program_users', 'users.id', '=', 'program_users.user_id')
+                ->join('programs', 'program_users.program_id', "=", 'programs.program_id')
+                ->select('programs.program_id','programs.program', 'programs.faculty', 'programs.level', 'programs.department', 'programs.status')
+                ->where('program_users.user_id','=',Auth::id())
+                ->get();
+
+        return view('pages.home')->with("activeCourses",$activeCourses)->with("activeProgram",$programs);
     }
 }

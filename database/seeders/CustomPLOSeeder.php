@@ -127,7 +127,7 @@ class CustomPLOSeeder extends Seeder
         $udl4->custom_plo = "Feedback is provided to students to contribute to their learning";
         $udl4->custom_program_id = 2;
         $udl4->custom_program_name = "UDL Guidelines";
-        $udl1->save();
+        $udl4->save();
 
         $min1 = new Custom_program_learning_outcomes();
         $min1->custom_plo = "Incorporation of the Declaration on the Rights of Indigenous Peoples Act and Calls to Action of the Truth and Reconciliation Commission";
@@ -224,5 +224,29 @@ class CustomPLOSeeder extends Seeder
         $clim9->custom_program_id = 4;
         $clim9->custom_program_name = "UBC's Climate Priorities";
         $clim9->save();
+
+        $indigeous1 = new Custom_program_learning_outcomes();
+        $indigeous1->custom_plo = "Integration of Indigenous histories, experiences, worldviews and knowledge systems";
+        $indigeous1->custom_program_id = 5;
+        $indigeous1->custom_program_name = "Indigenous Strategic Plan";
+        $indigeous1->save();
+
+        $indigeous2 = new Custom_program_learning_outcomes();
+        $indigeous2->custom_plo = "Inclusion of substantive content that explores histories and identifies how Indigenous issues intersect with the field of study";
+        $indigeous2->custom_program_id = 5;
+        $indigeous2->custom_program_name = "Indigenous Strategic Plan";
+        $indigeous2->save();
+
+        $indigeous3 = new Custom_program_learning_outcomes();
+        $indigeous3->custom_plo = "Inclusion of Indigenous people for the development and offering of the curriculum";
+        $indigeous3->custom_program_id = 5;
+        $indigeous3->custom_program_name = "Indigenous Strategic Plan";
+        $indigeous3->save();
+
+        $indigeous4 = new Custom_program_learning_outcomes();
+        $indigeous4->custom_plo = "Continus to partner with Indigenous communities locally and globally";
+        $indigeous4->custom_program_id = 5;
+        $indigeous4->custom_program_name = "Indigenous Strategic Plan";
+        $indigeous4->save();
     }
 }
