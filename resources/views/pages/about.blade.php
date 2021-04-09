@@ -35,7 +35,7 @@
                     <div class="card-header" id="headingTwo">
                         <button type="button" class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo"><h3 class="accordion-title">Benefits of Curriculum Mapping</h3></button>
                     </div>
-                    <div id="collapseTwo" class="collapse show" aria-labelledby="headingTwo" data-parent="#accordionGroup">
+                    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionGroup">
                         <div class="card-body">
                         <ul>
                             <li><strong>Improve student learning:</strong> Curriculum mapping helps faculty use evidence-based information, see relationships between course and overall program goals, and learning outcomes; </li>
@@ -58,7 +58,7 @@
                         <ul>
                             <li><strong>Before using the tool:</strong> Collect all relevant information to navigate the wizard: course learning outcomes (CLOs), assessment methods, and teaching & learning activities.</li>
                         <ul>
-                            <li>Note: Identifying CLOs can be a difficult task for some. If you require assistance with articulating CLOs, contact the<a href="https://ctl.ok.ubc.ca/">Centre for Teaching and Learning </a> for support. </li>
+                            <li>Note: Identifying CLOs can be a difficult task for some. If you require assistance with articulating CLOs, contact the <a href="https://ctl.ok.ubc.ca/">Centre for Teaching and Learning </a> for support. </li>
                         </ul>
                             <li>Once the tool draws its results, <strong>review, reflect,</strong> and take note of the course’s:</li>
                         <ul>
@@ -193,8 +193,8 @@
                             </ul>
                         </ul>
                         <br>
-                        <p>Inspired by and based on UCalgary’s tool: <a href="#">.</a></p>
-                        <p class="lead"> If you have questions about the Curriculum Alignment Tool, please contact <a href="mailto:laura.prada@ubc.ca">laura.prada@ubc.ca</a> at the <a href="https://provost.ok.ubc.ca/" target="_blank">Office of the Provost and Vice-President Academic, UBC Okanagan campus</a>. </p>
+                        <p>Inspired by and based on UCalgary’s tool <a href="https://taylorinstitute.ucalgary.ca/curriculum-links">Curriculum Links</a>.</p>
+                        <p class="lead"> If you have questions about the Curriculum MAP, please contact <a href="mailto:laura.prada@ubc.ca">laura.prada@ubc.ca</a> at the <a href="https://provost.ok.ubc.ca/" target="_blank">Office of the Provost and Vice-President Academic, UBC Okanagan campus</a>. </p>
                         </div>
                     </div>
                 </div>
