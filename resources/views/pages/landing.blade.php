@@ -5,14 +5,14 @@
         <div class="col-md-12">
 
             <div class="jumbotron">
-                <h1 class="display-4">UBCO Curriculum Alignment Tool</h1>
+                <h1 class="display-4">UBCO Curriculum MAP</h1>
                 <p class="lead">Course and program planning platform at UBCO</p>
                 <hr class="my-4">
                 <p>Plan, review and align courses and programs using online curriculum mapping tool. </p>
-                 <p class="lead">
+                <p class="lead">
                     <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
                 </p>
-             </div>
+            </div>
         </div>
     </div> -->
 
@@ -33,14 +33,10 @@
         <div class="col-md-12">
 
             <div class="jumbotron">
-                <h1 class="display-4">Curriculum Alignment MAP (Mapping, Analysis and Planning)</h1>
-                <p class="lead">This web application aims to support instructors to ideate, evaluate or create new programs and courses from a <a href="https://www.heacademy.ac.uk/sites/default/files/resources/id477_aligning_teaching_for_constructing_learning.pdf" target="_blank"><strong>constructive alignment</strong></a> perspective.</p>
-                <!-- <hr class="my-4">
-                <p>Plan, review and align courses and programs using online curriculum mapping tool. </p>
-                 <p class="lead">
-                    <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
-                </p> -->
-             </div>
+                <h1 class="display-4">UBC Curriculum MAP (Mapping, Analysis and Planning)</h1>                                                  <!-- This is the relative file path to the PDF file-->
+                <p class="lead">This web application aims to support instructors to ideate, evaluate or create new programs and courses from a <a href="../../../../pdf/id477_aligning_teaching_for_constructing_learning.pdf"><strong>constructive alignment</strong></a> perspective.</p>
+            </div>
+
         </div>
     </div>
 
@@ -48,38 +44,39 @@
 
     <div class="row mb-5 mt-3 lead justify-content-center">
         <div class="col-md-10">
-            <h1><strong>Curriculum Alignment MAP Overview</strong></h1>
+
+            <h1><strong>Curriculum MAP Overview</strong></h1>
             <p>
-                The Curriculum Alignment MAP is a custom-built web application to support instructors with the:
+                The Curriculum MAP is a custom-built web application to support instructors with the:
             </p>
             <div class="card-deck">
                 <div class="card">
-                  <div class="card-body">
+                <div class="card-body">
 
 
                     <p class="card-text"><strong >IDEATION </strong>of a new program. It allows instructors to map program learning outcomes (PLOs) to course learning outcomes (CLOs) of required and non-required courses for the program. </p>
 
-                  </div>
+                </div>
                 </div>
                 <div class="card">
 
-                  <div class="card-body">
+                <div class="card-body">
 
 
                     <p class="card-text"><strong>EVALUATION</strong> of existing courses or programs by looking at the alignment across learning outcomes, assessment methods, and teaching and learning activities.</p>
 
-                  </div>
+                </div>
                 </div>
                 <div class="card">
 
-                  <div class="card-body">
+                <div class="card-body">
 
 
                     <p class="card-text"><strong>CREATION</strong> of a new course by identifying course learning outcomes, assessment strategies, and teaching and learning methods.</p>
 
-                  </div>
                 </div>
-              </div>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -87,7 +84,7 @@
         <div class="col-md-12 bg-primary">
             <div class="my-5">
 
-               <div class="container">
+            <div class="container">
                 <div class="row">
                     <!-- <div class="col-md">
                         <h1>1. <p class="lead">Create a new program project</p></h1>
@@ -98,7 +95,9 @@
 
                     </div> -->
                     <div class="col-md font-weight-bold">
-                        <h1><strong>How to use this Curriculum Alignment MAP ?</strong></h1>
+
+                        <h1><strong>How to use this Curriculum MAP ?</strong></h1>
+
 
                         <p class="lead">
                             In order to use this tool, users must have identified the:
@@ -125,7 +124,7 @@
         <div class="col-md-10">
             <h1><strong>Questions ?</strong></h1>
             <p class="lead">
-                If you have questions about the Curriculum Alignment Tool, please contact <a href="mailto:laura.prada@ubc.ca">laura.prada@ubc.ca</a> at the <a href="https://provost.ok.ubc.ca/" target="_blank">Office of the Provost and Vice-President Academic, UBC Okanagan campus</a>.
+                If you have questions about the Curriculum MAP, please contact <a href="mailto:laura.prada@ubc.ca">laura.prada@ubc.ca</a> at the <a href="https://provost.ok.ubc.ca/" target="_blank">Office of the Provost and Vice-President Academic, UBC Okanagan campus</a>.
             </p>
 
         </div>

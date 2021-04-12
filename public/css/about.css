@@ -1,0 +1,23 @@
+#accordion{
+    width:100%;
+}
+
+.card-header {
+    background-color: #eef8fb;
+    height: 75px;
+}
+.card-header:hover{
+    background-color: #002145;
+    
+}
+.card-header:hover .accordion-title{
+    color: white;
+}
+.accordion-title {
+    color: #002145;
+    text-decoration: none;
+    font-size: 16pt;
+}
+.card-body{
+    font-size: 14pt;
+}
