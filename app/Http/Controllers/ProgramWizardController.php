@@ -111,9 +111,16 @@ class ProgramWizardController extends Controller
         $program = Program::where('program_id', $program_id)->first();
         $courses = Course::where('program_id', $program_id)->get();
 
-        $existCourses = Course::whereIn('program_id', ['1','2','3'])->get();
+        $usersCourses = CourseUser::where('user_id', $user->id)->get('course_id');
 
-        foreach($courses as $course){
+        $temp = array();
+        foreach($usersCourses as $userCourse) {
+            $courseIds[] = $userCourse->course_id;
+        }
+
+        $existCourses = Course::whereIn('program_id', ['1','2','3'])->whereIn('course_id', $courseIds)->get();
+
+        foreach($courses as $course) {
             foreach($existCourses as $index => $existCourse) {
                 if( $course->course_code == $existCourse->course_code && $course->delivery_modality == $existCourse->delivery_modality &&
                 $course->course_num == $existCourse->course_num && $course->year == $existCourse->year &&
@@ -121,6 +128,7 @@ class ProgramWizardController extends Controller
                 $course->course_title == $existCourse->course_title ) {
                     unset($existCourses[$index]);
                 }
+
             }
         }
 

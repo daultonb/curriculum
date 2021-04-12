@@ -80,6 +80,7 @@
                                         <a class="dropdown-item" href="{{ route('requestInvitation') }}">
                                             Registration invite
                                         </a>
+                                        <a class="dropdown-item" href="{{ route('syllabus') }}">Syllabus Generator</a>
                                     </div>
                             </li>
 

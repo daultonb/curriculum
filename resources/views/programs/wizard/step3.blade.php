@@ -648,31 +648,33 @@
 
                                     <div class="modal-body" style="height: auto;">
 
-                                        <p style="width:45%;text-align:left;"> Course not related with this program</p>
-                                        <div class="drag_container" style="height:275px;float: left;overflow: auto;">
-                                            @foreach($existCourses as $index => $course)
+                                        <p style="text-align:left;">To use existing courses to map this program, drag them from the left box into the right box.</p>
+                                        <h5 style="float: left; width: 50%;text-align:center">Existing courses</h5>
+                                        <h5 style="float: right; width: 50%; text-align: center;">Courses for this program</h5>
+                                        <div class="drag_container" style="height:275px;float: left;overflow: auto">
 
+                                            @foreach($existCourses as $index => $course)
 
                                             <div class="draggable" draggable="true">
                                                 <input type="hidden" name="course_id[]" id= "course{{$index}}" value={{$course->course_id}}>
                                                 <label for="course{{$index}}" class="dragItem">
                                                 Course: {{$course->year}} {{$course->semester}} {{$course->course_code}} {{$course->course_num}} - {{$course->section}}
                                                 </label>
+                                                <small class="form-text text-muted" style="padding-left:0.50rem">
+                                                    Is this course required by the program?
+                                                    </small>
                                                 <div class="form-check" style="padding-left:2.00rem;">
                                                     <label class="form-check-label">
                                                         <input type="radio" class="form-check-input" name="require{{$course->course_id}}" value="1" required>
-                                                        Required
+                                                        Core
                                                     </label>
                                                 </div>
                                                 <div class="form-check" style="padding-left:2.00rem">
                                                     <label class="form-check-label" >
                                                         <input type="radio" class="form-check-input" name="require{{$course->course_id}}" value="-1">
-                                                        Not Required
+                                                        Elective
                                                     </label>
                                                 </div>
-                                                <small class="form-text text-muted" style="padding-left:0.50rem">
-                                                Is this course required by the program?
-                                                </small>
                                             </div>
 
                                             @endforeach

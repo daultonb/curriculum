@@ -420,7 +420,7 @@ class CourseController extends Controller
 
         }
 
-        return redirect()->route('courseWizard.step4', $course_id)->with('success', 'Changes have been saved successfully. ');
+        return redirect()->route('courseWizard.step4', $course_id)->with('success', 'Changes have been saved successfully.');
     }
 
     public function pdf($course_id)
@@ -453,8 +453,8 @@ class CourseController extends Controller
                                 ->where('learning_outcomes.course_id','=',$course_id)->get();
 
         $pdf = PDF::loadView('courses.download', compact('course','program','l_outcomes','pl_outcomes','l_activities','a_methods','outcomeActivities', 'outcomeAssessments', 'outcomeMaps','mappingScales', 'ploCategories')) ;
-        return $pdf->download('summary.pdf');
 
+        return $pdf->download('summary.pdf');
     }
 
 }

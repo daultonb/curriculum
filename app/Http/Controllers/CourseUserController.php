@@ -55,8 +55,6 @@ class CourseUserController extends Controller
             'email'=> 'exists:users,email',
             ]);
 
-
-
         $course = Course::where('course_id',$course_id)->first();
         $user = User::where('email', $request->input('email'))->first();
 

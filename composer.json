@@ -16,9 +16,11 @@
         "fruitcake/laravel-cors": "^2.0",
         "google/recaptcha": "1.2.*",
         "guzzlehttp/guzzle": "^7.0.1",
+        "laminas/laminas-escaper": "^2.7",
         "laravel/framework": "^8.0",
         "laravel/tinker": "^2.0",
-        "laravel/ui": "^3.0"
+        "laravel/ui": "^3.0",
+        "phpoffice/phpword": "^0.18.1"
     },
     "require-dev": {
         "backpack/generators": "^3.1",

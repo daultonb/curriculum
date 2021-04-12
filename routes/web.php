@@ -26,6 +26,9 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('/about', 'AboutController@index')->name('about');
 
+Route::get('/syllabusGenerator', 'SyllabusController@index')->name('syllabus');
+Route::get('/syllabusGenerator/word','SyllabusController@WordExport')->name('syllabus.word');
+
 Route::resource('/programs','ProgramController');
 Route::get('/programs/{program}/submit','ProgramController@submit')->name('programs.submit');
 

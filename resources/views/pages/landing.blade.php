@@ -33,7 +33,7 @@
         <div class="col-md-12">
 
             <div class="jumbotron">
-                <h1 class="display-4">Curriculum Alignment Tool (CAT)</h1>
+                <h1 class="display-4">Curriculum Alignment MAP (Mapping, Analysis and Planning)</h1>
                 <p class="lead">This web application aims to support instructors to ideate, evaluate or create new programs and courses from a <a href="https://www.heacademy.ac.uk/sites/default/files/resources/id477_aligning_teaching_for_constructing_learning.pdf" target="_blank"><strong>constructive alignment</strong></a> perspective.</p>
                 <!-- <hr class="my-4">
                 <p>Plan, review and align courses and programs using online curriculum mapping tool. </p>
@@ -48,9 +48,9 @@
 
     <div class="row mb-5 mt-3 lead justify-content-center">
         <div class="col-md-10">
-            <h1><strong>Curriculum Alignment Tool Overview</strong></h1>
+            <h1><strong>Curriculum Alignment MAP Overview</strong></h1>
             <p>
-                The Curriculum Alignment Tool is a custom-built web application to support instructors with the:
+                The Curriculum Alignment MAP is a custom-built web application to support instructors with the:
             </p>
             <div class="card-deck">
                 <div class="card">
@@ -98,7 +98,7 @@
 
                     </div> -->
                     <div class="col-md font-weight-bold">
-                        <h1><strong>How to use this Curriculum Alignment Tool ?</strong></h1>
+                        <h1><strong>How to use this Curriculum Alignment MAP ?</strong></h1>
 
                         <p class="lead">
                             In order to use this tool, users must have identified the:
