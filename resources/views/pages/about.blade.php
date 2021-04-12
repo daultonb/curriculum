@@ -101,7 +101,7 @@
                         <h4>Alignment with Quality Assurance and Enhancement</h4>
                         <p>UBC Okanagan is committed to providing the highest quality of education to all students. This means ongoing work for continuous improvement and innovation of teaching and learning practices across disciplines.</p>
                         <p>This website aims to support this commitment by providing all instructors with a tool to ideate, create, and evaluate new or already existing courses and programs, using backward design. Engaging in this important exercise benefits students, instructors, and our overall communities. </p>
-                        <p>To learn more about UBC Okanagan’s efforts towards quality assurance and enhancement <a href ="https://provost.ok.ubc.ca/initiatives/quality-assurance-and-enhancement/" alt="quality assurance and enhancement site"  target="_blank">click here.</a> </p>
+                        <p>To learn more about UBC Okanagan’s efforts towards quality assurance and enhancement <a href ="https://provost.ok.ubc.ca/initiatives/quality-assurance-and-enhancement/" title="Quality Assurance and Enhancement site"  target="_blank">click here.</a> </p>
                         </div>
                     </div>
                 </div>
@@ -111,9 +111,7 @@
                     </div>
                     <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordionGroup">
                         <div class="card-body">
-                        <ul>
-                            <li>From users</li>
-                        </ul>
+                        <p>Testimonials have not been collected yet.</p>
                         </div>
                     </div>
                 </div>
