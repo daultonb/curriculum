@@ -25,7 +25,7 @@
                                 <li>“understand curriculum structures and relationships, gain insight in how students experience their discipline, and increase awareness of curricular content” (Archambault and Masunaga, 2015). </li>
                             </ul>
                             <br>
-                            <p><a href="https://strategicplan.ubc.ca/transformative-learning/">UBC’s Strategic Plan’s Strategy on Transformative Learning</a> focuses on an important cornerstone of the curriculum mapping process. The strategy notes that: </p>
+                            <p><a href="https://strategicplan.ubc.ca/transformative-learning/" target="_blank">UBC’s Strategic Plan’s Strategy on Transformative Learning</a> focuses on an important cornerstone of the curriculum mapping process. The strategy notes that: </p>
                             <p><i>Our work at UBC is focused on enhanced support for program redesign around competencies; the development of problem-solving experiences; technology-enabled learning; and continued growth in work-integrated education. Sustained progress requires leadership across the institution to model, inspire and celebrate excellence in teaching and mentorship. </i></p>
                             <p>To create an immersive learning experience that fosters competencies identified by faculties and departments as critical to the discipline, a curriculum map can be an <strong>effective way to visualize the program structure, list of courses, teaching and learning activities, and assessment practices.</strong> This “integrative and sustainable” (Kalu & Dyjur, 2018) process is collaborative and <strong>geared towards student success.</strong></p>
                         </div>
@@ -58,7 +58,7 @@
                         <ul>
                             <li><strong>Before using the tool:</strong> Collect all relevant information to navigate the wizard: course learning outcomes (CLOs), assessment methods, and teaching & learning activities.</li>
                         <ul>
-                            <li>Note: Identifying CLOs can be a difficult task for some. If you require assistance with articulating CLOs, contact the <a href="https://ctl.ok.ubc.ca/">Centre for Teaching and Learning </a> for support. </li>
+                            <li>Note: Identifying CLOs can be a difficult task for some. If you require assistance with articulating CLOs, contact the <a href="https://ctl.ok.ubc.ca/" target="_blank">Centre for Teaching and Learning </a> for support. </li>
                         </ul>
                             <li>Once the tool draws its results, <strong>review, reflect,</strong> and take note of the course’s:</li>
                         <ul>
@@ -101,7 +101,7 @@
                         <h4>Alignment with Quality Assurance and Enhancement</h4>
                         <p>UBC Okanagan is committed to providing the highest quality of education to all students. This means ongoing work for continuous improvement and innovation of teaching and learning practices across disciplines.</p>
                         <p>This website aims to support this commitment by providing all instructors with a tool to ideate, create, and evaluate new or already existing courses and programs, using backward design. Engaging in this important exercise benefits students, instructors, and our overall communities. </p>
-                        <p>To learn more about UBC Okanagan’s efforts towards quality assurance and enhancement <a href ="https://provost.ok.ubc.ca/initiatives/quality-assurance-and-enhancement/" alt="quality assurance and enhancement site">click here.</a> </p>
+                        <p>To learn more about UBC Okanagan’s efforts towards quality assurance and enhancement <a href ="https://provost.ok.ubc.ca/initiatives/quality-assurance-and-enhancement/" alt="quality assurance and enhancement site"  target="_blank">click here.</a> </p>
                         </div>
                     </div>
                 </div>
@@ -193,7 +193,7 @@
                             </ul>
                         </ul>
                         <br>
-                        <p>Inspired by and based on UCalgary’s tool <a href="https://taylorinstitute.ucalgary.ca/curriculum-links">Curriculum Links</a>.</p>
+                        <p>Inspired by and based on UCalgary’s tool <a href="https://taylorinstitute.ucalgary.ca/curriculum-links" target="_blank">Curriculum Links</a>.</p>
                         <p class="lead"> If you have questions about the Curriculum MAP, please contact <a href="mailto:laura.prada@ubc.ca">laura.prada@ubc.ca</a> at the <a href="https://provost.ok.ubc.ca/" target="_blank">Office of the Provost and Vice-President Academic, UBC Okanagan campus</a>. </p>
                         </div>
                     </div>
