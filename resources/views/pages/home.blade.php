@@ -12,46 +12,61 @@
 
                 <div class="card shadow rounded" style="float: left;width:27%;margin:20px;border-style: solid;
                 border-color: #6495ED;">
-                    <div class="card-body" style="background-color:#6495ED;">
-                        <span style="color: white;font-size:24px;">
-                        My Programs
-                        </span>
+                    <div class="card-title" style="background-color:#6495ED;float: left;">
+                        <h3 style="color: white;margin:22px">
+                        <a style="color: white;text-decoration: none;" href="{{ route('programs.index') }}">My Programs</a>
+                        <span style="float: right">{{count($activeProgram)}}</span>
+                        </h3>
                     </div>
 
-                    <div class="card-footer" style="padding:0%;">
-                        <a class="nav-link" href="{{ route('programs.index') }}" style="color: #6495ED">
-                            In-progress or completed programs &#10141;</a>
+                    <div class="card-body" style="padding:0%;">
+                        <span style="color: #6495ED;margin-left:10px;font-size:15px">
+                            In-progress or completed programs:
+                        </span>
+                        <ul style="max-height:150px;overflow-y: auto;">
+                            @foreach ($activeProgram as $program)
+                            <li>{{$program->program}}</li>
+                            @endforeach
+                        </ul>
                     </div>
                 </div>
 
                 <div class="card shadow rounded" style="float: left;width:26%;margin:20px;border-style: solid;
                 border-color: #4169E1;">
-                    <div class="card-body" style="background-color: #4169E1;">
-                        <span style="color: white;font-size:24px;">
-                        My Courses
-                        </span>
+                    <div class="card-title" style="background-color: #4169E1;">
+                        <h3 style="color: white;margin:22px">
+                        <a style="color: white;text-decoration: none;" href="{{ route('courses.index') }}">My Courses</a>
+                        <span style="float: right">{{count($activeCourses)}}</span>
+                        </h3>
                     </div>
 
-                    <div class="card-footer" style="padding:0%;margin-left:3px">
-                        <a class="nav-link" href="{{ route('courses.index') }}" style="color: #4169E1">
-                            In-progress or completed courses &#10141;</a>
+                    <div class="card-body" style="padding:0%;">
+                        <span style="color: #4169E1;margin-left:10px;font-size:15px">
+                            In-progress courses:
+                        </span>
+                        <ul style="max-height:150px;overflow-y: auto;">
+                            @foreach ($activeCourses as $course)
+                            <li>{{$course->year}} {{$course->semester}} {{$course->course_code}} {{$course->course_num}} {{$course->section}}</li>
+                            @endforeach
+                        </ul>
                     </div>
                 </div>
 
-                <div class="card shadow rounded" style="float: left;width:25%;margin:20px;border-style: solid;
+                <div class="card shadow rounded" style="float: left;width:27%;margin:20px;border-style: solid;
                 border-color: #228B22;">
-                    <div class="card-body" style="background-color: #228B22;">
-                        <span style="color: white;font-size:24px;">
+                    <div class="card-title" style="background-color: #228B22;">
+                        <h3 style="color: white;margin:22px">
+                        <a style="color: white;text-decoration: none;" href="{{ route('requestInvitation') }}" >
                         Registration Invite
-                        </span>
+                        </a>
+                        </h3>
                     </div>
 
-                    <div class="card-footer" style="padding:0%;margin-left:3px">
-                        <a class="nav-link" href="{{ route('requestInvitation') }}" style="color: #228B22">
-                            Invite somebody to the website &#10141;</a>
+                    <div class="card-body" style="padding:0%;">
+                        <span style="color: #228B22;;margin-left:10px;font-size:15px">
+                            Invite somebody to the website &#10141;</span>
                     </div>
                 </div>
-
 
         </div>
     </div>

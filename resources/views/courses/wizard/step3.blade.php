@@ -70,7 +70,7 @@
                                                     <input list="l_activities{{$index}}" name="l_activity[]" id="l_activity{{$l_activity->l_activity_id}}" form="l_activity_form" class="form-control" type="text"
                                                     type= "method" placeholder="Choose from the dropdown list or type your own" value="{{$l_activity->l_activity}}" required autofocus style="white-space: pre"
                                                     spellcheck="true">
-                                                        <datalist id="l_activities{{$index}}" name="l_activities" >
+                                                    <datalist id="l_activities{{$index}}" name="l_activities" >
                                                             <option value="Discussion">
                                                             <option value="Gallery walk">
                                                             <option value="Group discussion">
@@ -191,48 +191,49 @@
 
     //Add a new row of assesment method
     function add() {
-        var container = $('#l_activity_table');
         var rowCount = $('#l_activity_table tr').length - 1;
             var element =
             `<tr>
                 <td>
-                    <input list="l_activities`+ rowCount +`" name="l_activity[]" id="l_new_activity`+ rowCount +` " form="l_activity_form"
-                    type="text" class="form-control" required autofocus placeholder="Choose from the dropdown list or type your own">
-                        <datalist id="l_activities`+ rowCount +`" name="l_activities" spellcheck="true">
-                            <option value="Discussion">
-                            <option value="Gallery walk">
-                            <option value="Group discussion">
-                            <option value="Group work">
-                            <option value="Guest Speaker">
-                            <option value="Independent study">
-                            <option value="Issue-based inquiry">
-                            <option value="Jigsaw">
-                            <option value="Journals and learning logs">
-                            <option value="Lab">
-                            <option value="Lecture">
-                            <option value="Literature response">
-                            <option value="Mind map">
-                            <option value="Poll">
-                            <option value="Portfolio development">
-                            <option value="Problem-solving">
-                            <option value="Reflection piece">
-                            <option value="Role-playing">
-                            <option value="Service learning">
-                            <option value="Seminar">
-                            <option value="Sorting">
-                            <option value="Think-pair-share">
-                            <option value="Tutorial">
-                            <option value="Venn diagram">
+                    <input list="l_activities" name="l_activity[]" id="l_activity`+rowCount+`" form="l_activity_form" class="form-control" type="text"
+                    type= "method" placeholder="Choose from the dropdown list or type your own" required autofocus
+                    spellcheck="true">
+                    <datalist id="l_activities" name="l_activities" >
+                        <option value="Discussion">Discussion</option>
+                        <option value="Gallery walk">
+                        <option value="Group discussion">
+                        <option value="Group work">
+                        <option value="Guest Speaker">
+                        <option value="Independent study">
+                        <option value="Issue-based inquiry">
+                        <option value="Jigsaw">
+                        <option value="Journals and learning logs">
+                        <option value="Lab">
+                        <option value="Lecture">
+                        <option value="Literature response">
+                        <option value="Mind map">
+                        <option value="Poll">
+                        <option value="Portfolio development">
+                        <option value="Problem-solving">
+                        <option value="Reflection piece">
+                        <option value="Role-playing">
+                        <option value="Service learning">
+                        <option value="Seminar">
+                        <option value="Sorting">
+                        <option value="Think-pair-share">
+                        <option value="Tutorial">
+                        <option value="Venn diagram">
 
-                            @if(isset($custom_activities))
-                            @foreach($custom_activities as $activity)
-                                <option value={{$activity->custom_activities}}>
-                            @endforeach
-                            @endif
+                        @if(isset($custom_activities))
+                        @foreach($custom_activities as $activity)
+                            <option value={{$activity->custom_activities}}>
+                        @endforeach
+                        @endif
                         </datalist>
                     </td>
                 </tr>`;
 
+            var container = $('#l_activity_table');
             container.append(element);
     }
 
@@ -278,6 +279,7 @@
         }
     }
 
+    // Helper function used to Sorting the datalist
     function sort(datalist) {
         datalist.sort(function(string_1,string_2) {
             if(string_1.toLowerCase() < string_2.toLowerCase()){return -1;}

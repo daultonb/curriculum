@@ -8616,9 +8616,9 @@
             @endswitch
             </p>
             <p><b>Program Project:</b> {{$program->program}}</p>
-            <p class="text-muted"><b>Faculty/School:</b> {{$program->faculty}}</p>
-            <p class="text-muted"><b>Department:</b> {{$program->department}}</p>
-            <p class="text-muted"><b>Level: </b>{{$program->level}}</p>
+            <p><b>Faculty/School:</b> {{$program->faculty}}</p>
+            <p><b>Department:</b> {{$program->department}}</p>
+            <p><b>Level: </b>{{$program->level}}</p>
 
         </div>
 
@@ -8803,7 +8803,6 @@
                 </tr>
                 <tr>
                     <td style="padding-left: 24px; padding-right: 24px">
-                        <p>Program learning outcomes are listed below.</p>
 
                         <table class="table table-bordered table-sm mt-3">
 

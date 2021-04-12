@@ -48,7 +48,7 @@
 
                 <div class="card-body">
                     <p class="form-text text-muted">Input all <a href="https://ctlt.ubc.ca/resources/webliography/assessmentevaluation/" target="_blank">assessment methods</a> of the course individually.
-                        You may also choose to use the <a href="https://ubcoapps.elearning.ubc.ca/">UBCO's Workload Calculator</a> to estimate the student time commitment in this course based on the chosen assignments.</p>
+                        You may also choose to use the <a href="https://ubcoapps.elearning.ubc.ca/" target="_blank">UBCO's Workload Calculator</a> to estimate the student time commitment in this course based on the chosen assignments.</p>
 
                     <div id="admins">
                         <div class="row">
@@ -155,7 +155,7 @@
 
                     <form method="POST" id="a_method_form" action="{{ action('AssessmentMethodController@store') }}">
                         @csrf
-                        <button type="submit" class="btn btn-primary mt-3 float-right" id="btnSave" style="margin-right:15px; ">
+                        <button type="submit" class="btn btn-primary mt-3 float-right" id="btnSave" style="margin-right:15px;">
                             Save
                         </button>
                         <input type="hidden" name="course_id" value="{{$course->course_id}}" form="a_method_form">
@@ -232,8 +232,9 @@
             `<tr>
                 <td>
                     <input list="a_methods`+rowCount+`" name= "a_method[]" id="a_new_method`+rowCount+`" type="text" class="form-control
-                    @error('a_method') is-invalid @enderror" name="a_method" form="a_method_form" placeholder="Choose from the dropdown list or type your own" required autofocus>
-                    <datalist id="a_methods`+rowCount+`" name="a_methods" spellcheck="true">
+                    @error('a_method') is-invalid @enderror" name="a_method" form="a_method_form" placeholder="Choose from the dropdown list or type your own"
+                    spellcheck="true" required autofocus>
+                    <datalist id="a_methods`+rowCount+`" name="a_methods">
                         <option value="Annotated bibliography">
                         <option value="Assignment">
                         <option value="Attendance">
@@ -363,6 +364,7 @@
         }
     }
 
+    // Helper function used to Sorting the datalist
     function sort(datalist) {
         datalist.sort(function(string_1,string_2) {
             if(string_1.toLowerCase() < string_2.toLowerCase()){return -1;}

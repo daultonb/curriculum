@@ -18,6 +18,7 @@
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
 
     <!-- Styles -->
+
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js" integrity="sha384-q2kxQ16AaE6UbzuKqyBE9/u/KzioAlnx2maXQHiDX9d4/zp8Ok3f+M7DPm+Ib6IU" crossorigin="anonymous"></script>
@@ -64,7 +65,7 @@
                         @else
 
                         <li class="nav-item">
-                        <a class="nav-link" href="{{ route('home')}}">Home</a>
+                        <a class="nav-link" href="{{ route('home')}}">Dashboard</a>
                         </li>
 
                         <li class="nav-item">
@@ -79,6 +80,7 @@
                                         <a class="dropdown-item" href="{{ route('requestInvitation') }}">
                                             Registration invite
                                         </a>
+                                        <a class="dropdown-item" href="{{ route('syllabus') }}">Syllabus Generator</a>
                                     </div>
                             </li>
 

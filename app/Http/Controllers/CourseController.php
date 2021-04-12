@@ -148,8 +148,9 @@ class CourseController extends Controller
         $course_ids = $request->input('course_id');
 
         //forloop create an copy of the courses
-        foreach($course_ids as $course_id){
+        foreach($course_ids as $index => $course_id){
             $existCourse = Course::where('course_id', $course_id)->first();
+            $requires = $request->input('require'.$course_ids[$index]);
 
             $course = new Course;
 
@@ -158,7 +159,7 @@ class CourseController extends Controller
             $course->course_num = $existCourse->course_num;
             $course->course_code =  $existCourse->course_code;
             $course->status = -1;
-            $course->required = 0;
+            $course->required = $requires;
             $course->type = $existCourse->type;
 
             $course->delivery_modality = $existCourse->delivery_modality;
@@ -168,13 +169,13 @@ class CourseController extends Controller
 
             $course->assigned = -1;
             if($course->save()){
+
                 /*copy learning activities
                 $learning_activities = DB::table('learning_activities',$course_id)->pluck('l_activity')->toArray();
 
                 foreach($learning_activities as $learning_activitie){
 
                 }
-
                 */
 
                 //copy learning outcomes
@@ -188,7 +189,6 @@ class CourseController extends Controller
                     $lo->course_id = $course->course_id;
                     $lo->save();
                 }
-
                 /*copy assessment methods
                 $a_methods = DB::table('assessment_methods',$course_id)->pluck('a_method')->toArray();
                 $weights = DB::table('assessment_methods',$course_id)->pluck('weight')->toArray();
@@ -196,8 +196,8 @@ class CourseController extends Controller
                 foreach($a_methods as $a_method){
 
                 }
-
                 */
+
                 $request->session()->flash('success', 'New course added');
             }else{
                 $request->session()->flash('error', 'There was an error adding the course');
@@ -420,7 +420,7 @@ class CourseController extends Controller
 
         }
 
-        return redirect()->route('courseWizard.step4', $course_id)->with('success', 'Changes have been saved successfully. ');
+        return redirect()->route('courseWizard.step4', $course_id)->with('success', 'Changes have been saved successfully.');
     }
 
     public function pdf($course_id)
@@ -453,8 +453,8 @@ class CourseController extends Controller
                                 ->where('learning_outcomes.course_id','=',$course_id)->get();
 
         $pdf = PDF::loadView('courses.download', compact('course','program','l_outcomes','pl_outcomes','l_activities','a_methods','outcomeActivities', 'outcomeAssessments', 'outcomeMaps','mappingScales', 'ploCategories')) ;
-        return $pdf->download('summary.pdf');
 
+        return $pdf->download('summary.pdf');
     }
 
 }

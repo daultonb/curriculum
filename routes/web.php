@@ -26,6 +26,9 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('/about', 'AboutController@index')->name('about');
 
+Route::get('/syllabusGenerator', 'SyllabusController@index')->name('syllabus');
+Route::get('/syllabusGenerator/word','SyllabusController@WordExport')->name('syllabus.word');
+
 Route::resource('/programs','ProgramController');
 Route::get('/programs/{program}/submit','ProgramController@submit')->name('programs.submit');
 
@@ -60,14 +63,16 @@ Route::resource('/ploCategory','PLOCategoryController');
 Route::resource('/programUser','ProgramUserController', ['except'=>'destroy']);
 Route::delete('/programUser/{program}/{user}','ProgramUserController@delete')->name('programUser.destroy');
 
-
+// Program wizard controller used to sent info from database to the blade page
 Route::get('/programWizard/{program}/step1','ProgramWizardController@step1')->name('programWizard.step1');
 Route::get('/programWizard/{program}/step2','ProgramWizardController@step2')->name('programWizard.step2');
 Route::get('/programWizard/{program}/step3','ProgramWizardController@step3')->name('programWizard.step3');
 Route::get('/programWizard/{program}/step4','ProgramWizardController@step4')->name('programWizard.step4');
 
+// Program step3 add existing course to the program
 Route::post('/programWizard/{program}/step3/copy', 'CourseController@copy')->name('courses.copy');
 
+// Course wizard controller used to sent info from database to the blade page
 Route::get('/courseWizard/{course}/step1','CourseWizardController@step1')->name('courseWizard.step1');
 Route::get('/courseWizard/{course}/step2','CourseWizardController@step2')->name('courseWizard.step2');
 Route::get('/courseWizard/{course}/step3','CourseWizardController@step3')->name('courseWizard.step3');
@@ -78,10 +83,7 @@ Route::get('/courseWizard/{course}/step6','CourseWizardController@step6')->name(
 // invatation route
 Route::get('/invite', 'InviteController@requestInvitation')->name('requestInvitation');
 
-Route::get('/inviteMail',function(){
-    return new Invitation();
-});
-
+// route used to sent the invitation email
 Route::post('/invitations','InviteController@store')->name('storeInvitation');
 
 

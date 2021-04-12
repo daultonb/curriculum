@@ -36,6 +36,7 @@
                 <h1 class="display-4">UBC Curriculum MAP (Mapping, Analysis and Planning)</h1>                                                  <!-- This is the relative file path to the PDF file-->
                 <p class="lead">This web application aims to support instructors to ideate, evaluate or create new programs and courses from a <a href="../../../../pdf/id477_aligning_teaching_for_constructing_learning.pdf"><strong>constructive alignment</strong></a> perspective.</p>
             </div>
+
         </div>
     </div>
 
@@ -43,6 +44,7 @@
 
     <div class="row mb-5 mt-3 lead justify-content-center">
         <div class="col-md-10">
+
             <h1><strong>Curriculum MAP Overview</strong></h1>
             <p>
                 The Curriculum MAP is a custom-built web application to support instructors with the:
@@ -93,7 +95,9 @@
 
                     </div> -->
                     <div class="col-md font-weight-bold">
+
                         <h1><strong>How to use this Curriculum MAP ?</strong></h1>
+
 
                         <p class="lead">
                             In order to use this tool, users must have identified the:

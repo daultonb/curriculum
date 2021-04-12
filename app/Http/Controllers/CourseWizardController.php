@@ -18,7 +18,9 @@ use App\Models\LearningActivity;
 use App\Models\OutcomeActivity;
 use App\Models\MappingScale;
 use App\Models\PLOCategory;
+use APP\Models\Custom_program_learning_outcomes;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class CourseWizardController extends Controller
 {
@@ -224,9 +226,9 @@ class CourseWizardController extends Controller
                             ->where('mapping_scale_programs.program_id', $course->program_id)->get();
 
 
-
         return view('courses.wizard.step5')->with('l_outcomes', $l_outcomes)->with('course', $course)->with('pl_outcomes',$pl_outcomes)->with('mappingScales', $mappingScales)->with('courseUsers', $courseUsers)->with('user', $user)
-                                        ->with('lo_count',$lo_count)->with('am_count', $am_count)->with('la_count', $la_count)->with('oAct', $oAct)->with('oAss', $oAss)->with('outcomeMaps', $outcomeMaps);
+                                        ->with('lo_count',$lo_count)->with('am_count', $am_count)->with('la_count', $la_count)->with('oAct', $oAct)->with('oAss', $oAss)->with('outcomeMaps', $outcomeMaps)
+                                       ;
     }
 
     public function step6($course_id)

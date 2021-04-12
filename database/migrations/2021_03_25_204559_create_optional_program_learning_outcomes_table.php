@@ -29,6 +29,6 @@ class CreateOptionalProgramLearningOutcomesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('optional_program_learning_outcomes');
+        Schema::dropIfExists('custom_program_learning_outcomes');
     }
 }

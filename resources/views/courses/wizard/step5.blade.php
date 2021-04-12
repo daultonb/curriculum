@@ -110,6 +110,7 @@
                                 @else
                                     Using the mapping scale provided, identify the alignment between each of the CLOs against the PLOs.
                                 @endif
+
                             </p>
 
                             <div id="accordion">
@@ -117,7 +118,7 @@
                                 @for($i = 0; $i < count($l_outcomes); $i++)
 
                                     <div class="card">
-                                        <div class="card-header" id="headingOne">
+                                        <div class="card-header" id="headingOne" style="border-bottom: 0px;">
                                             <h5 class="mb-0">
                                                 <a data-toggle="collapse" data-target="#collapse{{$l_outcomes[$i]->l_outcome_id}}" aria-expanded="true" aria-controls="collapse{{$l_outcomes[$i]->l_outcome_id}}" href="#collapse{{$l_outcomes[$i]->l_outcome_id}}" style="text-decoration:none">
                                                     <b>CLO #{{$i+1}} </b>: {{$l_outcomes[$i]->clo_shortphrase}}
@@ -198,10 +199,7 @@
                             </div>
                         @endif
 
-
-
                     </div>
-
                 </div>
                 <div class="card-footer">
                     <a href="{{route('courseWizard.step4', $course->course_id)}}">
@@ -213,24 +211,14 @@
                 </div>
 
             </div>
-
-
-
         </div>
-
-
-
-
-
     </div>
-
-
-
 </div>
 
 
-<script type="text/javascript">
+<script>
     $(document).ready(function () {
+
 
         $('[data-toggle="tooltip"]').tooltip();
 
@@ -287,6 +275,7 @@
 
         // });
     });
+
   </script>
 
 

@@ -108,6 +108,7 @@
                                             <div class="col-md-2 float-right">
                                                 <select id="course_year" class="form-control @error('course_year') is-invalid @enderror"
                                                 name="course_year" required autofocus>
+                                                    <option @if($course->year === 2022) selected @endif value="2022">2022</option>
                                                     <option @if($course->year === 2021) selected @endif value="2021">2021</option>
                                                     <option @if($course->year === 2020) selected @endif value="2020">2020</option>
                                                     <option @if($course->year === 2019) selected @endif value="2019">2019</option>
