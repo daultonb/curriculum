@@ -28,6 +28,7 @@ Route::get('/about', 'AboutController@index')->name('about');
 
 Route::get('/syllabusGenerator', 'SyllabusController@index')->name('syllabus');
 Route::get('/syllabusGenerator/word','SyllabusController@WordExport')->name('syllabus.word');
+Route::get('/syllabusGenerator/course','SyllabusController@getCourseInfo');
 
 Route::resource('/programs','ProgramController');
 Route::get('/programs/{program}/submit','ProgramController@submit')->name('programs.submit');
@@ -48,6 +49,7 @@ Route::resource('/lo','LearningOutcomeController')->only(['store','update','edit
 Route::resource('/plo','ProgramLearningOutcomeController');
 
 Route::resource('/la','LearningActivityController');
+
 Route::post('/ajax/custom_activities','CustomLearningActivitiesController@store' );
 Route::post('/ajax/custom_methods','CustomAssessmentMethodsController@store' );
 
@@ -80,11 +82,18 @@ Route::get('/courseWizard/{course}/step4','CourseWizardController@step4')->name(
 Route::get('/courseWizard/{course}/step5','CourseWizardController@step5')->name('courseWizard.step5');
 Route::get('/courseWizard/{course}/step6','CourseWizardController@step6')->name('courseWizard.step6');
 
+// Save optional PLOs
+Route::post('/optionals','OptionalPriorities@store')->name('storeOptionalPLOs');
+
 // invatation route
-Route::get('/invite', 'InviteController@requestInvitation')->name('requestInvitation');
+Route::get('/invite', 'InviteController@index')->name('requestInvitation');
 
 // route used to sent the invitation email
 Route::post('/invitations','InviteController@store')->name('storeInvitation');
 
+// UnderConstruction page
+Route::get('/construction', function () {
+    return view('pages.construction');
+});
 
 Auth::routes();

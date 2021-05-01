@@ -31,12 +31,10 @@
 
     <div class="row justify-content-center">
         <div class="col-md-12">
-
             <div class="jumbotron">
                 <h1 class="display-4">UBC Curriculum MAP (Mapping, Analysis and Planning)</h1>                                                  <!-- This is the relative file path to the PDF file-->
                 <p class="lead">This web application aims to support instructors to ideate, evaluate or create new programs and courses from a <a href="../../../../pdf/id477_aligning_teaching_for_constructing_learning.pdf"><strong>constructive alignment</strong></a> perspective.</p>
             </div>
-
         </div>
     </div>
 
@@ -53,7 +51,6 @@
                 <div class="card">
                 <div class="card-body">
 
-
                     <p class="card-text"><strong >IDEATION </strong>of a new program. It allows instructors to map program learning outcomes (PLOs) to course learning outcomes (CLOs) of required and non-required courses for the program. </p>
 
                 </div>
@@ -62,7 +59,6 @@
 
                 <div class="card-body">
 
-
                     <p class="card-text"><strong>EVALUATION</strong> of existing courses or programs by looking at the alignment across learning outcomes, assessment methods, and teaching and learning activities.</p>
 
                 </div>
@@ -70,7 +66,6 @@
                 <div class="card">
 
                 <div class="card-body">
-
 
                     <p class="card-text"><strong>CREATION</strong> of a new course by identifying course learning outcomes, assessment strategies, and teaching and learning methods.</p>
 

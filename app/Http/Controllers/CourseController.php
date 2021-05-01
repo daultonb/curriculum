@@ -321,7 +321,6 @@ class CourseController extends Controller
         //
         $c = Course::where('course_id', $course_id)->first();
         $type = $c->type;
-        $program_id = $c->program_id;
 
         if($c->delete()){
             $request->session()->flash('success','Course has been deleted');
@@ -329,12 +328,9 @@ class CourseController extends Controller
             $request->session()->flash('error', 'There was an error deleting the course');
         }
 
-        if($type == 'assigned' || $program_id !== '3'||$program_id !== '2'|| $program_id !== '1'){
-
+        if($type == 'assigned'){
             return redirect()->route('programWizard.step3', $request->input('program_id'));
-
         }else{
-
             return redirect()->route('courses.index');
         }
 

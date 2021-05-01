@@ -4,7 +4,7 @@
 
 <div class="row justify-content-center">
   <div class=" col-md-12">
-    <h1>Programs</h1>
+    <h1>My Programs</h1>
     <p class="form-text text-muted">See below the programs you have mapped using this tool. </p>
     <p class="form-text text-primary font-weight-bold"><i>Note:</i> If you are ideating/evaluating a course that is not
       associated with a specific program, use the <a href="/courses">"My Courses"</a> tab instead.</p>
@@ -206,7 +206,7 @@
   </div>
 </div>
 
-<script type="text/javascript">
+<script type="application/javascript">
   $(document).ready(function () {
 
     $("form").submit(function () {

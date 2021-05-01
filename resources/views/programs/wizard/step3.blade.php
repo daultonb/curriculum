@@ -658,7 +658,7 @@
                                             <div class="draggable" draggable="true">
                                                 <input type="hidden" name="course_id[]" id= "course{{$index}}" value={{$course->course_id}}>
                                                 <label for="course{{$index}}" class="dragItem">
-                                                Course: {{$course->year}} {{$course->semester}} {{$course->course_code}} {{$course->course_num}} - {{$course->section}}
+                                                Course: {{$course->course_title}} {{$course->course_code}} {{$course->course_num}}
                                                 </label>
                                                 <small class="form-text text-muted" style="padding-left:0.50rem">
                                                     Is this course required by the program?

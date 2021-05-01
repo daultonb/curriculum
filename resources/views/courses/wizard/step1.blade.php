@@ -75,18 +75,44 @@
                                                     {{$l_outcome->l_outcome}}
                                                 </td>
                                                 <td width="250px">
-                                                    <form class="float-right ml-2" action="{{route('lo.destroy', $l_outcome->l_outcome_id)}}" method="POST">
-                                                        @csrf
-                                                        {{method_field('DELETE')}}
-                                                        <input type="hidden" name="course_id" value="{{$course->course_id}}">
-                                                        <button style="width:60px;" type="submit" class="btn btn-danger btn-sm ">Delete</button>
-                                                    </form>
+                                                    <button style="width:60px;margin-left:10px;" type="button" class="btn btn-danger btn-sm btn btn-danger btn-sm float-right"
+                                                    data-toggle="modal" data-target="#CLOdeleteConfirmation" >Delete</button>
+
+                                                    <!-- Delete Confirmation Modal -->
+                                                    <div class="modal fade" id="CLOdeleteConfirmation" tabindex="-1" role="dialog" aria-labelledby="CLOdeleteConfirmation" aria-hidden="true">
+                                                        <div class="modal-dialog" role="document">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <h5 class="modal-title" id="CLOdeleteConfirmation">Delete Confirmation</h5>
+                                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                        <span aria-hidden="true">&times;</span>
+                                                                    </button>
+                                                                </div>
+
+                                                                <div class="modal-body">
+                                                                Are you sure you want to delete {{$l_outcome->l_outcome}} ?
+                                                                </div>
+
+                                                                <form class="float-right ml-2" action="{{route('lo.destroy', $l_outcome->l_outcome_id)}}" method="POST">
+                                                                    @csrf
+                                                                    {{method_field('DELETE')}}
+                                                                    <input type="hidden" name="course_id" value="{{$course->course_id}}">
+
+                                                                    <div class="modal-footer">
+                                                                        <button style="width:60px" type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Cancel</button>
+                                                                        <button style="width:60px;" type="submit" class="btn btn-danger btn-sm ">Delete</button>
+                                                                    </div>
+
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                    </div>
 
                                                     <button type="button" style="width:60px;" class="btn btn-secondary btn-sm float-right" data-toggle="modal" data-target="#editLearningOutcomeModal{{$l_outcome->l_outcome_id}}">
                                                         Edit
                                                     </button>
 
-                                                    <!-- Modal -->
+                                                    <!-- Bloom’s Taxonomy of Learning Modal -->
                                                     <div class="modal fade" id="editLearningOutcomeModal{{$l_outcome->l_outcome_id}}" tabindex="-1" role="dialog"
                                                         aria-labelledby="editLearningOutcomeModalLabel" aria-hidden="true">
                                                         <div class="modal-dialog modal-lg" role="document">
@@ -103,13 +129,12 @@
                                                                     @csrf
                                                                     {{method_field('PUT')}}
                                                                     <div class="modal-body">
-
                                                                         <div class="form-group row">
                                                                             <label for="l_outcome" class="col-md-4 col-form-label text-md-center">Course Learning Outcome (CLO) or Competency</label>
 
                                                                             <div class="col-md-8">
-                                                                                <textarea id="l_outcome" class="form-control" @error('l_outcome') is-invalid @enderror rows="3" name="l_outcome" required autofocus>{{$l_outcome->l_outcome}}
-                                                                                </textarea>
+                                                                                <textarea id="l_outcome" class="form-control" @error('l_outcome') is-invalid @enderror
+                                                                                rows="3" name="l_outcome" required autofocus placeholder="Develop...">{{$l_outcome->l_outcome}}</textarea>
 
                                                                                 @error('l_outcome')
                                                                                 <span class="invalid-feedback" role="alert">
@@ -123,14 +148,14 @@
                                                                                 </small>
 
                                                                             </div>
-
                                                                         </div>
 
                                                                         <div class="form-group row">
                                                                             <label for="title" class="col-md-4 col-form-label text-md-right">Short Phrase</label>
 
                                                                             <div class="col-md-8">
-                                                                                <input id="title" type="text" class="form-control @error('title') is-invalid @enderror" name="title" value="{{$l_outcome->clo_shortphrase}}" autofocus>
+                                                                                <input id="title" type="text" class="form-control @error('title') is-invalid @enderror"
+                                                                                name="title" autofocus placeholder="Experiment..." value={{$l_outcome->clo_shortphrase}}>
 
                                                                                 @error('title')
                                                                                 <span class="invalid-feedback" role="alert">
@@ -141,20 +166,72 @@
                                                                                 <small class="form-text text-muted">
                                                                                     Having a short phrase helps with data visualization at the end of this process <strong>(4 words max)</strong>.
                                                                                 </small>
-
                                                                             </div>
-                                                                        </div>
 
-                                                                        <div style="col-md-8">
-                                                                            <p>Bloom’s Taxonomy can help you identify the targeted level of knowledge/skill attainment for each CLO</p>
-                                                                            <img src="https://cpb-us-e1.wpmucdn.com/wordpressua.uark.edu/dist/a/315/files/2013/09/Blooms_Taxonomy_pyramid_cake-style-use-with-permission.jpg"
-                                                                            style="max-width: 100%; max-height: 100%">
-                                                                            <p>Image created by Jessica Shabatura , retrieved from https://tips.uark.edu/using-blooms-taxonomy/</P>
+                                                                            <div style="col-md-8; text-align: center; margin-top:20px">
+
+                                                                                <div>
+                                                                                    <p style="margin-top: 25px;margin-left:4px;margin-right:4px;">A well-written learning outcome states what students are expected to <span style="font-style: italic;">know, be able to do, or care about</span>, after successfully completing the course/program. Such statements begin with one measurable verb.</p>
+                                                                                    <p>The below are examples of verbs associated with different levels of Bloom’s Taxonomy of Learning.</p>
+                                                                                </div>
+
+                                                                                <div class="flex-container">
+                                                                                    <div class="box" style="background-color: #e8f4f8;">
+                                                                                        <strong>REMEMBER</strong>
+                                                                                        <p>Retrieve relevant knowledge from long-term memory</p>
+                                                                                    </div>
+                                                                                    <div class="box" style="background-color: #E6E6FA;">
+                                                                                        <strong>UNDERSTAND</strong>
+                                                                                        <p>Construct meaning from instructional messages</p>
+                                                                                    </div>
+                                                                                    <div class="box" style="background-color: #c1e1ec;">
+                                                                                        <strong>APPLY</strong>
+                                                                                        <p>Carry out or use a procedure in a given situation</p>
+                                                                                    </div>
+                                                                                    <div class="box" style="background-color: #ADD8E6;">
+                                                                                        <strong>ANALYZE</strong>
+                                                                                        <p>Break material into its constituent parts and determine how the parts relate</p>
+                                                                                    </div>
+                                                                                    <div class="box" style="background-color: #87CEEB;">
+                                                                                        <strong>EVALUATE</strong>
+                                                                                        <p>Make judgements basesd on criteria and standards</p>
+                                                                                    </div>
+                                                                                    <div class="box" style="background-color: #6495ED;">
+                                                                                        <strong>CREATE</strong>
+                                                                                        <p>Put elements together to form a coherent or functional whole</p>
+                                                                                    </div>
+
+                                                                                    <div class="box">
+                                                                                        <p class="CLO_example">Example: define, describe, identify, list, locate, match, memorize, recall, recognize, reproduce, select, state</p>
+                                                                                    </div>
+                                                                                    <div class="box">
+                                                                                        <p class="CLO_example">Example: classify，compare，discuss，distinguish，exemplify，explain，illustrate，inder，interpret，paraphrase，predict，summarize</p>
+                                                                                    </div>
+                                                                                    <div class="box">
+                                                                                        <p class="CLO_example">Example: calculate，construct，demonstrate，dramatize，employ，execute，implement，manipulate，modify，simulate solve</p>
+                                                                                    </div>
+                                                                                    <div class="box">
+                                                                                        <p class="CLO_example">Example: attribute，categorize，classify，compare，correlate，deduce，differentiate，distinguish，organize plan</p>
+                                                                                    </div>
+                                                                                    <div class="box">
+                                                                                        <p class="CLO_example">Example: assess，check，critique，decide，defend，judge，justify，presuade，recommend，support</p>
+                                                                                    </div>
+                                                                                    <div class="box">
+                                                                                        <p class="CLO_example">Example: compile，compose，construct，design，develop，formulate，generate，hypothesize，integrate，modify，plan，produce</p>
+                                                                                    </div>
+                                                                                </div>
+
+                                                                                <small>
+                                                                                    Source: Anderson, L. W., Krathwohl, D. R., & Bloom, B. S. (2001). A taxonomy for learning, teaching, and assessing: A revision of bloom's taxonomy of educational objectives (Abridged ed.). New York: Longman.
+                                                                                </small>
+                                                                            </div>
+
                                                                         </div>
 
                                                                         <input type="hidden" name="course_id" value="{{$course->course_id}}">
 
                                                                     </div>
+
                                                                     <div class="modal-footer">
                                                                         <button type="button" class="btn btn-secondary col-2 btn-sm" data-dismiss="modal">Close</button>
                                                                         <button type="submit" class="btn btn-primary col-2 btn-sm">Save</button>
@@ -179,11 +256,11 @@
                         </div>
                     </div>
 
-                    <button type="button" class="btn btn-primary btn-sm col-3 mt-3 float-left" data-toggle="modal" data-target="#addLearningOutcomeModal" style="margin-left: 10px">
+                    <button type="button" class="btn btn-primary btn-sm col-2 mt-2 float-left" data-toggle="modal" data-target="#addLearningOutcomeModal" style="margin-left: 10px">
                         ＋ Add Course Learning Outcome
                     </button>
 
-                    <!-- Modal -->
+                    <!-- Bloom’s Taxonomy of Learning Modal -->
                     <div class="modal fade" id="addLearningOutcomeModal" tabindex="-1" role="dialog"
                         aria-labelledby="addLearningOutcomeModalLabel" aria-hidden="true">
                         <div class="modal-dialog modal-lg" role="document">
@@ -326,7 +403,7 @@
 
     </div>
 </div>
-<script type="text/javascript">
+<script type="application/javascript">
     $(document).ready(function () {
 
       $("form").submit(function () {

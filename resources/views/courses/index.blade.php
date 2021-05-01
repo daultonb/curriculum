@@ -3,7 +3,7 @@
 @section('content')
 <div class="row justify-content-center">
     <div class="col-md-12">
-        <h1>Courses </h1>
+        <h1>My Courses</h1>
     <p class="form-text text-muted">See below the courses you have mapped using this tool (under Completed Courses) and those you are still working on (In Progress Courses).
         </p>
     <p class="form-text text-primary font-weight-bold"><i>Note:</i>  If you are ideating/evaluating a program, go to <a href="/programs">"My Programs"</a>.
@@ -91,7 +91,7 @@
                             </div>
 
                             <div class="form-group row">
-                                <label for="course_title" class="col-md-3 col-form-label text-md-right">Year and Semester</label>
+                                <label for="course_title" class="col-md-3 col-form-label text-md-right">Term and Year</label>
 
                                 <div class="col-md-3">
                                     <select id="course_semester" class="form-control @error('course_semester') is-invalid @enderror"
@@ -112,12 +112,11 @@
                                 <div class="col-md-2 float-right">
                                     <select id="course_year" class="form-control @error('course_year') is-invalid @enderror"
                                     name="course_year" required autofocus>
+                                        <option value="2023">2023</option>
+                                        <option value="2022">2022</option>
                                         <option value="2021">2021</option>
                                         <option value="2020">2020</option>
                                         <option value="2019">2019</option>
-                                        <option value="2018">2018</option>
-                                        <option value="2017">2017</option>
-                                        <option value="2016">2016</option>
 
                                     @error('course_year')
                                     <span class="invalid-feedback" role="alert">

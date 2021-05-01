@@ -10990,6 +10990,11 @@ datalist {
 
 .optionalPLO th, .optionalPLO td{
     padding: 0.25rem;
+    margin-right: 0;
+}
+
+.dashBoard th, .dashBoard td{
+    padding: 0.6rem;
 }
 
 .drag_container{
@@ -11011,4 +11016,53 @@ datalist {
 .dragItem{
     margin-left:10px;
     margin-top:3px;
+}
+
+.btn-icon {
+    display: inline-block;
+    width: 20px; /* Optional to keep buttons same size */
+    padding: 4px 2px;
+    color: black;
+    text-decoration: none;
+    text-align: center;
+  }
+
+.table th, .table td {
+border-top: 0px;
+}
+
+ul:before{
+content:attr(aria-label);
+font-size:120%;
+font-weight:bold;
+margin-left:-15px;
+}
+
+.optionalSyllabus{
+    list-style: none;
+}
+
+.optionalSyllabus li{
+    display:block;
+    float: left;
+    margin-right: 1%;
+    width: 49%;
+}
+
+.requiredField{
+    color:red;
+}
+
+.constructionPage{
+    height: 100%;
+    width: 100%;
+    line-height: 400px;
+    text-align: center;
+}
+
+.constructionPageTitle{
+    display: inline-block;
+    font-size: 65px;
+    line-height: 1.1em;
+    font-weight: 100;
 }

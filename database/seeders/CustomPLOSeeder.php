@@ -16,117 +16,117 @@ class CustomPLOSeeder extends Seeder
     public function run()
     {
         $wef1 = new Custom_program_learning_outcomes();
-        $wef1->custom_plo = "Analytical thinking and innovation";
+        $wef1->custom_plo = "Incorporation of the Declaration on the Rights of Indigenous Peoples Act and Calls to Action of the Truth and Reconciliation Commission";
         $wef1->custom_program_id = 1;
-        $wef1->custom_program_name = "World Economic Forum 2020";
+        $wef1->custom_program_name = "UBC's Mandate by the Ministry";
         $wef1->save();
 
         $wef2 = new Custom_program_learning_outcomes();
-        $wef2->custom_plo = "Active learning and learning strategies";
+        $wef2->custom_plo = "Align with CleanBC's plan to a protect our communities towards a more sustainable future";
         $wef2->custom_program_id = 1;
-        $wef2->custom_program_name = "World Economic Forum 2020";
+        $wef2->custom_program_name = "UBC's Mandate by the Ministry";
         $wef2->save();
 
         $wef3 = new Custom_program_learning_outcomes();
-        $wef3->custom_plo = "Complex problem-solving";
+        $wef3->custom_plo = "Advancing and supporting open learning resources";
         $wef3->custom_program_id = 1;
-        $wef3->custom_program_name = "World Economic Forum 2020";
+        $wef3->custom_program_name = "UBC's Mandate by the Ministry";
         $wef3->save();
 
         $wef4 = new Custom_program_learning_outcomes();
-        $wef4->custom_plo = "Critical thinking and analysis";
+        $wef4->custom_plo = "Offer programming aligned with high opportunity and priority occupations (such as trades, technology, early childhood educators and health)";
         $wef4->custom_program_id = 1;
-        $wef4->custom_program_name = "World Economic Forum 2020";
+        $wef4->custom_program_name = "UBC's Mandate by the Ministry";
         $wef4->save();
 
         $wef5 = new Custom_program_learning_outcomes();
-        $wef5->custom_plo = "Creativity, originality and initiative";
+        $wef5->custom_plo = "Embed more co-op and work-integrated learning opportunities";
         $wef5->custom_program_id = 1;
-        $wef5->custom_program_name = "World Economic Forum 2020";
+        $wef5->custom_program_name = "UBC's Mandate by the Ministry";
         $wef5->save();
 
         $wef6 = new Custom_program_learning_outcomes();
         $wef6->custom_plo = "Leadership and social influence";
         $wef6->custom_program_id = 1;
-        $wef6->custom_program_name = "World Economic Forum 2020";
+        $wef6->custom_program_name = "UBC's Mandate by the Ministry";
         $wef6->save();
 
         $wef7 = new Custom_program_learning_outcomes();
-        $wef7->custom_plo = "Technology use, monitoring and control";
+        $wef7->custom_plo = "Respond to the reskilling needs of British Columbians to support employment and career transitions";
         $wef7->custom_program_id = 1;
-        $wef7->custom_program_name = "World Economic Forum 2020";
+        $wef7->custom_program_name = "UBC's Mandate by the Ministry";
         $wef7->save();
 
         $wef8 = new Custom_program_learning_outcomes();
-        $wef8->custom_plo = "Technology design and programming";
+        $wef8->custom_plo = "Supporting students’ awareness of career planning resources (such as the Labour Market Outlook)";
         $wef8->custom_program_id = 1;
-        $wef8->custom_program_name = "World Economic Forum 2020";
+        $wef8->custom_program_name = "UBC's Mandate by the Ministry";
         $wef8->save();
 
-        $wef9 = new Custom_program_learning_outcomes();
-        $wef9->custom_plo = "Resilience, stress tolerance and flexibility";
-        $wef9->custom_program_id = 1;
-        $wef9->custom_program_name = "World Economic Forum 2020";
-        $wef9->save();
-
-        $wef10 = new Custom_program_learning_outcomes();
-        $wef10->custom_plo = "Reasoning, problem-solving and ideation";
-        $wef10->custom_program_id = 1;
-        $wef10->custom_program_name = "World Economic Forum 2020";
-        $wef10->save();
-
-        $wef11 = new Custom_program_learning_outcomes();
-        $wef11->custom_plo = "Emotional intelligence";
-        $wef11->custom_program_id = 1;
-        $wef11->custom_program_name = "World Economic Forum 2020";
-        $wef11->save();
-
-        $wef12 = new Custom_program_learning_outcomes();
-        $wef12->custom_plo = "Troubleshooting and user experience";
-        $wef12->custom_program_id = 1;
-        $wef12->custom_program_name = "World Economic Forum 2020";
-        $wef12->save();
-
-        $wef13 = new Custom_program_learning_outcomes();
-        $wef13->custom_plo = "Service orientation";
-        $wef13->custom_program_id = 1;
-        $wef13->custom_program_name = "World Economic Forum 2020";
-        $wef13->save();
-
-        $wef14 = new Custom_program_learning_outcomes();
-        $wef14->custom_plo = "Systems analysis and evaluation";
-        $wef14->custom_program_id = 1;
-        $wef14->custom_program_name = "World Economic Forum 2020";
-        $wef14->save();
-
-        $wef15 = new Custom_program_learning_outcomes();
-        $wef15->custom_plo = "Persuasion and negotiation";
-        $wef15->custom_program_id = 1;
-        $wef15->custom_program_name = "World Economic Forum 2020";
-        $wef15->save();
-
         $udl1 = new Custom_program_learning_outcomes();
-        $udl1->custom_plo = "Learning outcomes are clearly stated";
+        $udl1->custom_plo = "Active listening";
         $udl1->custom_program_id = 2;
-        $udl1->custom_program_name = "UDL Guidelines";
+        $udl1->custom_program_name = "BC’s Labour Market";
         $udl1->save();
 
         $udl2 = new Custom_program_learning_outcomes();
-        $udl2->custom_plo = "Teaching and learning methods are diverse and present content in more than one manner";
+        $udl2->custom_plo = "Speaking";
         $udl2->custom_program_id = 2;
-        $udl2->custom_program_name = "UDL Guidelines";
+        $udl2->custom_program_name = "BC’s Labour Market";
         $udl2->save();
 
         $udl3 = new Custom_program_learning_outcomes();
-        $udl3->custom_plo = "Assessment methods are flexible";
+        $udl3->custom_plo = "Reading Comprehension";
         $udl3->custom_program_id = 2;
-        $udl3->custom_program_name = "UDL Guidelines";
+        $udl3->custom_program_name = "BC’s Labour Market";
         $udl3->save();
 
         $udl4 = new Custom_program_learning_outcomes();
-        $udl4->custom_plo = "Feedback is provided to students to contribute to their learning";
+        $udl4->custom_plo = "Critical Thinking";
         $udl4->custom_program_id = 2;
-        $udl4->custom_program_name = "UDL Guidelines";
+        $udl4->custom_program_name = "BC’s Labour Market";
+        $udl4->save();
+
+        $udl5 = new Custom_program_learning_outcomes();
+        $udl5->custom_plo = "Social Perceptiveness";
+        $udl5->custom_program_id = 2;
+        $udl5->custom_program_name = "BC’s Labour Market";
+        $udl5->save();
+
+        $udl6 = new Custom_program_learning_outcomes();
+        $udl6->custom_plo = "Judgement and Decision Making";
+        $udl6->custom_program_id = 2;
+        $udl6->custom_program_name = "BC’s Labour Market";
+        $udl6->save();
+
+        $udl7 = new Custom_program_learning_outcomes();
+        $udl7->custom_plo = "Writing";
+        $udl7->custom_program_id = 2;
+        $udl7->custom_program_name = "BC’s Labour Market";
+        $udl7->save();
+
+        $udl8 = new Custom_program_learning_outcomes();
+        $udl8->custom_plo = "Monitoring";
+        $udl8->custom_program_id = 2;
+        $udl8->custom_program_name = "BC’s Labour Market";
+        $udl8->save();
+
+        $udl9 = new Custom_program_learning_outcomes();
+        $udl9->custom_plo = "Complex Problem Solving";
+        $udl9->custom_program_id = 2;
+        $udl9->custom_program_name = "BC’s Labour Market";
+        $udl9->save();
+
+        $udl10 = new Custom_program_learning_outcomes();
+        $udl10->custom_plo = "Coordination";
+        $udl10->custom_program_id = 2;
+        $udl10->custom_program_name = "BC’s Labour Market";
+        $udl10->save();
+
+        $udl4 = new Custom_program_learning_outcomes();
+        $udl4->custom_plo = "Critical Thinking";
+        $udl4->custom_program_id = 2;
+        $udl4->custom_program_name = "BC’s Labour Market";
         $udl4->save();
 
         $min1 = new Custom_program_learning_outcomes();

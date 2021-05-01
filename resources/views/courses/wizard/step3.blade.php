@@ -47,6 +47,10 @@
 
                 <div class="card-body">
                     <p class="form-text text-muted">Input all teaching and learning activities of the course individually.</p>
+                    <p class="form-text">For increased accessibility and enhanced student participation, while still offering challenging learning opportunities,
+                        use there <a target="_blank" href="https://udlguidelines.cast.org/binaries/content/assets/udlguidelines/udlg-v2-2/udlg_graphicorganizer_v2-2_numbers-no.pdf">Universal Design for Learning Guildlines</a>
+                        (Offered by CAST) to design your course. You may also use <a target="_blank" href="https://udlguidelines.cast.org/binaries/content/assets/common/publications/articles/cast-udl-planningq-a11y.pdf">these key questions to guide</a> you.
+                    </p>
 
                     <div id="admins">
                         <div class="row">

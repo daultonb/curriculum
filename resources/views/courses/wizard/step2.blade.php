@@ -180,7 +180,8 @@
     </div>
 </div>
 
-<script type="text/javascript">
+
+<script>
     $(document).ready(function () {
 
       sortDropdown();
@@ -294,7 +295,7 @@
                 var container = $('#a_method_table').find("tr:last");
                 container.prev().after(element);
             }
-    }
+        }
 
 
     // Dynamic finds total

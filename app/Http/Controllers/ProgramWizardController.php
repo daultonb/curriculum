@@ -113,7 +113,7 @@ class ProgramWizardController extends Controller
 
         $usersCourses = CourseUser::where('user_id', $user->id)->get('course_id');
 
-        $temp = array();
+        $courseIds = array();
         foreach($usersCourses as $userCourse) {
             $courseIds[] = $userCourse->course_id;
         }

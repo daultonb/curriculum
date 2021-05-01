@@ -9,11 +9,18 @@ use Illuminate\Support\Str;
 use App\Mail\Invitation;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\DB;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 use function PHPUnit\Framework\directoryExists;
 
 class InviteController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware(['auth', 'verified']);
+    }
 
     public function invite() {
         // show the user a form with an email field to invite a new user
@@ -21,8 +28,11 @@ class InviteController extends Controller
     }
 
     // function to get to Invitation page
-    public function requestInvitation() {
-        return view('emails.request');
+    public function index() {
+        $user = User::where('id', Auth::id())->first();
+        $invites = Invite::where('user_id',$user->id)->get();
+
+        return view('emails.request')->with('invites',$invites);
     }
 
     // Sent a invitation email with generated token
@@ -42,6 +52,9 @@ class InviteController extends Controller
         }
 
         $invite->generateToken();
+        $user = User::where('id', $request->input('user_id'))->first();
+        $invite->user_id = $user->id;
+
         $invite->save();
 
         Mail::to($invite->email)->send(new Invitation($invite->invitation_token));
