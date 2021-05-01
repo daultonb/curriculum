@@ -391,6 +391,36 @@
 
                     </div>
 
+                    <div class="card-header font-weight-bold">
+                        {{$course->course_code}}{{$course->course_num}}: Optional alignment to UBC and Ministry priorities
+                    </div>
+
+                    <div class="card-body ml-5 mr-5">
+                        Optional alignment to UBC and Ministry priorities are listed below.
+
+                        <table class="table table-bordered table-sm mt-3">
+
+                            @if(count($optional_PLOs)<1)
+                                <tr>
+                                    <th class="table-light">There are no Optional alignment to UBC and Ministry priorities for this course.</th>
+                                </tr>
+                            @else
+
+                                <tr>
+                                    <th class="table-light"></th>
+                                    <th class="table-light">Optional alignment to UBC and Ministry priorities</th>
+                                </tr>
+                                    @foreach ($optional_PLOs as $index => $optional_Plo)
+                                        <tr>
+                                            <td style="width:5%" >{{$index+1}}</td>
+                                            <td>{{$optional_Plo->custom_PLO}}</td>
+                                        </tr>
+                                    @endforeach
+
+                            @endif
+                            </table>
+                    </div>
+
                 </div>
                 <p class="form-text text-center text-muted">
                     If you have finished mapping this course. Click the finish button to save your work.
@@ -421,7 +451,7 @@
 
 </div>
 
-<script type="text/javascript">
+<script type="application/javascript">
     $(document).ready(function () {
 
       $("form").submit(function () {

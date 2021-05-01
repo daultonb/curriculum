@@ -198,8 +198,271 @@
                                 @endfor
                             </div>
                         @endif
-
                     </div>
+
+                    <!--Optional Priorities -->
+                    <div class="jumbotron">
+                        <p class="container form-text">
+                            <b>(Optional) Alignment with UBC/Ministry Priorities:</b>
+                            Select, from the below UBC and/or Ministry priorities and strategies, those that align strongly with your course. This is optional.
+                        </p>
+
+                        <div id="accordion">
+                        <form id="optinal" action="{{ route('storeOptionalPLOs') }}" method="POST">
+                            {{ csrf_field() }}
+
+                            <input type="hidden" name="course_id" value="{{$course->course_id}}">
+
+                            <div class="card Ministry" id="Ministry">
+                                <div class="card-header" id="headingOne" style="border-bottom: 0px;">
+                                    <h5 class="mb-0">
+                                        <a data-toggle="collapse" data-target="#collapse_optional_Ministry" aria-expanded="false" aria-controls="collapse_optional_Ministry" href="#collapse_optional_Ministry" style="text-decoration:none">
+                                            Ministry of Advanced Education and Skills Training
+                                        </a>
+                                    </h5>
+                                </div>
+                                <div id="collapse_optional_Ministry" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+                                    <div class="card-body">
+
+                                        <h5>UBC's Mandate by the Ministry</h5>
+                                        <p>UBC's mandate letter (see<a href="https://www2.gov.bc.ca/gov/content/education-training/post-secondary-education/institution-resources-administration/mandate-letters" target="_blank"> mandate letter here </a>)
+                                             calls for the below, as they relate to curriculum:</p>
+                                        <table class="table table-hover optionalPLO" id="ubcMandate" data-toolbar="#toolbar" data-toggle="table" data-maintain-meta-data="true">
+                                            <thead class="thead-light">
+                                                <tr>
+                                                <th data-field="state" data-checkbox="true"></th>
+                                                <th data-field="Description">Description</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach ($ubc_mandate_letters as $index => $letter)
+                                                <tr>
+                                                <td>
+
+                                                    @if (in_array($letter,$optional_PLOs))
+                                                        <input type="checkbox" name = "optionalItem[]" value="{{$letter}}" checked>
+                                                    @else
+                                                        <input type="checkbox" name = "optionalItem[]" value="{{$letter}}">
+                                                    @endif
+
+                                                </td>
+                                                <td>
+                                                    {{$letter}}
+                                                </td>
+                                                </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+
+                                        <h5>
+                                            BC's Labour Market: Top skills in Demand
+                                        </h5>
+                                        <p>BC's tops skills in demand,as forecasted to the year 2029 by the <a href="https://www.workbc.ca/getmedia/18214b5d-b338-4bbd-80bf-b04e48a11386/BC_Labour_Market_Outlook_2019.pdf.aspx" target="_blank">BC Labour Market Outlook (page 46)</a>
+                                            , are the following:
+                                        </p>
+
+                                        <table class="table table-hover optionalPLO" id="LabourMarket" data-toolbar="#toolbar" data-toggle="table" data-maintain-meta-data="true">
+                                            <thead class="thead-light">
+                                                <tr>
+                                                <th data-field="state" data-checkbox="true"></th>
+                                                <th data-field="Description">Description</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                            @foreach ($bc_labour_market as $index => $skill)
+                                                <tr>
+                                                <td>
+                                                    @if (in_array($skill,$optional_PLOs))
+                                                            <input type="checkbox" name = "optionalItem[]" value="{{$skill}}" checked>
+                                                        @else
+                                                            <input type="checkbox" name = "optionalItem[]" value="{{$skill}}">
+                                                        @endif
+                                                </td>
+                                                <td>
+                                                    {{$skill}}
+                                                </td>
+                                                </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+
+                                        <p>Additionally, BC expects <a href="https://www.workbc.ca/Labour-Market-Industry/Jobs-in-Demand/High-Demand-Occupations.aspx" target="_blank">these occupations to be of "High Opportunity"</a> in the province. Does your course/program align with a High Opportunity Occupation in BC ?
+                                        <select id="highOpportunity" class="highOpportunity">
+                                            <option value="1">Yes</option>
+                                            <option value="0">No</option>
+                                        </select>
+
+                                        <!--
+                                        <div class="addedOptions" id="addedOptions">
+                                            <p style="margin-top:5px;">Please list them : </p>
+
+                                            <table class="table table-hover optionalPLO" id="highOpportunityTable" data-toolbar="#toolbar" data-toggle="table" data-maintain-meta-data="true">
+                                                <thead class="thead-light">
+                                                    <tr>
+                                                        <th>#</th>
+                                                        <th data-field="Description">Description</th>
+                                                    </tr>
+                                                </thead>
+
+                                                <tbody>
+                                                </tbody>
+                                            </table>
+
+                                            <div class="form-group">
+                                                <button type="button" class="btn btn-primary btn-sm col-2 mt-2" id="btnAdd">
+                                                    ＋ Add
+                                                </button>
+                                            </div>
+                                        </div>
+                                        -->
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="card BC_strategic" id="BC_strategic">
+                                <div class="card-header" id="headingOne" style="border-bottom: 0px;">
+                                    <h5 class="mb-0">
+                                        <a data-toggle="collapse" data-target="#collapse_optional_BC_strategic" aria-expanded="true" aria-controls="collapse_optional_BC_strategic" href="#collapse_optional_BC_strategic" style="text-decoration:none">
+                                            UBC Strategic Priorities
+                                        </a>
+                                    </h5>
+                                </div>
+
+                                <div id="collapse_optional_BC_strategic" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+                                    <div class="card-body">
+                                        <h5>
+                                            <a href="https://strategicplan.ubc.ca/" target="_blank">
+                                            Shaping UBC's next Century
+                                            </a>
+                                        </h5>
+                                        <table class="table table-hover optionalPLO" id="ubcStrategy" data-toolbar="#toolbar" data-toggle="table" data-maintain-meta-data="true">
+                                            <thead class="thead-light">
+                                                <tr>
+                                                <th data-field="state" data-checkbox="true"></th>
+                                                <th data-field="Description">Description</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                            @foreach ($shaping_ubc as $index => $strategy)
+                                                <tr>
+                                                <td>
+                                                    @if (in_array($strategy,$optional_PLOs))
+                                                            <input type="checkbox" name= "optionalItem[]" value="{{$strategy}}" checked>
+                                                        @else
+                                                            <input type="checkbox" name= "optionalItem[]" value="{{$strategy}}">
+                                                        @endif
+                                                </td>
+                                                <td>
+                                                    <a href ="{{$shaping_ubc_link[$index]}}" target="_blank">Strategy {{$index + 1}}: </a>
+                                                    {{$strategy}}
+                                                    @if($index == 17)
+                                                        <a href="https://www.alumni.ubc.ca/about/strategic-plan/" target="_blank">Connecting Forward.</a>
+                                                    @endif
+                                                </td>
+                                                </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+
+                                        <h5>
+                                            <a href="https://okmain.cms.ok.ubc.ca/wp-content/uploads/sites/26/2019/02/UBCO-Outlook-2040.pdf" target="_blank">
+                                            UBC Okanagan 2040 Outlook
+                                            </a>
+                                        </h5>
+
+                                        <table class="table table-hover optionalPLO" id="ubc_2024Outlook" data-toolbar="#toolbar" data-toggle="table" data-maintain-meta-data="true">
+                                            <thead class="thead-light">
+                                                <tr>
+                                                <th data-field="state" data-checkbox="true"></th>
+                                                <th data-field="Description">Description</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach ($okanagan_2040_outlook as $index => $outlook)
+                                                <tr>
+                                                <td>
+                                                    @if (in_array($strategy,$optional_PLOs))
+                                                        <input type="checkbox" name= "optionalItem[]" value="{{$outlook}}" checked>
+                                                    @else
+                                                        <input type="checkbox" name= "optionalItem[]" value="{{$outlook}}">
+                                                    @endif
+                                                </td>
+                                                <td>
+                                                    {{$outlook}}
+                                                </td>
+                                                </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+
+                                        <h5>
+                                            <a href="https://aboriginal-2018.sites.olt.ubc.ca/files/2020/09/UBC.ISP_C2V13.1_Spreads_Sept1.pdf" target="_blank">
+                                                UBC's Indigenous Strategic Plan (2020)</h5></a>
+
+                                        <table class="table table-hover optionalPLO" id="IndigenousPlan" data-toolbar="#toolbar" data-toggle="table" data-maintain-meta-data="true">
+                                            <thead class="thead-light">
+                                                <tr>
+                                                <th data-field="state" data-checkbox="true"></th>
+                                                <th data-field="Description">Description</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach ($ubc_indigenous_plan as $index => $plan)
+                                                <tr>
+                                                <td>
+                                                    @if (in_array($strategy,$optional_PLOs))
+                                                        <input type="checkbox" name= "optionalItem[]" value="{{$plan}}" checked>
+                                                    @else
+                                                        <input type="checkbox" name= "optionalItem[]" value="{{$plan}}">
+                                                    @endif
+                                                </td>
+                                                <td>
+                                                    {{$plan}}
+                                                </td>
+                                                </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+
+                                        <h5><a href="https://bog3.sites.olt.ubc.ca/files/2021/01/4_2021.02_Climate-Emergency-Engagement.pdf" target="_blank">UBC's Climate Priorities</a></h5>
+                                        <p>The <a href="https://bog3.sites.olt.ubc.ca/files/2021/01/4_2021.02_Climate-Emergency-Engagement.pdf" target="_blank">UBC's Climate Emergency Engagement Report and Recommendations (2021)</a> set out the below curricular examples.
+                                            Programs are encouraged to take these and/or other initiatives that align with the report:
+                                        </p>
+
+                                        <table class="table table-hover optionalPLO" id="climate_priorities" data-toolbar="#toolbar" data-toggle="table" data-maintain-meta-data="true">
+                                            <thead class="thead-light">
+                                                <tr>
+                                                <th data-field="state" data-checkbox="true"></th>
+                                                <th data-field="Description">Description</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach ($ubc_climate_priorities as $index => $climate)
+                                                <tr>
+                                                <td>
+                                                    @if (in_array($strategy,$optional_PLOs))
+                                                        <input type="checkbox" name= "optionalItem[]" value="{{$climate}}" checked>
+                                                    @else
+                                                        <input type="checkbox" name= "optionalItem[]" value="{{$climate}}">
+                                                    @endif
+                                                </td>
+                                                <td>
+                                                    {{$climate}}
+                                                </td>
+                                                </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-primary my-3 btn-sm float-right col-2">Save</button>
+                        </form>
+                        </div>
+                    </div>
+
+
                 </div>
                 <div class="card-footer">
                     <a href="{{route('courseWizard.step4', $course->course_id)}}">
@@ -218,8 +481,6 @@
 
 <script>
     $(document).ready(function () {
-
-
         $('[data-toggle="tooltip"]').tooltip();
 
         $("form").submit(function () {
@@ -228,6 +489,24 @@
         $(this).find(":submit").html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>');
 
       });
+
+        // Hide and show the optional
+        $("#highOpportunity").on('change', function () {
+            var value = $("#highOpportunity").val();
+            console.log(value);
+            if (value == "1" ){
+                $('#addedOptions').show();
+                $("#addedOptions :input").prop("disabled", false);
+            }else{
+                $('#addedOptions').hide();
+                $("#addedOptions :input").prop("disabled", true);
+            }
+
+        });
+
+        $('#btnAdd').click(function() {
+            add();
+        });
 
         // $("form").submit(function (e) {
         //     // prevent duplicate form submissions
@@ -276,7 +555,25 @@
         // });
     });
 
-  </script>
+    function add() {
+        var length = $('#highOpportunityTable tr').length;
+
+        var element = `
+            <tr>
+                <td>
+                    `
+                    +length+
+                    `
+                </td>
+                <td>
+                    <input class = "form-control" type="text" name="inputItem[]" spellcheck="true" required>
+                </td>
+            </tr>`;
+            var container = $('#highOpportunityTable tbody');
+            container.append(element);
+    }
+
+</script>
 
 
 @endsection

@@ -6,7 +6,78 @@
     <div class="home">
         <div class="card">
             <div class="card-body">
-                <h2> Syllabus Generator </h2>
+
+                <h2> Syllabus Generator
+                    <select class="form-group" id="campus" name="campus" form="sylabusGenerator" style="font-size:15px;">
+                        <option value="O">UBC-Okanagan (default)</option>
+                        <option value="V">UBC-Vancouver</option>
+                    </select>
+                    <input type="checkbox" name="langAcknoledgement" id="langAcknoledgement" form = "sylabusGenerator">
+                    <label for="langAcknoledgement" style="font-size: 14px;">Land acknowledgement</label>
+                    <button type="button" class="btn btn-primary btn-sm col-2 mt-2 float-right" data-toggle="modal" data-target="#importExistingCourse" style="margin-right: 10px">
+                        Import existing courses
+                    </button>
+                </h2>
+
+
+                <!-- Import existing course Modal -->
+                <div class="modal fade" id="importExistingCourse" tabindex="-1" role="dialog" aria-labelledby="importExistingCourse" aria-hidden="true">
+                    <div class="modal-dialog modal-lg" role="document" style="width:1250px;">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="importExistingCourse">Import Existing Course</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+
+                                <div class="modal-body" style="height: auto;">
+
+                                    <p style="text-align:left;">Select one course from the below existing courses</p>
+                                    <table class="table table-hover dashBoard">
+                                        <thead>
+                                          <tr>
+                                            <th scope="col"></th>
+                                            <th scope="col">Course Title</th>
+                                            <th scope="col">Course Code</th>
+                                            <th scope="col">Semester</th>
+                                          </tr>
+                                        </thead>
+
+                                        @foreach ($activeCourses as $index => $course)
+                                        <tbody>
+                                        <tr>
+                                            <th scope="row">
+                                                <input value = {{$course->course_id}} class="form-check-input" type="radio" name="importCourse" id="importCourse"
+                                                form = "sylabusGenerator" style="margin-left: 0px">
+                                            </th>
+                                            <td>{{$course->course_title}}</td>
+                                            <td>{{$course->course_code}} {{$course->course_num}}</td>
+                                            <td>
+                                                @if($course->semester == "W1")
+                                                Winter {{$course->year}} Term 1
+                                                @elseif ($course->semester == "W2")
+                                                Winter {{$course->year}} Term 2
+                                                @elseif ($course->semester == "S1")
+                                                Summar {{$course->year}} Term 1
+                                                @else
+                                                Summar {{$course->year}} Term 2
+                                                @endif
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                        @endforeach
+                                    </table>
+                                </div>
+
+                                <div class="modal-footer">
+                                    <button style="width:60px" type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Cancel</button>
+                                    <button style="width:60px" type="button" class="btn btn-primary btn-sm"
+                                    id="importButton" name="importButton" data-dismiss="modal">Import</button>
+                                </div>
+                        </div>
+                    </div>
+                </div>
 
                 <div class="card">
                     <div class="card-body">
@@ -15,82 +86,252 @@
                             <form method="GET" id="sylabusGenerator" action="{{ action('SyllabusController@WordExport') }}">
                                 @csrf
                                 <div class="container">
+
                                     <div class="row">
-                                        <div class="col">
+                                        <div class="col mb-2">
+                                            <label for="courseTitle"><span class="requiredField">*</span>Title:</label>
+                                            <input id = "courseTitle" name = "courseTitle" class ="form-control" type="text"
+                                            placeholder="E.g. Intro to Software development" required>
+                                        </div>
+                                    </div>
 
-                                            <label for="courseTitle">Course Title:</label>
-                                            <input id = "courseTitle" name = "courseTitle" class ="form-control" type="text" placeholder="ex. Intro to Software development">
+                                    <div class="row">
+                                        <div class="col-3 mb-2">
+                                            <label for="courseNumber"><span class="requiredField">*</span>Course Number:</label>
+                                            <input id = "courseNumber" name = "courseNumber" class ="form-control" type="text"
+                                            placeholder="E.g. CPSC 310" required>
+                                        </div>
 
-                                            <label for="courseNumber">Course Number:</label>
-                                            <input id = "courseNumber" name = "courseNumber" class ="form-control col-md-5" type="text" placeholder="ex. CPSC 310">
+                                        <div class="col-3 mb-2">
+                                            <label for="courseinstructor"><span class="requiredField">*</span>Course Instructor:</label>
+                                            <input id = "courseinstructor" name = "courseinstructor" class ="form-control" type="text"
+                                            placeholder="E.g. Dr. J. Doe" required>
+                                        </div>
+                                    </div>
 
-                                            <label for="courseinstructor">Course Instructor:</label>
-                                            <input id = "courseinstructor" name = "courseinstructor" class ="form-control" type="text" placeholder="ex. Dr. J. Doe">
-
+                                    <div class="row">
+                                        <div class="col mb-2">
                                             <label for="courseTA">Course TA's (optional):</label>
-                                            <input id = "courseTA" name = "courseTA" class ="form-control" type="text">
+                                            <input id = "courseTA" name = "courseTA" class ="form-control col-md-7" type="text">
+                                        </div>
+                                    </div>
 
-                                            <label for="courseLocation">Course Location:</label>
-                                            <input id = "courseLocation" name = "courseLocation" class ="form-control" type="text" placeholder="ex. WEL 140">
+                                    <div class="row">
+                                        <div class="col mb-2">
+                                            <label for="courseLocation"><span class="requiredField">*</span>Course Location:</label>
+                                            <input id = "courseLocation" name = "courseLocation" class ="form-control col-md-5" type="text"
+                                            placeholder="E.g. WEL 140" required>
+                                        </div>
+                                    </div>
 
-                                            <label for="courseYear">Course Year:</label>
-                                            <select id="courseYear" class="form-control col-md-2" name="courseYear">
+                                    <div class="row">
+                                        <div class="col mb-2">
+                                            <label for="officeHour"><span class="requiredField">*</span>Office Hours:</label>
+                                            <textarea id = "officeHour" name = "officeHour" class ="form-control"
+                                            type="date" form="sylabusGenerator" required></textarea>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-2 mb-2">
+                                            <label for="courseYear"><span class="requiredField">*</span>Course Year:</label>
+                                            <select id="courseYear" class="form-control" name="courseYear">
                                                 <option vlaue="2023">2023</option>
                                                 <option value="2022">2022</option>
                                                 <option value="2021">2021</option>
                                                 <option value="2020">2020</option>
                                             </select>
+                                        </div>
 
-                                            <label for="startTime">Start Time:</label>
-                                            <input id = "startTime" name = "startTime" class ="form-control" type="text" placeholder="ex. 1:00 PM">
+                                        <div class="col-3 mb-3">
+                                            <label for="courseSemester"><span class="requiredField">*</span>Course Term:</label>
+                                            <select id="courseSemester" class="form-control" name="courseSemester" required>
+                                                <option value="W1">Winter Term 1</option>
+                                                <option value="W2">Winter Term 2</option>
+                                                <option value="S1">Summer Term 1</option>
+                                                <option value="S2">Summer Term 2</option>
+                                            </select>
+                                        </div>
 
-                                            <label for="endTime">End Time:</label>
-                                            <input id = "endTime" name = "endTime" class ="form-control" type="text" placeholder="ex. 2:00 PM">
+                                        <div class="col-3 mb-3">
+                                            <label for="startTime"><span class="requiredField">*</span>Course Start Time:</label>
+                                            <input id = "startTime" name = "startTime" class ="form-control" type="text"
+                                            placeholder="E.g. 1:00 PM" required>
+                                        </div>
 
-                                            <label for="semesterStartday">Semester Start Date:</label>
-                                            <input id = "semesterStartday" name = "semesterStartday" class ="form-control col-md-3" type="date">
-
-                                            <label for="semesterEndday">Last Class Date:</label>
-                                            <input id = "semesterEndday" name = "semesterEndday" class ="form-control col-md-3" type="date">
-
-                                            <label for="finalcheckbox">Does the course has Final ?</label>
-                                            <input id = "finalcheckbox" name = "finalcheckbox" type="checkbox" value="1">
-
-                                            <label for="finalDate">Final Exam Date:</label>
-                                            <input id = "finalDate" name = "finalDate" class="form-control col-md-3" type="date" disabled>
-
-                                            <label for="classDate">Class Days:</label>
-
-                                            <div id="classDate">
-                                                <input id="monday" type="checkbox" name="schedule[]" value="M">
-                                                <label for="monday">Monday</label>
-
-                                                <input id="tuesday" type="checkbox" name="schedule[]" value="Tu">
-                                                <label for="tuesday">Tuesday</label>
-
-                                                <input id="wednesday" type="checkbox" name="schedule[]" value="w">
-                                                <label for="wednesday">Wednesday</label>
-
-                                                <input id="thursday" type="checkbox" name="schedule[]" value= "Th">
-                                                <label for="thursday">Thursday</label>
-
-                                                <input id="friday" type="checkbox" name="schedule[]" value="F">
-                                                <label for="friday">Friday</label>
-                                            </div>
-
-                                            <button type="submit" class="btn btn-primary col-2 btn-sm"
-                                            style="float: right">Generate Syllaus Dococumnet</button>
+                                        <div class="col-3 mb-3">
+                                            <label for="endTime"><span class="requiredField">*</span>Course End Time:</label>
+                                            <input id = "endTime" name = "endTime" class ="form-control" type="text"
+                                            placeholder="E.g. 2:00 PM" required>
                                         </div>
                                     </div>
-                                </div>
 
-                            </form>
+                                    <div class="row">
+                                        <div class="col-3 mb-3">
+                                            <label for="semesterStartday"><span class="requiredField">*</span>Term Start Date:</label>
+                                            <input id = "semesterStartday" name = "semesterStartday" class ="form-control"
+                                            type="date" required>
+                                        </div>
+
+                                        <div class="col-3 mb-3">
+                                            <label for="semesterEndday"><span class="requiredField">*</span>Last Class Date:</label>
+                                            <input id = "semesterEndday" name = "semesterEndday" class ="form-control"
+                                            type="date" required>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col mb-3">
+                                            <label for="classDate"><span class="requiredField">*</span>Class Meeting Days:</label>
+
+                                            <div class="classDate">
+                                                <input id="monday" type="checkbox" name="schedule[]" value="Mon" required>
+                                                <label for="monday">Monday</label>
+
+                                                <input id="tuesday" type="checkbox" name="schedule[]" value="Tue" required>
+                                                <label for="tuesday">Tuesday</label>
+
+                                                <input id="wednesday" type="checkbox" name="schedule[]" value="Wed" required>
+                                                <label for="wednesday">Wednesday</label>
+
+                                                <input id="thursday" type="checkbox" name="schedule[]" value= "Thu" required>
+                                                <label for="thursday">Thursday</label>
+
+                                                <input id="friday" type="checkbox" name="schedule[]" value="Fri" required>
+                                                <label for="friday">Friday</label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="row">
+                                        <div class="col mb-3">
+                                            <label for="courseFormat">Course Format:</label>
+                                            <textarea id = "courseFormat" name = "courseFormat" class ="form-control"
+                                            type="text" form="sylabusGenerator"></textarea>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col mb-3">
+                                            <label for="courseOverview">Course Overview, Content and Objectives:</label>
+                                            <textarea id = "courseOverview" name = "courseOverview" class ="form-control"
+                                            type="text" form="sylabusGenerator"></textarea>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col mb-3">
+                                            <label for="learningOutcome">Learning Outcomes:</label>
+                                            <textarea id = "learningOutcome" name = "learningOutcome" class ="form-control"
+                                            type="date" style="height:125px;" form="sylabusGenerator"></textarea>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col mb-3">
+                                            <label for="evaluationCriteria">Evaluation Criteria and Grading:</label>
+                                            <textarea id = "evaluationCriteria" name = "evaluationCriteria" class ="form-control"
+                                            type="date" style="height:125px;" form="sylabusGenerator"></textarea>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col mb-3">
+                                            <label for="latePolicy">Late policy:</label>
+                                            <textarea id = "latePolicy" name = "latePolicy" class ="form-control"
+                                            type="date" form="sylabusGenerator"></textarea>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col mb-3">
+                                            <label for="missingExam">Missed exam policy:</label>
+                                            <textarea id = "missingExam" name = "missingExam" class ="form-control"
+                                            type="date" form="sylabusGenerator"></textarea>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col mb-3">
+                                            <label for="missingActivity">Missed Activity Policy:</label>
+                                            <textarea id = "missingActivity" name = "missingActivity" class ="form-control"
+                                            type="date" form="sylabusGenerator"></textarea>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col mb-3">
+                                            <label for="passingCriteria">Passing criteria:</label>
+                                            <textarea id = "passingCriteria" name = "passingCriteria" class ="form-control"
+                                            type="date" form="sylabusGenerator"></textarea>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col mb-3">
+                                            <label for="requiredReading">Required Readings and Videos:</label>
+                                            <textarea id = "requiredReading" name = "requiredReading" class ="form-control"
+                                            type="date" form="sylabusGenerator"></textarea>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="row">
+                                        <div class="col mb-3">
+                                            <div id="optionalSyllabus" class="optionalSyllabus" style="margin-top:30px;">
+                                            <ul aria-label="Optional: The below are suggested sections to communicate various resources on campus" style="list-style-type:none;">
+                                                <li>
+                                                <input id="academic" type="checkbox" name="academic" value="academic" checked>
+                                                <label for="academic">Academic Integrity Statement</label>
+                                                </li>
+
+                                                <li>
+                                                <input id="final" type="checkbox" name="final" value="final" checked>
+                                                <label for="final">Final Examinations</label>
+                                                </li>
+
+                                                <li>
+                                                <input id="gradingPractices" type="checkbox" name="gradingPractices" value="gradingPractices" checked>
+                                                <label for="gradingPractices">Grading Practices</label>
+                                                </li>
+
+                                                <li>
+                                                <input id="health" type="checkbox" name="health" value="health" checked>
+                                                <label for="health">Health & Wellness</label>
+                                                </li>
+
+                                                <li>
+                                                <input id="safewalk" type="checkbox" name="safewalk" value="safewalk" checked>
+                                                <label for="safewalk">Safewalk</label>
+                                                </li>
+
+                                                <li>
+                                                <input id="hub" type="checkbox" name="hub" value="hub" checked>
+                                                <label for="hub">Student Learning Hub</label>
+                                                </li>
+
+                                                <li>
+                                                <input id="disabilityAssistance" type="checkbox" name="disabilityAssistance" value="disabilityAssistance" checked>
+                                                <label for="disabilityAssistance">UBC Okanagan Disability Resource Centre</label>
+                                                </li>
+
+                                                <li>
+                                                <input id="equity" type="checkbox" name="equity" value= "equity" checked>
+                                                <label for="equity">UBC Okanagan Equity and Inclusion Office</label>
+                                                </li>
+                                            </ul>
+                                        </div>
+
+                                    </div>
+                                </form>
+                            </div>
                         </div>
-
                     </div>
                 </div>
-
             </div>
+            <button type="submit" class="btn btn-primary col-2 btn-sm"
+            style="float: right;margin:10px;" form="sylabusGenerator">Generate Syllabus</button>
         </div>
     </div>
 </div>
@@ -100,7 +341,144 @@
         $('#finalcheckbox').click(function() {
             $("#finalDate").prop("disabled", !this.checked);
         });
-});
+
+        $('#campus').change(handleVersion);
+
+        // Import Course information into the input field throught GET ajax call
+        $('#importButton').click(function() {
+            var course_id = $('input[name="importCourse"]:checked').val();
+            $.ajax({
+                type: "GET",
+                url: "/syllabusGenerator/course",
+                data: {course_id : course_id},
+                headers: {
+                    'X-CSRF-Token': '{{ csrf_token() }}',
+                },
+            }).done(function(data) {
+                var decode_data = JSON.parse(data);
+                var a_methods = decode_data['a_methods'];
+                var l_outcomes = decode_data['l_outcomes'];
+
+                var a_methods_text = "";
+                var l_outcomes_text = "";
+
+                a_methods.forEach(element => {
+                    a_methods_text += element.a_method + " " + element.weight + "%\n";
+                });
+
+                for(var i = 0; i < l_outcomes.length; i++) {
+                    l_outcomes_text += (i+1) + ". " + l_outcomes[i].l_outcome + "\n";
+                }
+
+                var a_method_input = $('#evaluationCriteria');
+                var l_outcome_input = $('#learningOutcome');
+
+
+                a_method_input.val(a_methods_text);
+                l_outcome_input.val(l_outcomes_text);
+            });
+        });
+
+        // Dynamic update required attribute for dates
+        var requiredCheckboxes = $('.classDate :checkbox[required]');
+        requiredCheckboxes.change(function() {
+            if(requiredCheckboxes.is(':checked')) {
+            requiredCheckboxes.removeAttr('required');
+            } else {
+            requiredCheckboxes.attr('required', 'required');
+            }
+        });
+
+    });
+
+
+
+
+    // Function changes optional verison of syllabus
+    function handleVersion() {
+    var vancouverOptionalList = `
+    <ul aria-label="Optional: The below are suggested sections to communicate various resources on campus" style="list-style-type:none;">
+            <li>
+            <input id="disabilities" type="checkbox" name="disabilities" value="disabilities" checked>
+            <label for="disabilities">Accommodations for students with disabilities</label>
+            </li>
+        </ul>`;
+
+        var okanaganOptionalList = `
+        <ul aria-label="Optional: The below are suggested sections to communicate various resources on campus" style="list-style-type:none;">
+            <li>
+            <input id="plagiarism" type="checkbox" name="plagiarism" value="plagiarism" checked>
+            <label for="plagiarism">Plagiarism and Collaboration</label>
+            </li>
+
+            <li>
+            <input id="cooperation" type="checkbox" name="cooperation" value="cooperation" checked>
+            <label for="cooperation">Cooperation vs. Cheating</label>
+            </li>
+
+            <li>
+            <input id="grievances" type="checkbox" name="grievances" value="grievances" checked>
+            <label for="grievances">Grievances and Complaints Procedures</label>
+            </li>
+
+            <li>
+            <input id="academic" type="checkbox" name="academic" value="academic" checked>
+            <label for="academic">Academic Integrity</label>
+            </li>
+
+            <li>
+            <input id="gradingPractices" type="checkbox" name="gradingPractices" value="gradingPractices" checked>
+            <label for="gradingPractices">Grading Practices</label>
+            </li>
+
+            <li>
+            <input id="copyright" type="checkbox" name="copyright" value="copyright" checked>
+            <label for="copyright">Copyright Disclaimer</label>
+            </li>
+
+            <li>
+            <input id="disabilityAssistance" type="checkbox" name="disabilityAssistance" value="disabilityAssistance" checked>
+            <label for="disabilityAssistance">Disability Assistance</label>
+            </li>
+
+            <li>
+            <input id="equity" type="checkbox" name="equity" value= "equity" checked>
+            <label for="equity">Equity, Human Rights, Discrimination and Harassment</label>
+            </li>
+
+            <li>
+            <input id="health" type="checkbox" name="health" value="health" checked>
+            <label for="health">Health & Wellness - UNC 337</label>
+            </li>
+
+            <li>
+            <input id="sexual" type="checkbox" name="sexual" value="sexual" checked>
+            <label for="sexual">Sexual Violence Prevention and Response Office</label>
+            </li>
+
+            <li>
+            <input id="IIO" type="checkbox" name="IIO" value="IIO" checked>
+            <label for="IIO">Independent Investigations Office</label>
+            </li>
+
+            <li>
+            <input id="hub" type="checkbox" name="hub" value="hub" checked>
+            <label for="hub">The Hub</label>
+            </li>
+
+            <li>
+            <input id="safewalk" type="checkbox" name="safewalk" value="safewalk" checked>
+            <label for="safewalk">Safewalk</label>
+            </li>
+        </ul>`;
+
+        var conceptName = $('#campus').find(":selected").text();
+        if(conceptName == 'UBC-Vancouver'){
+            $('#optionalSyllabus').html(vancouverOptionalList);
+        }else{
+            $('#optionalSyllabus').html(okanaganOptionalList);
+        }
+    }
 </script>
 
 @endsection
