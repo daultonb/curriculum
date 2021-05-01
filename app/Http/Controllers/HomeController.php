@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Course;
 
 class HomeController extends Controller
 {
@@ -35,11 +36,22 @@ class HomeController extends Controller
                 ->where('course_users.user_id','=',Auth::id())->where('courses.status','=', -1)
                 ->get();
 
-                $programs = User::join('program_users', 'users.id', '=', 'program_users.user_id')
-                ->join('programs', 'program_users.program_id', "=", 'programs.program_id')
-                ->select('programs.program_id','programs.program', 'programs.faculty', 'programs.level', 'programs.department', 'programs.status')
-                ->where('program_users.user_id','=',Auth::id())
-                ->get();
+        $programs = User::join('program_users', 'users.id', '=', 'program_users.user_id')
+        ->join('programs', 'program_users.program_id', "=", 'programs.program_id')
+        ->select('programs.program_id','programs.program', 'programs.faculty', 'programs.level', 'programs.department', 'programs.status')
+        ->where('program_users.user_id','=',Auth::id())
+        ->get();
+
+        /*
+        $courseUsers = array();
+        foreach($activeCourses as $course){
+            $courseUsers[] =
+            Course::join('course_users','courses.course_id',"=","course_users.course_id")
+            ->join('users','course_users.user_id',"=","users.id")
+            ->select('users.email')
+            ->where('courses.course_id','=',$course->course_id)->get();
+        }
+        */
 
         return view('pages.home')->with("activeCourses",$activeCourses)->with("activeProgram",$programs);
     }

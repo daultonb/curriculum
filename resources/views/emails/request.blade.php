@@ -22,6 +22,8 @@
 
                                 <div class="col-md-8">
                                     <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" required autofocus>
+                                    <input type="hidden" class="form-check-input" name="user_id" value={{Auth::id()}}>
+                                    <input type="hidden" class="form-check-input" name="type" value="unassigned">
 
                                     @if ($errors->has('email'))
                                         <span class="help-block">
@@ -40,6 +42,39 @@
                             </div>
                         </form>
                     </div>
+                </div>
+
+                <div class="card mb-5 mt-5" style="background-color: white;">
+                    <div class="card-body" style="padding:0%;">
+                        @if(count($invites)>0)
+                            <table class="table table-hover dashBoard">
+                                <thead>
+                                  <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Invited Email</th>
+                                    <th scope="col">Date and Time</th>
+                                  </tr>
+                                </thead>
+
+                                @foreach ($invites as $index => $invite)
+                                <tbody>
+                                  <tr>
+                                    <th scope="row">{{$index + 1}}</th>
+                                    <td>{{$invite->email}}</td>
+                                    <td>{{$invite->updated_at}}</td>
+                                  </tr>
+                                </tbody>
+                                @endforeach
+                            </table>
+
+                        @else
+
+                        <div>
+                            <span>There are no invites</span>
+                        </div>
+
+                        @endif
+                </div>
                 </div>
             </div>
         </div>
