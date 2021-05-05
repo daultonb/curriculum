@@ -35,3 +35,8 @@ button:active{
     font-size: 11pt;
     font-family: 'Open Sans', sans-serif;
 }
+
+ul { /* fixes weird spacing from the bootstrap defaults*/
+    margin-top: -20px;
+    padding-bottom: 15px;
+}

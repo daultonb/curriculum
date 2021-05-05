@@ -50,7 +50,7 @@
                     <div class="col-sm"> 
                         <div class="img">
                             <!-- replace this with ideation img!! -->
-                            <img src=" {{ asset('img/questionmark_wikimedia_80x80.png') }}"/>
+                            <img src=" {{ asset('img/Ideation.png') }}"/>
                         </div>
                         <h4>Ideation</h4>
                         <p>Allows instructors to map program learning outcomes (PLOs) to course learning outcomes (CLOs) of required and non-required courses for the program.</p>
@@ -58,8 +58,8 @@
                     <div class="col-sm">
                 
                         <div class="img"> 
-                            <!-- replace this with ideation img!! -->
-                            <img src=" {{ asset('img/questionmark_wikimedia_80x80.png') }}"/>
+                            <!-- replace this with creation img!! -->
+                            <img src=" {{ asset('img/Creation.png') }}"/>
                         </div>
                         <h4>Creation</h4>
                         <p>Allows instructors to create a new course by identifying course learning outcomes, assessment strategies, and teaching and learning methods.</p>
@@ -67,7 +67,7 @@
                     <div class="col-sm">
                         <div class="img">
                             <!-- replace this with evaulation img!! -->
-                            <img src=" {{ asset('img/questionmark_wikimedia_80x80.png') }}"/>
+                            <img src=" {{ asset('img/Evaluation.png') }}"/>
                         </div>
                         <h4>Evaluation</h4>
                         <p>Allows instructors to evaluate existing courses or programs by looking at the alignment across learning outcomes, assessment methods, and teaching and learning activities.</p>
@@ -88,8 +88,8 @@
             </div>
             <div class="span4">
                 <div class="text-center clearfix">
-                        <!-- replace this with speach bubble img!! -->
-                        <img src=" {{ asset('img/questionmark_wikimedia.png') }}"/>
+                        <!-- Image recoloured from: https://www.flaticon.com/free-icon/conversation-mark-interface-symbol-of-circular-speech-bubble-with-quotes-signs-inside_40341 -->
+                        <img src=" {{ asset('img/Quote4_blue2.png') }}"/>
                     <div style="display:inline-block">
                         <h4><strong>
                         “develop, review, improve <br>and perfect an integrated <br>curriculum, including <br>curriculum alignment”
@@ -130,7 +130,7 @@
                 <div class="col-sm">
                     <!-- replace this with img! -->
                     <div class="box-img">
-                        <img src=" {{ asset('img/questionmark_wikimedia_128x128.png') }}" />
+                        <img src=" {{ asset('img/Checkmark.png') }}" />
                     </div>
                     <div class="box-text">
                         <h2>
@@ -144,7 +144,7 @@
                 <div class="col-sm">
                     <!-- replace this with img! -->
                     <div class="box-img">
-                        <img src=" {{ asset('img/questionmark_wikimedia_128x128.png') }}" />
+                        <img src=" {{ asset('img/Checkmark.png') }}" />
                     </div>
                     <div class="box-text">
                         <h2>
@@ -160,7 +160,7 @@
                 <div class="col-sm">
                     <!-- replace this with img! -->
                     <div class="box-img">
-                        <img src=" {{ asset('img/questionmark_wikimedia_128x128.png') }}" />
+                        <img src=" {{ asset('img/Checkmark.png') }}" />
                     </div>
                     <div class="box-text">
                         <h2>
@@ -174,7 +174,7 @@
                 <div class="col-sm">
                     <!-- replace this with img! -->
                     <div class="box-img">
-                        <img src=" {{ asset('img/questionmark_wikimedia_128x128.png') }}" />
+                        <img src=" {{ asset('img/Checkmark.png') }}" />
                     </div>
                     <div class="box-text">
                         <h2>
