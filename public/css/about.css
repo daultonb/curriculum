@@ -1,23 +1,37 @@
 #accordion{
     width:100%;
+    
+}
+.btn.btn-link:hover{
+    text-decoration: none;
 }
 
 .card-header {
-    background-color: #eef8fb;
+    background-color: #002145;
     height: 75px;
 }
 .card-header:hover{
-    background-color: #002145;
-    
+    background-color: #0055B7;    
 }
 .card-header:hover .accordion-title{
     color: white;
 }
+.btn.btn-link:active{
+    border:none;
+}
+button:active{
+    border: none;
+}
 .accordion-title {
-    color: #002145;
+    color: white;
     text-decoration: none;
     font-size: 16pt;
+    font-family: 'Open Sans', sans-serif
+}
+.accordion-title:hover{
+    text-decoration: none;
 }
 .card-body{
-    font-size: 14pt;
+    font-size: 11pt;
+    font-family: 'Open Sans', sans-serif;
 }
