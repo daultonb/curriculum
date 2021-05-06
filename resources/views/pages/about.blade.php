@@ -108,41 +108,6 @@
                 </div>
             
                 <div class="card">
-                    <div class="card-header" id="headingFive">
-                        <h2 class="mb-0">
-                            <button type="button" class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseFive">
-                                <h3 class="accordion-title">FAQ</h3>
-                            </button>                     
-                        </h2>
-                    </div>
-                    <div id="collapseFive" class="collapse" aria-labelledby="headingFive" data-parent="#accordionGroup">
-                        <div class="card-body">
-                        <ul class="nested-list">
-                            <li>Can I use this mapping website if I don’t have all course details?
-                                <ul>
-                                    <li>Yes, the minimum requirement to use this tool is a set of course learning outcomes or competencies. All other requested information is optional.</li>
-                                </ul>
-                            </li>
-                            <li>Can I view how different courses map to different program learning outcomes? 
-                                <ul>
-                                    <li>Yes, you may map one course to as many sets of program-learning outcomes or competencies as you like.</li>
-                                </ul>
-                            </li>
-                            <li>How do I retrieve a course or program that I deleted in the past? 
-                                <ul>
-                                    <li>Once you have deleted a course or a program, you are not able to retrieve it.</li>
-                                </ul>
-                            </li>
-                            <li>Can somebody help me use this tool? 
-                                <ul>
-                                    <li>Yes, you may request support for course and program mapping from the Centre for Teaching and Learning or the Provost Office.</li>
-                                </ul>
-                            </li>
-                        </ul>
-                        </div>
-                    </div>
-                </div>
-                <div class="card">
                     <div class="card-header" id="headingSix">
                         <h2 class="mb-0">
                             <button type="button" class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseSix"><h3 class="accordion-title">References and Literature</h3></button>                     
