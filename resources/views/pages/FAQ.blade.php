@@ -3,20 +3,20 @@
 @section('content')
 
 <link href=" {{ asset('css/about.css') }}" rel="stylesheet" type="text/css" >
+<!--Link for FontAwesome Font for the arrows for the accordions.-->
 <link href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous" rel="stylesheet" type="text/css" >
 
 
 <div class="container">
     <div class="row">
-
         <div style="width: 100%;border-bottom: 1px solid #DCDCDC">
             <h1 style="text-align:center;">FAQ</h1>
-
         </div>
+        
         <div class="accordions" style="width:100%">
             <div class="accordion" id="accordionGroup">
                 <div class="card">
-                    <div class="card-header" id="headingTwo">
+                    <div class="card-header" id="headingOne">
                         <input type="checkbox" id="title1" data-toggle="collapse" data-target="#collapseOne"/>
                         <label for="title1">
                             <h3 class="accordion-title">Can I use this mapping website if I don’t have all course details?</h3>

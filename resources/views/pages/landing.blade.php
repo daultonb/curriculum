@@ -1,33 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-    <!-- <div class="row justify-content-center">
-        <div class="col-md-12">
-
-            <div class="jumbotron">
-                <h1 class="display-4">UBCO Curriculum MAP</h1>
-                <p class="lead">Course and program planning platform at UBCO</p>
-                <hr class="my-4">
-                <p>Plan, review and align courses and programs using online curriculum mapping tool. </p>
-                <p class="lead">
-                    <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
-                </p>
-            </div>
-        </div>
-    </div> -->
-
-    <!-- <div class="row mb-5 mt-3 justify-content-center font-weight-bold text-primary">
-        <div class="col-md-8">
-            <h1><strong>What is Curriculum Mapping ?</strong></h1>
-            <p>
-                It is “the process of associating course outcomes with program‐level learning outcomes and aligning elements of courses
-                (e.g., teaching and learning activities, assessment strategies) within a program, to ensure that it is structured in a
-                strategic, thoughtful way that enhances student learning.” (Dyjur & Kalu, 2017). In other words, mapping provides a global view of how
-                elements of the curriculum relate to the program outcomes.
-            </p>
-
-        </div>
-    </div> -->
 
     <div class="row p-md-5 justify-content-center text-dark bg-secondary">
         <div class="col-md-12 ">
@@ -80,7 +53,7 @@
         <div class="container">
             <div class="quote">
                 <h4><strong>
-                “make learning and teaching more <br>meaningful to students and teachers” 
+                “...make learning and teaching more <br>meaningful to students and teachers.” 
                 </strong></h4>
                 <p class="lead">
                 Lam and Tsui, 2016
@@ -89,7 +62,7 @@
             <div class="span4">
                 <div class="text-center clearfix">
                         <!-- Image recoloured from: https://www.flaticon.com/free-icon/conversation-mark-interface-symbol-of-circular-speech-bubble-with-quotes-signs-inside_40341 -->
-                        <img src=" {{ asset('img/Quote4_blue2.png') }}"/>
+                        <img src=" {{ asset('img/quote4_blue3_400x400.png') }}"/>
                     <div style="display:inline-block">
                         <h4><strong>
                         “develop, review, improve <br>and perfect an integrated <br>curriculum, including <br>curriculum alignment”
@@ -103,7 +76,7 @@
 
             <div class="quote">
                 <h4><strong>
-                    “understand curriculum structures and relationships, gain <br>insight in how students experience their discipline, and <br>increase awareness of curricular content” 
+                    “...understand curriculum structures and relationships, gain <br>insight in how students experience their discipline, and <br>increase awareness of curricular content.” 
                 </strong></h4>
                 <p class="lead">
                     Archambault and Masunaga, 2015
@@ -195,16 +168,18 @@
         <div class="container">
                 <div class="col-md font-weight-bold">
 
-                    <h1><strong>How to Use</strong></h1>
+                    <h1><strong>How to Use Curriculum MAP?</strong></h1>
                     
                     <p class="lead">
-                        In order to use this tool, users must have identified the:
+                        To use this website, users must:
                     </p>
 
-                    <ol style="list-style-type: none;">
-                        <li class="lead" >Course/program learning outcomes</li>
-                        <li class="lead" >Assessment methods (e.g. quizzes, oral presentation, research paper, etc.)</li>
-                        <li class="lead" >Teaching and learning activities (e.g. lecture, problem-based learning, lab, tutorial, discussion, etc.)</li>
+                    <ol>
+                        <li class="lead">Register on the website (registration button can be found on the top banner).</li>
+                        <li class="lead">Choose whether to create a course or a program for curriculum mapping.</li>
+                        <li class="lead">Follow the prompts and steps shown on the website.</li>
+                        <li class="lead">Save or print the results.</li>
+                        <li class="lead">Log back in to review or edit your work.</li>
                     </ol>
 
                     <p class="lead">

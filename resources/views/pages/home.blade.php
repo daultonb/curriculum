@@ -23,27 +23,27 @@
                         @if(count($activeProgram)>0)
                         <table class="table table-hover dashBoard">
                             <thead>
-                              <tr>
+                            <tr>
                                 <th scope="col"></th>
                                 <th scope="col">Program</th>
                                 <th scope="col">Faculty and Department/School</th>
                                 <th scope="col">Level</th>
                                 <th scope="col">Actions</th>
-                              </tr>
+                            </tr>
                             </thead>
 
                             @foreach ($activeProgram as $index => $program)
                             <tbody>
-                              <tr>
+                            <tr>
                                 <th scope="row">{{$index + 1}}</th>
                                 <td>{{$program->program}}</td>
                                 <td>{{$program->faculty}}</td>
                                 <td>{{$program->level}}</td>
                                 <td style="display: inline-block">
                                     <a class="dropdown-item btn-icon" href="{{route('programWizard.step1', $program->program_id)}}">
-                                    <img src={{url('/icons/edit.png')}} style="width:15px;height:15px"></a>
+                                    <img src=" {{ asset('dashboard-icons/edit.png') }}" style="width:15px;height:15px"/></a>
                                     <a class="dropdown-item btn-icon" data-toggle="modal" data-target="#deleteProgram{{$index}}" href=#>
-                                    <img src={{url('/icons/delete.png')}} style="width:15px;height:15px"></a>
+                                    <img src="{{ asset('dashboard-icons/delete.png') }}" style="width:15px;height:15px"/></a>
 
 
                                     <!-- Delete Confirmation Modal -->
@@ -76,11 +76,11 @@
                                     </div>
 
                                 </td>
-                              </tr>
+                            </tr>
                             </tbody>
                             @endforeach
-                          </table>
-                          @endif
+                        </table>
+                        @endif
 
                     </div>
                 </div>
@@ -97,19 +97,19 @@
                         @if(count($activeCourses)>0)
                             <table class="table table-hover dashBoard">
                                 <thead>
-                                  <tr>
+                                <tr>
                                     <th scope="col"></th>
                                     <th scope="col">Course Title</th>
                                     <th scope="col">Course Code</th>
                                     <th scope="col">Semester</th>
                                     <th scope="col">Invite Collaborators</th>
                                     <th scope="col">Actions</th>
-                                  </tr>
+                                </tr>
                                 </thead>
 
                                 @foreach ($activeCourses as $index => $course)
                                 <tbody>
-                                  <tr>
+                                <tr>
                                     <th scope="row">{{$index + 1}}</th>
                                     <td>{{$course->course_title}}</td>
                                     <td>{{$course->course_code}} {{$course->course_num}}</td>
@@ -118,9 +118,9 @@
                                     </td>
                                     <td style="display: inline-block">
                                         <a class="dropdown-item btn-icon" href="{{route('courseWizard.step1', $course->course_id)}}">
-                                        <img src="icons/edit.png" style="width:15px;height:15px"></a>
+                                        <img src="{{ asset('dashboard-icons/edit.png') }}" style="width:15px;height:15px"/></a>
                                         <a class="dropdown-item btn-icon" data-toggle="modal" data-target="#deleteConfirmation{{$index}}" href=#>
-                                        <img src="icons/delete.png" style="width:15px;height:15px"></a>
+                                        <img src="{{ asset('dashboard-icons/delete.png') }}" style="width:15px;height:15px"/></a>
 
                                         <!-- Delete Confirmation Modal -->
                                         <div class="modal fade" id="deleteConfirmation{{$index}}" tabindex="-1" role="dialog" aria-labelledby="deleteConfirmation{{$index}}" aria-hidden="true">
@@ -154,7 +154,7 @@
                                         </div>
 
                                     </td>
-                                  </tr>
+                                </tr>
                                 </tbody>
                                 @endforeach
                             </table>

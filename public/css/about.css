@@ -36,11 +36,12 @@ button:active{
     font-family: 'Open Sans', sans-serif;
 }
 
-li > ul { /* fixes weird spacing from the bootstrap defaults*/
-    margin-top: -20px;
+.accordion-sublist{ /* fixes weird spacing from the bootstrap defaults*/
+    margin-top: -30px;
     padding-bottom: 15px;
 }
 
+/*This is the css for the accordions*/
 input {
     display: none;
 }
