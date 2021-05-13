@@ -143,8 +143,9 @@ class SyllabusController extends Controller
                     $land = "We acknowledge that the UBC Point Grey campus is situated on the traditional, ancestral and unceded territory of the Musqueam people.";
                     $templateProcessor->setValue('land',$land);
                 }else{
-                    $templateProcessor->cloneBlock('land',0);
+                    $templateProcessor->setValue('land',"");//insert blank instead of "${land}"
                 }
+                
             break;
         }
 
@@ -268,6 +269,12 @@ class SyllabusController extends Controller
             $templateProcessor->setValue('require_reading',$requiredReading);
         }else{
             $templateProcessor->cloneBlock('Norequire_reading',0);
+        }
+
+        if($request->input('disabilityAssistance')){
+            $templateProcessor->cloneBlock('disability');
+        }else{
+            $templateProcessor->cloneBlock('disability', 0);
         }
 
 
