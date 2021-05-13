@@ -131,7 +131,7 @@ class SyllabusController extends Controller
                     $land = "The UBC Okanagan campus is situated on the territory of the Syilx Okanagan Nation.";
                     $templateProcessor->setValue('land', $land);
                 }else{
-                    $templateProcessor->cloneBlock('land',0);
+                    $templateProcessor->setValue('land', ""); //insert blank instead of "${land}"
                 }
 
 
