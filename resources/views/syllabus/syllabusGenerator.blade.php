@@ -59,9 +59,9 @@
                                                 @elseif ($course->semester == "W2")
                                                 Winter {{$course->year}} Term 2
                                                 @elseif ($course->semester == "S1")
-                                                Summar {{$course->year}} Term 1
+                                                Summer {{$course->year}} Term 1
                                                 @else
-                                                Summar {{$course->year}} Term 2
+                                                Summer {{$course->year}} Term 2
                                                 @endif
                                             </td>
                                         </tr>
@@ -86,7 +86,7 @@
                             <form method="POST" id="sylabusGenerator" action="{{ action('SyllabusController@WordExport') }}">
                                 @csrf
                                 <div class="container">
-
+                                    <!-- Course Title -->
                                     <div class="row">
                                         <div class="col mb-2">
                                             <label for="courseTitle"><span class="requiredField">*</span>Title:</label>
@@ -94,7 +94,7 @@
                                             placeholder="E.g. Intro to Software development" required>
                                         </div>
                                     </div>
-
+                                    <!-- Course Code, Course Number, Course Instructor -->
                                     <div class="row">
                                         <div class="col-3 mb-2">
                                             <label for="courseCode"><span class="requiredField">*</span>Course Code:</label>
@@ -103,7 +103,7 @@
                                         </div>
 
                                         <div class="col-3 mb-2">
-                                            <label for="courseNumber"><span class="requiredField">*</span>Course Number</label>
+                                            <label for="courseNumber"><span class="requiredField">*</span>Course Number:</label>
                                             <input id = "courseNumber" name = "courseNumber" class ="form-control" type="text"
                                             placeholder="E.g. 310" required>
                                         </div>
@@ -114,30 +114,32 @@
                                             placeholder="E.g. Dr. J. Doe" required>
                                         </div>
                                     </div>
-
+                                    <!-- Course TA -->
                                     <div class="row">
                                         <div class="col mb-2">
-                                            <label for="courseTA">Course TA's (optional):</label>
+                                            <label for="courseTA">Course TA's:</label>
                                             <input id = "courseTA" name = "courseTA" class ="form-control col-md-7" type="text">
                                         </div>
                                     </div>
-
+                                    <!-- Course Location -->
                                     <div class="row">
                                         <div class="col mb-2">
-                                            <label for="courseLocation"><span class="requiredField">*</span>Course Location:</label>
+                                            <label for="courseLocation">Course Location:</label>
                                             <input id = "courseLocation" name = "courseLocation" class ="form-control col-md-5" type="text"
-                                            placeholder="E.g. WEL 140" required>
+                                            placeholder="E.g. WEL 140" 
+                                            >
                                         </div>
                                     </div>
-
+                                    <!-- Office Hours -->
                                     <div class="row">
                                         <div class="col mb-2">
-                                            <label for="officeHour"><span class="requiredField">*</span>Office Hours:</label>
+                                            <label for="officeHour">Office Hours:</label>
                                             <textarea id = "officeHour" name = "officeHour" class ="form-control"
-                                            type="date" form="sylabusGenerator" required></textarea>
+                                            type="date" form="sylabusGenerator" 
+                                            ></textarea>
                                         </div>
                                     </div>
-
+                                    <!-- Course Year, Course Term, Course Start Time, Course End Time -->
                                     <div class="row">
                                         <div class="col-2 mb-2">
                                             <label for="courseYear"><span class="requiredField">*</span>Course Year:</label>
@@ -160,50 +162,50 @@
                                         </div>
 
                                         <div class="col-3 mb-3">
-                                            <label for="startTime"><span class="requiredField">*</span>Course Start Time:</label>
+                                            <label for="startTime">Class Start Time:</label>
                                             <input id = "startTime" name = "startTime" class ="form-control" type="text"
-                                            placeholder="E.g. 1:00 PM" required>
+                                            placeholder="E.g. 1:00 PM" >
                                         </div>
 
                                         <div class="col-3 mb-3">
-                                            <label for="endTime"><span class="requiredField">*</span>Course End Time:</label>
+                                            <label for="endTime">Class End Time:</label>
                                             <input id = "endTime" name = "endTime" class ="form-control" type="text"
-                                            placeholder="E.g. 2:00 PM" required>
+                                            placeholder="E.g. 2:00 PM" >
                                         </div>
                                     </div>
-
-                                    <div class="row">
+                                    <!-- Kieran May 19, 2021: Term start and end date not being used in generated syllabus -->
+                                    <!-- <div class="row">
                                         <div class="col-3 mb-3">
-                                            <label for="semesterStartday"><span class="requiredField">*</span>Term Start Date:</label>
+                                            <label for="semesterStartday">Term Start Date:</label>
                                             <input id = "semesterStartday" name = "semesterStartday" class ="form-control"
-                                            type="date" required>
+                                            type="date" >
                                         </div>
 
                                         <div class="col-3 mb-3">
-                                            <label for="semesterEndday"><span class="requiredField">*</span>Last Class Date:</label>
+                                            <label for="semesterEndday">Last Class Date:</label>
                                             <input id = "semesterEndday" name = "semesterEndday" class ="form-control"
-                                            type="date" required>
+                                            type="date" >
                                         </div>
-                                    </div>
+                                    </div> -->
 
                                     <div class="row">
                                         <div class="col mb-3">
-                                            <label for="classDate"><span class="requiredField">*</span>Class Meeting Days:</label>
+                                            <label for="classDate">Class Meeting Days:</label>
 
                                             <div class="classDate">
-                                                <input id="monday" type="checkbox" name="schedule[]" value="Mon" required>
+                                                <input id="monday" type="checkbox" name="schedule[]" value="Mon">
                                                 <label for="monday">Monday</label>
 
-                                                <input id="tuesday" type="checkbox" name="schedule[]" value="Tue" required>
+                                                <input id="tuesday" type="checkbox" name="schedule[]" value="Tue">
                                                 <label for="tuesday">Tuesday</label>
 
-                                                <input id="wednesday" type="checkbox" name="schedule[]" value="Wed" required>
+                                                <input id="wednesday" type="checkbox" name="schedule[]" value="Wed">
                                                 <label for="wednesday">Wednesday</label>
 
-                                                <input id="thursday" type="checkbox" name="schedule[]" value= "Thu" required>
+                                                <input id="thursday" type="checkbox" name="schedule[]" value= "Thu">
                                                 <label for="thursday">Thursday</label>
 
-                                                <input id="friday" type="checkbox" name="schedule[]" value="Fri" required>
+                                                <input id="friday" type="checkbox" name="schedule[]" value="Fri">
                                                 <label for="friday">Friday</label>
                                             </div>
                                         </div>
@@ -404,14 +406,14 @@
         });
 
         // Dynamic update required attribute for dates
-        var requiredCheckboxes = $('.classDate :checkbox[required]');
-        requiredCheckboxes.change(function() {
-            if(requiredCheckboxes.is(':checked')) {
-            requiredCheckboxes.removeAttr('required');
-            } else {
-            requiredCheckboxes.attr('required', 'required');
-            }
-        });
+        // var requiredCheckboxes = $('.classDate :checkbox[required]');
+        // requiredCheckboxes.change(function() {
+        //     if(requiredCheckboxes.is(':checked')) {
+        //     requiredCheckboxes.removeAttr('required');
+        //     } else {
+        //     requiredCheckboxes.attr('required', 'required');
+        //     }
+        // });
 
     });
 

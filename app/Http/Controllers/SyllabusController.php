@@ -73,16 +73,8 @@ class SyllabusController extends Controller
         $courseCode = $request->input('courseCode');
         $courseNumber = $request->input('courseNumber');
         $courseInstructor = $request->input('courseinstructor');
-        $courseTa = $request->input('courseTA');
-        $courseLocation = $request->input('courseLocation');
-        $courseStartTime = $request->input('startTime');
-        $courseEndTime = $request->input('endTime');
-        $courseStartDay = $request->input('semesterStartday');
-        $courseEndDay = $request->input('semesterEndday');
         $courseYear = $request->input('courseYear');
-        $schedules = $request->input('schedule');
         $semester = $request->input('courseSemester');
-        $office_hour = $request->input('officeHour');
 
         switch($request->input('campus')){
             // generate word syllabus for Okanagan campus course
@@ -142,7 +134,7 @@ class SyllabusController extends Controller
                     $templateProcessor->cloneBlock('land');
                 }else{
                     // tell template processor to not include land block
-                    $templateProcessor->cloneBlock('land', 0); //insert blank instead of "${land}"
+                    $templateProcessor->cloneBlock('land', 0); 
                 }
 
 
@@ -168,33 +160,58 @@ class SyllabusController extends Controller
                 
             break;
         }
-
+        // add required form fields common to both campuses to template
         $templateProcessor->setValues(array('courseTitle'=> $courseTitle,'courseCode' => $courseCode, 'courseNumber'=> $courseNumber, 'courseInstructor'=> $courseInstructor,
-                    'courseLocation'=> $courseLocation, 'courseStartTime'=> $courseStartTime, 'courseEndTime'=> $courseEndTime, 'courseStartDay'=>$courseStartDay,
-                    'courseEndDay'=> $courseEndDay,'courseYear'=> $courseYear,'office_hour' => $office_hour));
+                    'courseYear'=> $courseYear,));
 
-
-
-
-        // Load final dates
-        if($request->input('finalcheckbox')){
-            $finalDate = $request->input('finalDate');
-            $templateProcessor->setValue('finalDate',$finalDate);
-        }
-
-
+        // tell template processor to include course TA if user completed the field(s)
         if($courseTa = $request->input('courseTA')){
             $templateProcessor->cloneBlock('NoTa');
             $templateProcessor->setValue('courseTA',$courseTa);
         }else{
             $templateProcessor->cloneBlock('NoTa',0);
         }
-
-        $schedule = "";
-        foreach($schedules as $day) {
-            $schedule = ($schedule == "" ? $day : $schedule . '/' . $day);
+        // tell template processor to include course location if user completed the field(s)
+        if ($courseLocation = $request->input('courseLocation')) {
+            $templateProcessor->cloneBlock('NoCourseLocation');
+            $templateProcessor->setValue('courseLocation',$courseLocation);
+        } else {
+            $templateProcessor->cloneBlock('NoCourseLocation',0);
         }
-        $templateProcessor->setValue('schedule',$schedule);
+        
+        // tell template processor to include class hours if user completed the field(s)
+        if ($classStartTime = $request->input('startTime') and $classEndTime = $request->input('endTime')) {
+            $templateProcessor->cloneBlock('NoClassHours');
+            $templateProcessor->setValues(array('classStartTime' => $classStartTime, 'classEndTime' => $classEndTime));
+        } else {
+            $templateProcessor->cloneBlock('NoClassHours',0);
+        }
+
+        // tell template processor to include course schedule if user completed the field(s)
+        if ($schedules = $request->input('schedule')) {
+            $templateProcessor->cloneBlock('NoCourseDays');
+            $schedule = "";
+            foreach($schedules as $day) {
+                $schedule = ($schedule == "" ? $day : $schedule . '/' . $day);
+            }
+            $templateProcessor->setValue('schedule',$schedule);
+        } else {
+            $templateProcessor->cloneBlock('NoCourseDays', 0);
+        }
+
+        // tell template processor to include office hours if user completed the field(s)
+        if ($officeHour = $request->input('officeHour')) {
+            $templateProcessor->cloneBlock('NoOfficeHours');
+            $templateProcessor->setValue('officeHour',$officeHour);
+        } else {
+            $templateProcessor->cloneBlock('NoOfficeHours', 0);
+        }
+
+        // Load final dates
+        if($request->input('finalcheckbox')){
+            $finalDate = $request->input('finalDate');
+            $templateProcessor->setValue('finalDate',$finalDate);
+        }
 
         switch($semester){
             case("W1"):
@@ -206,11 +223,11 @@ class SyllabusController extends Controller
                 $templateProcessor->setValue('term',"Term 2");
             break;
             case("S1"):
-                $templateProcessor->setValue('season',"Summar");
+                $templateProcessor->setValue('season',"Summer");
                 $templateProcessor->setValue('term',"Term 1");
             break;
             case("S2"):
-                $templateProcessor->setValue('season',"Summar");
+                $templateProcessor->setValue('season',"Summer");
                 $templateProcessor->setValue('term',"Term 2");
             break;
         }
