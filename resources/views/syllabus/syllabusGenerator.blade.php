@@ -228,7 +228,12 @@
 
                                     <div class="row">
                                         <div class="col mb-3">
-                                            <label for="learningOutcome">Learning Outcomes:</label>
+                                            <label for="learningOutcome">Learning Outcomes:
+                                            </label>
+                                            <p style="color:gray">
+                                                <i>                     Upon completion of this course, students will be able to...
+                                                </i>
+                                            </p>
                                             <textarea id = "learningOutcome" name = "learningOutcome" class ="form-control"
                                             type="date" style="height:125px;" form="sylabusGenerator"></textarea>
                                         </div>
