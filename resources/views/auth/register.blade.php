@@ -63,8 +63,8 @@
                         </div>
                         <div class="form-group row">
                             <div class="col-md-10 offset-md-4">
-                                <input type="checkbox" id="terms-and-conditions" required>
-                                <label for="terms-and-conditions" class="col-md-14 col-form-label text-md-right"> I agree to the <a href="/terms" target="_blank">Terms & Conditions</a></label>
+                                <input type="checkbox" id="terms-of-use" required>
+                                <label for="terms-of-use" class="col-md-14 col-form-label text-md-right"> I agree to the <a href="/terms" target="_blank">Terms of Use</a>.</label>
                             </div>
                         </div>
 
