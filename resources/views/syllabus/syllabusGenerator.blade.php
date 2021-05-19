@@ -83,7 +83,7 @@
                     <div class="card-body">
 
                         <div class="courseInfo">
-                            <form method="GET" id="sylabusGenerator" action="{{ action('SyllabusController@WordExport') }}">
+                            <form method="POST" id="sylabusGenerator" action="{{ action('SyllabusController@WordExport') }}">
                                 @csrf
                                 <div class="container">
 
@@ -470,7 +470,7 @@
             var conceptName = $('#campus').find(":selected").text();
             if(conceptName == 'UBC-Vancouver'){
                 $('#optionalSyllabus').html(vancouverOptionalList);
-                
+
             }else{
                 $('#optionalSyllabus').html(okanaganOptionalList);
         }
