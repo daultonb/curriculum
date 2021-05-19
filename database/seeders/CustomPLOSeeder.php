@@ -136,7 +136,7 @@ class CustomPLOSeeder extends Seeder
         $min1->save();
 
         $min2 = new Custom_program_learning_outcomes();
-        $min2->custom_plo = "Align with CleanBC's plan to a protect our communities towards a more sustainabl future";
+        $min2->custom_plo = "Align with CleanBC's plan to a protect our communities towards a more sustainable future";
         $min2->custom_program_id = 3;
         $min2->custom_program_name = "Ministry of Advanced Education,Skills and Training";
         $min2->save();
@@ -148,7 +148,7 @@ class CustomPLOSeeder extends Seeder
         $min3->save();
 
         $min4 = new Custom_program_learning_outcomes();
-        $min4->custom_plo = "Offer programming aligned with high opportunity and priority occupations (such as trades,technology,early childhood educators and health)";
+        $min4->custom_plo = "Offer programming aligned with high opportunity and priority occupations (such as trades, technology, early childhood educators and health)";
         $min4->custom_program_id = 3;
         $min4->custom_program_name = "Ministry of Advanced Education,Skills and Training";
         $min4->save();
@@ -160,13 +160,13 @@ class CustomPLOSeeder extends Seeder
         $min5->save();
 
         $min6 = new Custom_program_learning_outcomes();
-        $min6->custom_plo = "Respond to the reskilling neds of British Columbians to support employment and career transitions";
+        $min6->custom_plo = "Respond to the reskilling needs of British Columbians to support employment and career transitions";
         $min6->custom_program_id = 3;
         $min6->custom_program_name = "Ministry of Advanced Education,Skills and Training";
         $min6->save();
 
         $min7 = new Custom_program_learning_outcomes();
-        $min7->custom_plo = "Supporting students' awareness of career planning resources(such as the Labour Market Outlook)";
+        $min7->custom_plo = "Supporting students' awareness of career planning resources (such as the Labour Market Outlook)";
         $min7->custom_program_id = 3;
         $min7->custom_program_name = "Ministry of Advanced Education,Skills and Training";
         $min7->save();

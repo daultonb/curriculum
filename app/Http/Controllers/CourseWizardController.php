@@ -225,11 +225,11 @@ class CourseWizardController extends Controller
                             ->where('mapping_scale_programs.program_id', $course->program_id)->get();
 
         $ubc_mandate_letters = array("Incorporation of the Declaration on the Rights of Indigenous Peoples Act and Calls to Action of the Truth and Reconciliation Commission",
-        "Align with CleanBC's plan to a protect our communities towards a more sustainabl future","Advancing and supporting open learning resources","Offer programming aligned with high opportunity and priority occupations (such as trades,technology,early childhood educators and health)",
-        "Embed more co-op and work-integrated learning opportunities","Respond to the reskilling neds of British Columbians to support employment and career transitions","Supporting students' awareness of career planning resources(such as the Labour Market Outlook)");
+        "Align with CleanBC's plan to a protect our communities towards a more sustainable future","Advancing and supporting open learning resources","Offer programming aligned with high opportunity and priority occupations (such as trades, technology, early childhood educators and health)",
+        "Embed more co-op and work-integrated learning opportunities","Respond to the reskilling needs of British Columbians to support employment and career transitions","Supporting students' awareness of career planning resources (such as the Labour Market Outlook)");
 
-        $bc_labour_market = array("Active listening","Speaking","Reading Comprehension","Critical Thinking","Social Perceptiveness","Judgement and Decision Making","Writing","Monitoring"
-        ,"Complex Problem Solving","Coordingation");
+        $bc_labour_market = array("Active Listening","Speaking","Reading Comprehension","Critical Thinking","Social Perceptiveness","Judgement and Decision Making","Writing","Monitoring"
+        ,"Complex Problem Solving","Coordination");
 
         $shaping_ubc = array("Great People: Attract, engage and retain a diverse global community of outstanding students, faculty and staff.","Inspiring Spaces: Create welcoming physical and virtual spaces to advance collaboration, innovation and community development.",
         "Thriving Communities: Support the ongoing development of sustainable, healthy and connected campuses and communities, consistent with the 20-Year Sustainability Strategy and the developing Wellbeing Strategy.","Inclusive Excellence: Cultivate a diverse community that creates and sustains equitable and inclusive campuses.",

@@ -35,7 +35,7 @@
                             <td>Course Learning Outcomes</td>
                             <td>Student Assessment Methods</td>
                             <td>Teaching and Learning Activities</td>
-                            <td>Course Outcome Mapping</td>
+                            <td>Course Alignment</td>
                             <td>Program Outcome Mapping</td>
                             <td>Course Summary</td>
                         </tr>
@@ -45,9 +45,9 @@
 
             <div class="card">
 
-
                 <div class="card-body">
-
+                    <p class="form-text">This step, requires instructors to intentionally evaluate all course elements to achieve <a target="_blank" href="https://centre.cc.umanitoba.ca/development/resources/course-alignment/">course alignment.</a> This means, ensuring that the targeted learning outcomes are in alignment with the assessment methods and teaching/instructional practices.</p>
+                    <p class="form-text">This can be an iterative process and may take a long time. Intentional evaluation and re-thinking of some course elements is encouraged to achieve better alignment. </p>
                         <div class="row">
                             <div class="col">
 

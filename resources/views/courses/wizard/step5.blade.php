@@ -36,7 +36,7 @@
                             <td>Course Learning Outcomes</td>
                             <td>Student Assessment Methods</td>
                             <td>Teaching and Learning Activities</td>
-                            <td>Course Outcome Mapping</td>
+                            <td>Course Alignment</td>
                             <td>Program Outcome Mapping</td>
                             <td>Course Summary</td>
                         </tr>
@@ -248,6 +248,13 @@
                                                 </td>
                                                 <td>
                                                     {{$letter}}
+                                                    @if($index == 0)
+                                                        <a href="http://trc.ca/assets/pdf/Calls_to_Action_English2.pdf" target="_blank">(More Information can be found here)</a>
+                                                    @elseif($index == 1)
+                                                        <a href="https://cleanbc.gov.bc.ca/" target="_blank">(More Information can be found here)</a>
+                                                    @elseif($index == 6)
+                                                        <a href="https://www.workbc.ca/getmedia/18214b5d-b338-4bbd-80bf-b04e48a11386/BC_Labour_Market_Outlook_2019.pdf.aspx" target="_blank">(More Information can be found here)</a>
+                                                    @endif
                                                 </td>
                                                 </tr>
                                                 @endforeach
