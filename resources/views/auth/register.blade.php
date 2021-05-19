@@ -61,6 +61,12 @@
                                 <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
                             </div>
                         </div>
+                        <div class="form-group row">
+                            <div class="col-md-10 offset-md-4">
+                                <input type="checkbox" id="terms-and-conditions" required>
+                                <label for="terms-and-conditions" class="col-md-14 col-form-label text-md-right"> I agree to the <a href="/terms" target="_blank">Terms & Conditions</a></label>
+                            </div>
+                        </div>
 
                         <div class="form-group row">
                             <div class="col-md-6 offset-md-4">
