@@ -33,7 +33,7 @@
     padding-bottom: 15px;
 }
 
-input {
+.accordion-input {
     display: none;
 }
 
@@ -51,11 +51,11 @@ label {
     background: #0055B7;
 }
 
-input + label + .content {
+.accordion-input + label + .content {
     display: none;
 }
 
-input:checked + label + .content {
+.accordion-input:checked + label + .content {
     display: block;
 }
 /*This is for the arrow*/
@@ -64,7 +64,7 @@ label::after {
 	content: '\f078';
 	font-weight: bold;
 }
-input:checked + label::after {
+.accordion-input:checked + label::after {
 	content: '\f077';
 }
 /*This is for the arrow*/

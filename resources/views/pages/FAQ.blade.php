@@ -17,7 +17,7 @@
             <div class="accordion" id="accordionGroup">
                 <div class="card">
                     <div class="card-header" id="headingOne">
-                        <input type="checkbox" id="title1" data-toggle="collapse" data-target="#collapseOne"/>
+                        <input class="accordion-input" type="checkbox" id="title1" data-toggle="collapse" data-target="#collapseOne"/>
                         <label for="title1">
                             <h3 class="accordion-title">Can I use this mapping website if I don’t have all course details?</h3>
                         </label>   
@@ -31,7 +31,7 @@
                 </div>
                 <div class="card">
                     <div class="card-header" id="headingTwo">
-                        <input type="checkbox" id="title2" data-toggle="collapse" data-target="#collapseTwo"/>
+                        <input class="accordion-input" type="checkbox" id="title2" data-toggle="collapse" data-target="#collapseTwo"/>
                         <label for="title2">
                             <h3 class="accordion-title">Can I view how different courses map to different program learning outcomes?</h3>                   
                         </label>
@@ -44,7 +44,7 @@
                 </div>
                 <div class="card">
                     <div class="card-header" id="headingThree">
-                        <input type="checkbox" id="title3" data-toggle="collapse" data-target="#collapseThree"/>
+                        <input class="accordion-input" type="checkbox" id="title3" data-toggle="collapse" data-target="#collapseThree"/>
                         <label for="title3">
                             <h3 class="accordion-title">How do I retrieve a course or program that I deleted in the past? </h3>
                         </label>                   
@@ -57,7 +57,7 @@
                 </div>
                 <div class="card">
                     <div class="card-header" id="headingFour">
-                        <input type="checkbox" id="title4" data-toggle="collapse" data-target="#collapseFour"/>
+                        <input class="accordion-input" type="checkbox" id="title4" data-toggle="collapse" data-target="#collapseFour"/>
                         <label for="title4">
                             <h3 class="accordion-title">Can somebody help me use this tool? </h3>
                         </label>                 
