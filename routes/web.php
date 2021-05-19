@@ -30,7 +30,7 @@ Route::get('/faq', 'FAQController@index')->name('FAQ');
 
 
 Route::get('/syllabusGenerator', 'SyllabusController@index')->name('syllabus');
-Route::get('/syllabusGenerator/word','SyllabusController@WordExport')->name('syllabus.word');
+Route::post('/syllabusGenerator/word','SyllabusController@WordExport')->name('syllabus.word');
 Route::get('/syllabusGenerator/course','SyllabusController@getCourseInfo');
 
 Route::resource('/programs','ProgramController');
