@@ -1,3 +1,4 @@
+
 @extends('layouts.app')
 
 @section('content')
@@ -43,8 +44,7 @@
                                             <th scope="col">Semester</th>
                                           </tr>
                                         </thead>
-
-                                        @foreach ($activeCourses as $index => $course)
+                                        @foreach ($allCourses as $index => $course)
                                         <tbody>
                                         <tr>
                                             <th scope="row">
@@ -59,9 +59,9 @@
                                                 @elseif ($course->semester == "W2")
                                                 Winter {{$course->year}} Term 2
                                                 @elseif ($course->semester == "S1")
-                                                Summar {{$course->year}} Term 1
+                                                Summer {{$course->year}} Term 1
                                                 @else
-                                                Summar {{$course->year}} Term 2
+                                                Summer {{$course->year}} Term 2
                                                 @endif
                                             </td>
                                         </tr>
@@ -83,10 +83,10 @@
                     <div class="card-body">
 
                         <div class="courseInfo">
-                            <form method="GET" id="sylabusGenerator" action="{{ action('SyllabusController@WordExport') }}">
+                            <form method="POST" id="sylabusGenerator" action="{{ action('SyllabusController@WordExport') }}">
                                 @csrf
                                 <div class="container">
-
+                                    <!-- Course Title -->
                                     <div class="row">
                                         <div class="col mb-2">
                                             <label for="courseTitle"><span class="requiredField">*</span>Title:</label>
@@ -94,12 +94,18 @@
                                             placeholder="E.g. Intro to Software development" required>
                                         </div>
                                     </div>
-
+                                    <!-- Course Code, Course Number, Course Instructor -->
                                     <div class="row">
+                                        <div class="col-3 mb-2">
+                                            <label for="courseCode"><span class="requiredField">*</span>Course Code:</label>
+                                            <input id = "courseCode" name = "courseCode" class ="form-control" type="text"
+                                            placeholder="E.g. CPSC" required>
+                                        </div>
+
                                         <div class="col-3 mb-2">
                                             <label for="courseNumber"><span class="requiredField">*</span>Course Number:</label>
                                             <input id = "courseNumber" name = "courseNumber" class ="form-control" type="text"
-                                            placeholder="E.g. CPSC 310" required>
+                                            placeholder="E.g. 310" required>
                                         </div>
 
                                         <div class="col-3 mb-2">
@@ -108,35 +114,37 @@
                                             placeholder="E.g. Dr. J. Doe" required>
                                         </div>
                                     </div>
-
+                                    <!-- Course TA -->
                                     <div class="row">
                                         <div class="col mb-2">
-                                            <label for="courseTA">Course TA's (optional):</label>
+                                            <label for="courseTA">Course TA's:</label>
                                             <input id = "courseTA" name = "courseTA" class ="form-control col-md-7" type="text">
                                         </div>
                                     </div>
-
+                                    <!-- Course Location -->
                                     <div class="row">
                                         <div class="col mb-2">
-                                            <label for="courseLocation"><span class="requiredField">*</span>Course Location:</label>
+                                            <label for="courseLocation">Course Location:</label>
                                             <input id = "courseLocation" name = "courseLocation" class ="form-control col-md-5" type="text"
-                                            placeholder="E.g. WEL 140" required>
+                                            placeholder="E.g. WEL 140" 
+                                            >
                                         </div>
                                     </div>
-
+                                    <!-- Office Hours -->
                                     <div class="row">
                                         <div class="col mb-2">
-                                            <label for="officeHour"><span class="requiredField">*</span>Office Hours:</label>
+                                            <label for="officeHour">Office Hours:</label>
                                             <textarea id = "officeHour" name = "officeHour" class ="form-control"
-                                            type="date" form="sylabusGenerator" required></textarea>
+                                            type="date" form="sylabusGenerator" 
+                                            ></textarea>
                                         </div>
                                     </div>
-
+                                    <!-- Course Year, Course Term, Course Start Time, Course End Time -->
                                     <div class="row">
                                         <div class="col-2 mb-2">
                                             <label for="courseYear"><span class="requiredField">*</span>Course Year:</label>
                                             <select id="courseYear" class="form-control" name="courseYear">
-                                                <option vlaue="2023">2023</option>
+                                                <option value="2023">2023</option>
                                                 <option value="2022">2022</option>
                                                 <option value="2021">2021</option>
                                                 <option value="2020">2020</option>
@@ -154,50 +162,50 @@
                                         </div>
 
                                         <div class="col-3 mb-3">
-                                            <label for="startTime"><span class="requiredField">*</span>Course Start Time:</label>
+                                            <label for="startTime">Class Start Time:</label>
                                             <input id = "startTime" name = "startTime" class ="form-control" type="text"
-                                            placeholder="E.g. 1:00 PM" required>
+                                            placeholder="E.g. 1:00 PM" >
                                         </div>
 
                                         <div class="col-3 mb-3">
-                                            <label for="endTime"><span class="requiredField">*</span>Course End Time:</label>
+                                            <label for="endTime">Class End Time:</label>
                                             <input id = "endTime" name = "endTime" class ="form-control" type="text"
-                                            placeholder="E.g. 2:00 PM" required>
+                                            placeholder="E.g. 2:00 PM" >
                                         </div>
                                     </div>
-
-                                    <div class="row">
+                                    <!-- Kieran May 19, 2021: Term start and end date not being used in generated syllabus -->
+                                    <!-- <div class="row">
                                         <div class="col-3 mb-3">
-                                            <label for="semesterStartday"><span class="requiredField">*</span>Term Start Date:</label>
+                                            <label for="semesterStartday">Term Start Date:</label>
                                             <input id = "semesterStartday" name = "semesterStartday" class ="form-control"
-                                            type="date" required>
+                                            type="date" >
                                         </div>
 
                                         <div class="col-3 mb-3">
-                                            <label for="semesterEndday"><span class="requiredField">*</span>Last Class Date:</label>
+                                            <label for="semesterEndday">Last Class Date:</label>
                                             <input id = "semesterEndday" name = "semesterEndday" class ="form-control"
-                                            type="date" required>
+                                            type="date" >
                                         </div>
-                                    </div>
+                                    </div> -->
 
                                     <div class="row">
                                         <div class="col mb-3">
-                                            <label for="classDate"><span class="requiredField">*</span>Class Meeting Days:</label>
+                                            <label for="classDate">Class Meeting Days:</label>
 
                                             <div class="classDate">
-                                                <input id="monday" type="checkbox" name="schedule[]" value="Mon" required>
+                                                <input id="monday" type="checkbox" name="schedule[]" value="Mon">
                                                 <label for="monday">Monday</label>
 
-                                                <input id="tuesday" type="checkbox" name="schedule[]" value="Tue" required>
+                                                <input id="tuesday" type="checkbox" name="schedule[]" value="Tue">
                                                 <label for="tuesday">Tuesday</label>
 
-                                                <input id="wednesday" type="checkbox" name="schedule[]" value="Wed" required>
+                                                <input id="wednesday" type="checkbox" name="schedule[]" value="Wed">
                                                 <label for="wednesday">Wednesday</label>
 
-                                                <input id="thursday" type="checkbox" name="schedule[]" value= "Thu" required>
+                                                <input id="thursday" type="checkbox" name="schedule[]" value= "Thu">
                                                 <label for="thursday">Thursday</label>
 
-                                                <input id="friday" type="checkbox" name="schedule[]" value="Fri" required>
+                                                <input id="friday" type="checkbox" name="schedule[]" value="Fri">
                                                 <label for="friday">Friday</label>
                                             </div>
                                         </div>
@@ -222,7 +230,12 @@
 
                                     <div class="row">
                                         <div class="col mb-3">
-                                            <label for="learningOutcome">Learning Outcomes:</label>
+                                            <label for="learningOutcome">Learning Outcomes:
+                                            </label>
+                                            <p style="color:gray">
+                                                <i>                     Upon completion of this course, students will be able to...
+                                                </i>
+                                            </p>
                                             <textarea id = "learningOutcome" name = "learningOutcome" class ="form-control"
                                             type="date" style="height:125px;" form="sylabusGenerator"></textarea>
                                         </div>
@@ -356,6 +369,11 @@
                 },
             }).done(function(data) {
                 var decode_data = JSON.parse(data);
+                var c_title = decode_data['c_title'];
+                var c_code = decode_data['c_code'];
+                var c_num = decode_data['c_num'];
+                var c_year = decode_data['c_year'];
+                var c_term = decode_data['c_term'];
                 var a_methods = decode_data['a_methods'];
                 var l_outcomes = decode_data['l_outcomes'];
 
@@ -369,25 +387,33 @@
                 for(var i = 0; i < l_outcomes.length; i++) {
                     l_outcomes_text += (i+1) + ". " + l_outcomes[i].l_outcome + "\n";
                 }
-
+                var c_title_input = $('#courseTitle');
+                var c_code_input = $('#courseCode');
+                var c_num_input = $('#courseNumber');
+                var c_year_input = $('#courseYear');
+                var c_term_input = $('#courseSemester');
                 var a_method_input = $('#evaluationCriteria');
                 var l_outcome_input = $('#learningOutcome');
 
-
+                c_title_input.val(c_title);
+                c_code_input.val(c_code);
+                c_num_input.val(c_num);
+                c_year_input.val(c_year);
+                c_term_input.val(c_term);
                 a_method_input.val(a_methods_text);
                 l_outcome_input.val(l_outcomes_text);
             });
         });
 
         // Dynamic update required attribute for dates
-        var requiredCheckboxes = $('.classDate :checkbox[required]');
-        requiredCheckboxes.change(function() {
-            if(requiredCheckboxes.is(':checked')) {
-            requiredCheckboxes.removeAttr('required');
-            } else {
-            requiredCheckboxes.attr('required', 'required');
-            }
-        });
+        // var requiredCheckboxes = $('.classDate :checkbox[required]');
+        // requiredCheckboxes.change(function() {
+        //     if(requiredCheckboxes.is(':checked')) {
+        //     requiredCheckboxes.removeAttr('required');
+        //     } else {
+        //     requiredCheckboxes.attr('required', 'required');
+        //     }
+        // });
 
     });
 
@@ -396,34 +422,25 @@
 
     // Function changes optional verison of syllabus
     function handleVersion() {
-    var vancouverOptionalList = `
-    <ul aria-label="Optional: The below are suggested sections to communicate various resources on campus" style="list-style-type:none;">
-            <li>
-            <input id="disabilities" type="checkbox" name="disabilities" value="disabilities" checked>
-            <label for="disabilities">Accommodations for students with disabilities</label>
-            </li>
-        </ul>`;
+        // the optionalList variables need to match the optional syllabus list above (default is to display Okanagan)
 
+        var vancouverOptionalList = `
+        <ul aria-label="Optional: The below are suggested sections to communicate various resources on campus" style="list-style-type:none;">
+                <li>
+                <input id="disabilities" type="checkbox" name="disabilities" value="disabilities" checked>
+                <label for="disabilities">Accommodations for students with disabilities</label>
+                </li>
+            </ul>`;
         var okanaganOptionalList = `
         <ul aria-label="Optional: The below are suggested sections to communicate various resources on campus" style="list-style-type:none;">
             <li>
-            <input id="plagiarism" type="checkbox" name="plagiarism" value="plagiarism" checked>
-            <label for="plagiarism">Plagiarism and Collaboration</label>
-            </li>
-
-            <li>
-            <input id="cooperation" type="checkbox" name="cooperation" value="cooperation" checked>
-            <label for="cooperation">Cooperation vs. Cheating</label>
-            </li>
-
-            <li>
-            <input id="grievances" type="checkbox" name="grievances" value="grievances" checked>
-            <label for="grievances">Grievances and Complaints Procedures</label>
-            </li>
-
-            <li>
             <input id="academic" type="checkbox" name="academic" value="academic" checked>
             <label for="academic">Academic Integrity</label>
+            </li>
+
+            <li>
+            <input id="final" type="checkbox" name="final" value="final" checked>
+            <label for="final">Final Examinations</label>
             </li>
 
             <li>
@@ -432,52 +449,68 @@
             </li>
 
             <li>
-            <input id="copyright" type="checkbox" name="copyright" value="copyright" checked>
-            <label for="copyright">Copyright Disclaimer</label>
-            </li>
-
-            <li>
-            <input id="disabilityAssistance" type="checkbox" name="disabilityAssistance" value="disabilityAssistance" checked>
-            <label for="disabilityAssistance">Disability Assistance</label>
-            </li>
-
-            <li>
-            <input id="equity" type="checkbox" name="equity" value= "equity" checked>
-            <label for="equity">Equity, Human Rights, Discrimination and Harassment</label>
-            </li>
-
-            <li>
             <input id="health" type="checkbox" name="health" value="health" checked>
-            <label for="health">Health & Wellness - UNC 337</label>
-            </li>
-
-            <li>
-            <input id="sexual" type="checkbox" name="sexual" value="sexual" checked>
-            <label for="sexual">Sexual Violence Prevention and Response Office</label>
-            </li>
-
-            <li>
-            <input id="IIO" type="checkbox" name="IIO" value="IIO" checked>
-            <label for="IIO">Independent Investigations Office</label>
-            </li>
-
-            <li>
-            <input id="hub" type="checkbox" name="hub" value="hub" checked>
-            <label for="hub">The Hub</label>
+            <label for="health">Health & Wellness</label>
             </li>
 
             <li>
             <input id="safewalk" type="checkbox" name="safewalk" value="safewalk" checked>
             <label for="safewalk">Safewalk</label>
             </li>
-        </ul>`;
 
-        var conceptName = $('#campus').find(":selected").text();
-        if(conceptName == 'UBC-Vancouver'){
-            $('#optionalSyllabus').html(vancouverOptionalList);
-        }else{
-            $('#optionalSyllabus').html(okanaganOptionalList);
+            <li>
+            <input id="hub" type="checkbox" name="hub" value="hub" checked>
+            <label for="hub">Student Learning Hub</label>
+            </li>
+
+            <li>
+            <input id="disabilityAssistance" type="checkbox" name="disabilityAssistance" value="disabilityAssistance" checked>
+            <label for="disabilityAssistance">UBC Okanagan Disability Resource Centre</label>
+            </li>
+
+            <li>
+            <input id="equity" type="checkbox" name="equity" value= "equity" checked>
+            <label for="equity">UBC Okanagan Equity and Inclusion Office</label>
+            </li>
+            </ul>`;
+
+            var conceptName = $('#campus').find(":selected").text();
+            if(conceptName == 'UBC-Vancouver'){
+                $('#optionalSyllabus').html(vancouverOptionalList);
+
+            }else{
+                $('#optionalSyllabus').html(okanaganOptionalList);
         }
+        // unused optional resources
+        // <li>
+        // <input id="plagiarism" type="checkbox" name="plagiarism" value="plagiarism" checked>
+        // <label for="plagiarism">Plagiarism and Collaboration</label>
+        // </li>
+
+        // <li>
+        // <input id="cooperation" type="checkbox" name="cooperation" value="cooperation" checked>
+        // <label for="cooperation">Cooperation vs. Cheating</label>
+        // </li>
+
+        // <li>
+        // <input id="grievances" type="checkbox" name="grievances" value="grievances" checked>
+        // <label for="grievances">Grievances and Complaints Procedures</label>
+        // </li>
+        // <li>
+        // <input id="sexual" type="checkbox" name="sexual" value="sexual" checked>
+        // <label for="sexual">Sexual Violence Prevention and Response Office</label>
+        // </li>
+
+        // <li>
+        // <input id="IIO" type="checkbox" name="IIO" value="IIO" checked>
+        // <label for="IIO">Independent Investigations Office</label>
+        // </li>
+
+        // <li>
+        // <input id="copyright" type="checkbox" name="copyright" value="copyright" checked>
+        // <label for="copyright">Copyright Disclaimer</label>
+        // </li>
+
     }
 </script>
 

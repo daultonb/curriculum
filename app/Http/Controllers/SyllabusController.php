@@ -6,10 +6,13 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use PhpOffice\PhpWord\PhpWord;
 use PhpOffice\PhpWord\TemplateProcessor;
+use PhpOffice\PhpWord\Element\Table;
 use Illuminate\Support\Facades\Auth;
 use App\Models\LearningOutcome;
 use App\Models\AssessmentMethod;
+use App\Models\Course;
 use PhpOffice\PhpWord\Element\TextRun;
+use Illuminate\Support\Facades\Log;
 
 class SyllabusController extends Controller
 {
@@ -21,27 +24,25 @@ class SyllabusController extends Controller
 
     public function index(){
         $user = User::where('id', Auth::id())->first();
+        // get completed courses (status = 1) and in progress courses (status = -1) fir tge current user
 
-        $activeCourses = User::join('course_users', 'users.id', '=', 'course_users.user_id')
-                ->join('courses', 'course_users.course_id', '=', 'courses.course_id')
-                ->join('programs', 'courses.program_id', '=', 'programs.program_id')
-                ->select('courses.program_id','courses.course_code','courses.delivery_modality','courses.semester','courses.year','courses.section',
-                'courses.course_id','courses.course_num','courses.course_title', 'courses.status','programs.program', 'programs.faculty', 'programs.department','programs.level')
-                ->where('course_users.user_id','=',Auth::id())->where('courses.status','=', -1)
-                ->get();
-
-        $archivedCourses = User::join('course_users', 'users.id', '=', 'course_users.user_id')
-                ->join('courses', 'course_users.course_id', '=', 'courses.course_id')
-                ->join('programs', 'courses.program_id', '=', 'programs.program_id')
-                ->select('courses.program_id','courses.course_code','courses.delivery_modality','courses.semester','courses.year','courses.section',
-                'courses.course_id','courses.course_num','courses.course_title', 'courses.status','programs.program', 'programs.faculty', 'programs.department','programs.level')
-                ->where('course_users.user_id','=',Auth::id())->where('courses.status','=', 1)
-                ->get();
-
-        return view("syllabus.syllabusGenerator")->with('user', $user)->with('activeCourses', $activeCourses)->with('archivedCourses', $archivedCourses);
+        $allCourses = User::join('course_users', 'users.id', '=', 'course_users.user_id')
+            ->join('courses', 'course_users.course_id', '=', 'courses.course_id')
+            ->join('programs', 'courses.program_id', '=', 'programs.program_id')
+            ->select('courses.program_id','courses.course_code','courses.delivery_modality','courses.semester','courses.year','courses.section',
+            'courses.course_id','courses.course_num','courses.course_title', 'courses.status','programs.program', 'programs.faculty', 'programs.department','programs.level')
+            ->where([
+                ['course_users.user_id','=',Auth::id()],
+                ['courses.status', '=', 1]
+            ])->orWhere([
+                ['course_users.user_id','=',Auth::id()],
+                ['courses.status', '=', -1]
+            ])->get();
+            
+        return view("syllabus.syllabusGenerator")->with('user', $user)->with('allCourses', $allCourses);
     }
 
-    //Ajax to get course infomatio
+    // Ajax to get course infomation
     public function getCourseInfo(Request $request) {
 
         $this->validate($request, [
@@ -49,9 +50,16 @@ class SyllabusController extends Controller
             ]);
 
         $course_id = $request->course_id;
-
+        // get relevant course info for import into Syllabus Generator
+        $courseInfo = Course::select('course_code', 'course_num', 'course_title', 'year', 'semester')->where('course_id', '=', $course_id)->first();
         $a_methods = AssessmentMethod::where('course_id', $course_id)->get();
         $l_outcomes = LearningOutcome::where('course_id', $course_id)->get();
+        // put courseInfo, assessment methods and CLOs in the return object
+        $data['c_title'] = $courseInfo->course_title;
+        $data['c_code'] = $courseInfo->course_code;
+        $data['c_num'] = $courseInfo->course_num;
+        $data['c_year'] = $courseInfo->year;
+        $data['c_term'] = $courseInfo->semester;
         $data['a_methods'] = $a_methods;
         $data['l_outcomes'] = $l_outcomes;
 
@@ -62,20 +70,14 @@ class SyllabusController extends Controller
     //Syllabus Word file
     public function WordExport(Request $request){
         $courseTitle = $request->input('courseTitle');
+        $courseCode = $request->input('courseCode');
         $courseNumber = $request->input('courseNumber');
         $courseInstructor = $request->input('courseinstructor');
-        $courseTa = $request->input('courseTA');
-        $courseLocation = $request->input('courseLocation');
-        $courseStartTime = $request->input('startTime');
-        $courseEndTime = $request->input('endTime');
-        $courseStartDay = $request->input('semesterStartday');
-        $courseEndDay = $request->input('semesterEndday');
         $courseYear = $request->input('courseYear');
-        $schedules = $request->input('schedule');
         $semester = $request->input('courseSemester');
-        $office_hour = $request->input('officeHour');
 
         switch($request->input('campus')){
+            // generate word syllabus for Okanagan campus course
             case 'O':
                 $templateProcessor = new TemplateProcessor('word-template/UBC-O_default.docx');
 
@@ -128,52 +130,88 @@ class SyllabusController extends Controller
                 }
 
                 if($request->input('langAcknoledgement')){
-                    $land = "The UBC Okanagan campus is situated on the territory of the Syilx Okanagan Nation.";
-                    $templateProcessor->setValue('land', $land);
+                    // tell template processor to include land block
+                    $templateProcessor->cloneBlock('land');
                 }else{
-                    $templateProcessor->setValue('land', ""); //insert blank instead of "${land}"
+                    // tell template processor to not include land block
+                    $templateProcessor->cloneBlock('land', 0); 
                 }
 
 
             break;
             case 'V':
+                // generate word syllabus for Vancouver campus course
                 $templateProcessor = new TemplateProcessor('word-template/UBC-V_default.docx');
 
                 if($request->input('langAcknoledgement')){
-                    $land = "We acknowledge that the UBC Point Grey campus is situated on the traditional, ancestral and unceded territory of the Musqueam people.";
-                    $templateProcessor->setValue('land',$land);
+                    // tell template processor to include land block
+                    $templateProcessor->cloneBlock('land');
                 }else{
-                    $templateProcessor->cloneBlock('land',0);
+                    // tell template processor to not include land block
+                    $templateProcessor->cloneBlock('land', 0);
                 }
+
+                if($request->input('disabilities')){
+                    $templateProcessor->cloneBlock('disabilities');
+                }else{
+                    $templateProcessor->cloneBlock('disabilities', 0);
+                }
+        
+                
             break;
         }
+        // add required form fields common to both campuses to template
+        $templateProcessor->setValues(array('courseTitle'=> $courseTitle,'courseCode' => $courseCode, 'courseNumber'=> $courseNumber, 'courseInstructor'=> $courseInstructor,
+                    'courseYear'=> $courseYear,));
 
-        $templateProcessor->setValues(array('courseTitle'=> $courseTitle,'courseNumber'=> $courseNumber, 'courseInstructor'=> $courseInstructor,
-                    'courseLocation'=> $courseLocation, 'courseStartTime'=> $courseStartTime, 'courseEndTime'=> $courseEndTime, 'courseStartDay'=>$courseStartDay,
-                    'courseEndDay'=> $courseEndDay,'courseYear'=> $courseYear,'office_hour' => $office_hour));
-
-
-
-
-        // Load final dates
-        if($request->input('finalcheckbox')){
-            $finalDate = $request->input('finalDate');
-            $templateProcessor->setValue('finalDate',$finalDate);
-        }
-
-
+        // tell template processor to include course TA if user completed the field(s)
         if($courseTa = $request->input('courseTA')){
             $templateProcessor->cloneBlock('NoTa');
             $templateProcessor->setValue('courseTA',$courseTa);
         }else{
             $templateProcessor->cloneBlock('NoTa',0);
         }
-
-        $schedule = "";
-        foreach($schedules as $day) {
-            $schedule = ($schedule == "" ? $day : $schedule . '/' . $day);
+        // tell template processor to include course location if user completed the field(s)
+        if ($courseLocation = $request->input('courseLocation')) {
+            $templateProcessor->cloneBlock('NoCourseLocation');
+            $templateProcessor->setValue('courseLocation',$courseLocation);
+        } else {
+            $templateProcessor->cloneBlock('NoCourseLocation',0);
         }
-        $templateProcessor->setValue('schedule',$schedule);
+        
+        // tell template processor to include class hours if user completed the field(s)
+        if ($classStartTime = $request->input('startTime') and $classEndTime = $request->input('endTime')) {
+            $templateProcessor->cloneBlock('NoClassHours');
+            $templateProcessor->setValues(array('classStartTime' => $classStartTime, 'classEndTime' => $classEndTime));
+        } else {
+            $templateProcessor->cloneBlock('NoClassHours',0);
+        }
+
+        // tell template processor to include course schedule if user completed the field(s)
+        if ($schedules = $request->input('schedule')) {
+            $templateProcessor->cloneBlock('NoCourseDays');
+            $schedule = "";
+            foreach($schedules as $day) {
+                $schedule = ($schedule == "" ? $day : $schedule . '/' . $day);
+            }
+            $templateProcessor->setValue('schedule',$schedule);
+        } else {
+            $templateProcessor->cloneBlock('NoCourseDays', 0);
+        }
+
+        // tell template processor to include office hours if user completed the field(s)
+        if ($officeHour = $request->input('officeHour')) {
+            $templateProcessor->cloneBlock('NoOfficeHours');
+            $templateProcessor->setValue('officeHour',$officeHour);
+        } else {
+            $templateProcessor->cloneBlock('NoOfficeHours', 0);
+        }
+
+        // Load final dates
+        if($request->input('finalcheckbox')){
+            $finalDate = $request->input('finalDate');
+            $templateProcessor->setValue('finalDate',$finalDate);
+        }
 
         switch($semester){
             case("W1"):
@@ -185,11 +223,11 @@ class SyllabusController extends Controller
                 $templateProcessor->setValue('term',"Term 2");
             break;
             case("S1"):
-                $templateProcessor->setValue('season',"Summar");
+                $templateProcessor->setValue('season',"Summer");
                 $templateProcessor->setValue('term',"Term 1");
             break;
             case("S2"):
-                $templateProcessor->setValue('season',"Summar");
+                $templateProcessor->setValue('season',"Summer");
                 $templateProcessor->setValue('term',"Term 2");
             break;
         }
@@ -218,19 +256,41 @@ class SyllabusController extends Controller
             $templateProcessor->cloneBlock('NocourseOverview');
             $templateProcessor->setValue('courseOverview',$courseOverview);
         }else{
-            $templateProcessor->cloneBlock('NocourseOverview',0);
+            // tell template processor to not include 'NocourseOverview block
+            $templateProcessor->cloneBlock('NocourseOverview', 0);
         }
 
         if($learningOutcome){
             $templateProcessor->cloneBlock('NolearningOutcomes');
-            $templateProcessor->setValue('learningOutcomes',$learningOutcome);
+            // split learning outcomes string on newline char
+            $learningOutcomes = explode("\n", $learningOutcome);
+            // create a table for learning outcomes (workaround for no list option)
+            $learningOutcomesTable = new Table(array('borderSize'=>8, 'borderColor' => 'DCDCDC'));
+            // add a new row and cell to table for each learning outcome
+            foreach($learningOutcomes as $outcome) {
+                $learningOutcomesTable->addRow();
+                $learningOutcomesTable->addCell()->addText($outcome);
+            }
+            // add learning outcome table to word doc
+            $templateProcessor->setComplexBlock('learningOutcomes',$learningOutcomesTable);
         }else{
             $templateProcessor->cloneBlock('NolearningOutcomes',0);
         }
 
         if($evaluationCriteria){
             $templateProcessor->cloneBlock('NoGrading');
-            $templateProcessor->setValue('grading',$evaluationCriteria);
+            // split assessment methods string on newline char
+            $assessmentMethods = explode("\n", $evaluationCriteria);
+            // create a table for learning outcomes (workaround for no list option)
+            $assessmentMethodsTable = new Table(array('borderSize' => 8, 'borderColor' => 'DCDCDC'));
+            // add a new row and cell to table for each assessment method
+            foreach($assessmentMethods as $index => $assessmentMethod){
+                $assessmentMethodsTable->addRow();
+                $assessmentMethodsTable->addCell()->addText(strval($index + 1));
+                $assessmentMethodsTable->addCell()->addText($assessmentMethod);
+            }
+            // add assessment methods table to word doc
+            $templateProcessor->setComplexBlock('grading', $assessmentMethodsTable);
         }else{
             $templateProcessor->cloneBlock('NoGrading',0);
         }
@@ -270,8 +330,7 @@ class SyllabusController extends Controller
             $templateProcessor->cloneBlock('Norequire_reading',0);
         }
 
-
-        $templateProcessor->saveAs($courseNumber . '-Syllabus.docx');
-        return response()->download($courseNumber .  '-Syllabus.docx')->deleteFileAfterSend(true);
+        $templateProcessor->saveAs($courseCode.$courseNumber. '-Syllabus.docx');
+        return response()->download($courseCode.$courseNumber.  '-Syllabus.docx')->deleteFileAfterSend(true);
     }
 }

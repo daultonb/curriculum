@@ -144,7 +144,7 @@
                             Staff Collaboration
                         </h2>
                         <p class="lead">
-                            Provice an opportunity for faculty <br>to work together and help new <br>faculty develop professional <br>relationships and a sense of <br>belonging.
+                            Provide an opportunity for faculty <br>to work together and help new <br>faculty develop professional <br>relationships and a sense of <br>belonging.
                         </p>
                     </div>
                 </div>

@@ -27,10 +27,11 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/about', 'AboutController@index')->name('about');
 
 Route::get('/faq', 'FAQController@index')->name('FAQ');
+Route::get('/terms', 'TermsController@index')->name('terms');
 
 
 Route::get('/syllabusGenerator', 'SyllabusController@index')->name('syllabus');
-Route::get('/syllabusGenerator/word','SyllabusController@WordExport')->name('syllabus.word');
+Route::post('/syllabusGenerator/word','SyllabusController@WordExport')->name('syllabus.word');
 Route::get('/syllabusGenerator/course','SyllabusController@getCourseInfo');
 
 Route::resource('/programs','ProgramController');
