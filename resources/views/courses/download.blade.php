@@ -8795,9 +8795,9 @@
             <table style="margin-top:15px; page-break-before: always;" class="table">
                 <tr>
                     @if($course->program_id == 1 ?? $course->program_id == 2 ?? $course->program_id == 3 )
-                        <th style="background-color: rgba(100,149,237, .8)">BC {{$program->program}} (in lieu of PLOs)</th>
+                        <th style="background-color: rgba(100,149,237, .8)">BC {{$program->program}}</th>
                     @else
-                        <th style="background-color: rgba(100,149,237, .8)">{{$program->program}}: Program Learning Outcomes or Competencies</th>
+                        <th style="background-color: rgba(100,149,237, .8)">{{$program->program}}</th>
                     @endif
 
                 </tr>
@@ -8814,8 +8814,9 @@
                             @else
 
                                 <tr>
+                                
                                     <th style="background-color: #e3e3e3;" class="table-light"></th>
-                                    <th style="background-color: #e3e3e3;" class="table-light">Program Learning Outcomes</th>
+                                    <th style="background-color: #e3e3e3;" class="table-light">Standards</th>
                                     @if(count($ploCategories)>0)
                                         <th style="background-color: #e3e3e3;" class="table-light">PLO Category</th>
                                     @endif
