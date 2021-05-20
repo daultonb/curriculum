@@ -12,7 +12,6 @@ use App\Models\LearningOutcome;
 use App\Models\AssessmentMethod;
 use App\Models\Course;
 use PhpOffice\PhpWord\Element\TextRun;
-use Illuminate\Support\Facades\Log;
 
 class SyllabusController extends Controller
 {
@@ -69,6 +68,17 @@ class SyllabusController extends Controller
 
     //Syllabus Word file
     public function WordExport(Request $request){
+        
+        // validate request
+        $request->validate([
+            'courseTitle' => ['required'],
+            'courseCode' => ['required'],
+            'courseNumber' => ['required'],
+            'courseinstructor' => ['required'],
+            'courseYear' => ['required'],
+            'courseSemester' => ['required'],
+        ]);
+
         $courseTitle = $request->input('courseTitle');
         $courseCode = $request->input('courseCode');
         $courseNumber = $request->input('courseNumber');
