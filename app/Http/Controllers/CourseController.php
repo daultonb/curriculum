@@ -84,6 +84,7 @@ class CourseController extends Controller
             'course_code' => 'required',
             'course_num' => 'required',
             'course_title'=> 'required',
+
             ]);
 
         $course = new Course;
@@ -98,12 +99,18 @@ class CourseController extends Controller
         $course->delivery_modality = $request->input('delivery_modality');
         $course->year = $request->input('course_year');
         $course->semester = $request->input('course_semester');
-        $course->section = $request->input('course_section');
+        
+        if ($course->section = $request->input('course_section') == null) {
+            $course->section = "";
+        } else {
+            $course->section = $request->input('course_section');
+        }
 
 
         if($request->input('type') == 'assigned'){
 
             $course->assigned = -1;
+
             if($course->save()){
                 $request->session()->flash('success', 'New course added');
             }else{

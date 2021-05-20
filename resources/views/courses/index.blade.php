@@ -135,7 +135,7 @@
                                 <div class="col-md-4">
                                     <input id="course_section" type="text"
                                         class="form-control @error('course_section') is-invalid @enderror"
-                                        name="course_section" required autofocus>
+                                        name="course_section" autofocus>
 
                                     @error('course_section')
                                     <span class="invalid-feedback" role="alert">
