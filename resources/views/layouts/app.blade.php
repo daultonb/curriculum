@@ -72,11 +72,11 @@
                         <li class="nav-item">
 
                         <!-- <a class="nav-link" href="{{ route('programs.index') }}">My Programs</a> -->
-                        <a class="nav-link" href="/construction">My Programs</a>
+                        <!--<a class="nav-link" href="/construction">My Programs</a>-->
                         </li>
 
                         <li class="nav-item">
-                        <a class="nav-link" href="{{ route('courses.index') }}">My Courses</a>
+                        <!--<a class="nav-link" href="{{ route('courses.index') }}">My Courses</a>-->
                         </li>
 
                         <li class="nav-item">

@@ -99,7 +99,7 @@
                         <div style="float:right; padding-right:10px;">
                             <img src="{{ asset('dashboard-icons/add_White.png') }}" style="width:20px;height:20px;"/>
                         </div>
-                        </a>
+                        </a>           
                         </h3>
                     </div>
 
@@ -176,4 +176,5 @@
         </div>
     </div>
 </div>
+
 @endsection
