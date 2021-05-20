@@ -69,6 +69,19 @@ class SyllabusController extends Controller
 
     //Syllabus Word file
     public function WordExport(Request $request){
+        
+        Log::debug('Class Schedule: ' . print_r($request->input('schedule'), true));
+        Log::debug('Example optional resource: ' . print_r($request->input('academic'), true));
+        // validate request
+        $request->validate([
+            'courseTitle' => ['required'],
+            'courseCode' => ['required'],
+            'courseNumber' => ['required'],
+            'courseinstructor' => ['required'],
+            'courseYear' => ['required'],
+            'courseSemester' => ['required'],
+        ]);
+
         $courseTitle = $request->input('courseTitle');
         $courseCode = $request->input('courseCode');
         $courseNumber = $request->input('courseNumber');
