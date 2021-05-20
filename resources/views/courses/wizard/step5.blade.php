@@ -2,6 +2,10 @@
 
 @section('content')
 
+<link href=" {{ asset('css/accordions.css') }}" rel="stylesheet" type="text/css" >
+<!--Link for FontAwesome Font for the arrows for the accordions.-->
+<link href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous" rel="stylesheet" type="text/css" >
+
 <div>
     <div class="row justify-content-center">
         <div class="col-md-12">
@@ -36,7 +40,7 @@
                             <td>Course Learning Outcomes</td>
                             <td>Student Assessment Methods</td>
                             <td>Teaching and Learning Activities</td>
-                            <td>Course Outcome Mapping</td>
+                            <td>Course Alignment</td>
                             <td>Program Outcome Mapping</td>
                             <td>Course Summary</td>
                         </tr>
@@ -45,8 +49,6 @@
             </div>
 
             <div class="card">
-
-
                 <div class="card-body">
                     <p class="container form-text text-muted">Now that you have inputted all your course information, you are ready to map it to the program-level learning outcomes (PLOs).
                         @if($course->program_id == 1 ?? $course->program_id == 2 ?? $course->program_id == 3 )
@@ -81,7 +83,7 @@
                                             </td>
 
                                         </tr>
-                                   @endforeach
+                                    @endforeach
                                 </tbody>
                             </table>
                             @else
@@ -94,9 +96,8 @@
                             @endif
                         </div>
                     </div>
-
+                </div>
                     <div class="jumbotron">
-
                         @if(count($l_outcomes)<1)
                             <table class="table table-bordered table-sm">
                                 <tr>
@@ -112,28 +113,24 @@
                                 @endif
 
                             </p>
-
-                            <div id="accordion">
-
+                            <div class="accordions" style="width:100%">
                                 @for($i = 0; $i < count($l_outcomes); $i++)
-
+                                <div class="accordion" id="accordionGroup{{$l_outcomes[$i]->l_outcome_id}}">
                                     <div class="card">
-                                        <div class="card-header" id="headingOne" style="border-bottom: 0px;">
-                                            <h5 class="mb-0">
-                                                <a data-toggle="collapse" data-target="#collapse{{$l_outcomes[$i]->l_outcome_id}}" aria-expanded="true" aria-controls="collapse{{$l_outcomes[$i]->l_outcome_id}}" href="#collapse{{$l_outcomes[$i]->l_outcome_id}}" style="text-decoration:none">
-                                                    <b>CLO #{{$i+1}} </b>: {{$l_outcomes[$i]->clo_shortphrase}}
-                                                </a>
-
-                                            </h5>
-
+                                        <div class="card-header" id="heading{{$l_outcomes[$i]->l_outcome_id}}">
+                                            <input class="accordion-input" type="checkbox" id="title{{$l_outcomes[$i]->l_outcome_id}}" data-toggle="collapse" data-target="#collapse{{$l_outcomes[$i]->l_outcome_id}}"/>
+                                            <label for="title{{$l_outcomes[$i]->l_outcome_id}}">
+                                                <h5 class="accordion-title">
+                                                        <b>CLO #{{$i+1}} </b>: {{$l_outcomes[$i]->clo_shortphrase}}
+                                                </h5>
+                                            </label>
                                         </div>
-
                                         <form id="{{$l_outcomes[$i]->l_outcome_id}}" action="{{action('OutcomeMapController@store')}}" method="POST">
                                             @csrf
                                             <input type="hidden" name="course_id" value="{{$course->course_id}}">
                                             <input type="hidden" name="l_outcome_id" value="{{$l_outcomes[$i]->l_outcome_id}}">
 
-                                            <div id="collapse{{$l_outcomes[$i]->l_outcome_id}}" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+                                            <div id="collapse{{$l_outcomes[$i]->l_outcome_id}}" class="collapse" aria-labelledby="heading{{$l_outcomes[$i]->l_outcome_id}}" data-parent="#accordionGroup{{$l_outcomes[$i]->l_outcome_id}}">
 
                                                 <div class="card-body">
                                                     <h5>{{$l_outcomes[$i]->l_outcome}}</h5>
@@ -194,11 +191,12 @@
                                             </div>
                                         </form>
                                     </div>
-
+                                </div>
                                 @endfor
                             </div>
                         @endif
                     </div>
+                </div>
 
                     <!--Optional Priorities -->
                     <div class="jumbotron">
@@ -207,26 +205,27 @@
                             Select, from the below UBC and/or Ministry priorities and strategies, those that align strongly with your course. This is optional.
                         </p>
 
-                        <div id="accordion">
-                        <form id="optinal" action="{{ route('storeOptionalPLOs') }}" method="POST">
+                        <div class="accordion" id="accordionGroup01">
+                            <form id="optinal" action="{{ route('storeOptionalPLOs') }}" method="POST">
                             {{ csrf_field() }}
 
                             <input type="hidden" name="course_id" value="{{$course->course_id}}">
 
-                            <div class="card Ministry" id="Ministry">
-                                <div class="card-header" id="headingOne" style="border-bottom: 0px;">
-                                    <h5 class="mb-0">
-                                        <a data-toggle="collapse" data-target="#collapse_optional_Ministry" aria-expanded="false" aria-controls="collapse_optional_Ministry" href="#collapse_optional_Ministry" style="text-decoration:none">
+                            <div class="card" id="Ministry">
+                                <div class="card-header" id="headingMinistry">
+                                    <input class="accordion-input" type="checkbox" id="title01" data-toggle="collapse" data-target="#collapseMinistry"/>
+                                    <label for="title01">
+                                        <h5 class="accordion-title">
                                             Ministry of Advanced Education and Skills Training
-                                        </a>
-                                    </h5>
-                                </div>
-                                <div id="collapse_optional_Ministry" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
-                                    <div class="card-body">
-
+                                        </h5>
+                                    </label>   
+                                </div> 
+                
+                                <div id="collapseMinistry" class="collapse" aria-labelledby="headingMinistry" data-parent="#accordionGroup01">
+                                    <div class="card-body text-dark bg-secondary">
                                         <h5>UBC's Mandate by the Ministry</h5>
                                         <p>UBC's mandate letter (see<a href="https://www2.gov.bc.ca/gov/content/education-training/post-secondary-education/institution-resources-administration/mandate-letters" target="_blank"> mandate letter here </a>)
-                                             calls for the below, as they relate to curriculum:</p>
+                                            calls for the below, as they relate to curriculum:</p>
                                         <table class="table table-hover optionalPLO" id="ubcMandate" data-toolbar="#toolbar" data-toggle="table" data-maintain-meta-data="true">
                                             <thead class="thead-light">
                                                 <tr>
@@ -248,6 +247,13 @@
                                                 </td>
                                                 <td>
                                                     {{$letter}}
+                                                    @if($index == 0)
+                                                        <a href="http://trc.ca/assets/pdf/Calls_to_Action_English2.pdf" target="_blank">(More Information can be found here)</a>
+                                                    @elseif($index == 1)
+                                                        <a href="https://cleanbc.gov.bc.ca/" target="_blank">(More Information can be found here)</a>
+                                                    @elseif($index == 6)
+                                                        <a href="https://www.workbc.ca/getmedia/18214b5d-b338-4bbd-80bf-b04e48a11386/BC_Labour_Market_Outlook_2019.pdf.aspx" target="_blank">(More Information can be found here)</a>
+                                                    @endif
                                                 </td>
                                                 </tr>
                                                 @endforeach
@@ -319,17 +325,14 @@
                                     </div>
                                 </div>
                             </div>
-
-                            <div class="card BC_strategic" id="BC_strategic">
-                                <div class="card-header" id="headingOne" style="border-bottom: 0px;">
-                                    <h5 class="mb-0">
-                                        <a data-toggle="collapse" data-target="#collapse_optional_BC_strategic" aria-expanded="true" aria-controls="collapse_optional_BC_strategic" href="#collapse_optional_BC_strategic" style="text-decoration:none">
-                                            UBC Strategic Priorities
-                                        </a>
-                                    </h5>
-                                </div>
-
-                                <div id="collapse_optional_BC_strategic" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+                                <div class="card">
+                                    <div class="card-header" id="headingBCStrategic">
+                                        <input class="accordion-input" type="checkbox" id="title02" data-toggle="collapse" data-target="#collapseBCStrategic"/>
+                                        <label for="title02">
+                                            <h5 class="accordion-title">UBC Strategic Priorities</h5>
+                                        </label>   
+                                    </div>
+                                <div id="collapseBCStrategic" class="collapse" aria-labelledby="headingBCStrategic" data-parent="#accordionGroup01">
                                     <div class="card-body">
                                         <h5>
                                             <a href="https://strategicplan.ubc.ca/" target="_blank">
@@ -459,7 +462,6 @@
                             </div>
                             <button type="submit" class="btn btn-primary my-3 btn-sm float-right col-2">Save</button>
                         </form>
-                        </div>
                     </div>
 
 

@@ -27,6 +27,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/about', 'AboutController@index')->name('about');
 
 Route::get('/faq', 'FAQController@index')->name('FAQ');
+Route::get('/terms', 'TermsController@index')->name('terms');
 
 
 Route::get('/syllabusGenerator', 'SyllabusController@index')->name('syllabus');

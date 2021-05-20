@@ -2,53 +2,43 @@
 
 @section('content')
 
-    <div class="row p-md-5 justify-content-center text-dark bg-secondary">
-        <div class="col-md-12 ">
-            <div class="container">
-                <p><strong>UBC</strong></p>
-                    <h1>Curriculum MAP</h1>                                                  
-                    <p class="lead">A tool to support currculum mapping, analysis, and planning.</p>
-            </div>
-        </div>
-    </div>
-
     <div class="row p-md-5 justify-content-center text-light bg-primary">
         <div class="col-md-12">
             <div class="container">
-                <h1>What is Curriculum Mapping?</h1>
-                <p>
-                    Curriculum mapping is an instrument to evaluate the alignment of learning objectives to academic strategies at educational institutions.
-                </p>
+                <h1>Curriculum MAP</h1>                                                  
+                <p class="lead">A tool to support curriculum mapping, analysis, and planning.</p>
+                
                 <div class="row">
                     <div class="col-sm"> 
                         <div class="img">
-                            <!-- replace this with ideation img!! -->
+                            
                             <img src=" {{ asset('img/Ideation.png') }}"/>
                         </div>
                         <h4>Ideation</h4>
-                        <p>Allows instructors to map program learning outcomes (PLOs) to course learning outcomes (CLOs) of required and non-required courses for the program.</p>
+                        <p class="lead">Allows instructors to map program learning outcomes (PLOs) to course learning outcomes (CLOs) of required and non-required courses for the program.</p>
                     </div>
                     <div class="col-sm">
                 
                         <div class="img"> 
-                            <!-- replace this with creation img!! -->
+                            
                             <img src=" {{ asset('img/Creation.png') }}"/>
                         </div>
                         <h4>Creation</h4>
-                        <p>Allows instructors to create a new course by identifying course learning outcomes, assessment strategies, and teaching and learning methods.</p>
+                        <p class="lead">Allows instructors to create a new course by identifying course learning outcomes, assessment strategies, and teaching and learning methods.</p>
                     </div>
                     <div class="col-sm">
                         <div class="img">
-                            <!-- replace this with evaulation img!! -->
+                            
                             <img src=" {{ asset('img/Evaluation.png') }}"/>
                         </div>
                         <h4>Evaluation</h4>
-                        <p>Allows instructors to evaluate existing courses or programs by looking at the alignment across learning outcomes, assessment methods, and teaching and learning activities.</p>
+                        <p class="lead">Allows instructors to evaluate existing courses or programs by looking at the alignment across learning outcomes, assessment methods, and teaching and learning activities.</p>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    <!--
     <div class="row p-md-5 justify-content-center text-dark bg-secondary">
         <div class="container">
             <div class="quote">
@@ -61,7 +51,7 @@
             </div>
             <div class="span4">
                 <div class="text-center clearfix">
-                        <!-- Image recoloured from: https://www.flaticon.com/free-icon/conversation-mark-interface-symbol-of-circular-speech-bubble-with-quotes-signs-inside_40341 -->
+                        <\!-- Image recoloured from: https://www.flaticon.com/free-icon/conversation-mark-interface-symbol-of-circular-speech-bubble-with-quotes-signs-inside_40341 \-\->
                         <img src=" {{ asset('img/quote4_blue3_400x400.png') }}"/>
                     <div style="display:inline-block">
                         <h4><strong>
@@ -95,7 +85,7 @@
                 </div>
         </div>
     </div>
-
+    -->
     <div class="row p-md-5 justify-content-center text-dark bg-secondary">
         <div class="container">
             <h1>Benefits</h1>
@@ -154,7 +144,7 @@
                             Staff Collaboration
                         </h2>
                         <p class="lead">
-                            Provice an opportunity for faculty <br>to work together and help new <br>faculty develop professional <br>relationships and a sense of <br>belonging.
+                            Provide an opportunity for faculty <br>to work together and help new <br>faculty develop professional <br>relationships and a sense of <br>belonging.
                         </p>
                     </div>
                 </div>
