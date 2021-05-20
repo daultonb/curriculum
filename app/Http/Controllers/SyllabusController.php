@@ -12,7 +12,6 @@ use App\Models\LearningOutcome;
 use App\Models\AssessmentMethod;
 use App\Models\Course;
 use PhpOffice\PhpWord\Element\TextRun;
-use Illuminate\Support\Facades\Log;
 
 class SyllabusController extends Controller
 {
@@ -70,8 +69,6 @@ class SyllabusController extends Controller
     //Syllabus Word file
     public function WordExport(Request $request){
         
-        Log::debug('Class Schedule: ' . print_r($request->input('schedule'), true));
-        Log::debug('Example optional resource: ' . print_r($request->input('academic'), true));
         // validate request
         $request->validate([
             'courseTitle' => ['required'],
