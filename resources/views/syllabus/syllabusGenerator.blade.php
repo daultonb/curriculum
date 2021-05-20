@@ -15,7 +15,7 @@
                         </option>
                         <option value="V">UBC-Vancouver</option>
                     </select>
-                    <input type="checkbox" name="langAcknoledgement" id="langAcknoledgement" form = "sylabusGenerator" value="{{old('langAcknoledgement')}}">
+                    <input type="checkbox" name="langAcknoledgement" id="langAcknoledgement" form = "sylabusGenerator">
                     <label for="langAcknoledgement" style="font-size: 14px;">Land acknowledgement</label>
                     <button type="button" class="btn btn-primary btn-sm col-2 mt-2 float-right" data-toggle="modal" data-target="#importExistingCourse" style="margin-right: 10px">
                         Import existing courses
@@ -243,7 +243,6 @@
                                         </div>
                                     </div>
 
-                                    {{old('officeHour')}}
                                     <div class="row">
                                         <div class="col mb-3">
                                             <label for="courseFormat">Course Format:</label>
