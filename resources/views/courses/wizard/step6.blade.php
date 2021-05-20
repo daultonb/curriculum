@@ -35,7 +35,7 @@
                             <td>Course Learning Outcomes</td>
                             <td>Student Assessment Methods</td>
                             <td>Teaching and Learning Activities</td>
-                            <td>Course Outcome Mapping</td>
+                            <td>Course Alignment</td>
                             <td>Program Outcome Mapping</td>
                             <td>Course Summary</td>
                         </tr>
@@ -53,7 +53,7 @@
                     </a>
                 </div>
 
-                <p class="ml-5 mr-5 form-text text-muted">You can review	and	download the mapped course here. To edit information, select from the numbeered tabs above.
+                <p class="ml-5 mr-5 form-text text-muted">You can review	and	download the mapped course here. To edit information, select from the numbered tabs above.
                     Click finish only when you have completed the mapping process.</p>
 
 
@@ -225,15 +225,13 @@
 
                     <div class="card-header font-weight-bold">
                         @if($course->program_id == 1 ?? $course->program_id == 2 ?? $course->program_id == 3 )
-                            BC {{$program->program}} (in lieu of PLOs)
+                            BC {{$program->program}}
                         @else
-                            {{$program->program}}: Program Learning Outcomes or Competencies
+                            {{$program->program}}
                         @endif
                     </div>
 
                     <div class="card-body ml-5 mr-5 mt-3">
-
-                        Program learning outcomes are listed below.
 
                         <table class="table table-bordered table-sm mt-3">
 
@@ -246,7 +244,7 @@
 
                                 <tr>
                                     <th class="table-light"></th>
-                                    <th class="table-light">Program Learning Outcomes</th>
+                                    <th class="table-light">Standards</th>
                                     @if(count($ploCategories)>0)
                                         <th class="table-light">PLO Category</th>
                                     @endif
