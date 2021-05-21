@@ -157,15 +157,28 @@
                     <div id="collapseFive" class="collapse" aria-labelledby="headingFive" data-parent="#accordionGroup">
                         <div class="card-body">
                             <p class="lead">Funded by the UBC Okanagan Office of the Provost and Vice President Academic and supported by:</p>
-                            <ul class="accordion-sublist">
-                                <li class="lead">Abdelmuizz Yusuf (Muizz), Co-op student</li>
-                                <li class="lead">Jia Fei LuoZheng (Jeffrey), Co-op student</li>
-                                <li class="lead">Kieran Adams, Co-op student</li>
-                                <li class="lead">Daulton Baird, Office of the Provost and Vice President Academic</li>
-                                <li class="lead">Dr. Bowen Hui, Computer Science</li>
-                                <li class="lead">Dr. Anita Chaudhuri, English and Cultural Studies</li>
-                                <li class="lead">Janine Hirtz, Centre for Teaching and Learning</li>
-                                <li class="lead">Laura Prada, Office of the Provost and Vice President Academic</li>
+                            <ul class="accordion-sublist" style="list-style: none;">
+                                <li class="lead"> 
+                                <strong>UBC Okanagan Faculty and Staff:</strong>
+                                    <ul class="accordion-sublist">
+                                    <li class="lead">Dr. Anita Chaudhuri, English and Cultural Studies</li>
+                                    <li class="lead">Dr. Bowen Hui, Computer Science</li>
+                                    <li class="lead">Janine Hirtz, Centre for Teaching and Learning</li>
+                                    <li class="lead">Laura Prada, Office of the Provost and Vice President Academic</li>
+                                    </ul>
+                                </li>
+                                <li class="lead">
+                                <strong>UBC Okanagan and Vancouver Undergraduate Students:</strong>
+                                <ul class="accordion-sublist">
+                                <li class="lead">Abdelmuizz Yusuf (Muizz)</li>
+                                <li class="lead">Damyn Filipuzzi</li>
+                                <li class="lead">Daulton Baird</li>
+                                <li class="lead">Jia Fei LuoZheng (Jeffrey)</li>
+                                <li class="lead">Kieran Adams</li>
+                                
+                                </ul>
+                                </li>
+                                
                             </ul>
                             <br>
                             <p class="lead">Inspired by and based on UCalgary’s tool <a href="https://taylorinstitute.ucalgary.ca/curriculum-links" target="_blank">Curriculum Links</a>.</p>
