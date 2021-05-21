@@ -6,7 +6,7 @@
         <h1>My Courses</h1>
     <p class="form-text text-muted">See below the courses you have mapped using this tool (under Completed Courses) and those you are still working on (In Progress Courses).
         </p>
-    <p class="form-text text-primary font-weight-bold"><i>Note:</i>  If you are ideating/evaluating a program, go to <a href="/programs">"My Programs"</a>.
+    <p class="form-text text-primary font-weight-bold"><i>Note:</i>  If you are ideating/evaluating a program, go to <a href="/construction">"My Programs"</a>.
         This section should only be used for courses that you are not associating with a specific program.</p>
 
 
