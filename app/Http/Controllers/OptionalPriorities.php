@@ -25,13 +25,9 @@ class OptionalPriorities extends Controller
         
 
         // Check If Any PLO's have been selected 
-        // Only a Temporary Fix as this doesn't solve the problem when a user wants to unselect PLOS.
-        // when optional_PLOs == null set to empty array
         if ($optionalPLOs == !NULL) {
-
-            // ***** Throws error when no PLO's are selected: must be of the type array, null given
-            // Remove option that was not checked
-            Optional_priorities::whereNotIn('custom_PLO',$optionalPLOs)->where('course_id',$course_id)->where('input_status',0)->delete();
+            // Delete all OptionalPLO's not checked (Selected).
+            Optional_priorities::whereNotIn('custom_PLO',$optionalPLOs)->where('course_id',$course_id)->delete();
 
             // Loop to insert them to the table
             foreach($optionalPLOs as $optionalPLO) {
@@ -48,18 +44,10 @@ class OptionalPriorities extends Controller
                 }
             }
         } else {
-            // Needs to check if PLO's had been previously saved in the db, and if so it need to delete those entries.
+            // Remove Any PLO's based on their course ID
+            Optional_priorities::where('course_id',$course_id)->delete();
             $request->session()->flash('success', 'Alignment to UBC/Ministry priorities updated.');
         }
-
-        /*
-        if($inputOptionalPLOs = $request->input('inputItem')) {
-            foreach($inputOptionalPLOs as $inputOptionalPLO) {
-                $inputOps = Optional_priorities::where('course_id', $course_id)->get();
-                $inputOptionalPLO->input_status = 1;
-            }
-        }
-        */
 
         return redirect()->route('courseWizard.step5', $request->input('course_id'));
     }
