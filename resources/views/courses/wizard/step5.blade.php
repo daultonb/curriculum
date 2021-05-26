@@ -119,7 +119,7 @@
                                     <div class="card">
                                         <div class="card-header" id="heading{{$l_outcomes[$i]->l_outcome_id}}">
                                             <input class="accordion-input" type="checkbox" id="title{{$l_outcomes[$i]->l_outcome_id}}" data-toggle="collapse" data-target="#collapse{{$l_outcomes[$i]->l_outcome_id}}"/>
-                                            <label for="title{{$l_outcomes[$i]->l_outcome_id}}">
+                                            <label class="accordion-label" for="title{{$l_outcomes[$i]->l_outcome_id}}">
                                                 <h5 class="accordion-title">
                                                         <b>CLO #{{$i+1}} </b>: {{$l_outcomes[$i]->clo_shortphrase}}
                                                 </h5>
@@ -214,7 +214,7 @@
                             <div class="card" id="Ministry">
                                 <div class="card-header" id="headingMinistry">
                                     <input class="accordion-input" type="checkbox" id="title01" data-toggle="collapse" data-target="#collapseMinistry"/>
-                                    <label for="title01">
+                                    <label class="accordion-label" for="title01">
                                         <h5 class="accordion-title">
                                             Ministry of Advanced Education and Skills Training
                                         </h5>
@@ -328,7 +328,7 @@
                                 <div class="card">
                                     <div class="card-header" id="headingBCStrategic">
                                         <input class="accordion-input" type="checkbox" id="title02" data-toggle="collapse" data-target="#collapseBCStrategic"/>
-                                        <label for="title02">
+                                        <label class="accordion-label" for="title02">
                                             <h5 class="accordion-title">UBC Strategic Priorities</h5>
                                         </label>   
                                     </div>
