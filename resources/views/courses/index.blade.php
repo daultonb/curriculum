@@ -6,7 +6,7 @@
         <h1>My Courses</h1>
     <p class="form-text text-muted">See below the courses you have mapped using this tool (under Completed Courses) and those you are still working on (In Progress Courses).
         </p>
-    <p class="form-text text-primary font-weight-bold"><i>Note:</i>  If you are ideating/evaluating a program, go to <a href="/programs">"My Programs"</a>.
+    <p class="form-text text-primary font-weight-bold"><i>Note:</i>  If you are ideating/evaluating a program, go to <a href="/construction">"My Programs"</a>.
         This section should only be used for courses that you are not associating with a specific program.</p>
 
 
@@ -135,7 +135,7 @@
                                 <div class="col-md-4">
                                     <input id="course_section" type="text"
                                         class="form-control @error('course_section') is-invalid @enderror"
-                                        name="course_section" required autofocus>
+                                        name="course_section" autofocus>
 
                                     @error('course_section')
                                     <span class="invalid-feedback" role="alert">

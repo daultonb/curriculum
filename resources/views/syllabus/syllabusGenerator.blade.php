@@ -10,7 +10,9 @@
 
                 <h2> Syllabus Generator
                     <select class="form-group" id="campus" name="campus" form="sylabusGenerator" style="font-size:15px;">
-                        <option value="O">UBC-Okanagan (default)</option>
+                        <option value="O">
+                            UBC-Okanagan (default)
+                        </option>
                         <option value="V">UBC-Vancouver</option>
                     </select>
                     <input type="checkbox" name="langAcknoledgement" id="langAcknoledgement" form = "sylabusGenerator">
@@ -37,12 +39,12 @@
                                     <p style="text-align:left;">Select one course from the below existing courses</p>
                                     <table class="table table-hover dashBoard">
                                         <thead>
-                                          <tr>
-                                            <th scope="col"></th>
-                                            <th scope="col">Course Title</th>
-                                            <th scope="col">Course Code</th>
-                                            <th scope="col">Semester</th>
-                                          </tr>
+                                            <tr>
+                                                <th scope="col"></th>
+                                                <th scope="col">Course Title</th>
+                                                <th scope="col">Course Code</th>
+                                                <th scope="col">Semester</th>
+                                            </tr>
                                         </thead>
                                         @foreach ($allCourses as $index => $course)
                                         <tbody>
@@ -91,7 +93,7 @@
                                         <div class="col mb-2">
                                             <label for="courseTitle"><span class="requiredField">*</span>Title:</label>
                                             <input id = "courseTitle" name = "courseTitle" class ="form-control" type="text"
-                                            placeholder="E.g. Intro to Software development" required>
+                                            placeholder="E.g. Intro to Software development" required value="{{old('courseTitle')}}">
                                         </div>
                                     </div>
                                     <!-- Course Code, Course Number, Course Instructor -->
@@ -99,26 +101,26 @@
                                         <div class="col-3 mb-2">
                                             <label for="courseCode"><span class="requiredField">*</span>Course Code:</label>
                                             <input id = "courseCode" name = "courseCode" class ="form-control" type="text"
-                                            placeholder="E.g. CPSC" required>
+                                            placeholder="E.g. CPSC" required value="{{old('courseCode')}}">
                                         </div>
 
                                         <div class="col-3 mb-2">
                                             <label for="courseNumber"><span class="requiredField">*</span>Course Number:</label>
                                             <input id = "courseNumber" name = "courseNumber" class ="form-control" type="text"
-                                            placeholder="E.g. 310" required>
+                                            placeholder="E.g. 310" required value="{{old('courseNumber')}}">
                                         </div>
 
                                         <div class="col-3 mb-2">
                                             <label for="courseinstructor"><span class="requiredField">*</span>Course Instructor:</label>
                                             <input id = "courseinstructor" name = "courseinstructor" class ="form-control" type="text"
-                                            placeholder="E.g. Dr. J. Doe" required>
+                                            placeholder="E.g. Dr. J. Doe" required value="{{old('courseinstructor')}}">
                                         </div>
                                     </div>
                                     <!-- Course TA -->
                                     <div class="row">
                                         <div class="col mb-2">
                                             <label for="courseTA">Course TA's:</label>
-                                            <input id = "courseTA" name = "courseTA" class ="form-control col-md-7" type="text">
+                                            <input id = "courseTA" name = "courseTA" class ="form-control col-md-7" type="text" value="{{old('courseTA')}}">
                                         </div>
                                     </div>
                                     <!-- Course Location -->
@@ -126,7 +128,8 @@
                                         <div class="col mb-2">
                                             <label for="courseLocation">Course Location:</label>
                                             <input id = "courseLocation" name = "courseLocation" class ="form-control col-md-5" type="text"
-                                            placeholder="E.g. WEL 140" 
+                                            placeholder="E.g. WEL 140"
+                                            value="{{old('courseLocation')}}" 
                                             >
                                         </div>
                                     </div>
@@ -135,8 +138,9 @@
                                         <div class="col mb-2">
                                             <label for="officeHour">Office Hours:</label>
                                             <textarea id = "officeHour" name = "officeHour" class ="form-control"
-                                            type="date" form="sylabusGenerator" 
-                                            ></textarea>
+                                            type="date"
+                                            form="sylabusGenerator" 
+                                            >{{old('officeHour')}}</textarea>
                                         </div>
                                     </div>
                                     <!-- Course Year, Course Term, Course Start Time, Course End Time -->
@@ -144,33 +148,61 @@
                                         <div class="col-2 mb-2">
                                             <label for="courseYear"><span class="requiredField">*</span>Course Year:</label>
                                             <select id="courseYear" class="form-control" name="courseYear">
-                                                <option value="2023">2023</option>
-                                                <option value="2022">2022</option>
-                                                <option value="2021">2021</option>
-                                                <option value="2020">2020</option>
+                                                <option
+                                                value="2023"
+                                                {{old('courseYear') == '2023' ? 'selected=true' : ''}}
+                                                >
+                                                    2023
+                                                </option>
+                                                <option value="2022"
+                                                {{old('courseYear') == '2022' ? 'selected=true' : ''}}
+                                                >
+                                                    2022
+                                                </option>
+                                                <option value="2021"
+                                                {{old('courseYear') == '2021' ? 'selected=true' : ''}}
+                                                >
+                                                    2021
+                                                </option>
+                                                <option value="2020"
+                                                {{old('courseYear') == '2020' ? 'selected=true' : ''}}
+                                                >
+                                                    2020
+                                                </option>
                                             </select>
                                         </div>
 
                                         <div class="col-3 mb-3">
                                             <label for="courseSemester"><span class="requiredField">*</span>Course Term:</label>
                                             <select id="courseSemester" class="form-control" name="courseSemester" required>
-                                                <option value="W1">Winter Term 1</option>
-                                                <option value="W2">Winter Term 2</option>
-                                                <option value="S1">Summer Term 1</option>
-                                                <option value="S2">Summer Term 2</option>
+                                                <option value="W1" {{old('courseSemester') == 'W1' ? 'selected=true' : ''}}>
+                                                    Winter Term 1
+                                                </option>
+                                                <option value="W2" {{old('courseSemester') == 'W2' ? 'selected=true' : ''}}>
+                                                    Winter Term 2
+                                                </option>
+                                                <option value="S1" {{old('courseSemester') == 'S1' ? 'selected=true' : ''}}>
+                                                    Summer Term 1
+                                                </option>
+                                                <option value="S2" {{old('courseSemester') == 'S2' ? 'selected=true' : ''}}>
+                                                    Summer Term 2
+                                                </option>
                                             </select>
                                         </div>
 
                                         <div class="col-3 mb-3">
                                             <label for="startTime">Class Start Time:</label>
                                             <input id = "startTime" name = "startTime" class ="form-control" type="text"
-                                            placeholder="E.g. 1:00 PM" >
+                                            placeholder="E.g. 1:00 PM"
+                                            value="{{old('startTime')}}"
+                                            >
                                         </div>
 
                                         <div class="col-3 mb-3">
                                             <label for="endTime">Class End Time:</label>
                                             <input id = "endTime" name = "endTime" class ="form-control" type="text"
-                                            placeholder="E.g. 2:00 PM" >
+                                            placeholder="E.g. 2:00 PM"
+                                            value="{{old('endTime')}}" >
                                         </div>
                                     </div>
                                     <!-- Kieran May 19, 2021: Term start and end date not being used in generated syllabus -->
@@ -211,12 +243,11 @@
                                         </div>
                                     </div>
 
-
                                     <div class="row">
                                         <div class="col mb-3">
                                             <label for="courseFormat">Course Format:</label>
                                             <textarea id = "courseFormat" name = "courseFormat" class ="form-control"
-                                            type="text" form="sylabusGenerator"></textarea>
+                                            type="text" form="sylabusGenerator">{{old('courseFormat')}}</textarea>
                                         </div>
                                     </div>
 
@@ -224,7 +255,7 @@
                                         <div class="col mb-3">
                                             <label for="courseOverview">Course Overview, Content and Objectives:</label>
                                             <textarea id = "courseOverview" name = "courseOverview" class ="form-control"
-                                            type="text" form="sylabusGenerator"></textarea>
+                                            type="text" form="sylabusGenerator">{{old('courseOverview')}}</textarea>
                                         </div>
                                     </div>
 
@@ -237,7 +268,7 @@
                                                 </i>
                                             </p>
                                             <textarea id = "learningOutcome" name = "learningOutcome" class ="form-control"
-                                            type="date" style="height:125px;" form="sylabusGenerator"></textarea>
+                                            type="date" style="height:125px;" form="sylabusGenerator">{{old('learningOutcome')}}</textarea>
                                         </div>
                                     </div>
 
@@ -245,7 +276,7 @@
                                         <div class="col mb-3">
                                             <label for="evaluationCriteria">Evaluation Criteria and Grading:</label>
                                             <textarea id = "evaluationCriteria" name = "evaluationCriteria" class ="form-control"
-                                            type="date" style="height:125px;" form="sylabusGenerator"></textarea>
+                                            type="date" style="height:125px;" form="sylabusGenerator">{{old('evaluationCriteria')}}</textarea>
                                         </div>
                                     </div>
 
@@ -253,7 +284,7 @@
                                         <div class="col mb-3">
                                             <label for="latePolicy">Late policy:</label>
                                             <textarea id = "latePolicy" name = "latePolicy" class ="form-control"
-                                            type="date" form="sylabusGenerator"></textarea>
+                                            type="date" form="sylabusGenerator">{{old('latePolicy')}}</textarea>
                                         </div>
                                     </div>
 
@@ -261,7 +292,7 @@
                                         <div class="col mb-3">
                                             <label for="missingExam">Missed exam policy:</label>
                                             <textarea id = "missingExam" name = "missingExam" class ="form-control"
-                                            type="date" form="sylabusGenerator"></textarea>
+                                            type="date" form="sylabusGenerator">{{old('missingExam')}}</textarea>
                                         </div>
                                     </div>
 
@@ -269,7 +300,7 @@
                                         <div class="col mb-3">
                                             <label for="missingActivity">Missed Activity Policy:</label>
                                             <textarea id = "missingActivity" name = "missingActivity" class ="form-control"
-                                            type="date" form="sylabusGenerator"></textarea>
+                                            type="date" form="sylabusGenerator">{{old('missingActivity')}}</textarea>
                                         </div>
                                     </div>
 
@@ -277,7 +308,7 @@
                                         <div class="col mb-3">
                                             <label for="passingCriteria">Passing criteria:</label>
                                             <textarea id = "passingCriteria" name = "passingCriteria" class ="form-control"
-                                            type="date" form="sylabusGenerator"></textarea>
+                                            type="date" form="sylabusGenerator">{{old('passingCriteria')}}</textarea>
                                         </div>
                                     </div>
 
@@ -285,7 +316,7 @@
                                         <div class="col mb-3">
                                             <label for="requiredReading">Required Readings and Videos:</label>
                                             <textarea id = "requiredReading" name = "requiredReading" class ="form-control"
-                                            type="date" form="sylabusGenerator"></textarea>
+                                            type="date" form="sylabusGenerator">{{old('requiredReading')}}</textarea>
                                         </div>
                                     </div>
 
@@ -295,7 +326,9 @@
                                             <div id="optionalSyllabus" class="optionalSyllabus" style="margin-top:30px;">
                                             <ul aria-label="Optional: The below are suggested sections to communicate various resources on campus" style="list-style-type:none;">
                                                 <li>
-                                                <input id="academic" type="checkbox" name="academic" value="academic" checked>
+                                                <input id="academic" type="checkbox" name="academic" value="academic"
+                                                checked
+                                                >
                                                 <label for="academic">Academic Integrity Statement</label>
                                                 </li>
 
