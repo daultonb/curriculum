@@ -6487,8 +6487,9 @@ a.close.disabled {
 }
 
 .tooltip-inner {
-  max-width: 200px;
+  max-width: 350px;
   padding: 0.25rem 0.5rem;
+  margin: 0.25rem 0.5rem;
   color: #fff;
   text-align: center;
   background-color: #000;
@@ -11082,3 +11083,9 @@ margin-left:-15px;
   display:inline-block; 
   padding-left: 15px;
 }
+
+.bi-info-circle-fill {
+  margin-left: 8px;
+  margin-right: 8px;
+}
+
