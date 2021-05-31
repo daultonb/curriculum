@@ -238,7 +238,7 @@ class CourseWizardController extends Controller
         "Research Culture: Foster a strong and diverse research culture that embraces the highest standards of integrity, collegiality and service.","Education Renewal: Facilitate sustained program renewal and improvements in teaching effectiveness.",
         "Program Redesign: Reframe undergraduate academic program design in terms of learning outcomes and competencies.","Practical Learning: Expand experiential, work-integrated and extended learning opportunities for students, faculty, staff and alumni.",
         "Interdisciplinary Education: Facilitate the development of integrative, problem-focused learning.","Student Experience: Strengthen undergraduate and graduate student communities and experience.","Public Relevance: Deepen the relevance and public impact of UBC research and education.",
-        "Indigenous Engagement: Support the objectives and actions of the renewed Indigenous Strategic Plan.","Alumni Engagement: Reach, inspire and engage alumni through lifelong enrichment, consistent with the alumniUBC strategic plan, ","Global Networks: Build and sustain strategic global networks, notably around the Pacific Rim, that enhance impact.",
+        "Indigenous Engagement: Support the objectives and actions of the renewed Indigenous Strategic Plan.","Alumni Engagement: Reach, inspire and engage alumni through lifelong enrichment, consistent with the alumniUBC strategic plan,","Global Networks: Build and sustain strategic global networks, notably around the Pacific Rim, that enhance impact.",
         "Co-ordinated Engagement: Co-create with communities the principles and effective practices of engagement, and establish supporting infrastructure.");
 
         $shaping_ubc_link = array("https://strategicplan.ubc.ca/strategy-1-great-people/","https://strategicplan.ubc.ca/strategy-2-inspiring-spaces/","https://strategicplan.ubc.ca/strategy-3-thriving-communities/",
@@ -250,7 +250,7 @@ class CourseWizardController extends Controller
         $okanagan_2040_outlook  = array("Continuing education programs","Offer hybrid pedagogies","Professional programs in health and technology",
         "Increase graduate student training","Leverage new academic and/or research space", "Increased community engagement");
 
-        $ubc_indigenous_plan = array("Integration of Indigenous histories, experiences, worldviews and knowledge systems ","Inclusion of substantive content that explores histories and identifies how Indigenous issues intersect with the field of study",
+        $ubc_indigenous_plan = array("Integration of Indigenous histories, experiences, worldviews and knowledge systems", "Inclusion of substantive content that explores histories and identifies how Indigenous issues intersect with the field of study",
         "Inclusion of Indigenous people for the development and offering of the curriculum","Continue to partner with Indigenous communities locally and globally");
 
         $ubc_climate_priorities = array("Climate justice education","Climate research","Content on Indigenous rights, content, history, and culture","Environmental and sustainability education",

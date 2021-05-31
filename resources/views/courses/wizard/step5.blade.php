@@ -336,7 +336,7 @@
                                     <div class="card-body">
                                         <h5>
                                             <a href="https://strategicplan.ubc.ca/" target="_blank">
-                                            Shaping UBC's next Century
+                                            Shaping UBCs next Century
                                             </a>
                                         </h5>
                                         <table class="table table-hover optionalPLO" id="ubcStrategy" data-toolbar="#toolbar" data-toggle="table" data-maintain-meta-data="true">
@@ -347,20 +347,20 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                            @foreach ($shaping_ubc as $index => $strategy)
+                                                @foreach ($shaping_ubc as $index => $strategy)
                                                 <tr>
                                                 <td>
                                                     @if (in_array($strategy,$optional_PLOs))
-                                                            <input type="checkbox" name= "optionalItem[]" value="{{$strategy}}" checked>
-                                                        @else
-                                                            <input type="checkbox" name= "optionalItem[]" value="{{$strategy}}">
-                                                        @endif
+                                                        <input type="checkbox" name= "optionalItem[]" value="{{$strategy}}" checked>
+                                                    @else
+                                                        <input type="checkbox" name= "optionalItem[]" value="{{$strategy}}">
+                                                    @endif
                                                 </td>
                                                 <td>
                                                     <a href ="{{$shaping_ubc_link[$index]}}" target="_blank">Strategy {{$index + 1}}: </a>
                                                     {{$strategy}}
                                                     @if($index == 17)
-                                                        <a href="https://www.alumni.ubc.ca/about/strategic-plan/" target="_blank">Connecting Forward.</a>
+                                                        <a href="https://www.alumni.ubc.ca/about/strategic-plan/" target="_blank"> Connecting Forward.</a>
                                                     @endif
                                                 </td>
                                                 </tr>
@@ -385,7 +385,7 @@
                                                 @foreach ($okanagan_2040_outlook as $index => $outlook)
                                                 <tr>
                                                 <td>
-                                                    @if (in_array($strategy,$optional_PLOs))
+                                                    @if (in_array($outlook,$optional_PLOs))
                                                         <input type="checkbox" name= "optionalItem[]" value="{{$outlook}}" checked>
                                                     @else
                                                         <input type="checkbox" name= "optionalItem[]" value="{{$outlook}}">
@@ -399,9 +399,9 @@
                                             </tbody>
                                         </table>
 
-                                        <h5>
-                                            <a href="https://aboriginal-2018.sites.olt.ubc.ca/files/2020/09/UBC.ISP_C2V13.1_Spreads_Sept1.pdf" target="_blank">
-                                                UBC's Indigenous Strategic Plan (2020)</h5></a>
+                                        <h5><a href="https://aboriginal-2018.sites.olt.ubc.ca/files/2020/09/UBC.ISP_C2V13.1_Spreads_Sept1.pdf" target="_blank">
+                                        UBC's Indigenous Strategic Plan (2020)
+                                        </h5></a>
 
                                         <table class="table table-hover optionalPLO" id="IndigenousPlan" data-toolbar="#toolbar" data-toggle="table" data-maintain-meta-data="true">
                                             <thead class="thead-light">
@@ -414,7 +414,7 @@
                                                 @foreach ($ubc_indigenous_plan as $index => $plan)
                                                 <tr>
                                                 <td>
-                                                    @if (in_array($strategy,$optional_PLOs))
+                                                    @if (in_array($plan,$optional_PLOs))
                                                         <input type="checkbox" name= "optionalItem[]" value="{{$plan}}" checked>
                                                     @else
                                                         <input type="checkbox" name= "optionalItem[]" value="{{$plan}}">
@@ -444,7 +444,7 @@
                                                 @foreach ($ubc_climate_priorities as $index => $climate)
                                                 <tr>
                                                 <td>
-                                                    @if (in_array($strategy,$optional_PLOs))
+                                                    @if (in_array($climate,$optional_PLOs))
                                                         <input type="checkbox" name= "optionalItem[]" value="{{$climate}}" checked>
                                                     @else
                                                         <input type="checkbox" name= "optionalItem[]" value="{{$climate}}">
@@ -489,8 +489,7 @@
         // prevent duplicate form submissions
         $(this).find(":submit").attr('disabled', 'disabled');
         $(this).find(":submit").html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>');
-
-      });
+        });
 
         // Hide and show the optional
         $("#highOpportunity").on('change', function () {
@@ -503,7 +502,6 @@
                 $('#addedOptions').hide();
                 $("#addedOptions :input").prop("disabled", true);
             }
-
         });
 
         $('#btnAdd').click(function() {
