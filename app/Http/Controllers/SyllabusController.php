@@ -12,7 +12,6 @@ use App\Models\LearningOutcome;
 use App\Models\AssessmentMethod;
 use App\Models\Course;
 use PhpOffice\PhpWord\Element\TextRun;
-use Illuminate\Support\Facades\Log;
 
 class SyllabusController extends Controller
 {
@@ -24,8 +23,7 @@ class SyllabusController extends Controller
 
     public function index(){
         $user = User::where('id', Auth::id())->first();
-        // get completed courses (status = 1) and in progress courses (status = -1) fir tge current user
-
+        // get completed courses (status = 1) and in progress courses (status = -1) for the current user
         $allCourses = User::join('course_users', 'users.id', '=', 'course_users.user_id')
             ->join('courses', 'course_users.course_id', '=', 'courses.course_id')
             ->join('programs', 'courses.program_id', '=', 'programs.program_id')
@@ -38,8 +36,45 @@ class SyllabusController extends Controller
                 ['course_users.user_id','=',Auth::id()],
                 ['courses.status', '=', -1]
             ])->get();
+
+        $inputFieldDescriptions['otherCourseStaff'] = "If others lead face-to-face components such as tutorials or labs, let students know that they will meet them and be introduced in those sessions. Are others involved in marking homework? If so, do you want to identify them and provide contact information to students or have inquiries come to you?";
+
+        $inputFieldDescriptions['learningOutcomes'] = 'Tell students what changes in their knowledge, skills, or attitudes should occur during the course. Knowing these, students will have a framework within which to put individual components of the course and they will be primed for the kinds of assessments of learning that will come.';
+
+        $inputFieldDescriptions['learningAssessments'] = 'Identify the various ways you will assess achievement of stated learning outcomes or objectives, when each will occur, and the weighting of each component in the final grade. 
+        Sometimes your assessment plan will need to be adjusted, you must discuss the proposal with the class and provide a rationale and then update the syllabus. A new, dated electronic syllabus must be provided';
+
+        $inputFieldDescriptions['learningActivities'] = 'Do you expect students to participate in class? In what ways? (e.g., case studies, using “clickers” to answer questions, working in small groups, etc.) Is participation in on-line discussions required? Are readings required in advance with answers to be submitted to discussion questions or problem sets? 
+        Is an oral presentation required? Is there a field excursion?
+        ';
+
+        $inputFieldDescriptions['learningMaterials'] = 'List of required learning materials for your course and where they might be obtained (e.g. the Bookstore if you ordered a text or a reading package, your department office if an in-house resource is available).
+        Providing students with at least an estimate of the costs of materials is expected. 
+        Explanation of any on-line learning management system used (e.g.Canvas).
+        ';
+
+        $inputFieldDescriptions['latePolicy'] = 'State your policies on re-grading of marked work and on late submissions. What are the penalties for late assignments?';
+
+        $inputFieldDescriptions['missedActivityPolicy'] = 'In accordance with policy on Grading Practices, state how you deal with missed in-class assessments (e.g., are make-up tests offered for missed in-class tests, do you count the best X of Y assignments/tests, do you re-weight the marks from a missed test onto later assessments?';
+
+        $inputFieldDescriptions['coursePrereqs'] = 'Is there a course that students must have passed before taking this course?';
+
+        $inputFieldDescriptions['courseCoreqs'] = 'Is there a course that students must take concurrently (if not before)?';
+
+        $inputFieldDescriptions['courseContacts'] = 'Include any and all contact information you are willing to have students use. If you have a preferred mode, state it. For example, do you accept email inquiries? What is your typical response time?';
+
+        $inputFieldDescriptions['officeHours'] = 'Do you have set office hours or can students make appointments? Do you hold “office hours” online? If so, how do students access you?';
+
+        $inputFieldDescriptions['courseStructure'] = 'First, the basic components: lecture, lab, discussion, tutorial. Typically the locations are on the Student Service Centre but you may wish to include them.
+        Then a description of how your classes are structured: Do you use traditional lecturing? Do you provide notes (outlines)? Do you combine on-line and in-class activity?
+        You may wish to combine this section and Learning Outcomes below to provide an opportunity to introduce students to your philosophy of learning, to the culture of your discipline and how this course fits in the larger context.
+        ';
+
+        $inputFieldDescriptions['courseSchedule'] = 'This may be a weekly schedule, it may be class by class, but let students know that if changes occur, they will be informed.';
+
+        $inputFieldDescriptions['instructorBioStatement'] = 'You may wish to include your department/faculty/school and other information about your academic qualifications, interests, etc.';
             
-        return view("syllabus.syllabusGenerator")->with('user', $user)->with('allCourses', $allCourses);
+        return view("syllabus.syllabusGenerator")->with('user', $user)->with('allCourses', $allCourses)->with('inputFieldDescriptions', $inputFieldDescriptions);
     }
 
     // Ajax to get course infomation
@@ -69,6 +104,18 @@ class SyllabusController extends Controller
 
     //Syllabus Word file
     public function WordExport(Request $request){
+        
+        // validate request
+        $request->validate([
+            'campus' => ['required'],
+            'courseTitle' => ['required'],
+            'courseCode' => ['required'],
+            'courseNumber' => ['required'],
+            'courseinstructor' => ['required'],
+            'courseYear' => ['required'],
+            'courseSemester' => ['required'],
+        ]);
+        $campus = $request->input('campus');
         $courseTitle = $request->input('courseTitle');
         $courseCode = $request->input('courseCode');
         $courseNumber = $request->input('courseNumber');
@@ -76,15 +123,24 @@ class SyllabusController extends Controller
         $courseYear = $request->input('courseYear');
         $semester = $request->input('courseSemester');
 
-        switch($request->input('campus')){
+        switch($campus){
             // generate word syllabus for Okanagan campus course
             case 'O':
                 $templateProcessor = new TemplateProcessor('word-template/UBC-O_default.docx');
 
-                if($request->input('academic')){
-                    $templateProcessor->cloneBlock('academic');
+                if($courseFormat = $request->input('courseFormat')){
+                    $templateProcessor->cloneBlock('NocourseFormat');
+                    $templateProcessor->setValue('courseFormat',$courseFormat);
                 }else{
-                    $templateProcessor->cloneBlock('academic', 0);
+                    $templateProcessor->cloneBlock('NocourseFormat',0);
+                }
+        
+                if($courseOverview = $request->input('courseOverview')){
+                    $templateProcessor->cloneBlock('NocourseOverview');
+                    $templateProcessor->setValue('courseOverview',$courseOverview);
+                }else{
+                    // tell template processor to not include 'NocourseOverview block
+                    $templateProcessor->cloneBlock('NocourseOverview', 0);
                 }
 
                 if($request->input('gradingPractices')){
@@ -125,31 +181,105 @@ class SyllabusController extends Controller
 
                 if($request->input('final')){
                     $templateProcessor->cloneBlock('final_exam');
-                }else{
+                } else {
                     $templateProcessor->cloneBlock('final_exam', 0);
                 }
 
-                if($request->input('langAcknoledgement')){
-                    // tell template processor to include land block
-                    $templateProcessor->cloneBlock('land');
-                }else{
-                    // tell template processor to not include land block
-                    $templateProcessor->cloneBlock('land', 0); 
-                }
-
-
             break;
             case 'V':
+                $request->validate([
+                    'courseCredit' => ['required'],
+                ]);
+                $courseCredit = $request->input('courseCredit');
                 // generate word syllabus for Vancouver campus course
                 $templateProcessor = new TemplateProcessor('word-template/UBC-V_default.docx');
 
-                if($request->input('langAcknoledgement')){
-                    // tell template processor to include land block
-                    $templateProcessor->cloneBlock('land');
+                // add required form fields specific to Vancouver campus to template
+                $templateProcessor->setValues(array('courseCredit' => $courseCredit,));
+
+                if($officeLocation = $request->input('officeLocation')){
+                    $templateProcessor->cloneBlock('NoOfficeLocation');
+                    $templateProcessor->setValue('officeLocation', $officeLocation);
                 }else{
-                    // tell template processor to not include land block
-                    $templateProcessor->cloneBlock('land', 0);
+                    $templateProcessor->cloneBlock('NoOfficeLocation', 0);
                 }
+
+                if($contacts = $request->input('courseContacts')){
+                    $templateProcessor->cloneBlock('NoContacts');
+                    // split contacts string on newline char
+                    $contactsArr = explode("\n", $contacts);
+                    // create a table for contacts (workaround for no list option)
+                    $contactsTable = new Table(array('borderSize' => 8, 'borderColor' => 'DCDCDC'));
+                    // add a new row and cell to table for each contact
+                    foreach($contactsArr as $index => $contact){
+                        $contactsTable->addRow();
+                        $contactsTable->addCell()->addText(strval($index + 1));
+                        $contactsTable->addCell()->addText($contact);
+                    }
+                    // add contacts table to word doc
+                    $templateProcessor->setComplexBlock('contacts', $contactsTable);
+                    
+                }else{
+                    $templateProcessor->cloneBlock('NoContacts', 0);
+                }
+
+                if($coursePrereqs = $request->input('coursePrereqs')){
+                    $templateProcessor->cloneBlock('NoPrerequisites');
+                    // split course prereqs string on newline char
+                    $coursePrereqsArr = explode("\n", $coursePrereqs);
+                    // create a table for course prereqs (workaround for no list option)
+                    $coursePrereqsTable = new Table(array('borderSize' => 8, 'borderColor' => 'DCDCDC'));
+                    // add a new row and cell to table for each prereq
+                    foreach($coursePrereqsArr as $index => $prereq){
+                        $coursePrereqsTable->addRow();
+                        $coursePrereqsTable->addCell()->addText(strval($index + 1));
+                        $coursePrereqsTable->addCell()->addText($prereq);
+                    }
+                    // add course prereqs table to word doc
+                    $templateProcessor->setComplexBlock('prerequisites', $coursePrereqsTable);
+                }else{
+                    $templateProcessor->cloneBlock('NoPrerequisites', 0);
+                }
+
+                if($courseCoreqs = $request->input('courseCoreqs')){
+                    $templateProcessor->cloneBlock('NoCorequisites');
+                    // split course coreqs string on newline char
+                    $courseCoreqsArr = explode("\n", $courseCoreqs);
+                    // create a table for course coreqs (workaround for no list option)
+                    $courseCoreqsTable = new Table(array('borderSize' => 8, 'borderColor' => 'DCDCDC'));
+                    // add a new row and cell to table for each coreq
+                    foreach($courseCoreqsArr as $index => $coreq){
+                        $courseCoreqsTable->addRow();
+                        $courseCoreqsTable->addCell()->addText(strval($index + 1));
+                        $courseCoreqsTable->addCell()->addText($coreq);
+                    }
+                    // add course coreqs table to word doc
+                    $templateProcessor->setComplexBlock('corequisites', $courseCoreqsTable);
+                }else{
+                    $templateProcessor->cloneBlock('NoCorequisites', 0);
+                }
+
+                if($courseInstructorBio = $request->input('courseInstructorBio')){
+                    $templateProcessor->cloneBlock('NoInstructorBio');
+                    $templateProcessor->setValue('instructorBio', $courseInstructorBio);
+                }else{
+                    $templateProcessor->cloneBlock('NoInstructorBio', 0);
+                }
+
+                if($courseStructure = $request->input('courseStructure')){
+                    $templateProcessor->cloneBlock('NoCourseStructure');
+                    $templateProcessor->setValue('courseStructure', $courseStructure);
+                }else{
+                    $templateProcessor->cloneBlock('NoCourseStructure', 0);
+                }
+
+                if($courseSchedule = $request->input('courseSchedule')){
+                    $templateProcessor->cloneBlock('NoTopicsSchedule');
+                    $templateProcessor->setValue('courseSchedule', $courseSchedule);
+                }else{
+                    $templateProcessor->cloneBlock('NoTopicsSchedule', 0);
+                }
+
 
                 if($request->input('disabilities')){
                     $templateProcessor->cloneBlock('disabilities');
@@ -164,12 +294,51 @@ class SyllabusController extends Controller
         $templateProcessor->setValues(array('courseTitle'=> $courseTitle,'courseCode' => $courseCode, 'courseNumber'=> $courseNumber, 'courseInstructor'=> $courseInstructor,
                     'courseYear'=> $courseYear,));
 
-        // tell template processor to include course TA if user completed the field(s)
-        if($courseTa = $request->input('courseTA')){
-            $templateProcessor->cloneBlock('NoTa');
-            $templateProcessor->setValue('courseTA',$courseTa);
+        // date the syllabus
+        $templateProcessor->setValue('dateGenerated', date('d, M Y'));
+
+        // tell template processor to include a land acknowledgement if user selected it
+        if($request->input('landAcknowledgement')){
+            $templateProcessor->cloneBlock('land');
         }else{
-            $templateProcessor->cloneBlock('NoTa',0);
+            $templateProcessor->cloneBlock('land', 0);
+        }
+
+        // tell template processor to include learning activities if user completed the field(s)
+        if($learningActivities = $request->input('learningActivities')){
+            $templateProcessor->cloneBlock('NoLearningActivities');
+            // split learning activities string on newline char
+            $learningActivitiesArr = explode("\n", $learningActivities);
+            // create a table for learning activities (workaround for no list option)
+            $learningActivitiesTable = new Table(array('borderSize' => 8, 'borderColor' => 'DCDCDC'));
+            // add a new row and cell to table for each learning activity
+            foreach($learningActivitiesArr as $index => $learningActivity){
+                $learningActivitiesTable->addRow();
+                $learningActivitiesTable->addCell()->addText(strval($index + 1));
+                $learningActivitiesTable->addCell()->addText($learningActivity);
+            }
+            // add learning activities table to word doc
+            $templateProcessor->setComplexBlock('learningActivities', $learningActivitiesTable);
+        }else{
+            $templateProcessor->cloneBlock('NoLearningActivities',0);
+        }
+        // tell template processor to include other course staff if user completed the field(s)
+        if($otherCourseStaff = $request->input('otherCourseStaff')){
+            $templateProcessor->cloneBlock('NoOtherInstructionalStaff');
+            // split other course staff string on newline char
+            $otherCourseStaffArr = explode("\n", $otherCourseStaff);
+            // create a table for other course staff (workaround for no list option)
+            $otherCourseStaffTable = new Table(array('borderSize' => 8, 'borderColor' => 'DCDCDC'));
+            // add a new row and cell to table for each course staff member
+            foreach($otherCourseStaffArr as $index => $courseStaffMember){
+                $otherCourseStaffTable->addRow();
+                $otherCourseStaffTable->addCell()->addText(strval($index + 1));
+                $otherCourseStaffTable->addCell()->addText($courseStaffMember);
+            }
+            // add other course staff table to word doc
+            $templateProcessor->setComplexBlock('otherInstructionalStaff', $otherCourseStaffTable);
+        }else{
+            $templateProcessor->cloneBlock('NoOtherInstructionalStaff',0);
         }
         // tell template processor to include course location if user completed the field(s)
         if ($courseLocation = $request->input('courseLocation')) {
@@ -207,12 +376,6 @@ class SyllabusController extends Controller
             $templateProcessor->cloneBlock('NoOfficeHours', 0);
         }
 
-        // Load final dates
-        if($request->input('finalcheckbox')){
-            $finalDate = $request->input('finalDate');
-            $templateProcessor->setValue('finalDate',$finalDate);
-        }
-
         switch($semester){
             case("W1"):
                 $templateProcessor->setValue('season',"Winter");
@@ -232,35 +395,7 @@ class SyllabusController extends Controller
             break;
         }
 
-        //UBC logo
-        $templateProcessor->setImageValue('UBC_logo', array('path' => 'img/UBC-logo-2018-fullsig-blue-rgb72.png', 'width' => 400, 'height' => 400, 'ratio' => true));
-
-        $courseFormat = $request->input('courseFormat');
-        $courseOverview = $request->input('courseOverview');
-        $learningOutcome = $request->input('learningOutcome');
-        $evaluationCriteria = $request->input('evaluationCriteria');
-        $latePolicy = $request->input('latePolicy');
-        $missingExam = $request->input('missingExam');
-        $missingActivity = $request->input('missingActivity');
-        $passingCriteria = $request->input('passingCriteria');
-        $requiredReading = $request->input('requiredReading');
-
-        if($courseFormat){
-            $templateProcessor->cloneBlock('NocourseFormat');
-            $templateProcessor->setValue('courseFormat',$courseFormat);
-        }else{
-            $templateProcessor->cloneBlock('NocourseFormat',0);
-        }
-
-        if($courseOverview){
-            $templateProcessor->cloneBlock('NocourseOverview');
-            $templateProcessor->setValue('courseOverview',$courseOverview);
-        }else{
-            // tell template processor to not include 'NocourseOverview block
-            $templateProcessor->cloneBlock('NocourseOverview', 0);
-        }
-
-        if($learningOutcome){
+        if($learningOutcome = $request->input('learningOutcome')){
             $templateProcessor->cloneBlock('NolearningOutcomes');
             // split learning outcomes string on newline char
             $learningOutcomes = explode("\n", $learningOutcome);
@@ -277,10 +412,10 @@ class SyllabusController extends Controller
             $templateProcessor->cloneBlock('NolearningOutcomes',0);
         }
 
-        if($evaluationCriteria){
-            $templateProcessor->cloneBlock('NoGrading');
+        if($learningAssessments = $request->input('learningAssessments')){
+            $templateProcessor->cloneBlock('NoLearningAssessments');
             // split assessment methods string on newline char
-            $assessmentMethods = explode("\n", $evaluationCriteria);
+            $assessmentMethods = explode("\n", $learningAssessments);
             // create a table for learning outcomes (workaround for no list option)
             $assessmentMethodsTable = new Table(array('borderSize' => 8, 'borderColor' => 'DCDCDC'));
             // add a new row and cell to table for each assessment method
@@ -290,47 +425,54 @@ class SyllabusController extends Controller
                 $assessmentMethodsTable->addCell()->addText($assessmentMethod);
             }
             // add assessment methods table to word doc
-            $templateProcessor->setComplexBlock('grading', $assessmentMethodsTable);
+            $templateProcessor->setComplexBlock('learningAssessments', $assessmentMethodsTable);
         }else{
-            $templateProcessor->cloneBlock('NoGrading',0);
+            $templateProcessor->cloneBlock('NoLearningAssessments',0);
         }
 
-        if($latePolicy){
+        if($latePolicy = $request->input('latePolicy')){
             $templateProcessor->cloneBlock('NolatePolicy');
             $templateProcessor->setValue('latePolicy',$latePolicy);
         }else{
             $templateProcessor->cloneBlock('NolatePolicy',0);
         }
 
-        if($missingExam){
+        if($missingExam = $request->input('missingExam')){
             $templateProcessor->cloneBlock('NoMissingExam');
             $templateProcessor->setValue('missingExam',$missingExam);
         }else{
             $templateProcessor->cloneBlock('NoMissingExam',0);
         }
 
-        if($missingActivity){
+        if($missingActivity = $request->input('missingActivity')){
             $templateProcessor->cloneBlock('NomissingActivity');
             $templateProcessor->setValue('missingActivity',$missingActivity);
         }else{
             $templateProcessor->cloneBlock('NomissingActivity',0);
         }
 
-        if($passingCriteria){
+        if($passingCriteria = $request->input('passingCriteria')){
             $templateProcessor->cloneBlock('NopassingCriteria');
             $templateProcessor->setValue('passingCriteria',$passingCriteria);
         }else{
             $templateProcessor->cloneBlock('NopassingCriteria',0);
         }
 
-        if($requiredReading){
-            $templateProcessor->cloneBlock('Norequire_reading');
-            $templateProcessor->setValue('require_reading',$requiredReading);
+        if($learningMaterials = $request->input('learningMaterials')){
+            $templateProcessor->cloneBlock('NoLearningMaterials');
+            $templateProcessor->setValue('learningMaterials',$learningMaterials);
         }else{
-            $templateProcessor->cloneBlock('Norequire_reading',0);
+            $templateProcessor->cloneBlock('NoLearningMaterials',0);
+        }
+
+        if($request->input('academic')){
+            $templateProcessor->cloneBlock('academic');
+        }else{
+            $templateProcessor->cloneBlock('academic', 0);
         }
 
         $templateProcessor->saveAs($courseCode.$courseNumber. '-Syllabus.docx');
         return response()->download($courseCode.$courseNumber.  '-Syllabus.docx')->deleteFileAfterSend(true);
     }
+
 }

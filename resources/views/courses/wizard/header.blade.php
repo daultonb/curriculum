@@ -1,7 +1,7 @@
 <div class="mt-2 mb-5">
     <div class="row">
         <div class="col">
-            <h3>Course: {{$course->year}} {{$course->semester}} {{$course->course_code}}{{$course->course_num}} - {{$course->section}}</h3>
+            <h3>Course: {{$course->year}} {{$course->semester}} {{$course->course_code}}{{$course->course_num}}  {{$course->section}}</h3>
             <h5 class="text-muted">{{$course->course_title}}</h5>
             <h5>Delivery modality:
             @switch($course->delivery_modality)
@@ -132,7 +132,7 @@
                                             <div class="col-md-4">
                                                 <input id="course_section" type="text"
                                                     class="form-control @error('course_section') is-invalid @enderror"
-                                            name="course_section" required autofocus value= {{$course->section}}>
+                                            name="course_section" autofocus value= {{$course->section}}>
 
                                                 @error('course_section')
                                                 <span class="invalid-feedback" role="alert">

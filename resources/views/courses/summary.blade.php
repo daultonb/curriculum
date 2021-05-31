@@ -195,15 +195,14 @@
     
                     <div class="card-header font-weight-bold">
                         @if($course->program_id == 1 ?? $course->program_id == 2 ?? $course->program_id == 3 )
-                            BC {{$program->program}} (in lieu of PLOs)
+                            BC {{$program->program}}
                         @else 
-                            {{$program->program}}: Program Learning Outcomes or Competencies
+                            {{$program->program}}
                         @endif
                     </div>
     
                     <div class="card-body ml-5 mr-5 mt-3">
     
-                        Program learning outcomes are listed below.
     
                         <table class="table table-bordered table-sm mt-3">
     
@@ -216,7 +215,7 @@
     
                                 <tr>
                                     <th class="table-light"></th>
-                                    <th class="table-light">Program Learning Outcomes</th>
+                                    <th class="table-light">Standards</th>
                                     @if(count($ploCategories)>0)
                                         <th class="table-light">PLO Category</th>
                                     @endif

@@ -33,8 +33,13 @@ class HomeController extends Controller
                 ->join('programs', 'courses.program_id', '=', 'programs.program_id')
                 ->select('courses.program_id','courses.course_code','courses.delivery_modality','courses.semester','courses.year','courses.section',
                 'courses.course_id','courses.course_num','courses.course_title', 'courses.status','programs.program', 'programs.faculty', 'programs.department','programs.level')
-                ->where('course_users.user_id','=',Auth::id())->where('courses.status','=', -1)
-                ->get();
+                ->where([
+                    ['course_users.user_id','=',Auth::id()],
+                    ['courses.status', '=', 1]
+                ])->orWhere([
+                    ['course_users.user_id','=',Auth::id()],
+                    ['courses.status', '=', -1]
+                ])->get();
 
         $programs = User::join('program_users', 'users.id', '=', 'program_users.user_id')
         ->join('programs', 'program_users.program_id', "=", 'programs.program_id')

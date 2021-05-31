@@ -15,7 +15,12 @@
                     <div class="card-title" style="background-color:#1E90FF;margin-bottom: 0.00rem;">
                         <h3 style="color: white;margin:22px">
                         <!-- <a style="color: white;text-decoration: none;" href="{{ route('programs.index') }}">My Programs</a> -->
-                        <a style="color: white;text-decoration: none;" href="/construction">My Programs</a>
+                        <a style="color: white;text-decoration: none;" href="/construction">
+                        My Programs
+                        <div style="float:right; padding-right:10px;">
+                            <img src="{{ asset('dashboard-icons/add_White.png') }}" style="width:20px;height:20px;"/>
+                        </div>
+                        </a>
                         </h3>
                     </div>
 
@@ -89,7 +94,12 @@
                 border-color: #6495ED;">
                     <div class="card-title" style="background-color: #6495ED;margin-bottom: 0.00rem;">
                         <h3 style="color: white;margin:22px">
-                        <a style="color: white;text-decoration: none;" href="{{ route('courses.index') }}">My Courses</a>
+                        <a style="color: white;text-decoration: none;" href="{{ route('courses.index') }}">
+                        My Courses
+                        <div style="float:right; padding-right:10px;">
+                            <img src="{{ asset('dashboard-icons/add_White.png') }}" style="width:20px;height:20px;"/>
+                        </div>
+                        </a>           
                         </h3>
                     </div>
 
@@ -101,8 +111,8 @@
                                     <th scope="col"></th>
                                     <th scope="col">Course Title</th>
                                     <th scope="col">Course Code</th>
-                                    <th scope="col">Semester</th>
-                                    <th scope="col">Invite Collaborators</th>
+                                    <th scope="col">Term</th>
+                                    <!--<th scope="col">Invite Collaborators</th>-->
                                     <th scope="col">Actions</th>
                                 </tr>
                                 </thead>
@@ -114,8 +124,7 @@
                                     <td>{{$course->course_title}}</td>
                                     <td>{{$course->course_code}} {{$course->course_num}}</td>
                                     <td>{{$course->year}} {{$course->semester}}</td>
-                                    <td>
-                                    </td>
+                                    <!--<td></td>-->
                                     <td style="display: inline-block">
                                         <a class="dropdown-item btn-icon" href="{{route('courseWizard.step1', $course->course_id)}}">
                                         <img src="{{ asset('dashboard-icons/edit.png') }}" style="width:15px;height:15px"/></a>
@@ -147,7 +156,6 @@
                                                             <button style="width:60px" type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Cancel</button>
                                                             <button style="width:60px" type="submit" class="btn btn-danger btn-sm">Delete</button>
                                                         </div>
-
                                                     </form>
                                                 </div>
                                             </div>
@@ -168,4 +176,5 @@
         </div>
     </div>
 </div>
+
 @endsection
