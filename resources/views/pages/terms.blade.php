@@ -7,11 +7,19 @@
             <div class="container">
                     <h1>Terms of Use</h1>                                                  
                     <p class="lead">
-                    The information gathered on the UBC Curriculum MAP website is collected under the authority of section 26(c) of the British Columbia Freedom of Information and Protection of Privacy Act.
+                    The information gathered on the UBC Curriculum MAP website is collected under the authority of section 26(e) of the British Columbia Freedom of Information and Protection of Privacy Act.
                     <br><br>
-                    Information entered by website users will only be used for the intended purposes of allowing instructors and departments to make informed decisions about course/program design and enhance the overall student learning experience. Information entered by users will not be accessed, viewed, or evaluated by any other party or UBC unit. Website users retain authorship of information entered, and as such have ownership and responsibility for content. Specific permission for access to content may be sought for the purpose of evaluating and improving the UBC Curriculum Map tool. Any data entered into the UBC Curriculum Map website is stored on secure UBC Servers.
+                    Information entered by website users will only be used for the intended purposes of allowing instructors and departments to make informed decisions about course/program design and enhance the overall student learning experience. 
+                    
+                    <!-- Commented out until wording is finalized.
+                    Information entered by users will not be accessed, viewed, or evaluated by any other party or UBC unit. 
+                    -->
+                    Website users retain authorship of information entered, and as such have ownership and responsibility for content. 
+                    Specific permission for access to content may be sought for the purpose of evaluating and improving the UBC Curriculum MAP tool. 
+                    Any data entered into the UBC Curriculum MAP website is stored on secure UBC Servers.
                     <br><br>
-                    UBC reserves the right to amend the website’s terms of use at any time and will notify registered users of changes.
+                    UBC reserves the right to amend the website’s terms of use at any time and will notify registered users of changes. 
+                    Use of this website is subject to UBC’s Information Systems Policy
                     <br><br>
                     Questions about the collection of data may be directed to <a href="mailto:laura.prada@ubc.ca" target="_blank">laura.prada@ubc.ca</a>.</p>
             </div>

@@ -22,33 +22,32 @@ class OptionalPriorities extends Controller
 
         $course_id = $request->input('course_id');
         $optionalPLOs = $request->input('optionalItem');
+        
 
-        // Remove option that was not checked
-        Optional_priorities::whereNotIn('custom_PLO',$optionalPLOs)->where('course_id',$course_id)->where('input_status',0)->delete();
+        // Check If Any PLO's have been selected 
+        if ($optionalPLOs == !NULL) {
+            // Delete all OptionalPLO's not checked (Selected).
+            Optional_priorities::whereNotIn('custom_PLO',$optionalPLOs)->where('course_id',$course_id)->delete();
 
-        // Loop to insert them to the table
-        foreach($optionalPLOs as $optionalPLO) {
-            if(! (Optional_priorities::where('custom_PLO',$optionalPLO)->where('course_id',$course_id)->first())) {
-                $ops = new Optional_priorities();
-                $ops->course_id = $course_id;
-                $ops->custom_PLO = $optionalPLO;
-                $ops->input_status = 0;
-                if($ops->save()){
-                    $request->session()->flash('success', 'Alignment to UBC/Ministry priorities updated.');
-                }else{
-                    $request->session()->flash('error', 'There was an error updating the alignment to UBC/Ministry priorities.');
+            // Loop to insert them to the table
+            foreach($optionalPLOs as $optionalPLO) {
+                if(! (Optional_priorities::where('custom_PLO',$optionalPLO)->where('course_id',$course_id)->first())) {
+                    $ops = new Optional_priorities();
+                    $ops->course_id = $course_id;
+                    $ops->custom_PLO = $optionalPLO;
+                    $ops->input_status = 0;
+                    if($ops->save()){
+                        $request->session()->flash('success', 'Alignment to UBC/Ministry priorities updated.');
+                    }else{
+                        $request->session()->flash('error', 'There was an error updating the alignment to UBC/Ministry priorities.');
+                    }
                 }
             }
+        } else {
+            // Remove Any PLO's based on their course ID
+            Optional_priorities::where('course_id',$course_id)->delete();
+            $request->session()->flash('success', 'Alignment to UBC/Ministry priorities updated.');
         }
-
-        /*
-        if($inputOptionalPLOs = $request->input('inputItem')) {
-            foreach($inputOptionalPLOs as $inputOptionalPLO) {
-                $inputOps = Optional_priorities::where('course_id', $course_id)->get();
-                $inputOptionalPLO->input_status = 1;
-            }
-        }
-        */
 
         return redirect()->route('courseWizard.step5', $request->input('course_id'));
     }

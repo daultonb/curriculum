@@ -14,7 +14,7 @@ class UpdateCoursesTable extends Migration
     public function up()
     {
         Schema::table('courses', function (Blueprint $table) {
-            $table->string('section')->length(20)->after('course_num');
+            $table->string('section')->length(20)->after('course_num')->nullable();
             $table->char('semester')->length(2)->after('course_num');
             $table->integer('year')->length(4)->after('course_num');
             $table->char('delivery_modality')->length(1)->after('course_num');

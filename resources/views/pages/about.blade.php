@@ -36,6 +36,7 @@
                     </div>
                     <div class="col-sm">
                     <p class="lead" style="display:inline-block; padding: 2% 0;">To create an immersive learning experience that fosters competencies identified by faculties and departments as critical to the discipline, a curriculum map can be an <strong>effective way to visualize the program structure, list of courses, teaching and learning activities, and assessment practices.</strong> This “integrative and sustainable” (Kalu & Dyjur, 2018) process is collaborative and <strong>geared towards student success.</strong></p>
+
                     </div>
                     
                 </div>
@@ -88,6 +89,7 @@
                             <p class="lead">Department (if needed)</p>
                             <p class="lead"><i>Role in Project</i></p>
                         </figcaption>
+
                     </div>
                     <div class="col-sm"> 
                         <img class="team-img" src=" {{ asset('img/person-placeholder-300x300.jpg') }}"/>
@@ -114,6 +116,7 @@
                             <p class="lead">Department (if needed)</p>
                             <p class="lead"><i>Role in Project</i></p>
                         </figcaption>
+
                     </div>
                     <div class="col-sm"> 
                         <img class="team-img" src=" {{ asset('img/person-placeholder-300x300.jpg') }}"/>
