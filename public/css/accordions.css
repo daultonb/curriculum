@@ -37,7 +37,7 @@
     display: none;
 }
 
-label {
+.accordion-label {
     display: block;    
     padding: 8px 22px;
     margin: 0 0 1px 0;
@@ -59,16 +59,16 @@ label {
     display: block;
 }
 /*This is for the arrow*/
-label::after {
+.accordion-label::after {
 	font-family: "Font Awesome 5 Free";
 	content: '\f078';
 	font-weight: bold;
 }
-.accordion-input:checked + label::after {
+.accordion-input:checked + .accordion-label::after {
 	content: '\f077';
 }
 /*This is for the arrow*/
-label::after {
+.accordion-label::after {
 	font-family: "Font Awesome 5 Free";
 	content: '\f078';
 	font-weight: bold;
@@ -77,6 +77,6 @@ label::after {
 	right: 10px;
 	top: 6px;
 }
-label {
+.accordion-label {
 	position: relative;
 }
