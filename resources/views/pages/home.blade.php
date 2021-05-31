@@ -43,7 +43,7 @@
                             <tbody>
                             <tr>
                                 <th scope="row">{{$index + 1}}</th>
-                                <td>{{$program->program}}</td>
+                                <td><a href="{{route('programWizard.step1', $program->program_id)}}">{{$program->program}}</a></td>
                                 <td>{{$program->faculty}}</td>
                                 <td>{{$program->level}}</td>
                                 <td style="display: inline-block">
@@ -118,25 +118,47 @@
                                     <th scope="col">Term</th>
                                     <!--<th scope="col">Invite Collaborators</th>-->
                                     <th scope="col">Status</th>
+                                    <th scope="col">Program</th>
                                     <th scope="col">Actions</th>
                                 </tr>
                                 </thead>
 
+                                <!-- Displays 'My Courses' -->
                                 @foreach ($activeCourses as $index => $course)
                                 <tbody>
                                 <tr>
                                     @if($course->status !== 1)
-                                    <th scope="row">{{$index + 1}}</th>
-                                    <td>{{$course->course_title}}</td>
-                                    <td>{{$course->course_code}} {{$course->course_num}}</td>
-                                    <td>{{$course->year}} {{$course->semester}}</td>
-                                    <td>❗In Progress</td>
+                                        @if($course->program_id !== 1 ?? $course->program_id !== 2 ?? $course->program_id !== 3)
+                                            <th scope="row">{{$index + 1}}</th>
+                                            <td><a href="{{route('courseWizard.step1', $course->course_id)}}">{{$course->course_title}}</a></td>
+                                            <td>{{$course->course_code}} {{$course->course_num}}</td>
+                                            <td>{{$course->year}} {{$course->semester}}</td>
+                                            <td>❗In Progress</td>
+                                            <td><a href="{{route('programWizard.step1', $course->program_id)}}">{{$course->program}}</a></td>
+                                        @else
+                                            <th scope="row">{{$index + 1}}</th>
+                                            <td><a href="{{route('courseWizard.step1', $course->course_id)}}">{{$course->course_title}}</a></td>
+                                            <td>{{$course->course_code}} {{$course->course_num}}</td>
+                                            <td>{{$course->year}} {{$course->semester}}</td>
+                                            <td>❗In Progress</td>
+                                            <td>None</td>
+                                        @endif
                                     @else
-                                    <th scope="row">{{$index + 1}}</th>
-                                    <td>{{$course->course_title}}</td>
-                                    <td>{{$course->course_code}} {{$course->course_num}}</td>
-                                    <td>{{$course->year}} {{$course->semester}}</td>
-                                    <td>✔️Completed</td>
+                                        @if($course->program_id !== 1 ?? $course->program_id !== 2 ?? $course->program_id !== 3 )
+                                            <th scope="row">{{$index + 1}}</th>
+                                            <td><a href="{{route('courseWizard.step1', $course->course_id)}}">{{$course->course_title}}</a></td>
+                                            <td>{{$course->course_code}} {{$course->course_num}}</td>
+                                            <td>{{$course->year}} {{$course->semester}}</td>
+                                            <td>✔️Completed</td>
+                                            <td><a href="{{route('programWizard.step1', $course->program_id)}}">{{$course->program}}</a></td>
+                                        @else
+                                            <th scope="row">{{$index + 1}}</th>
+                                            <td><a href="{{route('courseWizard.step1', $course->course_id)}}">{{$course->course_title}}</a></td>
+                                            <td>{{$course->course_code}} {{$course->course_num}}</td>
+                                            <td>{{$course->year}} {{$course->semester}}</td>
+                                            <td>✔️Completed</td>
+                                            <td>None</td>
+                                        @endif
                                     @endif
 
                                     <!--<td></td>-->
