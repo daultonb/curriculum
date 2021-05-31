@@ -19,7 +19,7 @@
                         </select>
                     </span>
                     <!-- land acknowledgment -->
-                    <input type="checkbox" name="landAcknowledgement" id="landAcknowledgement" form = "sylabusGenerator">
+                    <input type="checkbox" name="landAcknowledgement" id="landAcknowledgement" form = "sylabusGenerator" checked>
                     <label for="landAcknowledgement" style="font-size: 14px;">Land acknowledgement</label>
                     <button type="button" class="btn btn-primary btn-sm col-2 mt-2 float-right" data-toggle="modal" data-target="#importExistingCourse" style="margin-right: 10px">
                         Import existing courses
@@ -96,7 +96,7 @@
                                     <div class="row">
                                         <div class="col mb-2">
                                             <label for="courseTitle"><span class="requiredField">*</span>Course Title</label>
-                                            <input id = "courseTitle" name = "courseTitle" class ="form-control" type="text"
+                                            <input spellcheck="true" id = "courseTitle" name = "courseTitle" class ="form-control" type="text"
                                             placeholder="E.g. Intro to Software development" required value="{{old('courseTitle')}}">
                                         </div>
                                     </div>
@@ -166,6 +166,11 @@
                                                 >
                                                     2020
                                                 </option>
+                                                <option value="2019"
+                                                {{old('courseYear') == '2020' ? 'selected=true' : ''}}
+                                                >
+                                                    2019
+                                                </option>
                                             </select>
                                         </div>
                                     </div>
@@ -189,7 +194,7 @@
                                         <div class="col mb-2">
                                             <label for="officeHour">Office Hours</label>
                                             <i class="bi bi-info-circle-fill" data-toggle="tooltip" data-bs-placement="right" title="{{$inputFieldDescriptions['officeHours']}}"></i>
-                                            <textarea id = "officeHour" name = "officeHour" class ="form-control"
+                                            <textarea spellcheck="true" id = "officeHour" name = "officeHour" class ="form-control"
                                             type="date"
                                             form="sylabusGenerator" 
                                             >{{old('officeHour')}}</textarea>
@@ -200,7 +205,10 @@
                                         <div class="col mb-2">
                                             <label  for="otherCourseStaff">Other Instructional Staff</label>
                                             <i class="bi bi-info-circle-fill" data-toggle="tooltip" data-bs-placement="right" title="{{$inputFieldDescriptions['otherCourseStaff']}}"></i>
-                                            <textarea id = "otherCourseStaff" name = "otherCourseStaff" class ="form-control" form="sylabusGenerator" >{{old('otherCourseStaff')}}</textarea>
+                                            <div class="form-note">
+                                                <i class="bi bi bi-exclamation-lg"></i><p>Place each entry on a newline for the best formatting results.</p>
+                                            </div>
+                                            <textarea id = "otherCourseStaff" name = "otherCourseStaff" class ="form-control" form="sylabusGenerator" spellcheck="true">{{old('otherCourseStaff')}}</textarea>
                                         </div>
                                     </div>
                                     <!-- Class Start Time, Class End Time -->
@@ -271,12 +279,15 @@
                                             <label for="learningOutcome">Learning Outcomes
                                             </label>
                                             <i class="bi bi-info-circle-fill" data-toggle="tooltip" data-bs-placement="right" title="{{$inputFieldDescriptions['learningOutcomes']}}"></i>
+                                            <div class="form-note">
+                                                <i class="bi bi-exclamation-lg"></i><p>Place each entry on a newline for the best formatting results.</p>
+                                            </div>
                                             <p style="color:gray">
                                                 <i>                     Upon successful completion of this course, students will be able to...
                                                 </i>
                                             </p>
                                             <textarea id = "learningOutcome" name = "learningOutcome" class ="form-control"
-                                            type="date" style="height:125px;" form="sylabusGenerator">{{old('learningOutcome')}}</textarea>
+                                            type="date" style="height:125px;" form="sylabusGenerator" spellcheck="true">{{old('learningOutcome')}}</textarea>
                                         </div>
                                     </div>
                                     
@@ -285,18 +296,24 @@
                                         <div class="col mb-3">
                                             <label for="learningAssessments">Assessments of Learning</label>
                                             <i class="bi bi-info-circle-fill" data-toggle="tooltip" data-bs-placement="right" title="{{$inputFieldDescriptions['learningAssessments']}}"></i>
+                                            <div class="form-note">
+                                                <i class="bi bi-exclamation-lg"></i><p>Place each entry on a newline for the best formatting results.</p>
+                                            </div>
                                             <textarea id = "learningAssessments" name = "learningAssessments" class ="form-control"
-                                            type="date" style="height:125px;" form="sylabusGenerator">{{old('learningAssessments')}}</textarea>
+                                            type="date" style="height:125px;" form="sylabusGenerator" spellcheck="true">{{old('learningAssessments')}}</textarea>
                                         </div>
                                     </div>
 
-                                    <!-- Course Teaching and Learning Activities -->
+                                    <!-- Learning Activities -->
                                     <div class="row">
                                         <div class="col mb-3">
-                                            <label for="learningActivities">Teaching and Learning Activities</label>
+                                            <label for="learningActivities">Learning Activities</label>
                                             <i class="bi bi-info-circle-fill" data-toggle="tooltip" data-bs-placement="right" title="{{$inputFieldDescriptions['learningActivities']}}"></i>
+                                            <div class="form-note">
+                                                <i class="bi bi-exclamation-lg"></i><p>Place each entry on a newline for the best formatting results.</p>
+                                            </div>
                                             <textarea id = "learningActivities" name = "learningActivities" class ="form-control"
-                                            type="date" style="height:125px;" form="sylabusGenerator">{{old('learningActivities')}}</textarea>
+                                            type="date" style="height:125px;" form="sylabusGenerator" spellcheck="true">{{old('learningActivities')}}</textarea>
                                         </div>
                                     </div>
 
@@ -306,7 +323,7 @@
                                             <label for="latePolicy">Late policy</label>
                                             <i class="bi bi-info-circle-fill" data-toggle="tooltip" data-bs-placement="right" title="{{$inputFieldDescriptions['latePolicy']}}"></i>
                                             <textarea id = "latePolicy" name = "latePolicy" class ="form-control"
-                                            type="date" form="sylabusGenerator">{{old('latePolicy')}}</textarea>
+                                            type="date" form="sylabusGenerator" spellcheck="true">{{old('latePolicy')}}</textarea>
                                         </div>
                                     </div>
 
@@ -315,7 +332,7 @@
                                         <div class="col mb-3">
                                             <label for="missingExam">Missed exam policy</label>
                                             <textarea id = "missingExam" name = "missingExam" class ="form-control"
-                                            type="date" form="sylabusGenerator">{{old('missingExam')}}</textarea>
+                                            type="date" form="sylabusGenerator" spellcheck="true">{{old('missingExam')}}</textarea>
                                         </div>
                                     </div>
 
@@ -325,7 +342,7 @@
                                             <label for="missingActivity">Missed Activity Policy</label>
                                             <i class="bi bi-info-circle-fill" data-toggle="tooltip" data-bs-placement="right" title="{{$inputFieldDescriptions['missedActivityPolicy']}}"></i>
                                             <textarea id = "missingActivity" name = "missingActivity" class ="form-control"
-                                            type="date" form="sylabusGenerator">{{old('missingActivity')}}</textarea>
+                                            type="date" form="sylabusGenerator" spellcheck="true">{{old('missingActivity')}}</textarea>
                                         </div>
                                     </div>
 
@@ -334,7 +351,7 @@
                                         <div class="col mb-3">
                                             <label for="passingCriteria">Passing criteria</label>
                                             <textarea id = "passingCriteria" name = "passingCriteria" class ="form-control"
-                                            type="date" form="sylabusGenerator">{{old('passingCriteria')}}</textarea>
+                                            type="date" form="sylabusGenerator" spellcheck="true">{{old('passingCriteria')}}</textarea>
                                         </div>
                                     </div>
 
@@ -344,7 +361,7 @@
                                             <label for="learningMaterials">Learning Materials</label>
                                             <i class="bi bi-info-circle-fill" data-toggle="tooltip" data-bs-placement="right" title="{{$inputFieldDescriptions['learningMaterials']}}"></i>
                                             <textarea id = "learningMaterials" name = "learningMaterials" class ="form-control"
-                                            type="date" form="sylabusGenerator">{{old('learningMaterials')}}</textarea>
+                                            type="date" form="sylabusGenerator" spellcheck="true">{{old('learningMaterials')}}</textarea>
                                         </div>
                                     </div>
 
@@ -559,6 +576,9 @@
             <div class="col mb-2">
                 <label for="courseContacts">Contacts</label>
                 <i class="bi bi-info-circle-fill has-tooltip"  data-bs-placement="right" title="{{$inputFieldDescriptions['courseContacts']}}"></i>
+                <div class="form-note">
+                    <i class="bi bi-exclamation-lg"></i><p>Place each entry on a newline for the best formatting results.</p>
+                </div>
                 <textarea name = "courseContacts" class ="form-control" type="date" form="sylabusGenerator">{{old('courseContacts')}}</textarea>
             </div>
             `;
@@ -567,13 +587,19 @@
             <div class="col mb-3">
                 <label for="coursePrereqs">Course Prerequisites</label>
                 <i class="bi bi-info-circle-fill has-tooltip" data-bs-placement="right" title="{{$inputFieldDescriptions['coursePrereqs']}}"></i>
-                <textarea name = "coursePrereqs" class ="form-control" type="text" form="sylabusGenerator">{{old('coursePrereqs')}}</textarea>
+                <div class="form-note">
+                    <i class="bi bi-exclamation-lg"></i><p>Place each entry on a newline for the best formatting results.</p>
+                </div>
+                <textarea name = "coursePrereqs" class ="form-control" type="text" form="sylabusGenerator" >{{old('coursePrereqs')}}</textarea>
             </div>
             `;
         var courseCoreqs = `
             <div class="col mb-3">
                 <label for="courseCoreqs">Course Corequisites</label>
-                <i class="bi bi-info-circle-fill has-tooltip" data-bs-placement="right" title="{{$inputFieldDescriptions['courseCoreqs']}}"></i>
+                <i class="bi bi-exclamation-lg has-tooltip" data-bs-placement="right" title="{{$inputFieldDescriptions['courseCoreqs']}}"></i>
+                <div class="form-note">
+                    <i class="bi bi-exclamation-circle-fill"></i><p>Place each entry on a newline for the best formatting results.</p>
+                </div>
                 <textarea id = "courseCoreqs" name = "courseCoreqs" class ="form-control" type="text" form="sylabusGenerator">{{old('courseCoreqs')}}</textarea>
             </div>
             `;
@@ -581,14 +607,14 @@
             <div class="col mb-2">
                     <label for="courseInstructorBio">Course Instructor Biographical Statement</label>
                     <i class="bi bi-info-circle-fill has-tooltip" data-bs-placement="right" title="{{$inputFieldDescriptions['instructorBioStatement']}}"></i>
-                    <textarea id = "courseInstructorBio" name = "courseInstructorBio" class ="form-control" form="sylabusGenerator">{{old('courseInstructorBio')}}</textarea>
+                    <textarea id = "courseInstructorBio" name = "courseInstructorBio" class ="form-control" form="sylabusGenerator" spellcheck="true">{{old('courseInstructorBio')}}</textarea>
             </div>
             `;
         var courseSchedule = `
             <div class="col mb-3">
                 <label for="courseSchedule">Course Schedule</label>
                 <i class="bi bi-info-circle-fill has-tooltip"  data-bs-placement="right" title="{{$inputFieldDescriptions['courseSchedule']}}"></i>
-                <textarea name = "courseSchedule" class ="form-control" type="text" form="sylabusGenerator">{{old('courseSchedule')}}</textarea>
+                <textarea name = "courseSchedule" class ="form-control" type="text" form="sylabusGenerator" spellcheck="true">{{old('courseSchedule')}}</textarea>
             </div>
             `;        
         
@@ -596,20 +622,20 @@
             <div class="col mb-3">
                 <label for="courseStructure">Course Structure</label>
                 <i class="bi bi-info-circle-fill has-tooltip" data-bs-placement="right" title="{{$inputFieldDescriptions['courseStructure']}}"></i>
-                <textarea name = "courseStructure" class ="form-control" type="text" form="sylabusGenerator">{{old('courseStructure')}}</textarea>
+                <textarea name = "courseStructure" class ="form-control" type="text" form="sylabusGenerator" spellcheck="true">{{old('courseStructure')}}</textarea>
             </div>
             `;
 
         var courseFormat = `
             <div class="col mb-3">
                 <label for="courseFormat">Course Format</label>
-                <textarea name = "courseFormat" class ="form-control" type="text" form="sylabusGenerator">{{old('courseFormat')}}</textarea>
+                <textarea name = "courseFormat" class ="form-control" type="text" form="sylabusGenerator" spellcheck="true">{{old('courseFormat')}}</textarea>
             </div>
             `;
         var courseOverview = `
             <div class="col mb-3">
                 <label for="courseOverview">Course Overview, Content and Objectives</label>
-                <textarea name = "courseOverview" class ="form-control" type="text" form="sylabusGenerator">{{old('courseOverview')}}</textarea>
+                <textarea name = "courseOverview" class ="form-control" type="text" form="sylabusGenerator" spellcheck="true">{{old('courseOverview')}}</textarea>
             </div>        
             `;
         var campusName = $('#campus').find(":selected").text();
@@ -641,8 +667,6 @@
             $('#courseStructure').empty();
             $('#courseSchedule').empty();
             $('#courseInstructorBio').empty();
-
-
         }
     }
 </script>
