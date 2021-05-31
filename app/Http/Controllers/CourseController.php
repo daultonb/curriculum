@@ -99,13 +99,7 @@ class CourseController extends Controller
         $course->delivery_modality = $request->input('delivery_modality');
         $course->year = $request->input('course_year');
         $course->semester = $request->input('course_semester');
-        
-        if ($course->section = $request->input('course_section') == null) {
-            $course->section = "";
-        } else {
-            $course->section = $request->input('course_section');
-        }
-
+        $course->section = $request->input('course_section');
 
         if($request->input('type') == 'assigned'){
 

@@ -132,7 +132,7 @@
                                             <div class="col-md-4">
                                                 <input id="course_section" type="text"
                                                     class="form-control @error('course_section') is-invalid @enderror"
-                                            name="course_section" required autofocus value= {{$course->section}}>
+                                            name="course_section" autofocus value= {{$course->section}}>
 
                                                 @error('course_section')
                                                 <span class="invalid-feedback" role="alert">
