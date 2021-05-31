@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\HomeController;
 use App\Models\Invite;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
@@ -23,6 +24,9 @@ Route::get('/', function () {
 Auth::routes(['verify' => true]);
 
 Route::get('/home', 'HomeController@index')->name('home');
+Route::post('/home', 'HomeController@store')->name('home.store');
+//Route::delete('/home/{course}/unassign', 'HomeController@destroy')->name('home.destroy');
+Route::get('/home/{course}/submit','CourseController@submit')->name('home.submit');
 
 Route::get('/about', 'AboutController@index')->name('about');
 
