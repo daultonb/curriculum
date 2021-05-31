@@ -208,7 +208,7 @@
                                             <div class="form-note">
                                                 <i class="bi bi bi-exclamation-lg"></i><p>Place each entry on a newline for the best formatting results.</p>
                                             </div>
-                                            <textarea id = "otherCourseStaff" name = "otherCourseStaff" class ="form-control" form="sylabusGenerator" spellcheck="true">{{old('otherCourseStaff')}}</textarea>
+                                            <textarea id = "otherCourseStaff" placeholder="Professor, Dr. Phil, PhD Clinical Psychology, ...&#10;Instructor, Bill Nye, BS Mechanical Engineering, ..." name = "otherCourseStaff" class ="form-control" form="sylabusGenerator" spellcheck="true">{{old('otherCourseStaff')}}</textarea>
                                         </div>
                                     </div>
                                     <!-- Class Start Time, Class End Time -->
@@ -286,7 +286,7 @@
                                                 <i>                     Upon successful completion of this course, students will be able to...
                                                 </i>
                                             </p>
-                                            <textarea id = "learningOutcome" name = "learningOutcome" class ="form-control"
+                                            <textarea id = "learningOutcome" placeholder="Define ... &#10;Classify ..." name = "learningOutcome" class ="form-control"
                                             type="date" style="height:125px;" form="sylabusGenerator" spellcheck="true">{{old('learningOutcome')}}</textarea>
                                         </div>
                                     </div>
@@ -299,7 +299,7 @@
                                             <div class="form-note">
                                                 <i class="bi bi-exclamation-lg"></i><p>Place each entry on a newline for the best formatting results.</p>
                                             </div>
-                                            <textarea id = "learningAssessments" name = "learningAssessments" class ="form-control"
+                                            <textarea id = "learningAssessments" placeholder="Presentation, 25%, Dec 1, ... &#10;Midterm Exam, 25%, Sept 31, ..." name = "learningAssessments" class ="form-control"
                                             type="date" style="height:125px;" form="sylabusGenerator" spellcheck="true">{{old('learningAssessments')}}</textarea>
                                         </div>
                                     </div>
@@ -312,7 +312,7 @@
                                             <div class="form-note">
                                                 <i class="bi bi-exclamation-lg"></i><p>Place each entry on a newline for the best formatting results.</p>
                                             </div>
-                                            <textarea id = "learningActivities" name = "learningActivities" class ="form-control"
+                                            <textarea id = "learningActivities" placeholder="Class participation consists of clicker questions, group discussions ... &#10;Students are expected to complete class pre-readings ..."name = "learningActivities" class ="form-control"
                                             type="date" style="height:125px;" form="sylabusGenerator" spellcheck="true">{{old('learningActivities')}}</textarea>
                                         </div>
                                     </div>
@@ -579,7 +579,7 @@
                 <div class="form-note">
                     <i class="bi bi-exclamation-lg"></i><p>Place each entry on a newline for the best formatting results.</p>
                 </div>
-                <textarea name = "courseContacts" class ="form-control" type="date" form="sylabusGenerator">{{old('courseContacts')}}</textarea>
+                <textarea name = "courseContacts" placeholder="Professor, Jane Doe, jane.doe@ubc.ca, +1 234 567 8900, ... &#10;Teaching Assistant, John Doe, john.doe@ubc.ca, ..."class ="form-control" type="date" form="sylabusGenerator">{{old('courseContacts')}}</textarea>
             </div>
             `;
 
@@ -590,17 +590,17 @@
                 <div class="form-note">
                     <i class="bi bi-exclamation-lg"></i><p>Place each entry on a newline for the best formatting results.</p>
                 </div>
-                <textarea name = "coursePrereqs" class ="form-control" type="text" form="sylabusGenerator" >{{old('coursePrereqs')}}</textarea>
+                <textarea name = "coursePrereqs" placeholder="CPSC 210 or EECE 210 or CPEN 221 &#10;CPSC 121 or MATH 220"class ="form-control" type="text" form="sylabusGenerator" >{{old('coursePrereqs')}}</textarea>
             </div>
             `;
         var courseCoreqs = `
             <div class="col mb-3">
                 <label for="courseCoreqs">Course Corequisites</label>
-                <i class="bi bi-exclamation-lg has-tooltip" data-bs-placement="right" title="{{$inputFieldDescriptions['courseCoreqs']}}"></i>
+                <i class="bi bi-info-circle-fill has-tooltip" data-bs-placement="right" title="{{$inputFieldDescriptions['courseCoreqs']}}"></i>
                 <div class="form-note">
-                    <i class="bi bi-exclamation-circle-fill"></i><p>Place each entry on a newline for the best formatting results.</p>
+                    <i class="bi bi-exclamation-lg"></i><p>Place each entry on a newline for the best formatting results.</p>
                 </div>
-                <textarea id = "courseCoreqs" name = "courseCoreqs" class ="form-control" type="text" form="sylabusGenerator">{{old('courseCoreqs')}}</textarea>
+                <textarea id = "courseCoreqs" placeholder="CPSC 107 or CPSC 110 &#10;CPSC 210" name = "courseCoreqs" class ="form-control" type="text" form="sylabusGenerator">{{old('courseCoreqs')}}</textarea>
             </div>
             `;
         var courseInstructorBio = `
