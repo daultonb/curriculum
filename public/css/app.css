@@ -11108,3 +11108,18 @@ margin-left:-15px;
   margin-bottom:auto;
 }
 
+.team-img{
+  /*centers the image and crops it to be circular */
+  width:150px; 
+  height:auto; 
+  display:block; 
+  margin-left:auto; 
+  margin-right:auto; 
+  object-fit:cover; 
+  border-radius:50%;
+}
+
+.ubc-footer-div {
+  
+}
+
