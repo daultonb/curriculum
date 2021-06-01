@@ -104,8 +104,14 @@ class CourseController extends Controller
         if($request->input('type') == 'assigned'){
 
             $course->assigned = -1;
+            $course->save();
 
-            if($course->save()){
+            $user = User::where('id', $request->input('user_id'))->first();
+            $courseUser = new CourseUser;
+            $courseUser->course_id = $course->course_id;
+            $courseUser->user_id = $user->id;
+
+            if($courseUser->save()){
                 $request->session()->flash('success', 'New course added');
             }else{
                 $request->session()->flash('error', 'There was an error adding the course');
@@ -133,7 +139,7 @@ class CourseController extends Controller
 
     }
 
-     /**
+    /**
      * Copy a existed resource and assign it to the program.
      *
      * @param  \Illuminate\Http\Request  $request

@@ -452,7 +452,7 @@
                         </div>
                     </div>
 
-                    <!-- Modal -->
+                    <!-- Create Course Modal -->
                     <div class="modal fade" id="createCourseModal" tabindex="-1" role="dialog" aria-labelledby="createCourseModalLabel" aria-hidden="true">
                         <div class="modal-dialog modal-lg" role="document">
                             <div class="modal-content">
@@ -623,6 +623,7 @@
                                         <input type="hidden" class="form-check-input" name="program_id"
                                             value={{$program->program_id}}>
                                         <input type="hidden" class="form-check-input" name="type" value="assigned">
+                                        <input type="hidden" class="form-check-input" name="user_id" value={{Auth::id()}}>
 
                                     </div>
                                     <div class="modal-footer">
