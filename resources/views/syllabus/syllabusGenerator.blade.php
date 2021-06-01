@@ -369,6 +369,9 @@
                                         </div>
                                     </div>
 
+                                    <!-- Course Learning Resources -->
+                                    <div class="row" id="courseLearningResources"></div>
+
                                     <!-- Course Optional Resources -->
                                     <div class="row">
                                         <div class="col mb-3">
@@ -622,6 +625,7 @@
                     <textarea id = "courseInstructorBio" name = "courseInstructorBio" class ="form-control" form="sylabusGenerator" spellcheck="true">{{old('courseInstructorBio')}}</textarea>
             </div>
             `;
+
         var courseSchedule = `
             <div class="col mb-3">
                 <label for="courseSchedule">Course Schedule</label>
@@ -635,6 +639,14 @@
                 <label for="courseStructure">Course Structure</label>
                 <i class="bi bi-info-circle-fill has-tooltip" data-bs-placement="right" title="{{$inputFieldDescriptions['courseStructure']}}"></i>
                 <textarea name = "courseStructure" class ="form-control" type="text" form="sylabusGenerator" spellcheck="true">{{old('courseStructure')}}</textarea>
+            </div>
+            `;
+
+        var courseLearningResources = `
+            <div class="col mb-2">
+                    <label for="courseLearningResources">Learning Resources</label>
+                    <i class="bi bi-info-circle-fill has-tooltip" data-bs-placement="right" title="{{$inputFieldDescriptions['courseLearningResources']}}"></i>
+                    <textarea id = "courseLearningResources" name = "courseLearningResources" class ="form-control" form="sylabusGenerator" spellcheck="true">{{old('courseLearningResources')}}</textarea>
             </div>
             `;
 
@@ -662,6 +674,7 @@
             $('#courseSchedule').html(courseSchedule);
             $('#courseInstructorBio').html(courseInstructorBio);
             $('#courseDescription').html(courseDescription);
+            $('#courseLearningResources').html(courseLearningResources);
 
             $('#courseFormat').empty();
             $('#courseOverview').empty();
@@ -681,6 +694,7 @@
             $('#courseSchedule').empty();
             $('#courseInstructorBio').empty();
             $('#courseDescription').empty();
+            $('#courseLearningResources').empty();
         }
     }
 </script>

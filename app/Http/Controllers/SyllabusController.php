@@ -75,6 +75,8 @@ class SyllabusController extends Controller
         $inputFieldDescriptions['courseSchedule'] = 'This may be a weekly schedule, it may be class by class, but let students know that if changes occur, they will be informed.';
 
         $inputFieldDescriptions['instructorBioStatement'] = 'You may wish to include your department/faculty/school and other information about your academic qualifications, interests, etc.';
+
+        $inputFieldDescriptions['courseLearningResources'] = 'Include information on any resources to support student learning that are supported by the academic unit responsible for the course.';
             
         return view("syllabus.syllabusGenerator")->with('user', $user)->with('allCourses', $allCourses)->with('inputFieldDescriptions', $inputFieldDescriptions);
     }
@@ -290,14 +292,20 @@ class SyllabusController extends Controller
                     $templateProcessor->cloneBlock('NoTopicsSchedule', 0);
                 }
 
+                // include vancouver course learning resources in template
+                if($courseLearningResources = $request->input('courseLearningResources')){
+                    $templateProcessor->cloneBlock('NoCourseLearningResources');
+                    $templateProcessor->setValue('courseLearningResources', $courseLearningResources);
+                }else{
+                    $templateProcessor->cloneBlock('NoCourseLearningActivities', 0);
+                }
+
 
                 if($request->input('disabilities')){
                     $templateProcessor->cloneBlock('disabilities');
                 }else{
                     $templateProcessor->cloneBlock('disabilities', 0);
                 }
-        
-                
             break;
         }
         // add required form fields common to both campuses to template
