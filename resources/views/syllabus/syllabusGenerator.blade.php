@@ -187,8 +187,12 @@
                                         <div id="officeLocation" class="col-6 mb-2">
                                         </div>
                                     </div>
+
+                                    <!-- Course Description -->
+                                    <div class="row" id="courseDescription"></div>                                    
                                     <!-- Course Contacts -->
                                     <div class="row" id="courseContacts"></div>
+
                                     <!-- Office Hours -->
                                     <div class="row">
                                         <div class="col mb-2">
@@ -572,6 +576,14 @@
             <input name = "officeLocation" class ="form-control" type="text" placeholder="E.g. WEL 140" value="{{old('officeLocation')}}">
             `;
 
+        var courseDescription = `
+            <div class="col mb-2">
+                <label for="courseDescription">Course Description</label>
+                <i class="bi bi-info-circle-fill has-tooltip"  data-bs-placement="right" title="{{$inputFieldDescriptions['courseDescription']}}"></i>
+                <textarea name = "courseDescription" class ="form-control" type="date" form="sylabusGenerator">{{old('courseDescription')}}</textarea>
+            </div>
+            `;
+
         var courseContacts = `
             <div class="col mb-2">
                 <label for="courseContacts">Contacts</label>
@@ -649,6 +661,7 @@
             $('#courseStructure').html(courseStructure);
             $('#courseSchedule').html(courseSchedule);
             $('#courseInstructorBio').html(courseInstructorBio);
+            $('#courseDescription').html(courseDescription);
 
             $('#courseFormat').empty();
             $('#courseOverview').empty();
@@ -667,6 +680,7 @@
             $('#courseStructure').empty();
             $('#courseSchedule').empty();
             $('#courseInstructorBio').empty();
+            $('#courseDescription').empty();
         }
     }
 </script>

@@ -57,6 +57,8 @@ class SyllabusController extends Controller
 
         $inputFieldDescriptions['missedActivityPolicy'] = 'In accordance with policy on Grading Practices, state how you deal with missed in-class assessments (e.g., are make-up tests offered for missed in-class tests, do you count the best X of Y assignments/tests, do you re-weight the marks from a missed test onto later assessments?';
 
+        $inputFieldDescriptions['courseDescription'] = "As in the Academic Calendar or, for courses without a published description, include a brief representative one";
+
         $inputFieldDescriptions['coursePrereqs'] = 'Is there a course that students must have passed before taking this course?';
 
         $inputFieldDescriptions['courseCoreqs'] = 'Is there a course that students must take concurrently (if not before)?';
@@ -202,6 +204,14 @@ class SyllabusController extends Controller
                     $templateProcessor->setValue('officeLocation', $officeLocation);
                 }else{
                     $templateProcessor->cloneBlock('NoOfficeLocation', 0);
+                }
+
+                // include vancouver course description in template
+                if($courseDescription = $request->input('courseDescription')){
+                    $templateProcessor->cloneBlock('NoCourseDescription');
+                    $templateProcessor->setValue('courseDescription', $courseDescription);
+                }else{
+                    $templateProcessor->cloneBlock('NoCourseDescription', 0);
                 }
 
                 if($contacts = $request->input('courseContacts')){
