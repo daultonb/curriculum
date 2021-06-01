@@ -305,16 +305,40 @@ class CourseController extends Controller
         $course->year = $request->input('course_year');
         $course->semester = $request->input('course_semester');
         $course->section = $request->input('course_section');
+        
+        if($request->input('type') == 'assigned'){
+            $course->assigned = -1;
+            $course->save();
 
-        if($course->save()){
-            $request->session()->flash('success', 'Course updated');
-        }else{
-            $request->session()->flash('error', 'There was an error updating the course');
+            $user = User::where('id', $request->input('user_id'))->first();
+            $courseUser = new CourseUser;
+            $courseUser->course_id = $course->course_id;
+            $courseUser->user_id = $user->id;
+            
+            if($courseUser->save()){
+                $request->session()->flash('success', 'Course updated');
+            }else{
+                $request->session()->flash('error', 'There was an error updating the course');
+            }
+    
+            return redirect()->back();
+        }else {
+            $course->assigned = 1;
+            $course->save();
+
+            $user = User::where('id', $request->input('user_id'))->first();
+            $courseUser = new CourseUser;
+            $courseUser->course_id = $course->course_id;
+            $courseUser->user_id = $user->id;
+
+            if($courseUser->save()){
+                $request->session()->flash('success', 'Course updated');
+            }else{
+                $request->session()->flash('error', 'There was an error updating the course');
+            }
+    
+            return redirect()->back();
         }
-
-        return redirect()->back();
-
-
     }
 
     /**

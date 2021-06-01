@@ -106,7 +106,7 @@
                                                         <button type="button" style="width:60px" class="btn btn-secondary btn-sm float-right ml-2" data-toggle="modal" data-target="#editCourseModal{{$course->course_id}}">
                                                             Edit
                                                         </button>
-                                                        <!-- Modal -->
+                                                        <!-- Edit Course Modal -->
                                                         <div class="modal fade" id="editCourseModal{{$course->course_id}}" tabindex="-1"
                                                             role="dialog" aria-labelledby="editCourseModalLabel"
                                                             aria-hidden="true">
@@ -320,9 +320,8 @@
                                                                                 </div>
                                                                             </div>
 
-                                                                            <input type="hidden" class="form-input"
-                                                                                name="program_id"
-                                                                                value={{$program->program_id}}>
+                                                                            <input type="hidden" class="form-input" name="program_id" value={{$program->program_id}}>
+                                                                            <input type="hidden" class="form-check-input" name="user_id" value={{Auth::id()}}>
 
                                                                         </div>
                                                                         <div class="modal-footer">
@@ -339,10 +338,10 @@
 
                                                         <!-- Assign instructor button  -->
                                                         <button type="button" style="width:120px" class="btn btn-outline-primary btn-sm ml-2 float-right" data-toggle="modal" data-target="#assignInstructorModal{{$course->course_id}}">
-                                                           Assign Instructor
+                                                        Assign Instructor
                                                         </button>
 
-                                                        <!-- Modal -->
+                                                        <!-- Assign Instructor Modal -->
                                                         <div class="modal fade" id="assignInstructorModal{{$course->course_id}}" tabindex="-1" role="dialog" aria-labelledby="assignInstructorModalLabel" aria-hidden="true">
                                                             <div class="modal-dialog modal-lg" role="document">
                                                                 <div class="modal-content">
