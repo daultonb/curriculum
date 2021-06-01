@@ -48,6 +48,8 @@ class HomeController extends Controller
         ->where('program_users.user_id','=',Auth::id())
         ->get();
 
+        $user = User::where('id', Auth::id())->first();
+
         /*
         $courseUsers = array();
         foreach($activeCourses as $course){
@@ -59,7 +61,7 @@ class HomeController extends Controller
         }
         */
 
-        return view('pages.home')->with("activeCourses",$activeCourses)->with("activeProgram",$programs);
+        return view('pages.home')->with("activeCourses",$activeCourses)->with("activeProgram",$programs)->with('user', $user);
     }
 
     /**

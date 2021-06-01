@@ -35,7 +35,7 @@ class ProgramController extends Controller
                 ->get();
 
         $user = User::where('id', Auth::id())->first();
-        return view('programs.index')->with('user', $user)->with('programs', $programs);
+        return view('home')->with('user', $user)->with('programs', $programs);
     }
 
     /**
@@ -90,7 +90,7 @@ class ProgramController extends Controller
         //     $user->roles()->attach($adminRole);
         // }
         
-        return redirect()->route('programs.index');
+        return redirect()->route('home');
 
     }
 
@@ -168,7 +168,7 @@ class ProgramController extends Controller
             $request->session()->flash('error', 'There was an error deleting the program');
         }
 
-        return redirect()->route('programs.index');
+        return redirect()->route('home');
     }
 
     public function submit(Request $request, $program_id)
@@ -183,6 +183,6 @@ class ProgramController extends Controller
             $request->session()->flash('error', 'There was an error submitting the program settings');
         }
 
-        return redirect()->route('programs.index');
+        return redirect()->route('home');
     }
 }
