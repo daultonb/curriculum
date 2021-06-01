@@ -71,10 +71,10 @@
                                                     <td>
 
                                                         <!-- Delete button -->
-                                                        <button style="width:60px" type="submit" class="btn btn-danger btn-sm float-right ml-2" data-toggle="modal" data-target="#deleteConfirmationCourse">Delete</button>
+                                                        <button style="width:60px" type="submit" class="btn btn-danger btn-sm float-right ml-2" data-toggle="modal" data-target="#deleteConfirmationCourse{{$course->course_id}}">Delete</button>
 
                                                         <!-- Delete Confirmation Modal -->
-                                                        <div class="modal fade" id="deleteConfirmationCourse" tabindex="-1" role="dialog" aria-labelledby="deleteConfirmationCourse" aria-hidden="true">
+                                                        <div class="modal fade" id="deleteConfirmationCourse{{$course->course_id}}" tabindex="-1" role="dialog" aria-labelledby="deleteConfirmationCourse" aria-hidden="true">
                                                             <div class="modal-dialog" role="document">
                                                                 <div class="modal-content">
                                                                     <div class="modal-header">
