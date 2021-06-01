@@ -5,6 +5,7 @@ use App\Models\Invite;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Mail\Invitation;
+use App\Models\LearningOutcome;
 
 /*
 |--------------------------------------------------------------------------

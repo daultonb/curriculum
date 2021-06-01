@@ -35,7 +35,7 @@ class ProgramController extends Controller
                 ->get();
 
         $user = User::where('id', Auth::id())->first();
-        return view('home')->with('user', $user)->with('programs', $programs);
+        return view('programs.index')->with('user', $user)->with('programs', $programs);
     }
 
     /**
