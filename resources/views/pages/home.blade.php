@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
+<div class="container" style="padding-bottom:246px;">
     <div class="row">
 
         <div style="width: 100%;border-bottom: 1px solid #DCDCDC">

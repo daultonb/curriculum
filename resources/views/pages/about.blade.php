@@ -1,9 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-
-
-
     <div class="row p-md-5 justify-content-center text-dark bg-secondary">
         <div class="col-md-12">
             <div class="container">
@@ -23,7 +20,7 @@
                     </div>
                     <div class="col-sm"> 
                         <div style="float: right;">
-                            <img style= "width:50%; height:auto; display:block; margin-left:auto; margin-right:auto;" src=" {{ asset('img/questionmark_wikimedia.png') }}"/>
+                            <!--<img style= "width:50%; height:auto; display:block; margin-left:auto; margin-right:auto;" src=" {{ asset('img/questionmark_wikimedia.png') }}"/>-->
                         </div>
                     </div>
                 </div>
@@ -31,7 +28,7 @@
                 <div class="row">
                     <div class="col-sm"> 
                         <div style="float: left;"> 
-                            <img style= "width:50%; height:auto; display:block; margin-left:auto; margin-right:auto;" src=" {{ asset('img/questionmark_wikimedia.png') }}"/>
+                            <!--<img style= "width:50%; height:auto; display:block; margin-left:auto; margin-right:auto;" src=" {{ asset('img/questionmark_wikimedia.png') }}"/>-->
                         </div>
                     </div>
                     <div class="col-sm">
@@ -58,7 +55,7 @@
                     </div>
                     <div class="col-sm">
                         <div style="float: right;">
-                            <img style="width:50%; height:auto; display:block; margin-left:auto; margin-right:auto;  border: 1px solid black;" src=" {{ asset('img/questionmark_wikimedia.png') }}"/>
+                            <!--<img style="width:50%; height:auto; display:block; margin-left:auto; margin-right:auto;  border: 1px solid black;" src=" {{ asset('img/questionmark_wikimedia.png') }}"/>-->
                         </div>
                     </div>
                 </div>
@@ -149,7 +146,7 @@
                         </figcaption>
                     </div>
                     <div class="col-sm"> 
-                        <img class="team-img" src=" {{ asset('img/person-placeholder-300x300.jpg') }}"/>
+                        <img class="team-img" src=" {{ asset('img/team/Kieran-200x200.png') }}"/>
                         <figcaption style="text-align: center;">
                             <p class="lead" style="margin-bottom:0px;"><strong>Kieran Adams</strong></p>
                             <p class="lead"><i>Undergraduate Developer</i></p>
