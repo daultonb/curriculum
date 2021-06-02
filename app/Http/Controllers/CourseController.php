@@ -145,70 +145,29 @@ class CourseController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function copy(Request $request){
+    public function addProgramToCourse(Request $request){
         $this->validate($request, [
             'course_id' => 'required',
             'program_id' => 'required',
             ]);
 
         $program_id = $request->input('program_id');
-        $course_ids = $request->input('course_id');
+        $course_id = $request->input('course_id');
+        
+        $course = Course::where('course_id', $course_id)->first();
+        $course->program_id = $program_id;
+        $course->status = -1;
+        $course->assigned = -1;
 
-        //forloop create an copy of the courses
-        foreach($course_ids as $index => $course_id){
-            $existCourse = Course::where('course_id', $course_id)->first();
-            $requires = $request->input('require'.$course_ids[$index]);
-
-            $course = new Course;
-
-            $course->program_id = $program_id;
-            $course->course_title = $existCourse->course_title;
-            $course->course_num = $existCourse->course_num;
-            $course->course_code =  $existCourse->course_code;
-            $course->status = -1;
+        foreach($course_id as $index => $course_i){
+            $requires = $request->input('require'.$course_i[$index]);
             $course->required = $requires;
-            $course->type = $existCourse->type;
-
-            $course->delivery_modality = $existCourse->delivery_modality;
-            $course->year = $existCourse->year;
-            $course->semester = $existCourse->semester;
-            $course->section = $existCourse->section;
-
-            $course->assigned = -1;
-            if($course->save()){
-
-                /*copy learning activities
-                $learning_activities = DB::table('learning_activities',$course_id)->pluck('l_activity')->toArray();
-
-                foreach($learning_activities as $learning_activitie){
-
-                }
-                */
-
-                //copy learning outcomes
-                $l_outcomes = DB::table('learning_outcomes',$course_id)->pluck('clo_shortphrase')->toArray();
-                $clo_shortphrases = DB::table('learning_outcomes',$course_id)->pluck('l_outcome')->toArray();
-
-                foreach($l_outcomes as $index => $l_outcome){
-                    $lo = new LearningOutcome;
-                    $lo->clo_shortphrase = $clo_shortphrases[$index];
-                    $lo->l_outcome = $l_outcome;
-                    $lo->course_id = $course->course_id;
-                    $lo->save();
-                }
-                /*copy assessment methods
-                $a_methods = DB::table('assessment_methods',$course_id)->pluck('a_method')->toArray();
-                $weights = DB::table('assessment_methods',$course_id)->pluck('weight')->toArray();
-
-                foreach($a_methods as $a_method){
-
-                }
-                */
-
-                $request->session()->flash('success', 'New course added');
-            }else{
-                $request->session()->flash('error', 'There was an error adding the course');
-            }
+        }
+        
+        if($course->save()){
+            $request->session()->flash('success', 'New course added');
+        }else{
+            $request->session()->flash('error', 'There was an error adding the course');
         }
 
         return redirect()->route('programWizard.step3', $request->input('program_id'));

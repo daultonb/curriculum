@@ -239,7 +239,7 @@
                                                                                 <div class="col-md-4">
                                                                                     <input id="course_section" type="text"
                                                                                         class="form-control @error('course_section') is-invalid @enderror"
-                                                                                name="course_section" required autofocus value= {{$course->section}}>
+                                                                                name="course_section" autofocus value= {{$course->section}}>
 
                                                                                     @error('course_section')
                                                                                     <span class="invalid-feedback" role="alert">
@@ -635,7 +635,7 @@
                         </div>
                     </div>
 
-                     <!-- Add existing course Modal ( Drag and drop effect)-->
+                    <!-- Add existing course Modal ( Drag and drop effect)-->
                     <div class="modal fade" id="addCourseModal" tabindex="-1" role="dialog" aria-labelledby="createCourseModalLabel" aria-hidden="true">
                         <div class="modal-dialog modal-lg" role="document" style="width:1250px;">
                             <div class="modal-content">
@@ -681,7 +681,7 @@
                                         </div>
 
 
-                                        <form method="POST" id="addExistCourse" action="{{route('courses.copy', $program->program_id)}}">
+                                        <form method="POST" id="addExistCourse" action="{{route('courses.addProgramToCourse', $program->program_id)}}">
                                         @csrf
 
                                         <div class="drag_container" style="height:275px;float: right;overflow: auto;">

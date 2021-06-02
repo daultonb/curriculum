@@ -14,14 +14,11 @@
                 border-color: #1E90FF;">
                     <div class="card-title" style="background-color:#1E90FF;margin-bottom: 0.00rem;">
                         <h3 style="color: white;margin:22px">
-                        <!-- <a style="color: white;text-decoration: none;" href="{{ route('programs.index') }}">My Programs</a> -->
                         <a style="color: white;text-decoration: none;">
                         My Programs
                         <div style="float:right; padding-right:10px;">
-                            <!-- Uncomment and remove <a> To link to Programs -->
-                            <!-- <button style="border: none; background: none; outline: none;" data-toggle="modal" data-target="#createProgramModal"> -->
-                            <button style="border: none; background: none; outline: none;">
-                                <a href="/construction"><img src="{{ asset('dashboard-icons/add_White.png') }}" style="width:20px;height:20px;"/></a>
+                            <button style="border: none; background: none; outline: none;" data-toggle="modal" data-target="#createProgramModal">
+                                <img src="{{ asset('dashboard-icons/add_White.png') }}" style="width:20px;height:20px;"/>
                             </button>
                         </div>
                         </a>
@@ -45,9 +42,7 @@
                             <tbody>
                             <tr>
                                 <th scope="row">{{$index + 1}}</th>
-                                <!-- Uncomment and remove other <td> To link to Programs -->
-                                <!-- <td><a href="{{route('programWizard.step1', $program->program_id)}}">{{$program->program}}</a></td> -->
-                                <td>{{$program->program}}</td>
+                                <td><a href="{{route('programWizard.step1', $program->program_id)}}">{{$program->program}}</a></td>
                                 <td>{{$program->faculty}}</td>
                                 <td>{{$program->level}}</td>
                                 <td style="display: inline-block">
@@ -55,6 +50,8 @@
                                     <img src=" {{ asset('dashboard-icons/edit.png') }}" style="width:15px;height:15px"/></a>
                                     <a class="dropdown-item btn-icon" data-toggle="modal" data-target="#deleteProgram{{$index}}" href=#>
                                     <img src="{{ asset('dashboard-icons/delete.png') }}" style="width:15px;height:15px"/></a>
+                                    <!-- <a class="dropdown-item btn-icon" data-toggle="modal">
+                                    <i class="bi bi-people-fill" data-toggle="tooltip" data-bs-placement="right"></i></a> -->
 
 
                                     <!-- Delete Confirmation Modal -->
@@ -202,6 +199,8 @@
                                     </div>
                                 </div>
                                 <!-- End Create Program Modal -->
+                        
+
                                 </td>
                             </tr>
                             </tbody>
@@ -261,9 +260,7 @@
                                             <td>{{$course->course_code}} {{$course->course_num}}</td>
                                             <td>{{$course->year}} {{$course->semester}}</td>
                                             <td>❗In Progress</td>
-                                            <!-- Uncomment and remove other <td> To link to Programs 
-                                            <td><a href="{{route('programWizard.step1', $course->program_id)}}">{{$course->program}}</a></td> -->
-                                            <td>{{$course->program}}</td>
+                                            <td><a href="{{route('programWizard.step1', $course->program_id)}}">{{$course->program}}</a></td>
                                         @endif
                                     @else
                                         @if($course->program_id == 1 || $course->program_id == 2 || $course->program_id == 3 )
@@ -279,9 +276,7 @@
                                             <td>{{$course->course_code}} {{$course->course_num}}</td>
                                             <td>{{$course->year}} {{$course->semester}}</td>
                                             <td>✔️Completed</td>
-                                            <!-- Uncomment and remove other <td> To link to Programs 
-                                            <td><a href="{{route('programWizard.step1', $course->program_id)}}">{{$course->program}}</a></td> -->
-                                            <td>{{$course->program}}</td>
+                                            <td><a href="{{route('programWizard.step1', $course->program_id)}}">{{$course->program}}</a></td>
                                         @endif
                                     @endif
 

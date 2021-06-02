@@ -128,7 +128,7 @@
 
             <div class="row my-2">
                 <div class="col">
-                    <!-- Assign instructor button  -->
+                    <!-- Assign Collaborator button  -->
                     <button type="button" class="btn btn-outline-primary btn-sm float-right" style="width:200px" data-toggle="modal" data-target="#addCollaboratorModal">Add Collaborators</button>
 
                     <!-- Add Collaborator Modal -->

@@ -7,6 +7,7 @@ use App\Models\Course;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use App\Models\CourseUser;
+use App\Models\ProgramUser;
 
 class HomeController extends Controller
 {
@@ -62,6 +63,16 @@ class HomeController extends Controller
         */
 
         return view('pages.home')->with("activeCourses",$activeCourses)->with("activeProgram",$programs)->with('user', $user);
+    }
+
+
+    public function getProgramUsers($program_id) {
+        
+        $programUsers = ProgramUser::join('users','program_users.user_id',"=","users.id")
+                                ->select('users.email','program_users.user_id','program_users.program_id')
+                                ->where('program_users.program_id','=',$program_id)->get();
+        
+        return view('pages.home')->with('ProgramUsers', $programUsers);
     }
 
     /**
