@@ -18,8 +18,10 @@
                         <a style="color: white;text-decoration: none;">
                         My Programs
                         <div style="float:right; padding-right:10px;">
-                            <button style="border: none; background: none; outline: none;" data-toggle="modal" data-target="#createProgramModal">
-                                <img src="{{ asset('dashboard-icons/add_White.png') }}" style="width:20px;height:20px;"/>
+                            <!-- Uncomment and remove <a> To link to Programs -->
+                            <!-- <button style="border: none; background: none; outline: none;" data-toggle="modal" data-target="#createProgramModal"> -->
+                            <button style="border: none; background: none; outline: none;">
+                                <a href="/construction"><img src="{{ asset('dashboard-icons/add_White.png') }}" style="width:20px;height:20px;"/></a>
                             </button>
                         </div>
                         </a>
@@ -43,7 +45,9 @@
                             <tbody>
                             <tr>
                                 <th scope="row">{{$index + 1}}</th>
-                                <td><a href="{{route('programWizard.step1', $program->program_id)}}">{{$program->program}}</a></td>
+                                <!-- Uncomment and remove other <td> To link to Programs -->
+                                <!-- <td><a href="{{route('programWizard.step1', $program->program_id)}}">{{$program->program}}</a></td> -->
+                                <td>{{$program->program}}</td>
                                 <td>{{$program->faculty}}</td>
                                 <td>{{$program->level}}</td>
                                 <td style="display: inline-block">
@@ -170,7 +174,7 @@
                                                         <div class="form-check ">
                                                             <label class="form-check-label">
                                                                 <input type="radio" class="form-check-input" name="level" value="Undergraduate" required>
-                                                                Undegraduate
+                                                                Undergraduate
                                                             </label>
                                                         </div>
                                                         <div class="form-check">
@@ -257,7 +261,9 @@
                                             <td>{{$course->course_code}} {{$course->course_num}}</td>
                                             <td>{{$course->year}} {{$course->semester}}</td>
                                             <td>❗In Progress</td>
-                                            <td><a href="{{route('programWizard.step1', $course->program_id)}}">{{$course->program}}</a></td>
+                                            <!-- Uncomment and remove other <td> To link to Programs 
+                                            <td><a href="{{route('programWizard.step1', $course->program_id)}}">{{$course->program}}</a></td> -->
+                                            <td>{{$course->program}}</td>
                                         @endif
                                     @else
                                         @if($course->program_id == 1 || $course->program_id == 2 || $course->program_id == 3 )
@@ -273,7 +279,9 @@
                                             <td>{{$course->course_code}} {{$course->course_num}}</td>
                                             <td>{{$course->year}} {{$course->semester}}</td>
                                             <td>✔️Completed</td>
-                                            <td><a href="{{route('programWizard.step1', $course->program_id)}}">{{$course->program}}</a></td>
+                                            <!-- Uncomment and remove other <td> To link to Programs 
+                                            <td><a href="{{route('programWizard.step1', $course->program_id)}}">{{$course->program}}</a></td> -->
+                                            <td>{{$course->program}}</td>
                                         @endif
                                     @endif
 
@@ -467,7 +475,7 @@
                                         <option value="" disabled selected hidden>Please Choose...</option>
                                         <option value="1">Bachelor's degree level standards</option>
                                         <option value="2">Master's degree level standards</option>
-                                        <option value="3">Doctoral degeree level standards</option>
+                                        <option value="3">Doctoral degree level standards</option>
                                     </select>
                                     <small id="helpBlock" class="form-text text-muted">
                                         These are the standards from the Ministry of Advanced Education in BC.
