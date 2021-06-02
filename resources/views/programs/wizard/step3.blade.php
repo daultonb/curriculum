@@ -71,10 +71,10 @@
                                                     <td>
 
                                                         <!-- Delete button -->
-                                                        <button style="width:60px" type="submit" class="btn btn-danger btn-sm float-right ml-2" data-toggle="modal" data-target="#deleteConfirmationCourse">Delete</button>
+                                                        <button style="width:60px" type="submit" class="btn btn-danger btn-sm float-right ml-2" data-toggle="modal" data-target="#deleteConfirmationCourse{{$course->course_id}}">Delete</button>
 
                                                         <!-- Delete Confirmation Modal -->
-                                                        <div class="modal fade" id="deleteConfirmationCourse" tabindex="-1" role="dialog" aria-labelledby="deleteConfirmationCourse" aria-hidden="true">
+                                                        <div class="modal fade" id="deleteConfirmationCourse{{$course->course_id}}" tabindex="-1" role="dialog" aria-labelledby="deleteConfirmationCourse" aria-hidden="true">
                                                             <div class="modal-dialog" role="document">
                                                                 <div class="modal-content">
                                                                     <div class="modal-header">
@@ -106,7 +106,7 @@
                                                         <button type="button" style="width:60px" class="btn btn-secondary btn-sm float-right ml-2" data-toggle="modal" data-target="#editCourseModal{{$course->course_id}}">
                                                             Edit
                                                         </button>
-                                                        <!-- Modal -->
+                                                        <!-- Edit Course Modal -->
                                                         <div class="modal fade" id="editCourseModal{{$course->course_id}}" tabindex="-1"
                                                             role="dialog" aria-labelledby="editCourseModalLabel"
                                                             aria-hidden="true">
@@ -320,9 +320,8 @@
                                                                                 </div>
                                                                             </div>
 
-                                                                            <input type="hidden" class="form-input"
-                                                                                name="program_id"
-                                                                                value={{$program->program_id}}>
+                                                                            <input type="hidden" class="form-input" name="program_id" value={{$program->program_id}}>
+                                                                            <input type="hidden" class="form-check-input" name="user_id" value={{Auth::id()}}>
 
                                                                         </div>
                                                                         <div class="modal-footer">
@@ -339,10 +338,10 @@
 
                                                         <!-- Assign instructor button  -->
                                                         <button type="button" style="width:120px" class="btn btn-outline-primary btn-sm ml-2 float-right" data-toggle="modal" data-target="#assignInstructorModal{{$course->course_id}}">
-                                                           Assign Instructor
+                                                        Assign Instructor
                                                         </button>
 
-                                                        <!-- Modal -->
+                                                        <!-- Assign Instructor Modal -->
                                                         <div class="modal fade" id="assignInstructorModal{{$course->course_id}}" tabindex="-1" role="dialog" aria-labelledby="assignInstructorModalLabel" aria-hidden="true">
                                                             <div class="modal-dialog modal-lg" role="document">
                                                                 <div class="modal-content">
@@ -452,7 +451,7 @@
                         </div>
                     </div>
 
-                    <!-- Modal -->
+                    <!-- Create Course Modal -->
                     <div class="modal fade" id="createCourseModal" tabindex="-1" role="dialog" aria-labelledby="createCourseModalLabel" aria-hidden="true">
                         <div class="modal-dialog modal-lg" role="document">
                             <div class="modal-content">
@@ -567,7 +566,7 @@
                                             <div class="col-md-4">
                                                 <input id="course_section" type="text"
                                                     class="form-control @error('course_section') is-invalid @enderror"
-                                                    name="course_section" required autofocus>
+                                                    name="course_section" autofocus>
 
                                                 @error('course_section')
                                                 <span class="invalid-feedback" role="alert">
@@ -623,6 +622,7 @@
                                         <input type="hidden" class="form-check-input" name="program_id"
                                             value={{$program->program_id}}>
                                         <input type="hidden" class="form-check-input" name="type" value="assigned">
+                                        <input type="hidden" class="form-check-input" name="user_id" value={{Auth::id()}}>
 
                                     </div>
                                     <div class="modal-footer">
