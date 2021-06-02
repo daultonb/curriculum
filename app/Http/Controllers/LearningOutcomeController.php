@@ -121,7 +121,6 @@ class LearningOutcomeController extends Controller
         //
         $lo = LearningOutcome::where('l_outcome_id', $l_outcome_id)->first();
 
-
         if($lo->delete()){
             $request->session()->flash('success','Course learning outcome has been deleted');
         }else{

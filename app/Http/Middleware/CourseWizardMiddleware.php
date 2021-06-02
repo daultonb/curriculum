@@ -16,10 +16,11 @@ class CourseWizardMiddleware
      */
     public function handle(Request $request, Closure $next)
     {
-        
-        if( auth()->user()->courses->find(( app('request')->route('course')))->status != -1 ){
-            return redirect('courses/{course}/summary');
-        }
+        // Redirecting to summary not working
+
+        //if( auth()->user()->courses->find(( app('request')->route('course')))->status != -1 ){
+        //    return redirect('courses/{course}/summary');
+        //}
 
         return $next($request);
     }
