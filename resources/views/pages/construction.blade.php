@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="constructionPage">
+    <div class="constructionPage" style="padding-bottom:70px;">
         <h1 class="constructionPageTitle">
             <span style="letter-spacing: 0.15em">
                 This page is currently under construction.
