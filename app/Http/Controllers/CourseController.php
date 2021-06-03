@@ -420,4 +420,19 @@ class CourseController extends Controller
         return $pdf->download('summary.pdf');
     }
 
+    // Removes the program id for a given course (Used In program wizard step 3).
+    public function removeFromProgram(Request $request, $course_id) {
+    $course = Course::where('course_id', $course_id)->first();
+    // Sets program to Bachelor's degree standards, Best solution for the time being. But could be improved.
+    $course->program_id = 1;
+    
+    if($course->save()){
+        $request->session()->flash('success', 'Course updated');
+    }else{
+        $request->session()->flash('error', 'There was an error removing the course');
+    }
+
+    return redirect()->route('programWizard.step3', $request->input('program_id'));    
+    }
+
 }

@@ -51,7 +51,7 @@
             <div class="card">
                 <div class="card-body">
                     <p class="container form-text text-muted">Now that you have inputted all your course information, you are ready to map it to the program-level learning outcomes (PLOs).
-                        @if($course->program_id == 1 ?? $course->program_id == 2 ?? $course->program_id == 3 )
+                        @if($course->program_id == 1 || $course->program_id == 2 || $course->program_id == 3 )
                             In lieu of specific PLOs, the below are the <a href="https://www2.gov.bc.ca/assets/gov/education/post-secondary-education/institution-resources-administration/degree-authorization/degree-program-criteria.pdf#page=19" target="_blank">standards provided by the Ministry of Advanced Education in BC</a>. Using the mapping scale provided, identify the alignment between each of the CLOs against the standards.
                         @else
                             Using the mapping scale provided, identify the alignment between each of the CLOs against the PLOs.
@@ -106,7 +106,7 @@
                             </table>
                         @else
                             <p class="container form-text font-weight-bold">
-                                @if($course->program_id == 1 ?? $course->program_id == 2 ?? $course->program_id == 3 )
+                                @if($course->program_id == 1 || $course->program_id == 2 || $course->program_id == 3 )
                                     Using the mapping scale provided, identify the alignment between each of the CLOs against the standards.
                                 @else
                                     Using the mapping scale provided, identify the alignment between each of the CLOs against the PLOs.
