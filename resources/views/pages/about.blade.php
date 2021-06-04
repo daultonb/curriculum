@@ -32,7 +32,7 @@
                         </div>
                     </div>
                     <div class="col-sm">
-                    <p class="lead" style="display:inline-block; padding: 2% 0;">To create an immersive learning experience that fosters competencies identified by faculties and departments as critical to the discipline, a curriculum map can be an <strong>effective way to visualize the program structure, list of courses, teaching and learning activities, and assessment practices.</strong> This “integrative and sustainable” (Kalu & Dyjur, 2018) process is collaborative and <strong>geared towards student success.</strong></p>
+                    <p class="lead" style="display:inline-block; padding: 2% 0;">To create an immersive learning experience that fosters competencies identified by faculties and departments as critical to the discipline, a curriculum map can be an <i>effective way to visualize the program structure, list of courses, teaching and learning activities, and assessment practices.</i> This “integrative and sustainable” (Kalu & Dyjur, 2018) process is collaborative and <i>geared towards student success.</i></p>
 
                     </div>
                     
@@ -53,11 +53,7 @@
                             <a href="#" title="?"  target="_blank" >Learn how to get the most out of Curriculum MAP</a>
                         </div>
                     </div>
-                    <div class="col-sm">
-                        <div style="float: right;">
-                            <!--<img style="width:50%; height:auto; display:block; margin-left:auto; margin-right:auto;  border: 1px solid black;" src=" {{ asset('img/questionmark_wikimedia.png') }}"/>-->
-                        </div>
-                    </div>
+                    
                 </div>
             </div>
         </div>
@@ -83,7 +79,7 @@
                         <img class="team-img" src=" {{ asset('img/team/Anita-200x200.png') }}"/>
                         <figcaption style="text-align: center;">
                             <p class="lead" style="margin-bottom:0px;"><strong>Dr. Anita Chaudhuri</strong></p>
-                            <p class="lead">English and Cultural Studies</p>
+                            <p class="lead" style="margin-bottom:0px;">English and Cultural Studies</p>
                             <p class="lead"><i>Faculty Consultant</i></p>
                         </figcaption>
 
@@ -92,15 +88,15 @@
                         <img class="team-img" src=" {{ asset('img/team/Bowen-200x200.png') }}"/>
                         <figcaption style="text-align: center;">
                             <p class="lead" style="margin-bottom:0px;"><strong>Dr. Bowen Hui</strong></p>
-                            <p class="lead">Computer Science</p>
-                            <p class="lead"><i>Tech Advisor</i></p>
+                            <p class="lead" style="margin-bottom:0px;">Computer Science</p>
+                            <p class="lead"><i>Tech Consultant</i></p>
                         </figcaption>
                     </div>
                     <div class="col-sm"> 
                         <img class="team-img" src=" {{ asset('img/team/Janine-200x200.png') }}"/>
                         <figcaption style="text-align: center;">
                             <p class="lead" style="margin-bottom:0px;"><strong>Janine Hirtz</strong></p>
-                            <p class="lead">Centre of Teaching and Learning</p>
+                            <p class="lead" style="margin-bottom:0px;">Centre of Teaching and Learning</p>
                             <p class="lead"><i>Curriculum Consultant</i></p>
                         </figcaption>
                     </div>
@@ -110,7 +106,7 @@
                         <img class="team-img" src=" {{ asset('img/team/Laura-200x200.png') }}"/>
                         <figcaption style="text-align:center;">
                             <p class="lead" style="margin-bottom:0px;"><strong>Laura Prada</strong></p>
-                            <p class="lead">Office of the Provost and Vice President Academic</p>
+                            <p class="lead" style="margin-bottom:0px;">Office of the Provost and VPA</p>
                             <p class="lead"><i>Project Manager</i></p>
                         </figcaption>
 
