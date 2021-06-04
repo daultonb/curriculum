@@ -53,9 +53,9 @@
                                             <td>{{$course->course_code}} {{$course->course_num}}</td>
                                             <td>
                                                 <!-- Redirect to Map Course to PLO's --> 
-                                                <button type="button" style="width: 100px;" class="btn btn-outline-primary btn-sm ml-2 float-right" data-toggle="modal" data-target="#mapProgram{{$course->course_id}}">Map Course</button>
+                                                <a href="{{route('map.index',[$course->course_id, $program->program_id])}}"><button type="button" style="width: 100px;" class="btn btn-outline-primary btn-sm ml-2 float-right">Map Course</button></a>
                                                 <!-- Redirect to Map CLO's to PLO's -->
-                                                <button type="button" style="width: 150px;" class="btn btn-outline-primary btn-sm ml-2 float-right" data-toggle="modal" data-target="#mapProgram{{$course->course_id}}">Map CLO's to PLO's</button>
+                                                <a href="{{route('ploclomap.index',[$course->course_id, $program->program_id])}}"><button type="button" style="width: 150px;" class="btn btn-outline-primary btn-sm ml-2 float-right">Map CLO's to PLO's</button></a>
                                             </td>
                                         </tr>
                                         </tbody>

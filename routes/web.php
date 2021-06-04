@@ -95,7 +95,7 @@ Route::get('/courseWizard/{course}/step6','CourseWizardController@step6')->name(
 // Save optional PLOs
 Route::post('/optionals','OptionalPriorities@store')->name('storeOptionalPLOs');
 
-// invatation route
+// Invatation route
 Route::get('/invite', 'InviteController@index')->name('requestInvitation');
 
 // route used to sent the invitation email
@@ -105,5 +105,10 @@ Route::post('/invitations','InviteController@store')->name('storeInvitation');
 Route::get('/construction', function () {
     return view('pages.construction');
 });
+
+// Route to for mapping Courses to PLO's
+Route::get('/courseMap/{course}/{program}', 'CourseMapController@index')->name('map.index');
+
+Route::get('/ploMap/{course}/{program}', 'PLOCLOMapController@index')->name('ploclomap.index');
 
 Auth::routes();
