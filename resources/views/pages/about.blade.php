@@ -49,8 +49,8 @@
                             <h1> Our Solution </h1>
                             <p class="lead">This customizable online tool is a vehicle to curriculum mapping and alignment. The information presented after completing the tool’s wizard should allow instructors and departments make informed decisions to enhance the course/program as well as the overall student experience and learning.</p>
                             
-                            <i class="bi bi-box-arrow-up-right"></i>
-                            <a href="#" title="?"  target="_blank" >Learn how to get the most out of Curriculum MAP</a>
+                            <!--<i class="bi bi-box-arrow-up-right"></i>
+                            <a href="#" title="?"  target="_blank" >Learn how to get the most out of Curriculum MAP</a>-->
                         </div>
                     </div>
                     
