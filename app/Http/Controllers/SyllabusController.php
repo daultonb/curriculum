@@ -12,6 +12,7 @@ use App\Models\LearningOutcome;
 use App\Models\AssessmentMethod;
 use App\Models\Course;
 use PhpOffice\PhpWord\Element\TextRun;
+use Illuminate\Support\Facades\Log;
 
 class SyllabusController extends Controller
 {
@@ -21,7 +22,9 @@ class SyllabusController extends Controller
         $this->middleware(['auth', 'verified']);
     }
 
-    public function index(){
+    public function index($syllabusId = null){
+
+        Log::debug($syllabusId);
         $user = User::where('id', Auth::id())->first();
         // get completed courses (status = 1) and in progress courses (status = -1) for the current user
         $allCourses = User::join('course_users', 'users.id', '=', 'course_users.user_id')
@@ -81,6 +84,65 @@ class SyllabusController extends Controller
         return view("syllabus.syllabusGenerator")->with('user', $user)->with('allCourses', $allCourses)->with('inputFieldDescriptions', $inputFieldDescriptions);
     }
 
+
+    /**
+     * Store syllabus.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        // validate request
+        $request->validate([
+            'campus' => ['required'],
+            'courseTitle' => ['required'],
+            'courseCode' => ['required'],
+            'courseNumber' => ['required'],
+            'courseInstructor' => ['required'],
+            'courseYear' => ['required'],
+            'courseSemester' => ['required'],
+        ]);
+
+        $campus = $request->input('campus');
+        $courseTitle = $request->input('courseTitle');
+        $courseCode = $request->input('courseCode');
+        $courseNumber = $request->input('courseNumber');
+        $courseInstructor = $request->input('courseInstructor');
+        $courseYear = $request->input('courseYear');
+        $semester = $request->input('courseSemester');
+
+
+        
+        if ($syllabusId = $request->input('syllabusId')) {
+            Log::debug('Update existing syllabus');
+
+        } else {
+            // create a new syllabus
+            Log::debug('Create a new syllabus');
+        }
+
+        $request->session()->flash('success', 'Your syllabus was successfully saved!');
+
+
+        // download syllabus as a word document
+        if ($request->input('download')) {
+            // create word document
+            $wordDocument = $this->wordExport($request);
+            // save word document on server
+            $wordDocument->saveAs($courseCode.$courseNumber.'-Syllabus.docx');
+            // force user browser to download the saved document
+            return response()->download($courseCode.$courseNumber.'-Syllabus.docx')->deleteFileAfterSend(true);            
+    
+        }
+
+
+        return redirect()->route('syllabus', [
+            'syllabusId' => $syllabusId,
+        ]);
+    }
+    
+
     // Ajax to get course infomation
     public function getCourseInfo(Request $request) {
 
@@ -106,29 +168,21 @@ class SyllabusController extends Controller
         return $data;
     }
 
-    //Syllabus Word file
-    public function WordExport(Request $request){
-        
-        // validate request
-        $request->validate([
-            'campus' => ['required'],
-            'courseTitle' => ['required'],
-            'courseCode' => ['required'],
-            'courseNumber' => ['required'],
-            'courseinstructor' => ['required'],
-            'courseYear' => ['required'],
-            'courseSemester' => ['required'],
-        ]);
+
+
+    // helper function to download syllabus as a word document
+    private function wordExport(Request $request){
+
         $campus = $request->input('campus');
         $courseTitle = $request->input('courseTitle');
         $courseCode = $request->input('courseCode');
         $courseNumber = $request->input('courseNumber');
-        $courseInstructor = $request->input('courseinstructor');
+        $courseInstructor = $request->input('courseInstructor');
         $courseYear = $request->input('courseYear');
         $semester = $request->input('courseSemester');
 
         switch($campus){
-            // generate word syllabus for Okanagan campus course
+            // generate word syllabus for Okanagan campus course using given template
             case 'O':
                 $templateProcessor = new TemplateProcessor('word-template/UBC-O_default.docx');
 
@@ -195,7 +249,7 @@ class SyllabusController extends Controller
                     'courseCredit' => ['required'],
                 ]);
                 $courseCredit = $request->input('courseCredit');
-                // generate word syllabus for Vancouver campus course
+                // generate word syllabus for Vancouver campus course using given template
                 $templateProcessor = new TemplateProcessor('word-template/UBC-V_default.docx');
 
                 // add required form fields specific to Vancouver campus to template
@@ -489,8 +543,8 @@ class SyllabusController extends Controller
             $templateProcessor->cloneBlock('academic', 0);
         }
 
-        $templateProcessor->saveAs($courseCode.$courseNumber. '-Syllabus.docx');
-        return response()->download($courseCode.$courseNumber.  '-Syllabus.docx')->deleteFileAfterSend(true);
+        return $templateProcessor;
+
     }
 
 }
