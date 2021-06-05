@@ -170,25 +170,14 @@ class ProgramWizardController extends Controller
         $msCount = MappingScale::join('mapping_scale_programs', 'mapping_scales.map_scale_id', "=", 'mapping_scale_programs.map_scale_id')
                                     ->where('mapping_scale_programs.program_id', $program_id)->count();
         $courseCount = Course::where('program_id', $program_id)->count();
-
-        $allCourses = User::join('course_users', 'users.id', '=', 'course_users.user_id')
-            ->join('courses', 'course_users.course_id', '=', 'courses.course_id')
-            ->join('programs', 'courses.program_id', '=', 'programs.program_id')
-            ->select('courses.program_id','courses.course_code','courses.delivery_modality','courses.semester','courses.year','courses.section',
-            'courses.course_id','courses.course_num','courses.course_title', 'courses.status','programs.program', 'programs.faculty', 'programs.department','programs.level')
-            ->where([
-                ['course_users.user_id','=',Auth::id()],
-                ['courses.status', '=', 1]
-            ])->orWhere([
-                ['course_users.user_id','=',Auth::id()],
-                ['courses.status', '=', -1]
-            ])->get();
+        
+        $courses = Course::where('program_id', $program_id)->get();
         
 
 
         return view('programs.wizard.step4')->with('program', $program)
                                             ->with("faculties", $faculties)->with("departments", $departments)->with("levels",$levels)->with('user', $user)->with('programUsers',$programUsers)
-                                            ->with('ploCount',$ploCount)->with('msCount', $msCount)->with('courseCount', $courseCount)->with('allCourses', $allCourses);
+                                            ->with('ploCount',$ploCount)->with('msCount', $msCount)->with('courseCount', $courseCount)->with('courses', $courses);
     }
 
 

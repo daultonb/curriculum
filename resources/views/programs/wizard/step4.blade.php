@@ -46,7 +46,7 @@
                                                 <th></th>
                                             </tr>
                                         </thead>
-                                        @foreach ($allCourses as $index => $course)
+                                        @foreach ($courses as $index => $course)
                                         <tbody>
                                         <tr>
                                             <td>{{$course->course_title}}</td>

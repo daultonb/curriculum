@@ -50,7 +50,8 @@
                                     <img src=" {{ asset('dashboard-icons/edit.png') }}" style="width:15px;height:15px"/></a>
                                     <a class="dropdown-item btn-icon" data-toggle="modal" data-target="#deleteProgram{{$index}}" href=#>
                                     <img src="{{ asset('dashboard-icons/delete.png') }}" style="width:15px;height:15px"/></a>
-                                    <!-- <a class="dropdown-item btn-icon" data-toggle="modal">
+                                    <!-- Collaborators Icon
+                                    <a class="dropdown-item btn-icon" data-toggle="modal">
                                     <i class="bi bi-people-fill" data-toggle="tooltip" data-bs-placement="right"></i></a> -->
 
 
@@ -286,6 +287,9 @@
                                         <img src="{{ asset('dashboard-icons/edit.png') }}" style="width:15px;height:15px"/></a>
                                         <a class="dropdown-item btn-icon" data-toggle="modal" data-target="#deleteConfirmation{{$index}}" href=#>
                                         <img src="{{ asset('dashboard-icons/delete.png') }}" style="width:15px;height:15px"/></a>
+                                        <!-- Collaborators Icon
+                                        <a class="dropdown-item btn-icon" data-toggle="modal">
+                                        <i class="bi bi-people-fill" data-toggle="tooltip" data-bs-placement="right"></i></a>-->
 
                                         <!-- Delete Confirmation Modal -->
                                         <div class="modal fade" id="deleteConfirmation{{$index}}" tabindex="-1" role="dialog" aria-labelledby="deleteConfirmation{{$index}}" aria-hidden="true">
