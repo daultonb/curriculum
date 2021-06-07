@@ -33,8 +33,8 @@
                 <div class="card-body">
 
                     <p>
-                       You have successfully created a program! Now, you can map courses to this program. You can also assign collaborators to this program.
-                       Go to "My courses" in the Menu (or Dashboard) tab to start ampping a course to this program.
+                    You have successfully created a program! Now, you can map courses to this program. You can also assign collaborators to this program.
+                    Go to "My courses" in the Menu (or Dashboard) tab to start mapping a course to this program.
                     </p>
 
                     <div class="text-center">
@@ -59,12 +59,12 @@
 <script type="text/javascript">
     $(document).ready(function () {
 
-      $("form").submit(function () {
+    $("form").submit(function () {
         // prevent duplicate form submissions
         $(this).find(":submit").attr('disabled', 'disabled');
         $(this).find(":submit").html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>');
 
-      });
     });
-  </script>
+    });
+</script>
 @endsection

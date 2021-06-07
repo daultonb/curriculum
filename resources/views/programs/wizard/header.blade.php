@@ -131,7 +131,7 @@
                     <!-- Assign instructor button  -->
                     <button type="button" class="btn btn-outline-primary btn-sm float-right" style="width:200px" data-toggle="modal" data-target="#addCollaboratorModal">Add Collaborators</button>
 
-                    <!-- Modal -->
+                    <!-- Add Collaborator Modal -->
                     <div class="modal fade" id="addCollaboratorModal" tabindex="-1" role="dialog" aria-labelledby="addCollaboratorModalLabel" aria-hidden="true">
                         <div class="modal-dialog modal-lg" role="document">
                             <div class="modal-content">
@@ -169,6 +169,10 @@
                                                                     {{method_field('DELETE')}}
 
                                                                     <button type="submit" class="btn btn-danger btn-sm ">Unassign</button>
+                                                                    <select>
+                                                                        <option>View Only</option>
+                                                                        <option>Can Edit</option>
+                                                                    </select>
                                                                 </form>
                                                             </td>
                                                         </tr>
@@ -189,6 +193,7 @@
 
                                             <div class="col-md-7">
                                                 <input id="email" type="email" class="form-control @error('program') is-invalid @enderror" name="email" required autofocus>
+                                                
 
                                                 @error('email')
                                                     <span class="invalid-feedback" role="alert">
@@ -196,6 +201,10 @@
                                                     </span>
                                                 @enderror
                                             </div>
+                                            <select>
+                                                <option>View Only</option>
+                                                <option>Can Edit</option>
+                                            </select>
                                         </div>
 
                                         <input type="hidden" class="form-check-input" name="program_id" value={{$program->program_id}}>

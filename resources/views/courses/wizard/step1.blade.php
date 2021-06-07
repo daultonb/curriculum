@@ -76,10 +76,11 @@
                                                 </td>
                                                 <td width="250px">
                                                     <button style="width:60px;margin-left:10px;" type="button" class="btn btn-danger btn-sm btn btn-danger btn-sm float-right"
-                                                    data-toggle="modal" data-target="#CLOdeleteConfirmation" >Delete</button>
+                                                    data-toggle="modal" data-target="#CLOdeleteConfirmation{{$l_outcome->l_outcome_id}}">
+                                                    Delete</button>
 
                                                     <!-- Delete Confirmation Modal -->
-                                                    <div class="modal fade" id="CLOdeleteConfirmation" tabindex="-1" role="dialog" aria-labelledby="CLOdeleteConfirmation" aria-hidden="true">
+                                                    <div class="modal fade" id="CLOdeleteConfirmation{{$l_outcome->l_outcome_id}}" tabindex="-1" role="dialog" aria-labelledby="CLOdeleteConfirmation" aria-hidden="true">
                                                         <div class="modal-dialog" role="document">
                                                             <div class="modal-content">
                                                                 <div class="modal-header">
@@ -90,7 +91,7 @@
                                                                 </div>
 
                                                                 <div class="modal-body">
-                                                                Are you sure you want to delete {{$l_outcome->l_outcome}} ?
+                                                                Are you sure you want to delete {{$l_outcome->l_outcome}}
                                                                 </div>
 
                                                                 <form class="float-right ml-2" action="{{route('lo.destroy', $l_outcome->l_outcome_id)}}" method="POST">
