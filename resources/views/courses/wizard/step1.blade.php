@@ -46,7 +46,7 @@
             <div class="card">
 
                 <div class="card-body">
-                    <p class="form-text text-muted"> Input the <a href="https://ctl.ok.ubc.ca/teaching-development/classroom-practices/learning-outcomes/" target="_blank">course learning outcomes (CLOs)</a> or <a href="https://sph.uth.edu/content/uploads/2012/01/Competencies-and-Learning-Objectives.pdf" target="_blank">competencies</a> of the course individually.
+                    <p class="form-text text-muted"> Input the <a href="https://ctl.ok.ubc.ca/teaching-development/classroom-practices/learning-outcomes/" target="_blank"><i class="bi bi-box-arrow-up-right"></i> course learning outcomes (CLOs)</a> or <a href="https://sph.uth.edu/content/uploads/2012/01/Competencies-and-Learning-Objectives.pdf" target="_blank"><i class="bi bi-box-arrow-up-right"></i> competencies</a> of the course individually.
                         <strong>It is recommended that a course has 5-7 CLOs maximum</strong>.
                     </p>
 
@@ -144,7 +144,7 @@
                                                                                 @enderror
 
                                                                                 <small class="form-text text-muted">
-                                                                                    <a href="https://tips.uark.edu/using-blooms-taxonomy/" target="_blank"><strong>Click here</strong></a>
+                                                                                    <a href="https://tips.uark.edu/using-blooms-taxonomy/" target="_blank"><strong><i class="bi bi-box-arrow-up-right"></i> Click here</strong></a>
                                                                                     for tips to write effective CLOs
                                                                                 </small>
 
@@ -291,7 +291,7 @@
                                                 @enderror
 
                                                 <small class="form-text text-muted">
-                                                    <a href="https://tips.uark.edu/using-blooms-taxonomy/" target="_blank"><strong>Click here</strong></a>
+                                                    <a href="https://tips.uark.edu/using-blooms-taxonomy/" target="_blank"><strong><i class="bi bi-box-arrow-up-right"></i> Click here</strong></a>
                                                     for tips to write effective CLOs
                                                 </small>
 
