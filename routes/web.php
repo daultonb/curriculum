@@ -35,10 +35,9 @@ Route::get('/faq', 'FAQController@index')->name('FAQ');
 Route::get('/terms', 'TermsController@index')->name('terms');
 
 
-Route::get('/syllabusGenerator/{syllabusId?}', 'SyllabusController@index')->name('syllabus');
-Route::post('/syllabusGenerator', 'SyllabusController@store')->name('syllabus.store');
-Route::get('/syllabusGenerator/import/course','SyllabusController@getCourseInfo');
-
+Route::get('/syllabusGenerator', 'SyllabusController@index')->name('syllabus');
+Route::post('/syllabusGenerator/word','SyllabusController@WordExport')->name('syllabus.word');
+Route::get('/syllabusGenerator/course','SyllabusController@getCourseInfo');
 
 Route::resource('/programs','ProgramController');
 Route::get('/programs/{program}/submit','ProgramController@submit')->name('programs.submit');
