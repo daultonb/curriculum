@@ -26,11 +26,70 @@
                     </button>
                 </h2>
 
+
+                <!-- Import existing course Modal -->
+                <div class="modal fade" id="importExistingCourse" tabindex="-1" role="dialog" aria-labelledby="importExistingCourse" aria-hidden="true">
+                    <div class="modal-dialog modal-lg" role="document" style="width:1250px;">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="importExistingCourse">Import Existing Course</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+
+                                <div class="modal-body" style="height: auto;">
+
+                                    <p style="text-align:left;">Select one course from the below existing courses</p>
+                                    <table class="table table-hover dashBoard">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col"></th>
+                                                <th scope="col">Course Title</th>
+                                                <th scope="col">Course Code</th>
+                                                <th scope="col">Semester</th>
+                                            </tr>
+                                        </thead>
+                                        @foreach ($allCourses as $index => $course)
+                                        <tbody>
+                                        <tr>
+                                            <th scope="row">
+                                                <input value = {{$course->course_id}} class="form-check-input" type="radio" name="importCourse" id="importCourse"
+                                                form = "sylabusGenerator" style="margin-left: 0px">
+                                            </th>
+                                            <td>{{$course->course_title}}</td>
+                                            <td>{{$course->course_code}} {{$course->course_num}}</td>
+                                            <td>
+                                                @if($course->semester == "W1")
+                                                Winter {{$course->year}} Term 1
+                                                @elseif ($course->semester == "W2")
+                                                Winter {{$course->year}} Term 2
+                                                @elseif ($course->semester == "S1")
+                                                Summer {{$course->year}} Term 1
+                                                @else
+                                                Summer {{$course->year}} Term 2
+                                                @endif
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                        @endforeach
+                                    </table>
+                                </div>
+
+                                <div class="modal-footer">
+                                    <button style="width:60px" type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Cancel</button>
+                                    <button style="width:60px" type="button" class="btn btn-primary btn-sm"
+                                    id="importButton" name="importButton" data-dismiss="modal">Import</button>
+                                </div>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="card">
                     <div class="card-body">
 
                         <div class="courseInfo">
-                            <form method="POST" id="sylabusGenerator" action="{{action('SyllabusController@store') }}">
+                            <form method="POST" id="sylabusGenerator" action="{{ action('SyllabusController@WordExport') }}">
                                 @csrf
                                 <div class="container">
                                     <!-- Course Title -->
@@ -61,9 +120,9 @@
                                     <div class="row">
 
                                         <div class="col-5 mb-2">
-                                            <label for="courseInstructor"><span class="requiredField">*</span>Course Instructor</label>
-                                            <input id = "courseInstructor" name = "courseInstructor" class ="form-control" type="text"
-                                            placeholder="E.g. Dr. J. Doe" required value="{{old('courseInstructor')}}">
+                                            <label for="courseinstructor"><span class="requiredField">*</span>Course Instructor</label>
+                                            <input id = "courseinstructor" name = "courseinstructor" class ="form-control" type="text"
+                                            placeholder="E.g. Dr. J. Doe" required value="{{old('courseinstructor')}}">
                                         </div>
                                         <div class="col-3 mb-3">
                                             <label for="courseSemester"><span class="requiredField">*</span>Course Term</label>
@@ -369,66 +428,8 @@
                     </div>
                 </div>
             </div>
-            <div style="display:flex; flex-flow:row nowrap; justify-content:flex-end; margin-top: 24px">
-                <button type="submit" class="btn btn-primary col-2 btn-sm" style="margin-right:24px;" form="sylabusGenerator">Save</button>
-                <button type="submit" name="download" value="1" class="btn btn-primary col-2 btn-sm" form="sylabusGenerator">Save and Download <i class="bi bi-download"></i></button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Import existing course Modal -->
-<div class="modal fade" id="importExistingCourse" tabindex="-1" role="dialog" aria-labelledby="importExistingCourse" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document" style="width:1250px;">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="importExistingCourse">Import Existing Course</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-
-            <div class="modal-body" style="height: auto;">
-
-                <p style="text-align:left;">Select one course from the below existing courses</p>
-                <table class="table table-hover dashBoard">
-                    <thead>
-                        <tr>
-                            <th scope="col"></th>
-                            <th scope="col">Course Title</th>
-                            <th scope="col">Course Code</th>
-                            <th scope="col">Semester</th>
-                        </tr>
-                    </thead>
-                    @foreach ($allCourses as $index => $course)
-                    <tbody>
-                        <tr>
-                            <th scope="row">
-                                <input value = {{$course->course_id}} class="form-check-input" type="radio" name="importCourse" id="importCourse" form = "sylabusGenerator" style="margin-left: 0px">
-                            </th>
-                            <td>{{$course->course_title}}</td>
-                            <td>{{$course->course_code}} {{$course->course_num}}</td>
-                            <td>
-                                @if($course->semester == "W1")
-                                Winter {{$course->year}} Term 1
-                                @elseif ($course->semester == "W2")
-                                Winter {{$course->year}} Term 2
-                                @elseif ($course->semester == "S1")
-                                Summer {{$course->year}} Term 1
-                                @else
-                                Summer {{$course->year}} Term 2
-                                @endif
-                            </td>
-                        </tr>
-                    </tbody>
-                    @endforeach
-                </table>
-            </div>
-
-            <div class="modal-footer">
-                <button style="width:60px" type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Cancel</button>
-                <button style="width:60px" type="button" class="btn btn-primary btn-sm" id="importButton" name="importButton" data-dismiss="modal">Import</button>
-            </div>
+            <button type="submit" class="btn btn-primary col-2 btn-sm"
+            style="float: right;margin:10px;" form="sylabusGenerator">Generate Syllabus</button>
         </div>
     </div>
 </div>
@@ -440,24 +441,12 @@
 
         $('#campus').change(onChangeCampus);
 
-        // $('#sylabusGenerator').on('submit', function(event) {
-        //     event.preventDefault();
-        //     if (document.activeElement.value == "save") {
-        //         saveForm();
-        //     }
-
-        //     if (document.activeElement.value == "saveAndDownload") {
-
-        //     }
-        //     console.log(document.activeElement.value); 
-        // });
-
         // Import Course information into the input field throught GET ajax call
         $('#importButton').click(function() {
             var course_id = $('input[name="importCourse"]:checked').val();
             $.ajax({
                 type: "GET",
-                url: "/syllabusGenerator/import/course",
+                url: "/syllabusGenerator/course",
                 data: {course_id : course_id},
                 headers: {
                     'X-CSRF-Token': '{{ csrf_token() }}',
