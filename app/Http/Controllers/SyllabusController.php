@@ -297,7 +297,7 @@ class SyllabusController extends Controller
                     $templateProcessor->cloneBlock('NoCourseLearningResources');
                     $templateProcessor->setValue('courseLearningResources', $courseLearningResources);
                 }else{
-                    $templateProcessor->cloneBlock('NoCourseLearningActivities', 0);
+                    $templateProcessor->cloneBlock('NoCourseLearningResources', 0);
                 }
 
 
@@ -476,6 +476,13 @@ class SyllabusController extends Controller
             $templateProcessor->cloneBlock('NopassingCriteria',0);
         }
 
+        if($otherCourseInfo = $request->input('otherCourseInfo')){
+            $templateProcessor->cloneBlock('NoOtherCourseInfo');
+            $templateProcessor->setValue('otherCourseInfo',$otherCourseInfo);
+        }else{
+            $templateProcessor->cloneBlock('NoOtherCourseInfo',0);
+        }
+
         if($learningMaterials = $request->input('learningMaterials')){
             $templateProcessor->cloneBlock('NoLearningMaterials');
             $templateProcessor->setValue('learningMaterials',$learningMaterials);
@@ -487,6 +494,11 @@ class SyllabusController extends Controller
             $templateProcessor->cloneBlock('academic');
         }else{
             $templateProcessor->cloneBlock('academic', 0);
+        }
+        if($request->input('copyright')){
+            $templateProcessor->cloneBlock('copyright');
+        }else{
+            $templateProcessor->cloneBlock('copyright', 0);
         }
 
         $templateProcessor->saveAs($courseCode.$courseNumber. '-Syllabus.docx');

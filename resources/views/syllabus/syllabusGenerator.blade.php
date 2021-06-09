@@ -372,6 +372,16 @@
                                     <!-- Course Learning Resources -->
                                     <div class="row" id="courseLearningResources"></div>
 
+                                    <!-- Other Course Info -->
+                                    <div class="row">
+                                        <div class="col mb-3" >
+                                            <label for="otherCourseInfo">Other</label>
+                                            <!-- <i class="bi bi-info-circle-fill" data-toggle="tooltip" data-bs-placement="right" title=""></i> -->
+                                            <textarea id = "otherCourseInfo" name = "otherCourseInfo" class ="form-control"
+                                            type="date" form="sylabusGenerator" spellcheck="true">{{old('otherCourseInfo')}}</textarea>
+                                        </div>
+                                    </div>
+
                                     <!-- Course Optional Resources -->
                                     <div class="row">
                                         <div class="col mb-3">
@@ -418,6 +428,12 @@
                                                 <input id="equity" type="checkbox" name="equity" value= "equity" checked>
                                                 <label for="equity">UBC Okanagan Equity and Inclusion Office</label>
                                                 </li>
+
+                                                <li>
+                                                <input id="copyright" type="checkbox" name="copyright" value= "copyright" checked>
+                                                <label for="equity">Copyright Statement</label>
+                                                </li>
+
                                             </ul>
                                         </div>
 
@@ -524,7 +540,14 @@
             <li>
             <input id="disabilities" type="checkbox" name="disabilities" value="disabilities" checked>
             <label for="disabilities">Accommodations for students with disabilities</label>
-            </li>`;
+            </li>
+
+            <li>
+            <input id="copyright" type="checkbox" name="copyright" value= "copyright" checked>
+            <label for="equity">Copyright Statement</label>
+            </li>
+
+            `;
         var okanaganOptionalList = `
             <li>
             <input id="academic" type="checkbox" name="academic" value="academic" checked>
@@ -564,7 +587,13 @@
             <li>
             <input id="equity" type="checkbox" name="equity" value= "equity" checked>
             <label for="equity">UBC Okanagan Equity and Inclusion Office</label>
-            </li>`;
+            </li>
+
+            <li>
+            <input id="copyright" type="checkbox" name="copyright" value= "copyright" checked>
+            <label for="equity">Copyright Statement</label>
+            </li>            
+            `;
 
         var courseCredit = `
             <label for="courseCredit">
