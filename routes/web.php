@@ -69,6 +69,7 @@ Route::resource('/outcomeMap','OutcomeMapController');
 
 Route::resource('/mappingScale','MappingScaleController');
 Route::post('/mappingScale/default','MappingScaleController@default')->name('mappingScale.default');
+Route::post('/mappingScale/default2','MappingScaleController@default2')->name('mappingScale.default2');
 
 Route::resource('/ploCategory','PLOCategoryController');
 
