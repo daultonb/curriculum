@@ -84,6 +84,7 @@
                                                         <option value="Diagram/chart">
                                                         <option value="Dialogue">
                                                         <option value="Essay">
+                                                        <option value="Exam">
                                                         <option value="Fill in the blank test">
                                                         <option value="Final Exam">
                                                         <option value="Group discussion">
@@ -246,6 +247,7 @@
                         <option value="Diagram/chart">
                         <option value="Dialogue">
                         <option value="Essay">
+                        <option value="Exam">
                         <option value="Fill in the blank test">
                         <option value="Final Exam">
                         <option value="Group discussion">
