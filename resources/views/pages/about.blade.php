@@ -16,20 +16,16 @@
                 <br><br>
                 <div class="row">
                     <div class="col-sm"> 
-                        <p class="lead" style="display:inline-block; padding: 4% 0;">Our work at UBC is focused on enhanced support for program redesign around competencies; the development of problem-solving experiences; technology-enabled learning; and continued growth in work-integrated education. Sustained progress requires leadership across the institution to model, inspire and celebrate excellence in teaching and mentorship.</p>
+                        <p class="lead" style="display:inline-block; padding: 4% 0;">Our work at UBC is focused on enhanced support for program redesign around competencies; the development of problem-solving experiences; <i> technology-enabled learning; </i> continued growth in work-integrated education. Sustained progress requires leadership across the institution to model, inspire and celebrate excellence in teaching and mentorship.</p>
                     </div>
                     <div class="col-sm"> 
-                        <div style="float: right;">
-                            <!--<img style= "width:50%; height:auto; display:block; margin-left:auto; margin-right:auto;" src=" {{ asset('img/questionmark_wikimedia.png') }}"/>-->
-                        </div>
+                        <img style= "width:auto; height:auto; display:block; margin-left:auto; margin-right:auto;" src=" {{ asset('img/tech-enabled-learning-2.png') }}"/>
                     </div>
                 </div>
                 <br><br>
                 <div class="row">
                     <div class="col-sm"> 
-                        <div style="float: left;"> 
-                            <!--<img style= "width:50%; height:auto; display:block; margin-left:auto; margin-right:auto;" src=" {{ asset('img/questionmark_wikimedia.png') }}"/>-->
-                        </div>
+                        <img style= "width:50%; height:auto; display:block; margin-left:auto; margin-right:auto;" src=" {{ asset('img/course-mapping-4.png') }}"/>
                     </div>
                     <div class="col-sm">
                     <p class="lead" style="display:inline-block; padding: 2% 0;">To create an immersive learning experience that fosters competencies identified by faculties and departments as critical to the discipline, a curriculum map can be an <i>effective way to visualize the program structure, list of courses, teaching and learning activities, and assessment practices.</i> This “integrative and sustainable” (Kalu & Dyjur, 2018) process is collaborative and <i>geared towards student success.</i></p>
@@ -48,9 +44,11 @@
                         <div style="float: left;">
                             <h1> Our Solution </h1>
                             <p class="lead">This customizable online tool is a vehicle to curriculum mapping and alignment. The information presented after completing the tool’s wizard should allow instructors and departments make informed decisions to enhance the course/program as well as the overall student experience and learning.</p>
-                            
-                            <!--<i class="bi bi-box-arrow-up-right"></i>
-                            <a href="#" title="?"  target="_blank" >Learn how to get the most out of Curriculum MAP</a>-->
+                        </div>
+                    </div>
+                    <div class="col-sm">
+                        <div style="float: right;">
+                            <img style="width:auto; height:auto; display:block; margin-left:auto; margin-right:auto;" src=" {{ asset('img/checklist.png') }}"/>
                         </div>
                     </div>
                     
