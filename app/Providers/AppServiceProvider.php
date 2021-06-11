@@ -30,6 +30,6 @@ class AppServiceProvider extends ServiceProvider
 
         Validator::extend('allowed_domain', function($attribute, $value, $parameters, $validator) {
             return in_array(explode('@', $value)[1], ['ubc.ca', 'mail.ubc.ca', 'alumni.ubc.ca', 'student.ubc.ca']);
-        }, 'Please Use A Valid Ubc Domain Address When Entering Your Email');
+        }, 'Please Use A Valid UBC Domain Address When Entering Your Email');
     }
 }
