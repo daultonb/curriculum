@@ -14,14 +14,11 @@
                 border-color: #1E90FF;">
                     <div class="card-title" style="background-color:#1E90FF;margin-bottom: 0.00rem;">
                         <h3 style="color: white;margin:22px">
-                        <!-- <a style="color: white;text-decoration: none;" href="{{ route('programs.index') }}">My Programs</a> -->
                         <a style="color: white;text-decoration: none;">
                         My Programs
                         <div style="float:right; padding-right:10px;">
-                            <!-- Uncomment and remove <a> To link to Programs -->
-                            <!-- <button style="border: none; background: none; outline: none;" data-toggle="modal" data-target="#createProgramModal"> -->
-                            <button style="border: none; background: none; outline: none;">
-                                <a href="/construction"><img src="{{ asset('dashboard-icons/add_White.png') }}" style="width:20px;height:20px;"/></a>
+                            <button style="border: none; background: none; outline: none;" data-toggle="modal" data-target="#createProgramModal">
+                                <img src="{{ asset('dashboard-icons/add_White.png') }}" style="width:20px;height:20px;"/>
                             </button>
                         </div>
                         </a>
@@ -45,9 +42,7 @@
                             <tbody>
                             <tr>
                                 <th scope="row">{{$index + 1}}</th>
-                                <!-- Uncomment and remove other <td> To link to Programs -->
-                                <!-- <td><a href="{{route('programWizard.step1', $program->program_id)}}">{{$program->program}}</a></td> -->
-                                <td>{{$program->program}}</td>
+                                <td><a href="{{route('programWizard.step1', $program->program_id)}}">{{$program->program}}</a></td>
                                 <td>{{$program->faculty}}</td>
                                 <td>{{$program->level}}</td>
                                 <td style="display: inline-block">
@@ -55,6 +50,9 @@
                                     <img src=" {{ asset('dashboard-icons/edit.png') }}" style="width:15px;height:15px"/></a>
                                     <a class="dropdown-item btn-icon" data-toggle="modal" data-target="#deleteProgram{{$index}}" href=#>
                                     <img src="{{ asset('dashboard-icons/delete.png') }}" style="width:15px;height:15px"/></a>
+                                    <!-- Collaborators Icon
+                                    <a class="dropdown-item btn-icon" data-toggle="modal">
+                                    <i class="bi bi-people-fill" data-toggle="tooltip" data-bs-placement="right"></i></a> -->
 
 
                                     <!-- Delete Confirmation Modal -->
@@ -85,6 +83,126 @@
                                             </div>
                                         </div>
                                     </div>
+
+                                <!-- Create Program Modal -->
+                                <div class="modal fade" id="createProgramModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-lg" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLabel">Add Program</h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                        <form method="POST" action="{{ action('ProgramController@store') }}">
+                                            @csrf
+                                            <div class="modal-body">
+                                                <div class="form-group row">
+                                                    <label for="program" class="col-md-2 col-form-label text-md-right">Program Name</label>
+                                                    <div class="col-md-8">
+                                                        <input id="program" type="text" class="form-control @error('program') is-invalid @enderror" name="program" required autofocus>
+                                                        @error('program')
+                                                        <span class="invalid-feedback" role="alert">
+                                                        <strong>{{ $message }}</strong>
+                                                        </span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label for="faculty" class="col-md-2 col-form-label text-md-right">Faculty/School</label>
+                                                    <div class="col-md-8">
+                                                        <select id='faculty' class="custom-select" name="faculty" required>
+                                                            <option disabled selected hidden>Open this select menu</option>
+                                                            <option value="School of Engineering">School of Engineering</option>
+                                                            <option value="Okanagan School of Education">Okanagan School of Education </option>
+                                                            <option value="Faculty of Arts and Social Sciences">Faculty of Arts and Social Sciences </option>
+                                                            <option value="Faculty of Creative and Critical Studies">Faculty of Creative and Critical Studies</option>
+                                                            <option value="Faculty of Science">Faculty of Science </option>
+                                                            <option value="School of Health and Exercise Sciences">School of Health and Exercise Sciences</option>
+                                                            <option value="School of Nursing">School of Nursing </option>
+                                                            <option value="School of Social Work">School of Social Work</option>
+                                                            <option value="Faculty of Management">Faculty of Management</option>
+                                                            <option value="Faculty of Medicine">Faculty of Medicine</option>
+                                                            <option value="College of Graduate studies">College of Graduate studies</option>
+                                                            <option value="Other">Other</option>
+                                                        </select>
+                                                        @error('faculty')
+                                                        <span class="invalid-feedback" role="alert">
+                                                            <strong>{{ $message }}</strong>
+                                                        </span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label for="department" class="col-md-2 col-form-label text-md-right">Department</label>
+                                                    <div class="col-md-8">
+                                                        <select id="department" class="custom-select" name="department">
+                                                            <option disabled selected hidden>Open this select menu</option>
+                                                            <optgroup label="Faculty of Arts and Social Sciences ">
+                                                                <option value="Community, Culture and Global Studies">Community, Culture and Global Studies</option>
+                                                                <option value="Economics, Philosophy and Political Science">Economics, Philosophy and Political
+                                                                Science</option>
+                                                                <option value="History and Sociology">History and Sociology</option>
+                                                                <option value="Psychology">Psychology</option>
+                                                            </optgroup>
+                                                            <optgroup label="Faculty of Creative and Critical Studies ">
+                                                                <option value="Creative Studies">Creative Studies</option>
+                                                                <option value="Languages and World Literature">Languages and World Literature</option>
+                                                                <option value="English and Cultural Studies">English and Cultural Studies</option>
+                                                            </optgroup>
+                                                            <optgroup label="Faculty of Science">
+                                                                <option value="Biology">Biology</option>
+                                                                <option value="Chemistry">Chemistry</option>
+                                                                <option value="Computer Science, Mathematics, Physics and Statistics">Computer Science,
+                                                                Mathematics, Physics and Statistics</option>
+                                                                <option value="Earth, Environmental and Geographic Sciences">Earth, Environmental and Geographic
+                                                                Sciences</option>
+                                                            </optgroup>
+                                                                <option value="Other">Other</option>
+                                                        </select>
+                                                        @error('department')
+                                                        <span class="invalid-feedback" role="alert">
+                                                            <strong>{{ $message }}</strong>
+                                                        </span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label for="level" class="col-md-2 col-form-label text-md-right">Level</label>
+                                                    <div class="col-md-6">
+                                                        <div class="form-check ">
+                                                            <label class="form-check-label">
+                                                                <input type="radio" class="form-check-input" name="level" value="Undergraduate" required>
+                                                                Undergraduate
+                                                            </label>
+                                                        </div>
+                                                        <div class="form-check">
+                                                            <label class="form-check-label">
+                                                                <input type="radio" class="form-check-input" name="level" value="Graduate">
+                                                                Graduate
+                                                            </label>
+                                                        </div>
+                                                        <div class="form-check">
+                                                            <label class="form-check-label">
+                                                                <input type="radio" class="form-check-input" name="level" value="Other">
+                                                                Other
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <input type="hidden" class="form-check-input" name="user_id" value={{$user->id}}>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary col-2 btn-sm" data-dismiss="modal">Close</button>
+                                                <button type="submit" class="btn btn-primary col-2 btn-sm">Add</button>
+                                            </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- End Create Program Modal -->
+                        
+
                                 </td>
                             </tr>
                             </tbody>
@@ -144,9 +262,7 @@
                                             <td>{{$course->course_code}} {{$course->course_num}}</td>
                                             <td>{{$course->year}} {{$course->semester}}</td>
                                             <td>❗In Progress</td>
-                                            <!-- Uncomment and remove other <td> To link to Programs 
-                                            <td><a href="{{route('programWizard.step1', $course->program_id)}}">{{$course->program}}</a></td> -->
-                                            <td>{{$course->program}}</td>
+                                            <td><a href="{{route('programWizard.step1', $course->program_id)}}">{{$course->program}}</a></td>
                                         @endif
                                     @else
                                         @if($course->program_id == 1 || $course->program_id == 2 || $course->program_id == 3 )
@@ -162,9 +278,7 @@
                                             <td>{{$course->course_code}} {{$course->course_num}}</td>
                                             <td>{{$course->year}} {{$course->semester}}</td>
                                             <td>✔️Completed</td>
-                                            <!-- Uncomment and remove other <td> To link to Programs 
-                                            <td><a href="{{route('programWizard.step1', $course->program_id)}}">{{$course->program}}</a></td> -->
-                                            <td>{{$course->program}}</td>
+                                            <td><a href="{{route('programWizard.step1', $course->program_id)}}">{{$course->program}}</a></td>
                                         @endif
                                     @endif
 
@@ -174,6 +288,9 @@
                                         <img src="{{ asset('dashboard-icons/edit.png') }}" style="width:15px;height:15px"/></a>
                                         <a class="dropdown-item btn-icon" data-toggle="modal" data-target="#deleteConfirmation{{$index}}" href=#>
                                         <img src="{{ asset('dashboard-icons/delete.png') }}" style="width:15px;height:15px"/></a>
+                                        <!-- Collaborators Icon
+                                        <a class="dropdown-item btn-icon" data-toggle="modal">
+                                        <i class="bi bi-people-fill" data-toggle="tooltip" data-bs-placement="right"></i></a>-->
 
                                         <!-- Delete Confirmation Modal -->
                                         <div class="modal fade" id="deleteConfirmation{{$index}}" tabindex="-1" role="dialog" aria-labelledby="deleteConfirmation{{$index}}" aria-hidden="true">

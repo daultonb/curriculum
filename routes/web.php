@@ -51,6 +51,7 @@ Route::get('/courses/{course}/submit','CourseController@submit')->name('courses.
 Route::get('/courses/{course}/summary','CourseController@show')->name('courses.summary');
 Route::post('/courses/{course}/outcomeDetails','CourseController@outcomeDetails')->name('courses.outcomeDetails');
 Route::get('/courses/{course}/pdf','CourseController@pdf')->name('courses.pdf');
+Route::get('/courses/{course}/remove','CourseController@removeFromProgram')->name('courses.remove');
 
 
 Route::resource('/lo','LearningOutcomeController')->only(['store','update','edit', 'destroy']);
@@ -81,7 +82,7 @@ Route::get('/programWizard/{program}/step3','ProgramWizardController@step3')->na
 Route::get('/programWizard/{program}/step4','ProgramWizardController@step4')->name('programWizard.step4');
 
 // Program step3 add existing course to the program
-Route::post('/programWizard/{program}/step3/copy', 'CourseController@copy')->name('courses.copy');
+Route::post('/programWizard/{program}/step3/addProgramToCourse', 'CourseController@addProgramToCourse')->name('courses.addProgramToCourse');
 
 // Course wizard controller used to sent info from database to the blade page
 Route::get('/courseWizard/{course}/step1','CourseWizardController@step1')->name('courseWizard.step1');
@@ -94,7 +95,7 @@ Route::get('/courseWizard/{course}/step6','CourseWizardController@step6')->name(
 // Save optional PLOs
 Route::post('/optionals','OptionalPriorities@store')->name('storeOptionalPLOs');
 
-// invatation route
+// Invatation route
 Route::get('/invite', 'InviteController@index')->name('requestInvitation');
 
 // route used to sent the invitation email
@@ -104,5 +105,10 @@ Route::post('/invitations','InviteController@store')->name('storeInvitation');
 Route::get('/construction', function () {
     return view('pages.construction');
 });
+
+// Route to for mapping Courses to PLO's
+Route::get('/courseMap/{course}/{program}', 'CourseMapController@index')->name('map.index');
+
+Route::get('/ploMap/{course}/{program}', 'PLOCLOMapController@index')->name('ploclomap.index');
 
 Auth::routes();

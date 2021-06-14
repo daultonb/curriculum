@@ -68,9 +68,9 @@ class ProgramUserController extends Controller
         if($user->save()){
             Mail::to($user->email)->send(new NotifyProgramAdminMail());
 
-            $request->session()->flash('success', 'Collabarator added');
+            $request->session()->flash('success', 'Collaborator added');
         }else{
-            $request->session()->flash('error', 'There was an error adding the Collabarator');
+            $request->session()->flash('error', 'There was an error adding the Collaborator');
         }
 
         return redirect()->back();

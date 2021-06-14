@@ -47,8 +47,8 @@
             <div class="card">
 
                 <div class="card-body">
-                    <p class="form-text text-muted">Input all <a href="https://ctlt.ubc.ca/resources/webliography/assessmentevaluation/" target="_blank">assessment methods</a> of the course individually.
-                        You may also choose to use the <a href="https://ubcoapps.elearning.ubc.ca/" target="_blank">UBCO's Workload Calculator</a> to estimate the student time commitment in this course based on the chosen assignments.</p>
+                    <p class="form-text text-muted">Input all <a href="https://ctlt.ubc.ca/resources/webliography/assessmentevaluation/" target="_blank"><i class="bi bi-box-arrow-up-right"></i> assessment methods</a> of the course individually.
+                        You may also choose to use the <a href="https://ubcoapps.elearning.ubc.ca/" target="_blank"><i class="bi bi-box-arrow-up-right"></i> UBCO's Workload Calculator</a> to estimate the student time commitment in this course based on the chosen assignments.</p>
 
                     <div id="admins">
                         <div class="row">
@@ -86,12 +86,14 @@
                                                         <option value="Essay">
                                                         <option value="Exam">
                                                         <option value="Fill in the blank test">
+                                                        <option value="Final Exam">
                                                         <option value="Group discussion">
                                                         <option value="Lab/field notes">
                                                         <option value="Letter">
                                                         <option value="Literature review">
                                                         <option value="Mathematical problem">
                                                         <option value="Materials and methods plan">
+                                                        <option value="Mid-term Exam">
                                                         <option value="Multimedia or slide presentation">
                                                         <option value="Multiple-choice test">
                                                         <option value="News or feature story">
@@ -123,7 +125,7 @@
 
                                                     <input type="hidden" name="a_method_id[]" value="{{$a_method->a_method_id}}" form="a_method_form">
                                                     <td style="display: flex">
-                                                        <input id="a_method_weight{{$a_method->a_method_id}}" type="number" step=".1" form="a_method_form" style="width:auto"
+                                                        <input id="a_method_weight{{$a_method->a_method_id}}" type="number" step="1" form="a_method_form" style="width:auto"
                                                         class="form-control @error('weight') is-invalid @enderror" value="{{$a_method->weight}}" name="weight[]" min="0" max="100" required autofocus>
                                                         <label for="a_method_weight{{$a_method->a_method_id}}" style="font-size: medium; margin-top:5px;margin-left:5px"><strong>%</strong></label>
                                                     </td>
@@ -247,12 +249,14 @@
                         <option value="Essay">
                         <option value="Exam">
                         <option value="Fill in the blank test">
+                        <option value="Final Exam">
                         <option value="Group discussion">
                         <option value="Lab/field notes">
                         <option value="Letter">
                         <option value="Literature review">
                         <option value="Mathematical problem">
                         <option value="Materials and methods plan">
+                        <option value="Mid-term Exam">
                         <option value="Multimedia or slide presentation">
                         <option value="Multiple-choice test">
                         <option value="News or feature story">
@@ -282,7 +286,7 @@
                     </datalist>
                 </td>
                     <td style="display: flex">
-                        <input id="a_new_method_weight`+rowCount+`" type="number" step=".1" form="a_method_form" style="width:auto"
+                        <input id="a_new_method_weight`+rowCount+`" type="number" step="1" form="a_method_form" style="width:auto"
                         class="form-control @error('weight') is-invalid @enderror" value = 0 name="weight[]" min="0" max="100" required autofocus>
                         <label for="a_new_method_weight`+rowCount+`" style="font-size: medium; margin-top:5px;margin-left:5px"><strong>%</strong></label>
                     </td>

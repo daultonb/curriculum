@@ -69,32 +69,31 @@
                                                         @endif
                                                     </td>
                                                     <td>
-
                                                         <!-- Delete button -->
-                                                        <button style="width:60px" type="submit" class="btn btn-danger btn-sm float-right ml-2" data-toggle="modal" data-target="#deleteConfirmationCourse{{$course->course_id}}">Delete</button>
+                                                        <button style="width:70px" type="submit" class="btn btn-danger btn-sm float-right ml-2" data-toggle="modal" data-target="#deleteConfirmationCourse{{$course->course_id}}">Remove</button>
 
                                                         <!-- Delete Confirmation Modal -->
                                                         <div class="modal fade" id="deleteConfirmationCourse{{$course->course_id}}" tabindex="-1" role="dialog" aria-labelledby="deleteConfirmationCourse" aria-hidden="true">
                                                             <div class="modal-dialog" role="document">
                                                                 <div class="modal-content">
                                                                     <div class="modal-header">
-                                                                        <h5 class="modal-title" id="exampleModalLabel">Delete Confirmation</h5>
+                                                                        <h5 class="modal-title" id="exampleModalLabel">Remove Confirmation</h5>
                                                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                                             <span aria-hidden="true">&times;</span>
                                                                         </button>
                                                                     </div>
 
                                                                     <div class="modal-body">
-                                                                    Are you sure you want to delete {{$course->course_code . ' ' . $course->course_num}} ?
+                                                                    Are you sure you want to Remove {{$course->course_code . ' ' . $course->course_num}} ?
                                                                     </div>
 
-                                                                    <form action="{{route('courses.destroy', $course->course_id)}}" method="POST" class="float-right ml-2">
+                                                                    <form action="{{route('courses.remove', $course->course_id)}}" method="POST" class="float-right ml-2">
                                                                         @csrf
-                                                                        {{method_field('DELETE')}}
+                                                                        {{method_field('GET')}}
                                                                         <input type="hidden" class="form-check-input " name="program_id" value={{$program->program_id}}>
                                                                         <div class="modal-footer">
                                                                         <button style="width:60px" type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Cancel</button>
-                                                                        <button style="width:60px" type="submit" class="btn btn-danger btn-sm">Delete</button>
+                                                                        <button style="width:70px" type="submit" class="btn btn-danger btn-sm">Remove</button>
                                                                         </div>
                                                                     </form>
 
@@ -239,7 +238,7 @@
                                                                                 <div class="col-md-4">
                                                                                     <input id="course_section" type="text"
                                                                                         class="form-control @error('course_section') is-invalid @enderror"
-                                                                                name="course_section" required autofocus value= {{$course->section}}>
+                                                                                name="course_section" autofocus value= {{$course->section}}>
 
                                                                                     @error('course_section')
                                                                                     <span class="invalid-feedback" role="alert">
@@ -601,23 +600,23 @@
                                             <label for="required" class="col-md-3 col-form-label text-md-right">Required</label>
                                             <div class="col-md-6">
 
-                                              <div class="form-check">
+                                            <div class="form-check">
                                                 <label class="form-check-label">
-                                                  <input type="radio" class="form-check-input" name="required" value="1" >
-                                                  Required
+                                                <input type="radio" class="form-check-input" name="required" value="1" >
+                                                Required
                                                 </label>
-                                              </div>
-                                              <div class="form-check">
+                                            </div>
+                                            <div class="form-check">
                                                 <label class="form-check-label">
-                                                  <input type="radio" class="form-check-input" name="required" value="-1">
-                                                  Not Required
+                                                <input type="radio" class="form-check-input" name="required" value="-1">
+                                                Not Required
                                                 </label>
-                                              </div>
-                                              <small class="form-text text-muted">
+                                            </div>
+                                            <small class="form-text text-muted">
                                                 Is this course required by the program?
                                             </small>
                                             </div>
-                                          </div>
+                                        </div>
 
                                         <input type="hidden" class="form-check-input" name="program_id"
                                             value={{$program->program_id}}>
@@ -635,7 +634,7 @@
                         </div>
                     </div>
 
-                     <!-- Add existing course Modal ( Drag and drop effect)-->
+                    <!-- Add existing course Modal ( Drag and drop effect)-->
                     <div class="modal fade" id="addCourseModal" tabindex="-1" role="dialog" aria-labelledby="createCourseModalLabel" aria-hidden="true">
                         <div class="modal-dialog modal-lg" role="document" style="width:1250px;">
                             <div class="modal-content">
@@ -681,7 +680,7 @@
                                         </div>
 
 
-                                        <form method="POST" id="addExistCourse" action="{{route('courses.copy', $program->program_id)}}">
+                                        <form method="POST" id="addExistCourse" action="{{route('courses.addProgramToCourse', $program->program_id)}}">
                                         @csrf
 
                                         <div class="drag_container" style="height:275px;float: right;overflow: auto;">
