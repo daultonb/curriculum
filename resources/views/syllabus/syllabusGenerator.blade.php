@@ -373,7 +373,7 @@
                                     <div class="row">
                                         <div class="col mb-2">
                                                 <label for="courseLearningResources">Learning Resources</label>
-                                                <i class="bi bi-info-circle-fill has-tooltip" data-bs-placement="right" title="{{$inputFieldDescriptions['courseLearningResources']}}"></i>
+                                                <i class="bi bi-info-circle-fill" data-toggle="tooltip" data-bs-placement="right" title="{{$inputFieldDescriptions['courseLearningResources']}}"></i>
                                                 <textarea id = "courseLearningResources" name = "courseLearningResources" class ="form-control" form="sylabusGenerator" spellcheck="true">{{old('courseLearningResources')}}</textarea>
                                         </div>
                                     </div>
@@ -667,14 +667,6 @@
             </div>
             `;
 
-        var courseLearningResources = `
-            <div class="col mb-2">
-                    <label for="courseLearningResources">Learning Resources</label>
-                    <i class="bi bi-info-circle-fill has-tooltip" data-bs-placement="right" title="{{$inputFieldDescriptions['courseLearningResources']}}"></i>
-                    <textarea id = "courseLearningResources" name = "courseLearningResources" class ="form-control" form="sylabusGenerator" spellcheck="true">{{old('courseLearningResources')}}</textarea>
-            </div>
-            `;
-
         var courseFormat = `
             <div class="col mb-3">
                 <label for="courseFormat">Course Format</label>
@@ -699,7 +691,6 @@
             $('#courseSchedule').html(courseSchedule);
             $('#courseInstructorBio').html(courseInstructorBio);
             $('#courseDescription').html(courseDescription);
-            $('#courseLearningResources').html(courseLearningResources);
 
             $('#courseFormat').empty();
             $('#courseOverview').empty();
@@ -719,7 +710,6 @@
             $('#courseSchedule').empty();
             $('#courseInstructorBio').empty();
             $('#courseDescription').empty();
-            $('#courseLearningResources').empty();
         }
     }
 </script>
