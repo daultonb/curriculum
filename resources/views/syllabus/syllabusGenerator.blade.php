@@ -370,15 +370,11 @@
                                     </div>
 
                                     <!-- Course Learning Resources -->
-                                    <div class="row" id="courseLearningResources"></div>
-
-                                    <!-- Other Course Info -->
                                     <div class="row">
-                                        <div class="col mb-3" >
-                                            <label for="otherCourseInfo">Other</label>
-                                            <!-- <i class="bi bi-info-circle-fill" data-toggle="tooltip" data-bs-placement="right" title=""></i> -->
-                                            <textarea id = "otherCourseInfo" name = "otherCourseInfo" class ="form-control"
-                                            type="date" form="sylabusGenerator" spellcheck="true">{{old('otherCourseInfo')}}</textarea>
+                                        <div class="col mb-2">
+                                                <label for="courseLearningResources">Learning Resources</label>
+                                                <i class="bi bi-info-circle-fill has-tooltip" data-bs-placement="right" title="{{$inputFieldDescriptions['courseLearningResources']}}"></i>
+                                                <textarea id = "courseLearningResources" name = "courseLearningResources" class ="form-control" form="sylabusGenerator" spellcheck="true">{{old('courseLearningResources')}}</textarea>
                                         </div>
                                     </div>
 
