@@ -92,8 +92,8 @@
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                                     <a class="dropdown-item" href="{{ route('logout') }}"
-                                       onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
+                                        onclick="event.preventDefault();
+                                                    document.getElementById('logout-form').submit();">
                                         {{ __('Logout') }}
                                     </a>
 
@@ -117,14 +117,18 @@
                 </div>
             </div>
         </nav>
-        <div class="container">
+        <div class="container bg-secondary">
             <main class="py-4">
                 @include('partials.alerts')
                 @yield('content')
 
             </main>
+            
         </div>
     </div>
-
+        <div style="width:100%;">
+            <iframe src="{{ asset('footer.html') }}" width="100%" scrolling="no" style="border:none; margin-bottom:-30px; min-height:426px; max-height: 821px;"/>
+        </div> 
+    
 </body>
 </html>
