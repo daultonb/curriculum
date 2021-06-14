@@ -13,6 +13,11 @@ use App\Models\AssessmentMethod;
 use App\Models\Course;
 use PhpOffice\PhpWord\Element\TextRun;
 use Illuminate\Support\Facades\Log;
+use App\Models\Syllabus;
+use App\Models\CourseUser;
+use App\Models\SyllabusUser;
+use Illuminate\Support\Facades\DB;
+use stdClass;
 
 class SyllabusController extends Controller
 {
@@ -24,10 +29,9 @@ class SyllabusController extends Controller
 
     public function index($syllabusId = null){
 
-        Log::debug($syllabusId);
         $user = User::where('id', Auth::id())->first();
         // get completed courses (status = 1) and in progress courses (status = -1) for the current user
-        $allCourses = User::join('course_users', 'users.id', '=', 'course_users.user_id')
+        $myCourses = User::join('course_users', 'users.id', '=', 'course_users.user_id')
             ->join('courses', 'course_users.course_id', '=', 'courses.course_id')
             ->join('programs', 'courses.program_id', '=', 'programs.program_id')
             ->select('courses.program_id','courses.course_code','courses.delivery_modality','courses.semester','courses.year','courses.section',
@@ -80,19 +84,101 @@ class SyllabusController extends Controller
         $inputFieldDescriptions['instructorBioStatement'] = 'You may wish to include your department/faculty/school and other information about your academic qualifications, interests, etc.';
 
         $inputFieldDescriptions['courseLearningResources'] = 'Include information on any resources to support student learning that are supported by the academic unit responsible for the course.';
+        
+        // if syllabusId is not null, view for syllabus with syllabusId was requested
+        if ($syllabusId != null) {
+            // get the saved syllabus if the current user is a user of this syllabus
+            $syllabus = DB::table('syllabi')->where('id', $syllabusId)
+            ->whereExists(function ($query) use ($syllabusId, $user) {
+                $query->select()->from('syllabi_users')->where([
+                    ['syllabi_users.syllabus_id', '=', $syllabusId],
+                    ['syllabi_users.user_id', '=', $user->id],
+                ]);
+            })->get()->first();
             
-        return view("syllabus.syllabusGenerator")->with('user', $user)->with('allCourses', $allCourses)->with('inputFieldDescriptions', $inputFieldDescriptions);
+            // if syllabus was found, return view with the syllabus data
+            if ($syllabus){
+                $course = Course::where('course_id', $syllabus->course_id)->get()->first();
+                return view("syllabus.syllabusGenerator", [
+                    'courseTitle' => $course->course_title,
+                    'courseCode' => $course->course_code,
+                    'courseNum' => $course->course_num, 
+                    'courseYear' => $course->year,
+                    'courseSemester' => $course->semester, 
+                ])->with('user', $user)->with('myCourses', $myCourses)->with('inputFieldDescriptions', $inputFieldDescriptions)->with('syllabus', $syllabus);
+
+            
+            // else redirect to the empty syllabus generator view where syllabus id is null
+            } else {
+                return redirect()->route('syllabus')->with('user', $user)->with('myCourses', $myCourses)->with('inputFieldDescriptions', $inputFieldDescriptions)->with('syllabus', []);
+            }
+
+        // else return the empty syllabus generator view where syllabus id is null
+        } else {
+            return view("syllabus.syllabusGenerator")->with('user', $user)->with('myCourses', $myCourses)->with('inputFieldDescriptions', $inputFieldDescriptions)->with('syllabus', []);
+        }
     }
 
 
     /**
-     * Store syllabus.
+     * Save syllabus.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function save(Request $request, $syllabusId = null)
     {
+        // validate request
+        $request->validate([
+            'campus' => ['required'],
+            'courseTitle' => ['required'],
+            'courseCode' => ['required'],
+            'courseNumber' => ['required'],
+            'courseInstructor' => ['required'],
+            'courseYear' => ['required'],
+            'courseSemester' => ['required'],
+        ]);
+        
+        // if syllabus already exists, update it
+        if ($syllabusId) {
+            Log::debug('Update existing syllabus');
+            // update syllabus
+            $this->update($request, $syllabusId);
+        // else create a new syllabus
+        } else {
+            // create a new syllabus
+            Log::debug('Create a new syllabus');
+
+            $syllabusId = $this->create($request);
+        }
+
+        $courseCode = $request->input('courseCode');
+        $courseNumber = $request->input('courseNumber');
+
+        // download syllabus as a word document
+        if ($request->input('download')) {
+            $documentName = $courseCode.$courseNumber.'-Syllabus.docx';
+            // create word document
+            $wordDocument = $this->wordExport($request);
+            // save word document on server
+            $wordDocument->saveAs($documentName);
+            // force user browser to download the saved document
+            return response()->download($courseCode.$courseNumber.'-Syllabus.docx')->deleteFileAfterSend(true);            
+        }
+
+        return redirect()->route('syllabus', [
+            'syllabusId' => $syllabusId,
+        ]);
+    }
+
+    /**
+     * Create a new syllabus resource.
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function create($request)
+    {
+        
         // validate request
         $request->validate([
             'campus' => ['required'],
@@ -110,40 +196,236 @@ class SyllabusController extends Controller
         $courseNumber = $request->input('courseNumber');
         $courseInstructor = $request->input('courseInstructor');
         $courseYear = $request->input('courseYear');
-        $semester = $request->input('courseSemester');
+        $courseSemester = $request->input('courseSemester');
 
-
+        // get current user
+        $user = User::where('id', Auth::id())->first();
         
-        if ($syllabusId = $request->input('syllabusId')) {
-            Log::debug('Update existing syllabus');
+        // create a new syllabus obj
+        $syllabus = new Syllabus;
+        // set syllabus owner id
+        $syllabus->owner_id = $user->id;
+        // set course campus
+        $syllabus->campus = $campus;
+        // set course instructor
+        $syllabus->course_instructor = $courseInstructor;
 
+        // if syllabus info was imported, link the new syllabus with that course
+        if ($courseId = $request->input('importCourse')) {
+            $syllabus->course_id = $courseId;
+
+        // else create a new course that links to the new syllabus
         } else {
-            // create a new syllabus
-            Log::debug('Create a new syllabus');
+            // create a new course instance
+            $course = new Course;
+            $course->course_title = $courseTitle;
+            $course->course_num = $courseNumber;
+            $course->course_code =  strtoupper($courseCode);
+            $course->year = $courseYear;
+            $course->semester = $courseSemester;
+            $course->assigned = 1;
+            $course->program_id = 1;
+            $course->type = 'unassigned';
+            $course->delivery_modality = 'O';
+            $course->create_method = "syllabusGenerator";
+            // save course to db
+            $course->save();
+            // get current user
+            $user = User::where('id', Auth::id())->first();
+            // create a course user
+            $courseUser = new CourseUser;
+            // set relationship between course user and course
+            $courseUser->course_id = $course->course_id;
+            $courseUser->user_id = $user->id;
+            // save course user to db
+            $courseUser->save();
+            // link syllabus to the new course
+            $syllabus->course_id = $course->course_id;
+
+        }
+        // set optional syllabus fields
+
+        if ($courseLocation = $request->input('courseLocation')) {
+            $syllabus->course_location = $courseLocation;
+        }
+        if ($otherInstructionalStaff = $request->input('otherCourseStaff')) {
+            $syllabus->other_instructional_staff = $otherInstructionalStaff;
+        }
+        if ($officeHours = $request->input('officeHours')) {
+            $syllabus->office_hours = $officeHours;
+        }
+        if ($classStartTime = $request->input('startTime')) {
+            $syllabus->class_start_time = $classStartTime;
+        }
+        if ($classEndTime = $request->input('endTime')) {
+            $syllabus->class_end_time = $classEndTime;
+        }
+        if ($classMeetingDays = $request->input('schedule')) {
+            $classSchedule = "";
+            foreach($classMeetingDays as $day) {
+                $classSchedule = ($classSchedule == "" ? $day : $classSchedule . '/' . $day);
+            }
+
+            $syllabus->class_meeting_days = $classSchedule;
+        }
+        if ($learningOutcomes = $request->input('learningOutcome')) {
+            $syllabus->learning_outcomes = $learningOutcomes;
+        }
+        if ($assessmentsOfLearning = $request->input('learningAssessments')) {
+            $syllabus->assessments_of_learning = $assessmentsOfLearning;
         }
 
-        $request->session()->flash('success', 'Your syllabus was successfully saved!');
-
-
-        // download syllabus as a word document
-        if ($request->input('download')) {
-            // create word document
-            $wordDocument = $this->wordExport($request);
-            // save word document on server
-            $wordDocument->saveAs($courseCode.$courseNumber.'-Syllabus.docx');
-            // force user browser to download the saved document
-            return response()->download($courseCode.$courseNumber.'-Syllabus.docx')->deleteFileAfterSend(true);            
-    
+        if ($learningActivities = $request->input('learningActivities')) {
+            $syllabus->learning_activities = $learningActivities;
         }
 
+        if ($latePolicy = $request->input('latePolicy')) {
+            $syllabus->late_policy = $latePolicy;
+        }
+        if ($missedExamPolicy = $request->input('missingExam')) {
+            $syllabus->missed_exam_policy = $missedExamPolicy;
+        }
+        if ($missedActivityPolicy = $request->input('missingActivity')) {
+            $syllabus->missed_activity_policy = $missedActivityPolicy;
+        }
+        if ($passingCriteria = $request->input('passingCriteria')) {
+            $syllabus->passing_criteria = $passingCriteria;
+        }
+        if ($learningMaterials = $request->input('learningMaterials')) {
+            $syllabus->learning_materials = $learningMaterials;
+        }
 
-        return redirect()->route('syllabus', [
-            'syllabusId' => $syllabusId,
-        ]);
+        if ($learningResources = $request->input('learningResources')) {
+            $syllabus->learning_resources = $learningResources;
+        }
+
+        if ($syllabus->save()) {
+            $request->session()->flash('success', 'Your syllabus was successfully saved!');
+            
+        } else {
+            $request->session()->flash('error', 'There was an error saving your syllabus');
+        }
+
+        // create a new syllabus user
+        $syllabusUser = new SyllabusUser;
+        // set relationship between syllabus and user
+        $syllabusUser->syllabus_id = $syllabus->id;
+        $syllabusUser->user_id = $user->id;
+        $syllabusUser->save();
+
+        return $syllabus->id;
+
     }
+
+
+    
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update($request, $syllabusId)
+    {
+        // validate request
+        $request->validate([
+            'campus' => ['required'],
+            'courseTitle' => ['required'],
+            'courseCode' => ['required'],
+            'courseNumber' => ['required'],
+            'courseInstructor' => ['required'],
+            'courseYear' => ['required'],
+            'courseSemester' => ['required'],
+        ]);
+        
+        $campus = $request->input('campus');
+        $courseTitle = $request->input('courseTitle');
+        $courseCode = $request->input('courseCode');
+        $courseNumber = $request->input('courseNumber');
+        $courseInstructor = $request->input('courseInstructor');
+        $courseYear = $request->input('courseYear');
+        $courseSemester = $request->input('courseSemester');
+
+        // get the syllabus, and start updating it
+        $syllabus = Syllabus::where('id', $syllabusId)->first();
+        $syllabus->campus = $campus;
+        $syllabus->course_instructor = $courseInstructor;
+
+        // if syllabus info was imported from a different course, update the syllabus course id 
+        if ($courseId = $request->input('importCourse')) {
+            $syllabus->course_id = $courseId;
+        }
+
+        // get its associated course and update it
+        $course = Course::where('course_id', $syllabus->course_id)->first();
+        $course->course_title = $courseTitle;
+        $course->course_num = $courseNumber;
+        $course->course_code =  strtoupper($courseCode);
+        $course->year = $courseYear;
+        $course->semester = $courseSemester;
+        $course->save();
+
+        // update optional syllabus fields
+        $syllabus->course_location = $request->input('courseLocation');
+        $syllabus->other_instructional_staff = $request->input('otherCourseStaff');
+        $syllabus->office_hours = $request->input('officeHour');
+        $syllabus->class_start_time = $request->input('startTime');
+        $syllabus->class_end_time = $request->input('endTime');
+
+        if ($classMeetingDays = $request->input('schedule')) {
+            $classSchedule = "";
+            foreach($classMeetingDays as $day) {
+                $classSchedule = ($classSchedule == "" ? $day : $classSchedule . '/' . $day);
+            }
+            $syllabus->class_meeting_days = $classSchedule;
+        } else {
+            $syllabus->class_meeting_days = null;
+        }
+
+        $syllabus->learning_outcomes = $request->input('learningOutcome');
+        $syllabus->assessments_of_learning = $request->input('learningAssessments');
+        $syllabus->learning_activities = $request->input('learningActivities');
+        $syllabus->late_policy = $request->input('latePolicy');
+        $syllabus->missed_exam_policy = $request->input('missingExam');
+        $syllabus->missed_activity_policy = $request->input('missingActivity');
+        $syllabus->passing_criteria = $request->input('passingCriteria');
+        $syllabus->learning_materials = $request->input('learningMaterials');
+        $syllabus->learning_resources = $request->input('learningResources');
+
+        if ($syllabus->save()) {
+            $request->session()->flash('success', 'Your syllabus was successfully saved!');
+            
+        } else {
+            $request->session()->flash('error', 'There was an error saving your syllabus');
+        }
+
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $syllabusId
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(Request $request, $syllabusId)
+    {
+        //
+        $syllabus = Syllabus::where('id', $syllabusId)->first();
+
+        if($syllabus->delete()){
+            $request->session()->flash('success','Your syllabus has been deleted');
+        }else{
+            $request->session()->flash('error', 'There was an error deleting your syllabus');
+        }
+
+        return redirect()->route('home');
+
+    }
+
     
 
-    // Ajax to get course infomation
+    // get existing course information
     public function getCourseInfo(Request $request) {
 
         $this->validate($request, [

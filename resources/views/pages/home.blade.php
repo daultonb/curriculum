@@ -172,22 +172,22 @@
                                     <td style="display: inline-block">
                                         <a class="dropdown-item btn-icon" href="{{route('courseWizard.step1', $course->course_id)}}">
                                         <img src="{{ asset('dashboard-icons/edit.png') }}" style="width:15px;height:15px"/></a>
-                                        <a class="dropdown-item btn-icon" data-toggle="modal" data-target="#deleteConfirmation{{$index}}" href=#>
+                                        <a class="dropdown-item btn-icon" data-toggle="modal" data-target="#deleteCourseConfirmation{{$index}}" href=#>
                                         <img src="{{ asset('dashboard-icons/delete.png') }}" style="width:15px;height:15px"/></a>
 
                                         <!-- Delete Confirmation Modal -->
-                                        <div class="modal fade" id="deleteConfirmation{{$index}}" tabindex="-1" role="dialog" aria-labelledby="deleteConfirmation{{$index}}" aria-hidden="true">
+                                        <div class="modal fade" id="deleteCourseConfirmation{{$index}}" tabindex="-1" role="dialog" aria-labelledby="deleteCourseConfirmation{{$index}}" aria-hidden="true">
                                             <div class="modal-dialog" role="document">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
-                                                        <h5 class="modal-title" id="deleteConfirmation{{$index}}">Delete Confirmation</h5>
+                                                        <h5 class="modal-title" id="deleteCourseConfirmation{{$index}}">Delete Course Confirmation</h5>
                                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                             <span aria-hidden="true">&times;</span>
                                                         </button>
                                                     </div>
 
                                                     <div class="modal-body">
-                                                    Are you sure you want to delete {{$course->course_code}} {{$course->course_num}} ?
+                                                    Are you sure you want to delete course {{$course->course_code}} {{$course->course_num}} ?
                                                     </div>
 
                                                     <form action="{{route('courses.destroy', $course->course_id)}}" method="POST">
@@ -204,6 +204,7 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        <!-- End of Delete Course Confirmation Modal -->
                                     </td>
                                 </tr>
                                 </tbody>
@@ -216,37 +217,138 @@
                     </div>
                 </div>
 
+                <!-- My Syllabi Section -->
+                <div class="card shadow rounded" style="margin:20px;border-style: solid;
+                border-color: #1E90FF;">
+                    <div class="card-title" style="background-color:#1E90FF;margin-bottom: 0.00rem;">
+                        <h3 style="color: white;margin:22px">My Syllabi
+                            <div style="float:right; padding-right:10px;">
+                                <a href="{{route('syllabus')}}">
+                                    <button style="border: none; background: none; outline: none;" >
+                                        <img src="{{ asset('dashboard-icons/add_White.png') }}" style="width:20px;height:20px;"/>
+                                    </button>
+                                </a>
+                            </div>
+                        </h3>
+                    </div>
+                    <div class="card-body" style="padding:0%;">
+                        @if(count($syllabi)>0)
+                            <table class="table table-hover dashBoard">
+                                <thead>
+                                <tr>
+                                    <th scope="col"></th>
+                                    <th scope="col">Course Title</th>
+                                    <th scope="col">Course Code</th>
+                                    <th scope="col">Term</th>
+                                    <th scope="col">Date Modified</th>
+                                    <th scope="col">Actions</th>
+                                </tr>
+                                </thead>
+
+                                @foreach ($syllabi as $index => $syllabus)
+
+                                <!-- Displays 'My Courses' -->
+                                <tbody>
+                                <tr>
+                                    <!-- index -->
+                                    <th scope="row">
+                                        {{$index + 1}}
+                                    </th>
+                                    <!-- course title -->
+                                    <td>
+                                        <a href="{{route('syllabus', $syllabus->id)}}">{{$syllabus->course_title}}</a>
+                                    </td>
+                                    <!-- course code -->
+                                    <td>
+                                        {{$syllabus->course_code}} {{$syllabus->course_num}}
+                                    </td>
+                                    <!-- term -->
+                                    <td>
+                                        {{$syllabus->year}} {{$syllabus->semester}}
+                                    </td>
+                                    <td>
+                                        {{$syllabus->updated_at}}
+                                    </td>
+                                    <!--<td></td>-->
+                                    <td style="display: inline-block">
+                                        <a class="dropdown-item btn-icon" href="{{route('syllabus', $syllabus->id)}}">
+                                            <img src="{{ asset('dashboard-icons/edit.png') }}" style="width:15px;height:15px"/>
+                                        </a>
+                                        <!-- <a>
+                                            <i class="bi bi-download"></i>
+                                        </a> -->
+                                        <a class="dropdown-item btn-icon" data-toggle="modal" data-target="#deleteSyllabusConfirmation{{$index}}" href=#>
+                                        <img src="{{ asset('dashboard-icons/delete.png') }}" style="width:15px;height:15px"/></a>
+
+
+                                        <!-- Delete Syllabus Confirmation Modal -->
+                                        <div class="modal fade" id="deleteSyllabusConfirmation{{$index}}" tabindex="-1" role="dialog" aria-labelledby="deleteConfirmation{{$index}}" aria-hidden="true">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="">Delete Syllabus Confirmation</h5>
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+
+                                                    <div class="modal-body">
+                                                    Are you sure you want to delete syllabus {{$syllabus->course_code}} {{$syllabus->course_num}}?
+                                                    </div>
+
+                                                    <form action="{{route('syllabus.delete', $syllabus->id)}}" method="POST">
+                                                        @csrf
+                                                        {{method_field('DELETE')}}
+
+                                                        <div class="modal-footer">
+                                                            <button style="width:60px" type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Cancel</button>
+                                                            <button style="width:60px" type="submit" class="btn btn-danger btn-sm">Delete</button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                </tbody>
+                                @endforeach
+                            </table>
+                        @else
+                        @endif
+                    </div>
+                </div>
+                <!-- End of My Syllabi Section -->
         </div>
     </div>
 </div>
 
-                                <!-- Create Program Modal -->
-                                <div class="modal fade" id="createProgramModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog modal-lg" role="document">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
+<!-- Create Program Modal -->
+<div class="modal fade" id="createProgramModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
                                                 <h5 class="modal-title" id="exampleModalLabel">Add Program</h5>
                                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                     <span aria-hidden="true">&times;</span>
                                                 </button>
-                                            </div>
-                                        <form method="POST" action="{{ action('ProgramController@store') }}">
+            </div>
+            <form method="POST" action="{{ action('ProgramController@store') }}">
                                             @csrf
-                                            <div class="modal-body">
-                                                <div class="form-group row">
-                                                    <label for="program" class="col-md-2 col-form-label text-md-right">Program Name</label>
-                                                    <div class="col-md-8">
+                <div class="modal-body">
+                    <div class="form-group row">
+                        <label for="program" class="col-md-2 col-form-label text-md-right">Program Name</label>
+                        <div class="col-md-8">
                                                         <input id="program" type="text" class="form-control @error('program') is-invalid @enderror" name="program" required autofocus>
                                                         @error('program')
                                                         <span class="invalid-feedback" role="alert">
                                                         <strong>{{ $message }}</strong>
                                                         </span>
                                                         @enderror
-                                                    </div>
-                                                </div>
-                                                <div class="form-group row">
-                                                    <label for="faculty" class="col-md-2 col-form-label text-md-right">Faculty/School</label>
-                                                    <div class="col-md-8">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="faculty" class="col-md-2 col-form-label text-md-right">Faculty/School</label>
+                        <div class="col-md-8">
                                                         <select id='faculty' class="custom-select" name="faculty" required>
                                                             <option disabled selected hidden>Open this select menu</option>
                                                             <option value="School of Engineering">School of Engineering</option>
@@ -267,11 +369,11 @@
                                                             <strong>{{ $message }}</strong>
                                                         </span>
                                                         @enderror
-                                                    </div>
-                                                </div>
-                                                <div class="form-group row">
+                        </div>
+                    </div>
+                    <div class="form-group row">
                                                     <label for="department" class="col-md-2 col-form-label text-md-right">Department</label>
-                                                    <div class="col-md-8">
+                        <div class="col-md-8">
                                                         <select id="department" class="custom-select" name="department">
                                                             <option disabled selected hidden>Open this select menu</option>
                                                             <optgroup label="Faculty of Arts and Social Sciences ">
@@ -301,64 +403,63 @@
                                                             <strong>{{ $message }}</strong>
                                                         </span>
                                                         @enderror
-                                                    </div>
-                                                </div>
-                                                <div class="form-group row">
-                                                    <label for="level" class="col-md-2 col-form-label text-md-right">Level</label>
-                                                    <div class="col-md-6">
-                                                        <div class="form-check ">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="level" class="col-md-2 col-form-label text-md-right">Level</label>
+                            <div class="col-md-6">
+                                <div class="form-check ">
                                                             <label class="form-check-label">
                                                                 <input type="radio" class="form-check-input" name="level" value="Undergraduate" required>
                                                                 Undergraduate
                                                             </label>
-                                                        </div>
-                                                        <div class="form-check">
+                                </div>
+                                <div class="form-check">
                                                             <label class="form-check-label">
                                                                 <input type="radio" class="form-check-input" name="level" value="Graduate">
                                                                 Graduate
                                                             </label>
-                                                        </div>
-                                                        <div class="form-check">
+                                </div>
+                                <div class="form-check">
                                                             <label class="form-check-label">
                                                                 <input type="radio" class="form-check-input" name="level" value="Other">
                                                                 Other
                                                             </label>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <input type="hidden" class="form-check-input" name="user_id" value={{$user->id}}>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary col-2 btn-sm" data-dismiss="modal">Close</button>
-                                                <button type="submit" class="btn btn-primary col-2 btn-sm">Add</button>
-                                            </div>
-                                            </form>
-                                        </div>
-                                    </div>
                                 </div>
-                                <!-- End Create Program Modal -->
+                            </div>
+                        </div>
+                        <input type="hidden" class="form-check-input" name="user_id" value={{$user->id}}>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary col-2 btn-sm" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary col-2 btn-sm">Add</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+<!-- End Create Program Modal -->
 
-                                        <!-- Create Course Modal -->
-                                        <div class="modal fade" id="createCourseModal" tabindex="-1" role="dialog" aria-labelledby="createCourseModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-lg" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
+<!-- Create Course Modal -->
+<div class="modal fade" id="createCourseModal" tabindex="-1" role="dialog" aria-labelledby="createCourseModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
                         <h5 class="modal-title" id="createCourseModalLabel">Add Course</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
-                    </div>
+                </div>
 
-                    <form id="createCourse" method="POST" action="{{ action('HomeController@store') }}">
+                <form id="createCourse" method="POST" action="{{ action('HomeController@store') }}">
                         @csrf
-                        <div class="modal-body">
+                    <div class="modal-body">
 
 
-                            <div class="form-group row">
-                                <label for="course_code" class="col-md-3 col-form-label text-md-right">Course
-                                    Code</label>
+                        <div class="form-group row">
+                            <label for="course_code" class="col-md-3 col-form-label text-md-right">Course Code</label>
 
-                                <div class="col-md-8">
+                            <div class="col-md-8">
                                     <input id="course_code" type="text"
                                         pattern="[A-Za-z]{4}"
                                         class="form-control @error('course_code') is-invalid @enderror"
@@ -372,144 +473,135 @@
                                     <small id="helpBlock" class="form-text text-muted">
                                         Four letter course code e.g. SUST, COSC etc.
                                     </small>
-                                </div>
                             </div>
+                        </div>
 
-                            <div class="form-group row">
-                                <label for="course_num" class="col-md-3 col-form-label text-md-right">Course
-                                    Number</label>
+                        <div class="form-group row">
+                            <label for="course_num" class="col-md-3 col-form-label text-md-right">Course Number</label>
 
-                                <div class="col-md-8">
-                                    <input id="course_num" type="text"
+                            <div class="col-md-8">
+                                <input id="course_num" type="text"
                                         class="form-control @error('course_num') is-invalid @enderror" name="course_num"
                                         required autofocus>
 
-                                    @error('course_num')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                    @enderror
-                                </div>
+                                @error('course_num')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                                @enderror
                             </div>
+                        </div>
 
-                            <div class="form-group row">
-                                <label for="course_title" class="col-md-3 col-form-label text-md-right">
-                                    Course Title</label>
-
-                                <div class="col-md-8">
-                                    <input id="course_title" type="text"
+                        <div class="form-group row">
+                            <label for="course_title" class="col-md-3 col-form-label text-md-right">Course Title</label>
+                            <div class="col-md-8">
+                                <input id="course_title" type="text"
                                         class="form-control @error('course_title') is-invalid @enderror"
                                         name="course_title" required autofocus>
 
-                                    @error('course_title')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                    @enderror
-                                </div>
+                                @error('course_title')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                                @enderror
                             </div>
+                        </div>
 
-                            <div class="form-group row">
-                                <label for="course_title" class="col-md-3 col-form-label text-md-right">Term and Year</label>
+                        <div class="form-group row">
+                            <label for="course_title" class="col-md-3 col-form-label text-md-right">Term and Year</label>
 
-                                <div class="col-md-3">
-                                    <select id="course_semester" class="form-control @error('course_semester') is-invalid @enderror"
+                            <div class="col-md-3">
+                                <select id="course_semester" class="form-control @error('course_semester') is-invalid @enderror"
                                         name="course_semester" required autofocus>
-                                        <option value="W1">Winter Term 1</option>
-                                        <option value="W2">Winter Term 2</option>
-                                        <option value="S1">Summer Term 1</option>
-                                        <option value="S2">Summer Term 2</option>
+                                    <option value="W1">Winter Term 1</option>
+                                    <option value="W2">Winter Term 2</option>
+                                    <option value="S1">Summer Term 1</option>
+                                    <option value="S2">Summer Term 2</option>
 
                                     @error('course_semester')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
                                     @enderror
-                                    </select>
-                                </div>
+                                </select>
+                            </div>
 
-                                <div class="col-md-2 float-right">
-                                    <select id="course_year" class="form-control @error('course_year') is-invalid @enderror"
+                            <div class="col-md-2 float-right">
+                                <select id="course_year" class="form-control @error('course_year') is-invalid @enderror"
                                     name="course_year" required autofocus>
-                                        <option value="2023">2023</option>
-                                        <option value="2022">2022</option>
-                                        <option value="2021">2021</option>
-                                        <option value="2020">2020</option>
-                                        <option value="2019">2019</option>
+                                    <option value="2023">2023</option>
+                                    <option value="2022">2022</option>
+                                    <option value="2021">2021</option>
+                                    <option value="2020">2020</option>
+                                    <option value="2019">2019</option>
 
                                     @error('course_year')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
-                                    </span>
-                                    @enderror
-                                    </select>
-                                </div>
-
+                                `</span>
+                                @enderror
+                                </select>
                             </div>
 
-                            <div class="form-group row">
-                                <label for="course_section" class="col-md-3 col-form-label text-md-right">Course
-                                    Section</label>
+                        </div>
 
-                                <div class="col-md-4">
-                                    <input id="course_section" type="text"
+                        <div class="form-group row">
+                            <label for="course_section" class="col-md-3 col-form-label text-md-right">Course Section</label>
+                            <div class="col-md-4">
+                                <input id="course_section" type="text"
                                         class="form-control @error('course_section') is-invalid @enderror"
                                         name="course_section" autofocus>
 
-                                    @error('course_section')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                    @enderror
-                                </div>
+                                @error('course_section')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                                @enderror
                             </div>
+                        </div>
 
-                            <div class="form-group row">
-                                <label for="delivery_modality" class="col-md-3 col-form-label text-md-right">
-                                    Delivery Modality
-                                </label>
-
-                                <div class="col-md-3 float-right">
-                                    <select id="delivery_modality" class="form-control @error('delivery_modality') is-invalid @enderror"
+                        <div class="form-group row">
+                            <label for="delivery_modality" class="col-md-3 col-form-label text-md-right">Delivery Modality</label>
+                            <div class="col-md-3 float-right">
+                                <select id="delivery_modality" class="form-control @error('delivery_modality') is-invalid @enderror"
                                     name="delivery_modality" required autofocus>
-                                        <option value="O">online</option>
-                                        <option value="I">in-person</option>
-                                        <option value="B">blended</option>
+                                    <option value="O">online</option>
+                                    <option value="I">in-person</option>
+                                    <option value="B">blended</option>
 
                                     @error('delivery_modality')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
                                     @enderror
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="form-group row">
-                                <label for="program_id" class="col-md-3 col-form-label text-md-right"> Map this course against</label>
-                                <div class="col-md-8">
-                                    <select class="form-control" name="program_id" id="program_id" required>
-                                        <option value="" disabled selected hidden>Please Choose...</option>
-                                        <option value="1">Bachelor's degree level standards</option>
-                                        <option value="2">Master's degree level standards</option>
-                                        <option value="3">Doctoral degree level standards</option>
-                                    </select>
-                                    <small id="helpBlock" class="form-text text-muted">
-                                        These are the standards from the Ministry of Advanced Education in BC.
-                                    </small>
-                                </div>
+                                </select>
                             </div>
                         </div>
-                        <input type="hidden" class="form-check-input" name="user_id" value={{Auth::id()}}>
-                        <input type="hidden" class="form-check-input" name="type" value="unassigned">
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary col-2 btn-sm" data-dismiss="modal">Close</button>
-                        <button id="submit" type="submit" class="btn btn-primary col-2 btn-sm">Add</button>
+
+                        <div class="form-group row">
+                            <label for="program_id" class="col-md-3 col-form-label text-md-right"> Map this course against</label>
+                            <div class="col-md-8">
+                                <select class="form-control" name="program_id" id="program_id" required>
+                                <option value="" disabled selected hidden>Please Choose...</option>
+                                <option value="1">Bachelor's degree level standards</option>
+                                <option value="2">Master's degree level standards</option>
+                                <option value="3">Doctoral degree level standards</option>
+                            </select>
+                            <small id="helpBlock" class="form-text text-muted">These are the standards from the Ministry of Advanced Education in BC.
+                            </small>
+                        </div>
                     </div>
-                </form>
-            </div>
+                </div>
+                <input type="hidden" class="form-check-input" name="user_id" value={{Auth::id()}}>
+                <input type="hidden" class="form-check-input" name="type" value="unassigned">
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary col-2 btn-sm" data-dismiss="modal">Close</button>
+                    <button id="submit" type="submit" class="btn btn-primary col-2 btn-sm">Add</button>
+                </div>
+            </form>
         </div>
     </div>
+</div>
 <!-- End Create Course Modal -->
 
 

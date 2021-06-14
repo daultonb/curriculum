@@ -30,7 +30,7 @@
                     <div class="card-body">
 
                         <div class="courseInfo">
-                            <form method="POST" id="sylabusGenerator" action="{{action('SyllabusController@store') }}">
+                            <form method="POST" id="sylabusGenerator" action="{{!empty($syllabus) ? action('SyllabusController@save', $syllabus->id) : action('SyllabusController@save')}}">
                                 @csrf
                                 <div class="container">
                                     <!-- Course Title -->
@@ -38,7 +38,7 @@
                                         <div class="col mb-2">
                                             <label for="courseTitle"><span class="requiredField">*</span>Course Title</label>
                                             <input spellcheck="true" id = "courseTitle" name = "courseTitle" class ="form-control" type="text"
-                                            placeholder="E.g. Intro to Software development" required value="{{old('courseTitle')}}">
+                                            placeholder="E.g. Intro to Software development" required value="{{ isset($courseTitle) ? $courseTitle : ''}}">
                                         </div>
                                     </div>
                                     <!-- Course Code, Course Number, Course Credit -->
@@ -46,13 +46,13 @@
                                         <div class="col-2 mb-2">
                                             <label for="courseCode"><span class="requiredField">*</span>Course Code</label>
                                             <input id = "courseCode" name = "courseCode" class ="form-control" type="text"
-                                            placeholder="E.g. CPSC" required value="{{old('courseCode')}}">
+                                            placeholder="E.g. CPSC" required value="{{ isset($courseCode) ? $courseCode : ''}}">
                                         </div>
 
                                         <div class="col-2 mb-2">
                                             <label for="courseNumber"><span class="requiredField">*</span>Course Number</label>
                                             <input id = "courseNumber" name = "courseNumber" class ="form-control" type="text"
-                                            placeholder="E.g. 310" required value="{{old('courseNumber')}}">
+                                            placeholder="E.g. 310" required value="{{ isset($courseNum) ? $courseNum : ''}}">
                                         </div>
                                         <div id="courseCredit" class="col-2 mb-2">
                                         </div>
@@ -62,22 +62,23 @@
 
                                         <div class="col-5 mb-2">
                                             <label for="courseInstructor"><span class="requiredField">*</span>Course Instructor</label>
+                                            
                                             <input id = "courseInstructor" name = "courseInstructor" class ="form-control" type="text"
-                                            placeholder="E.g. Dr. J. Doe" required value="{{old('courseInstructor')}}">
+                                            placeholder="E.g. Dr. J. Doe" required value="{{ !empty($syllabus) ? $syllabus->course_instructor : ''}}">
                                         </div>
                                         <div class="col-3 mb-3">
                                             <label for="courseSemester"><span class="requiredField">*</span>Course Term</label>
                                             <select id="courseSemester" class="form-control" name="courseSemester" required>
-                                                <option value="W1" {{old('courseSemester') == 'W1' ? 'selected=true' : ''}}>
+                                                <option value="W1" {{isset($courseSemester) ? (($courseSemester == 'W1') ? 'selected=true' : '') : ''}}>
                                                     Winter Term 1
                                                 </option>
-                                                <option value="W2" {{old('courseSemester') == 'W2' ? 'selected=true' : ''}}>
+                                                <option value="W2" {{isset($courseSemester) ? (($courseSemester == 'W2') ? 'selected=true' : '') : ''}}>
                                                     Winter Term 2
                                                 </option>
-                                                <option value="S1" {{old('courseSemester') == 'S1' ? 'selected=true' : ''}}>
+                                                <option value="S1" {{isset($courseSemester) ? (($courseSemester == 'S1') ? 'selected=true' : '') : ''}}>
                                                     Summer Term 1
                                                 </option>
-                                                <option value="S2" {{old('courseSemester') == 'S2' ? 'selected=true' : ''}}>
+                                                <option value="S2" {{isset($courseSemester) ? (($courseSemester == 'S2') ? 'selected=true' : '') : ''}}>
                                                     Summer Term 2
                                                 </option>
                                             </select>
@@ -88,27 +89,27 @@
                                             <select id="courseYear" class="form-control" name="courseYear">
                                                 <option
                                                 value="2023"
-                                                {{old('courseYear') == '2023' ? 'selected=true' : ''}}
+                                                {{isset($courseYear) ? (($courseYear == '2023') ? 'selected=true' : '') : ''}}
                                                 >
                                                     2023
                                                 </option>
                                                 <option value="2022"
-                                                {{old('courseYear') == '2022' ? 'selected=true' : ''}}
+                                                {{isset($courseYear) ? (($courseYear == '2022') ? 'selected=true' : '') : ''}}
                                                 >
                                                     2022
                                                 </option>
                                                 <option value="2021"
-                                                {{old('courseYear') == '2021' ? 'selected=true' : ''}}
+                                                {{isset($courseYear) ? (($courseYear == '2021') ? 'selected=true' : '') : ''}}
                                                 >
                                                     2021
                                                 </option>
                                                 <option value="2020"
-                                                {{old('courseYear') == '2020' ? 'selected=true' : ''}}
+                                                {{isset($courseYear) ? (($courseYear == '2020') ? 'selected=true' : '') : ''}}
                                                 >
                                                     2020
                                                 </option>
                                                 <option value="2019"
-                                                {{old('courseYear') == '2020' ? 'selected=true' : ''}}
+                                                {{isset($courseYear) ? (($courseYear == '2019') ? 'selected=true' : '') : ''}}
                                                 >
                                                     2019
                                                 </option>
@@ -121,7 +122,7 @@
                                             <label for="courseLocation">Course Location</label>
                                             <input id = "courseLocation" name = "courseLocation" class ="form-control" type="text"
                                             placeholder="E.g. WEL 140"
-                                            value="{{old('courseLocation')}}" 
+                                            value="{{ !empty($syllabus) ? $syllabus->course_location : ''}}" 
                                             >
                                         </div>
                                         <!-- Office Location -->
@@ -142,7 +143,7 @@
                                             <textarea spellcheck="true" id = "officeHour" name = "officeHour" class ="form-control"
                                             type="date"
                                             form="sylabusGenerator" 
-                                            >{{old('officeHour')}}</textarea>
+                                            >{{ !empty($syllabus) ? $syllabus->office_hours : ''}}</textarea>
                                         </div>
                                     </div>
                                     <!-- Other Course Staff -->
@@ -153,7 +154,7 @@
                                             <div class="form-note">
                                                 <i class="bi bi bi-exclamation-lg"></i><p>Place each entry on a newline for the best formatting results.</p>
                                             </div>
-                                            <textarea id = "otherCourseStaff" placeholder="Professor, Dr. Phil, PhD Clinical Psychology, ...&#10;Instructor, Bill Nye, BS Mechanical Engineering, ..." name = "otherCourseStaff" class ="form-control" form="sylabusGenerator" spellcheck="true">{{old('otherCourseStaff')}}</textarea>
+                                            <textarea id = "otherCourseStaff" placeholder="Professor, Dr. Phil, PhD Clinical Psychology, ...&#10;Instructor, Bill Nye, BS Mechanical Engineering, ..." name = "otherCourseStaff" class ="form-control" form="sylabusGenerator" spellcheck="true">{{ !empty($syllabus) ? $syllabus->other_instructional_staff : ''}}</textarea>
                                         </div>
                                     </div>
                                     <!-- Class Start Time, Class End Time -->
@@ -162,7 +163,7 @@
                                             <label for="startTime">Class Start Time</label>
                                             <input id = "startTime" name = "startTime" class ="form-control" type="text"
                                             placeholder="E.g. 1:00 PM"
-                                            value="{{old('startTime')}}"
+                                            value="{{ !empty($syllabus) ? $syllabus->class_start_time : ''}}"
                                             >
                                         </div>
 
@@ -170,7 +171,7 @@
                                             <label for="endTime">Class End Time</label>
                                             <input id = "endTime" name = "endTime" class ="form-control" type="text"
                                             placeholder="E.g. 2:00 PM"
-                                            value="{{old('endTime')}}" >
+                                            value="{{ !empty($syllabus) ? $syllabus->class_end_time : ''}}" >
                                         </div>
                                     </div>
                                     <!-- Class Meeting Days -->
@@ -232,7 +233,7 @@
                                                 </i>
                                             </p>
                                             <textarea id = "learningOutcome" placeholder="Define ... &#10;Classify ..." name = "learningOutcome" class ="form-control"
-                                            type="date" style="height:125px;" form="sylabusGenerator" spellcheck="true">{{old('learningOutcome')}}</textarea>
+                                            type="date" style="height:125px;" form="sylabusGenerator" spellcheck="true">{{ !empty($syllabus) ? $syllabus->learning_outcomes : ''}}</textarea>
                                         </div>
                                     </div>
                                     
@@ -245,7 +246,7 @@
                                                 <i class="bi bi-exclamation-lg"></i><p>Place each entry on a newline for the best formatting results.</p>
                                             </div>
                                             <textarea id = "learningAssessments" placeholder="Presentation, 25%, Dec 1, ... &#10;Midterm Exam, 25%, Sept 31, ..." name = "learningAssessments" class ="form-control"
-                                            type="date" style="height:125px;" form="sylabusGenerator" spellcheck="true">{{old('learningAssessments')}}</textarea>
+                                            type="date" style="height:125px;" form="sylabusGenerator" spellcheck="true">{{ !empty($syllabus) ? $syllabus->assessments_of_learning : ''}}</textarea>
                                         </div>
                                     </div>
 
@@ -258,7 +259,7 @@
                                                 <i class="bi bi-exclamation-lg"></i><p>Place each entry on a newline for the best formatting results.</p>
                                             </div>
                                             <textarea id = "learningActivities" placeholder="Class participation consists of clicker questions, group discussions ... &#10;Students are expected to complete class pre-readings ..."name = "learningActivities" class ="form-control"
-                                            type="date" style="height:125px;" form="sylabusGenerator" spellcheck="true">{{old('learningActivities')}}</textarea>
+                                            type="date" style="height:125px;" form="sylabusGenerator" spellcheck="true">{{ !empty($syllabus) ? $syllabus->learning_activities : ''}}</textarea>
                                         </div>
                                     </div>
 
@@ -268,7 +269,7 @@
                                             <label for="latePolicy">Late policy</label>
                                             <i class="bi bi-info-circle-fill" data-toggle="tooltip" data-bs-placement="right" title="{{$inputFieldDescriptions['latePolicy']}}"></i>
                                             <textarea id = "latePolicy" name = "latePolicy" class ="form-control"
-                                            type="date" form="sylabusGenerator" spellcheck="true">{{old('latePolicy')}}</textarea>
+                                            type="date" form="sylabusGenerator" spellcheck="true">{{ !empty($syllabus) ? $syllabus->late_policy : ''}}</textarea>
                                         </div>
                                     </div>
 
@@ -277,7 +278,7 @@
                                         <div class="col mb-3">
                                             <label for="missingExam">Missed exam policy</label>
                                             <textarea id = "missingExam" name = "missingExam" class ="form-control"
-                                            type="date" form="sylabusGenerator" spellcheck="true">{{old('missingExam')}}</textarea>
+                                            type="date" form="sylabusGenerator" spellcheck="true">{{ !empty($syllabus) ? $syllabus->missed_exam_policy : ''}}</textarea>
                                         </div>
                                     </div>
 
@@ -287,7 +288,7 @@
                                             <label for="missingActivity">Missed Activity Policy</label>
                                             <i class="bi bi-info-circle-fill" data-toggle="tooltip" data-bs-placement="right" title="{{$inputFieldDescriptions['missedActivityPolicy']}}"></i>
                                             <textarea id = "missingActivity" name = "missingActivity" class ="form-control"
-                                            type="date" form="sylabusGenerator" spellcheck="true">{{old('missingActivity')}}</textarea>
+                                            type="date" form="sylabusGenerator" spellcheck="true">{{ !empty($syllabus) ? $syllabus->missed_activity_policy : ''}}</textarea>
                                         </div>
                                     </div>
 
@@ -296,7 +297,7 @@
                                         <div class="col mb-3">
                                             <label for="passingCriteria">Passing criteria</label>
                                             <textarea id = "passingCriteria" name = "passingCriteria" class ="form-control"
-                                            type="date" form="sylabusGenerator" spellcheck="true">{{old('passingCriteria')}}</textarea>
+                                            type="date" form="sylabusGenerator" spellcheck="true">{{ !empty($syllabus) ? $syllabus->passing_criteria : ''}}</textarea>
                                         </div>
                                     </div>
 
@@ -306,7 +307,7 @@
                                             <label for="learningMaterials">Learning Materials</label>
                                             <i class="bi bi-info-circle-fill" data-toggle="tooltip" data-bs-placement="right" title="{{$inputFieldDescriptions['learningMaterials']}}"></i>
                                             <textarea id = "learningMaterials" name = "learningMaterials" class ="form-control"
-                                            type="date" form="sylabusGenerator" spellcheck="true">{{old('learningMaterials')}}</textarea>
+                                            type="date" form="sylabusGenerator" spellcheck="true">{{ !empty($syllabus) ? $syllabus->learning_materials : ''}}</textarea>
                                         </div>
                                     </div>
 
@@ -400,7 +401,7 @@
                             <th scope="col">Semester</th>
                         </tr>
                     </thead>
-                    @foreach ($allCourses as $index => $course)
+                    @foreach ($myCourses as $index => $course)
                     <tbody>
                         <tr>
                             <th scope="row">
@@ -434,86 +435,6 @@
 </div>
 
 <script type="application/javascript">
-    $(document).ready(function () {
-
-        $('[data-toggle="tooltip"]').tooltip();
-
-        $('#campus').change(onChangeCampus);
-
-        // $('#sylabusGenerator').on('submit', function(event) {
-        //     event.preventDefault();
-        //     if (document.activeElement.value == "save") {
-        //         saveForm();
-        //     }
-
-        //     if (document.activeElement.value == "saveAndDownload") {
-
-        //     }
-        //     console.log(document.activeElement.value); 
-        // });
-
-        // Import Course information into the input field throught GET ajax call
-        $('#importButton').click(function() {
-            var course_id = $('input[name="importCourse"]:checked').val();
-            $.ajax({
-                type: "GET",
-                url: "/syllabusGenerator/import/course",
-                data: {course_id : course_id},
-                headers: {
-                    'X-CSRF-Token': '{{ csrf_token() }}',
-                },
-            }).done(function(data) {
-                var decode_data = JSON.parse(data);
-                var c_title = decode_data['c_title'];
-                var c_code = decode_data['c_code'];
-                var c_num = decode_data['c_num'];
-                var c_year = decode_data['c_year'];
-                var c_term = decode_data['c_term'];
-                var a_methods = decode_data['a_methods'];
-                var l_outcomes = decode_data['l_outcomes'];
-
-                var a_methods_text = "";
-                var l_outcomes_text = "";
-
-                a_methods.forEach(element => {
-                    a_methods_text += element.a_method + " " + element.weight + "%\n";
-                });
-
-                for(var i = 0; i < l_outcomes.length; i++) {
-                    l_outcomes_text += (i+1) + ". " + l_outcomes[i].l_outcome + "\n";
-                }
-                var c_title_input = $('#courseTitle');
-                var c_code_input = $('#courseCode');
-                var c_num_input = $('#courseNumber');
-                var c_year_input = $('#courseYear');
-                var c_term_input = $('#courseSemester');
-                var a_method_input = $('#learningAssessments');
-                var l_outcome_input = $('#learningOutcome');
-
-                c_title_input.val(c_title);
-                c_code_input.val(c_code);
-                c_num_input.val(c_num);
-                c_year_input.val(c_year);
-                c_term_input.val(c_term);
-                a_method_input.val(a_methods_text);
-                l_outcome_input.val(l_outcomes_text);
-            });
-        });
-
-        // Dynamic update required attribute for dates
-        // var requiredCheckboxes = $('.classDate :checkbox[required]');
-        // requiredCheckboxes.change(function() {
-        //     if(requiredCheckboxes.is(':checked')) {
-        //     requiredCheckboxes.removeAttr('required');
-        //     } else {
-        //     requiredCheckboxes.attr('required', 'required');
-        //     }
-        // });
-
-    });
-
-
-
 
     // Function changes optional verison of syllabus
     function onChangeCampus() {
@@ -707,7 +628,112 @@
             $('#courseDescription').empty();
             $('#courseLearningResources').empty();
         }
+
     }
+
+    $(document).ready(function () {
+
+        var syllabus = <?php echo json_encode($syllabus);?>;
+
+        console.log(courseSemester + courseYear);
+    
+        $('[data-toggle="tooltip"]').tooltip();
+
+        $('#campus').change(onChangeCampus);
+
+
+        // Import Course information into the input field throught GET ajax call
+        $('#importButton').click(function() {
+            var course_id = $('input[name="importCourse"]:checked').val();
+            $.ajax({
+                type: "GET",
+                url: "/syllabusGenerator/import/course",
+                data: {course_id : course_id},
+                headers: {
+                    'X-CSRF-Token': '{{ csrf_token() }}',
+                },
+            }).done(function(data) {
+                var decode_data = JSON.parse(data);
+                var c_title = decode_data['c_title'];
+                var c_code = decode_data['c_code'];
+                var c_num = decode_data['c_num'];
+                var c_year = decode_data['c_year'];
+                var c_term = decode_data['c_term'];
+                var a_methods = decode_data['a_methods'];
+                var l_outcomes = decode_data['l_outcomes'];
+
+                var a_methods_text = "";
+                var l_outcomes_text = "";
+
+                a_methods.forEach(element => {
+                    a_methods_text += element.a_method + " " + element.weight + "%\n";
+                });
+
+                for(var i = 0; i < l_outcomes.length; i++) {
+                    l_outcomes_text += (i+1) + ". " + l_outcomes[i].l_outcome + "\n";
+                }
+                var c_title_input = $('#courseTitle');
+                var c_code_input = $('#courseCode');
+                var c_num_input = $('#courseNumber');
+                var c_year_input = $('#courseYear');
+                var c_term_input = $('#courseSemester');
+                var a_method_input = $('#learningAssessments');
+                var l_outcome_input = $('#learningOutcome');
+
+                c_title_input.val(c_title);
+                c_code_input.val(c_code);
+                c_num_input.val(c_num);
+                c_year_input.val(c_year);
+                c_term_input.val(c_term);
+                a_method_input.val(a_methods_text);
+                l_outcome_input.val(l_outcomes_text);
+            });
+        });
+
+        // Dynamic update required attribute for dates
+        // var requiredCheckboxes = $('.classDate :checkbox[required]');
+        // requiredCheckboxes.change(function() {
+        //     if(requiredCheckboxes.is(':checked')) {
+        //     requiredCheckboxes.removeAttr('required');
+        //     } else {
+        //     requiredCheckboxes.attr('required', 'required');
+        //     }
+        // });
+
+        // trigger campus dropdown change based on saved syllabus
+        if (syllabus['campus'] === 'O') {
+            $('#campus').val('O').trigger('change');
+        } else if (syllabus['campus'] === 'V') {
+            $('#campus').val('V').trigger('change');
+        }
+        
+        // use saved class meeting days
+        if (syllabus['class_meeting_days']) {
+            // split class meeting days string into an array
+            const classMeetingDays = syllabus['class_meeting_days'].split("/");
+            // mark days included in classMeetingDays as checked
+
+            if (classMeetingDays.includes('Mon')) {
+                $('#monday').attr('checked', 'true');
+            }
+            if (classMeetingDays.includes('Tue')) {
+                $('#tuesday').attr('checked', 'true');
+            }
+            if (classMeetingDays.includes('Wed')) {
+                $('#wednesday').attr('checked', 'true');
+            }
+            if (classMeetingDays.includes('Thu')) {
+                $('#thursday').attr('checked', 'true');
+            }
+            if (classMeetingDays.includes('Fri')) {
+                $('#friday').attr('checked', 'true');
+            }
+        }
+
+    });
+
+
+    
 </script>
 
 @endsection

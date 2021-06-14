@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Course;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use App\Models\CourseUser;
 
 class HomeController extends Controller
@@ -48,8 +49,13 @@ class HomeController extends Controller
         ->where('program_users.user_id','=',Auth::id())
         ->get();
 
-        $user = User::where('id', Auth::id())->first();
-
+        $syllabi = User::join('syllabi_users', 'users.id', '=', 'syllabi_users.user_id')
+                    ->join('syllabi', 'syllabi_users.syllabus_id', '=', 'syllabi.id')
+                    ->join('courses', 'courses.course_id', '=', 'syllabi.course_id')
+                    ->select('syllabi.id', 'courses.course_title', 'courses.course_code', 'courses.course_num', 'courses.semester', 'courses.year', 'syllabi.updated_at')
+                    ->where('syllabi_users.user_id', '=', Auth::id())
+                    ->get();
+        
         /*
         $courseUsers = array();
         foreach($activeCourses as $course){
@@ -61,7 +67,7 @@ class HomeController extends Controller
         }
         */
 
-        return view('pages.home')->with("activeCourses",$activeCourses)->with("activeProgram",$programs)->with('user', $user);
+        return view('pages.home')->with("activeCourses",$activeCourses)->with("activeProgram",$programs)->with('user', $user)->with('syllabi', $syllabi);
     }
 
     /**

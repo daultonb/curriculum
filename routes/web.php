@@ -36,8 +36,9 @@ Route::get('/terms', 'TermsController@index')->name('terms');
 
 
 Route::get('/syllabusGenerator/{syllabusId?}', 'SyllabusController@index')->name('syllabus');
-Route::post('/syllabusGenerator', 'SyllabusController@store')->name('syllabus.store');
+Route::post('/syllabusGenerator/{syllabusId?}', 'SyllabusController@save')->name('syllabus.save');
 Route::get('/syllabusGenerator/import/course','SyllabusController@getCourseInfo');
+Route::delete('/syllabusGenerator/{syllabusId}', 'SyllabusController@destroy')->name('syllabus.delete');
 
 
 Route::resource('/programs','ProgramController');

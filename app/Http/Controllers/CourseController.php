@@ -92,7 +92,9 @@ class CourseController extends Controller
         $course->course_title = $request->input('course_title');
         $course->course_num = $request->input('course_num');
         $course->course_code =  strtoupper($request->input('course_code'));
+        // status of mapping process
         $course->status = -1;
+        // course required for program
         $course->required = $request->input('required');
         $course->type = $request->input('type');
 
@@ -101,8 +103,9 @@ class CourseController extends Controller
         $course->semester = $request->input('course_semester');
         $course->section = $request->input('course_section');
 
+        // course creation triggered by add new course for program
         if($request->input('type') == 'assigned'){
-
+            // course not yet assigned to an instructor
             $course->assigned = -1;
             $course->save();
 
@@ -118,9 +121,10 @@ class CourseController extends Controller
             }
 
             return redirect()->route('programWizard.step3', $request->input('program_id'));
-
+        
+        // course creation triggered by add new course on dashboard
         }else{
-
+            // course assigned to course creator
             $course->assigned = 1;
             $course->save();
 
