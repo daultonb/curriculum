@@ -292,15 +292,6 @@ class SyllabusController extends Controller
                     $templateProcessor->cloneBlock('NoTopicsSchedule', 0);
                 }
 
-                // include vancouver course learning resources in template
-                if($courseLearningResources = $request->input('courseLearningResources')){
-                    $templateProcessor->cloneBlock('NoCourseLearningResources');
-                    $templateProcessor->setValue('courseLearningResources', $courseLearningResources);
-                }else{
-                    $templateProcessor->cloneBlock('NoCourseLearningResources', 0);
-                }
-
-
                 if($request->input('disabilities')){
                     $templateProcessor->cloneBlock('disabilities');
                 }else{
@@ -476,11 +467,12 @@ class SyllabusController extends Controller
             $templateProcessor->cloneBlock('NopassingCriteria',0);
         }
 
-        if($otherCourseInfo = $request->input('otherCourseInfo')){
-            $templateProcessor->cloneBlock('NoOtherCourseInfo');
-            $templateProcessor->setValue('otherCourseInfo',$otherCourseInfo);
+        // include vancouver course learning resources in template
+        if($courseLearningResources = $request->input('courseLearningResources')){
+            $templateProcessor->cloneBlock('NoCourseLearningResources');
+            $templateProcessor->setValue('courseLearningResources', $courseLearningResources);
         }else{
-            $templateProcessor->cloneBlock('NoOtherCourseInfo',0);
+            $templateProcessor->cloneBlock('NoCourseLearningResources', 0);
         }
 
         if($learningMaterials = $request->input('learningMaterials')){
