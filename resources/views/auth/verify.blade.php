@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="container">
-    <div class="row justify-content-center">
+    <div class="row justify-content-center" style="padding-bottom:265px;">
         <div class="col-md-8">
             @if (session('resent'))
                         <div class="alert alert-success" role="alert">

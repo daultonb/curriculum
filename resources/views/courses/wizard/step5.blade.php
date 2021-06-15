@@ -52,7 +52,7 @@
                 <div class="card-body">
                     <p class="container form-text text-muted">Now that you have inputted all your course information, you are ready to map it to the program-level learning outcomes (PLOs).
                         @if($course->program_id == 1 || $course->program_id == 2 || $course->program_id == 3 )
-                            In lieu of specific PLOs, the below are the <a href="https://www2.gov.bc.ca/assets/gov/education/post-secondary-education/institution-resources-administration/degree-authorization/degree-program-criteria.pdf#page=19" target="_blank">standards provided by the Ministry of Advanced Education in BC</a>. Using the mapping scale provided, identify the alignment between each of the CLOs against the standards.
+                            In lieu of specific PLOs, the below are the <a href="https://www2.gov.bc.ca/assets/gov/education/post-secondary-education/institution-resources-administration/degree-authorization/degree-program-criteria.pdf#page=19" target="_blank"><i class="bi bi-box-arrow-up-right"></i> standards provided by the Ministry of Advanced Education in BC</a>. Using the mapping scale provided, identify the alignment between each of the CLOs against the standards.
                         @else
                             Using the mapping scale provided, identify the alignment between each of the CLOs against the PLOs.
                         @endif
@@ -224,7 +224,7 @@
                                 <div id="collapseMinistry" class="collapse" aria-labelledby="headingMinistry" data-parent="#accordionGroup01">
                                     <div class="card-body text-dark bg-secondary">
                                         <h5>UBC's Mandate by the Ministry</h5>
-                                        <p>UBC's mandate letter (see<a href="https://www2.gov.bc.ca/gov/content/education-training/post-secondary-education/institution-resources-administration/mandate-letters" target="_blank"> mandate letter here </a>)
+                                        <p>UBC's mandate letter (see <a href="https://www2.gov.bc.ca/gov/content/education-training/post-secondary-education/institution-resources-administration/mandate-letters" target="_blank"><i class="bi bi-box-arrow-up-right"></i> mandate letter here </a>)
                                             calls for the below, as they relate to curriculum:</p>
                                         <table class="table table-hover optionalPLO" id="ubcMandate" data-toolbar="#toolbar" data-toggle="table" data-maintain-meta-data="true">
                                             <thead class="thead-light">
@@ -248,11 +248,11 @@
                                                 <td>
                                                     {{$letter}}
                                                     @if($index == 0)
-                                                        <a href="http://trc.ca/assets/pdf/Calls_to_Action_English2.pdf" target="_blank">(More Information can be found here)</a>
+                                                        <a href="http://trc.ca/assets/pdf/Calls_to_Action_English2.pdf" target="_blank">( <i class="bi bi-box-arrow-up-right"></i> More Information can be found here)</a>
                                                     @elseif($index == 1)
-                                                        <a href="https://cleanbc.gov.bc.ca/" target="_blank">(More Information can be found here)</a>
+                                                        <a href="https://cleanbc.gov.bc.ca/" target="_blank">( <i class="bi bi-box-arrow-up-right"></i> More Information can be found here)</a>
                                                     @elseif($index == 6)
-                                                        <a href="https://www.workbc.ca/getmedia/18214b5d-b338-4bbd-80bf-b04e48a11386/BC_Labour_Market_Outlook_2019.pdf.aspx" target="_blank">(More Information can be found here)</a>
+                                                        <a href="https://www.workbc.ca/getmedia/18214b5d-b338-4bbd-80bf-b04e48a11386/BC_Labour_Market_Outlook_2019.pdf.aspx" target="_blank">( <i class="bi bi-box-arrow-up-right"></i> More Information can be found here)</a>
                                                     @endif
                                                 </td>
                                                 </tr>
@@ -263,7 +263,7 @@
                                         <h5>
                                             BC's Labour Market: Top skills in Demand
                                         </h5>
-                                        <p>BC's tops skills in demand,as forecasted to the year 2029 by the <a href="https://www.workbc.ca/getmedia/18214b5d-b338-4bbd-80bf-b04e48a11386/BC_Labour_Market_Outlook_2019.pdf.aspx" target="_blank">BC Labour Market Outlook (page 46)</a>
+                                        <p>BC's tops skills in demand,as forecasted to the year 2029 by the <a href="https://www.workbc.ca/getmedia/18214b5d-b338-4bbd-80bf-b04e48a11386/BC_Labour_Market_Outlook_2019.pdf.aspx" target="_blank"><i class="bi bi-box-arrow-up-right"></i> BC Labour Market Outlook (page 46)</a>
                                             , are the following:
                                         </p>
 
@@ -292,7 +292,7 @@
                                             </tbody>
                                         </table>
 
-                                        <p>Additionally, BC expects <a href="https://www.workbc.ca/Labour-Market-Industry/Jobs-in-Demand/High-Demand-Occupations.aspx" target="_blank">these occupations to be of "High Opportunity"</a> in the province. Does your course/program align with a High Opportunity Occupation in BC ?
+                                        <p>Additionally, BC expects <a href="https://www.workbc.ca/Labour-Market-Industry/Jobs-in-Demand/High-Demand-Occupations.aspx" target="_blank"><i class="bi bi-box-arrow-up-right"></i> these occupations to be of "High Opportunity"</a> in the province. Does your course/program align with a High Opportunity Occupation in BC ?
                                         <select id="highOpportunity" class="highOpportunity">
                                             <option value="1">Yes</option>
                                             <option value="0">No</option>
@@ -334,11 +334,7 @@
                                     </div>
                                 <div id="collapseBCStrategic" class="collapse" aria-labelledby="headingBCStrategic" data-parent="#accordionGroup01">
                                     <div class="card-body">
-                                        <h5>
-                                            <a href="https://strategicplan.ubc.ca/" target="_blank">
-                                            Shaping UBCs next Century
-                                            </a>
-                                        </h5>
+                                        <h5><a href="https://strategicplan.ubc.ca/" target="_blank"><i class="bi bi-box-arrow-up-right"></i> Shaping UBCs next Century</a></h5>
                                         <table class="table table-hover optionalPLO" id="ubcStrategy" data-toolbar="#toolbar" data-toggle="table" data-maintain-meta-data="true">
                                             <thead class="thead-light">
                                                 <tr>
@@ -360,7 +356,7 @@
                                                     <a href ="{{$shaping_ubc_link[$index]}}" target="_blank">Strategy {{$index + 1}}: </a>
                                                     {{$strategy}}
                                                     @if($index == 17)
-                                                        <a href="https://www.alumni.ubc.ca/about/strategic-plan/" target="_blank"> Connecting Forward.</a>
+                                                        <a href="https://www.alumni.ubc.ca/about/strategic-plan/" target="_blank"><i class="bi bi-box-arrow-up-right"></i> Connecting Forward.</a>
                                                     @endif
                                                 </td>
                                                 </tr>
@@ -369,7 +365,7 @@
                                         </table>
 
                                         <h5>
-                                            <a href="https://okmain.cms.ok.ubc.ca/wp-content/uploads/sites/26/2019/02/UBCO-Outlook-2040.pdf" target="_blank">
+                                            <a href="https://okmain.cms.ok.ubc.ca/wp-content/uploads/sites/26/2019/02/UBCO-Outlook-2040.pdf" target="_blank"><i class="bi bi-box-arrow-up-right"></i>
                                             UBC Okanagan 2040 Outlook
                                             </a>
                                         </h5>
@@ -399,7 +395,7 @@
                                             </tbody>
                                         </table>
 
-                                        <h5><a href="https://aboriginal-2018.sites.olt.ubc.ca/files/2020/09/UBC.ISP_C2V13.1_Spreads_Sept1.pdf" target="_blank">
+                                        <h5><a href="https://aboriginal-2018.sites.olt.ubc.ca/files/2020/09/UBC.ISP_C2V13.1_Spreads_Sept1.pdf" target="_blank"><i class="bi bi-box-arrow-up-right"></i>
                                         UBC's Indigenous Strategic Plan (2020)
                                         </h5></a>
 
@@ -428,8 +424,8 @@
                                             </tbody>
                                         </table>
 
-                                        <h5><a href="https://bog3.sites.olt.ubc.ca/files/2021/01/4_2021.02_Climate-Emergency-Engagement.pdf" target="_blank">UBC's Climate Priorities</a></h5>
-                                        <p>The <a href="https://bog3.sites.olt.ubc.ca/files/2021/01/4_2021.02_Climate-Emergency-Engagement.pdf" target="_blank">UBC's Climate Emergency Engagement Report and Recommendations (2021)</a> set out the below curricular examples.
+                                        <h5><a href="https://bog3.sites.olt.ubc.ca/files/2021/01/4_2021.02_Climate-Emergency-Engagement.pdf" target="_blank"><i class="bi bi-box-arrow-up-right"></i> UBC's Climate Priorities</a></h5>
+                                        <p>The <a href="https://bog3.sites.olt.ubc.ca/files/2021/01/4_2021.02_Climate-Emergency-Engagement.pdf" target="_blank"><i class="bi bi-box-arrow-up-right"></i> UBC's Climate Emergency Engagement Report and Recommendations (2021)</a> set out the below curricular examples.
                                             Programs are encouraged to take these and/or other initiatives that align with the report:
                                         </p>
 

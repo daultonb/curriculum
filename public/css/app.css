@@ -11099,6 +11099,7 @@ margin-left:-15px;
   border-style:solid;
   border-color:#0055B7;
   border-width:thin;
+  border-radius: 8px;
 }
 
 .form-note > p {
@@ -11107,4 +11108,16 @@ margin-left:-15px;
   margin-top:auto;
   margin-bottom:auto;
 }
+
+.team-img{
+  /*centers the image and crops it to be circular */
+  width:150px; 
+  height:auto; 
+  display:block; 
+  margin-left:auto; 
+  margin-right:auto; 
+  object-fit:cover; 
+  border-radius:50%;
+}
+
 

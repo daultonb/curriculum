@@ -169,10 +169,6 @@
                                                                     {{method_field('DELETE')}}
 
                                                                     <button type="submit" class="btn btn-danger btn-sm ">Unassign</button>
-                                                                    <select>
-                                                                        <option>View Only</option>
-                                                                        <option>Can Edit</option>
-                                                                    </select>
                                                                 </form>
                                                             </td>
                                                         </tr>
@@ -201,10 +197,6 @@
                                                     </span>
                                                 @enderror
                                             </div>
-                                            <select>
-                                                <option>View Only</option>
-                                                <option>Can Edit</option>
-                                            </select>
                                         </div>
 
                                         <input type="hidden" class="form-check-input" name="program_id" value={{$program->program_id}}>

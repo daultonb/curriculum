@@ -57,6 +57,8 @@ class SyllabusController extends Controller
 
         $inputFieldDescriptions['missedActivityPolicy'] = 'In accordance with policy on Grading Practices, state how you deal with missed in-class assessments (e.g., are make-up tests offered for missed in-class tests, do you count the best X of Y assignments/tests, do you re-weight the marks from a missed test onto later assessments?';
 
+        $inputFieldDescriptions['courseDescription'] = "As in the Academic Calendar or, for courses without a published description, include a brief representative one";
+
         $inputFieldDescriptions['coursePrereqs'] = 'Is there a course that students must have passed before taking this course?';
 
         $inputFieldDescriptions['courseCoreqs'] = 'Is there a course that students must take concurrently (if not before)?';
@@ -73,6 +75,8 @@ class SyllabusController extends Controller
         $inputFieldDescriptions['courseSchedule'] = 'This may be a weekly schedule, it may be class by class, but let students know that if changes occur, they will be informed.';
 
         $inputFieldDescriptions['instructorBioStatement'] = 'You may wish to include your department/faculty/school and other information about your academic qualifications, interests, etc.';
+
+        $inputFieldDescriptions['courseLearningResources'] = 'Include information on any resources to support student learning that are supported by the academic unit responsible for the course.';
             
         return view("syllabus.syllabusGenerator")->with('user', $user)->with('allCourses', $allCourses)->with('inputFieldDescriptions', $inputFieldDescriptions);
     }
@@ -204,6 +208,14 @@ class SyllabusController extends Controller
                     $templateProcessor->cloneBlock('NoOfficeLocation', 0);
                 }
 
+                // include vancouver course description in template
+                if($courseDescription = $request->input('courseDescription')){
+                    $templateProcessor->cloneBlock('NoCourseDescription');
+                    $templateProcessor->setValue('courseDescription', $courseDescription);
+                }else{
+                    $templateProcessor->cloneBlock('NoCourseDescription', 0);
+                }
+
                 if($contacts = $request->input('courseContacts')){
                     $templateProcessor->cloneBlock('NoContacts');
                     // split contacts string on newline char
@@ -280,14 +292,11 @@ class SyllabusController extends Controller
                     $templateProcessor->cloneBlock('NoTopicsSchedule', 0);
                 }
 
-
                 if($request->input('disabilities')){
                     $templateProcessor->cloneBlock('disabilities');
                 }else{
                     $templateProcessor->cloneBlock('disabilities', 0);
                 }
-        
-                
             break;
         }
         // add required form fields common to both campuses to template
@@ -458,6 +467,14 @@ class SyllabusController extends Controller
             $templateProcessor->cloneBlock('NopassingCriteria',0);
         }
 
+        // include vancouver course learning resources in template
+        if($courseLearningResources = $request->input('courseLearningResources')){
+            $templateProcessor->cloneBlock('NoCourseLearningResources');
+            $templateProcessor->setValue('courseLearningResources', $courseLearningResources);
+        }else{
+            $templateProcessor->cloneBlock('NoCourseLearningResources', 0);
+        }
+
         if($learningMaterials = $request->input('learningMaterials')){
             $templateProcessor->cloneBlock('NoLearningMaterials');
             $templateProcessor->setValue('learningMaterials',$learningMaterials);
@@ -469,6 +486,11 @@ class SyllabusController extends Controller
             $templateProcessor->cloneBlock('academic');
         }else{
             $templateProcessor->cloneBlock('academic', 0);
+        }
+        if($request->input('copyright')){
+            $templateProcessor->cloneBlock('copyright');
+        }else{
+            $templateProcessor->cloneBlock('copyright', 0);
         }
 
         $templateProcessor->saveAs($courseCode.$courseNumber. '-Syllabus.docx');
