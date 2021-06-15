@@ -16,7 +16,7 @@ class CreateCourseProgramsTable extends Migration
     {
         Schema::create('course_programs', function (Blueprint $table) {
             $table->unsignedBigInteger('course_id');
-            $table->$table->unsignedBigInteger('program_id');
+            $table->unsignedBigInteger('program_id');
             $table->timestamps();
 
             $table->primary(['course_id','program_id']);
