@@ -33,17 +33,36 @@
                 <div class="card-body">
 
                     <p>
-                    You have successfully created a program! Now, you can map courses to this program. You can also assign collaborators to this program.
-                    Go to "My courses" in the Menu (or Dashboard) tab to start mapping a course to this program.
+                    Please select the course you would like to map.
                     </p>
 
-                    <div class="text-center">
-                        <a href="{{ route('courses.index') }}">
-                            <button class="btn btn-outline-success btn-sm col-4">Go to My Courses To Begin Mapping ➡</button>
-                        </a>
-
-                    </div>
-
+                            <div>
+                                <div>
+                                    <table class="table table-hover dashBoard">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">Course Title</th>
+                                                <th scope="col">Course Code</th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        @foreach ($courses as $index => $course)
+                                        <tbody>
+                                        <tr>
+                                            <td>{{$course->course_title}}</td>
+                                            <td>{{$course->course_code}} {{$course->course_num}}</td>
+                                            <td>
+                                                <!-- Redirect to Map Course to PLO's --> 
+                                                <a href="{{route('map.index',[$course->course_id, $program->program_id])}}"><button type="button" style="width: 100px;" class="btn btn-outline-primary btn-sm ml-2 float-right">Map Course</button></a>
+                                                <!-- Redirect to Map CLO's to PLO's -->
+                                                <a href="{{route('ploclomap.index',[$course->course_id, $program->program_id])}}"><button type="button" style="width: 150px;" class="btn btn-outline-primary btn-sm ml-2 float-right">Map CLO's to PLO's</button></a>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                        @endforeach
+                                    </table>
+                                </div>
+                        </div>
                 </div>
 
                 <div class="card-footer">
@@ -52,8 +71,8 @@
 
 
             </div>
-        </div>
 
+        </div>
     </div>
 </div>
 <script type="text/javascript">

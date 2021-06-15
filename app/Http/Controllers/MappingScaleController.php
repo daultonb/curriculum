@@ -137,7 +137,7 @@ class MappingScaleController extends Controller
     public function destroy(Request $request, $map_scale_id)
     {
         //
-        if($map_scale_id == 1 || $map_scale_id == 2 || $map_scale_id == 3){
+        if($map_scale_id == 1 || $map_scale_id == 2 || $map_scale_id == 3 || $map_scale_id == 4 || $map_scale_id == 5 || $map_scale_id == 6 || $map_scale_id == 7){
             $msp = MappingScaleProgram::where('program_id', $request->input('program_id'))
                                         ->where('map_scale_id', $map_scale_id);
             if($msp->delete()){
@@ -169,10 +169,11 @@ class MappingScaleController extends Controller
 
         foreach($msp as $m){
             $ms = MappingScale::where('map_scale_id', $m->map_scale_id)->first();
-            if($m->map_scale_id == 1 || $m->map_scale_id == 2 || $m->map_scale_id == 3){
+            if($m->map_scale_id == 1 || $m->map_scale_id == 2 || $m->map_scale_id == 3 || $m->map_scale_id == 4 || $m->map_scale_id == 5 || $m->map_scale_id == 6 || $m->map_scale_id == 7){
                 $ms->programs()->detach($request->input('program_id'));
             }else{
-                $ms->delete();
+                //$ms->delete();
+                //ddd($ms);
             }
         }
 
@@ -191,7 +192,51 @@ class MappingScaleController extends Controller
         $msp3->program_id = $request->input('program_id');
         
         if($msp3->save()){
-            $request->session()->flash('success', 'default mapping scale value set');
+            $request->session()->flash('success', 'Default mapping scale value set');
+        }else{
+            $request->session()->flash('error', 'There was an error deleting the plo category');
+        }
+        
+        return redirect()->route('programWizard.step2', $request->input('program_id'));
+    }
+
+    public function default2(Request $request)
+    {
+        //
+        $msp = MappingScaleProgram::where('program_id',  $request->input('program_id') )->get();
+        //dd($msp);
+
+        foreach($msp as $m){
+            $ms = MappingScale::where('map_scale_id', $m->map_scale_id)->first();
+            if($m->map_scale_id == 1 || $m->map_scale_id == 2 || $m->map_scale_id == 3 || $m->map_scale_id == 4 || $m->map_scale_id == 5 || $m->map_scale_id == 6 || $m->map_scale_id == 7){
+                $ms->programs()->detach($request->input('program_id'));
+            }else{
+                //$ms->delete();
+                //ddd($ms);
+            }
+        }
+
+        $msp1 = new MappingScaleProgram;
+        $msp1->map_scale_id = 4;
+        $msp1->program_id = $request->input('program_id');
+        $msp1->save();
+
+        $msp2 = new MappingScaleProgram;
+        $msp2->map_scale_id = 5;
+        $msp2->program_id = $request->input('program_id');
+        $msp2->save();
+
+        $msp3 = new MappingScaleProgram;
+        $msp3->map_scale_id = 6;
+        $msp3->program_id = $request->input('program_id');
+        $msp3->save();
+
+        $msp4 = new MappingScaleProgram;
+        $msp4->map_scale_id = 7;
+        $msp4->program_id = $request->input('program_id');
+        
+        if($msp4->save()){
+            $request->session()->flash('success', 'Other mapping scale value set');
         }else{
             $request->session()->flash('error', 'There was an error deleting the plo category');
         }
