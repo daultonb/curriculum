@@ -5,11 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Mapping_Scales_Ministry_Standards extends Model
+class CourseProgram extends Model
 {
     use HasFactory;
 
-    protected $primaryKey = 'map_scale_id';
+    public $incrementing = false;
 
-    // Might Need to relate to courses?
+    protected $primaryKey = ['course_id','program_id'];
 }

@@ -4,7 +4,6 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-// MIGHT NEED TO CHANGE TO A PIVOT TABLE 
 class CreateCourseProgramsTable extends Migration
 {
     /**
@@ -22,7 +21,7 @@ class CreateCourseProgramsTable extends Migration
             $table->primary(['course_id','program_id']);
             $table->foreign('course_id')->references('course_id')->on('courses')->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('program_id')->references('program_id')->on('programs')->onDelete('cascade')->onUpdate('cascade');
-        });
+            });
     }
 
     /**

@@ -20,7 +20,7 @@ class Program extends Model
 
     public function courses()
     {
-        return $this->hasMany('App\Models\Course', 'program_id', 'program_id');
+        return $this->belongsToMany(Course::class, 'course_programs', 'program_id', 'course_id');
     }
 
     public function mappingScaleLevel()

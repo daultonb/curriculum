@@ -34,10 +34,9 @@ class Course extends Model
         return $this->hasMany('App\Models\LearningOutcome', 'course_id','course_id');
     }
 
-    // should be many-to-many programs (or course_programs)
     public function program() 
     {
-        return $this->belongsTo('App\Models\Program', 'program_id', 'program_id');
+        return $this->belongsToMany(Program::class, 'course_programs', 'course_id', 'program_id');
     }
 }
 
