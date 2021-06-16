@@ -7,32 +7,22 @@
     <div class="home">
         <div class="card">
             <div class="card-body">
-                <h2> Syllabus Generator
-                    <!-- Campus dropdown -->
-                    <span class="requiredField" style="margin-left: 32px;font-size:15px;">*
-                        <select  class="form-group" id="campus" name="campus" form="sylabusGenerator" style="text-align:center; margin-right: 8px" required>
-                            <option disabled selected value=""> -- Campus -- </option>
-                            <option value="O">
-                                UBC Okanagan
-                            </option>
-                            <option value="V">UBC Vancouver</option>
-                        </select>
-                    </span>
-                    <!-- land acknowledgment -->
-                    <input type="checkbox" name="landAcknowledgement" id="landAcknowledgement" form = "sylabusGenerator" checked>
-                    <label for="landAcknowledgement" style="font-size: 14px;">Land acknowledgement</label>
-                    <button type="button" class="btn btn-primary btn-sm col-2 mt-2 float-right" data-toggle="modal" data-target="#importExistingCourse" style="margin-right: 10px">
-                        Import existing courses
-                    </button>
-                </h2>
-
+                <div class="row">
+                    <div class="col-4 mb-2">
+                        <!-- Heading -->
+                        <h2>Syllabus Generator</h2>                      
+                    </div>
+                    <!-- Import an existing course button -->
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#importExistingCourse" style="margin-bottom:24px;">Import an existing course</button>                                        
+                                    
+                </div>                
 
                 <!-- Import existing course Modal -->
                 <div class="modal fade" id="importExistingCourse" tabindex="-1" role="dialog" aria-labelledby="importExistingCourse" aria-hidden="true">
                     <div class="modal-dialog modal-lg" role="document" style="width:1250px;">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="importExistingCourse">Import Existing Course</h5>
+                                <h5 class="modal-title" id="importExistingCourse">Import an existing Course</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
@@ -92,6 +82,26 @@
                             <form method="POST" id="sylabusGenerator" action="{{ action('SyllabusController@WordExport') }}">
                                 @csrf
                                 <div class="container">
+                                    <div class="row">
+                                        <div class="col-3 mb-2">
+                                            <!-- Campus dropdown -->
+                                            <span class="requiredField" style="font-size:14px;">*
+                                                <select  class="form-group" id="campus" name="campus" form="sylabusGenerator" style="text-align:center;" required>
+                                                    <option disabled selected value=""> -- Campus -- </option>
+                                                    <option value="O">
+                                                        UBC Okanagan
+                                                    </option>
+                                                    <option value="V">UBC Vancouver</option>
+                                                </select>
+                                            </span>
+                                        </div>
+                                        <div class="col mb-2 ml-2">
+                                            <!-- land acknowledgment -->
+                                            <input type="checkbox" name="landAcknowledgement" id="landAcknowledgement" form = "sylabusGenerator" checked>
+                                            <label for="landAcknowledgement" style="font-size: 14px;">Land acknowledgement</label>
+                                        </div>
+                                    </div>
+                                    
                                     <!-- Course Title -->
                                     <div class="row">
                                         <div class="col mb-2">
