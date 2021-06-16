@@ -33,7 +33,7 @@
                             <div class="col">
                                 <table class="table table-borderless">
 
-                                    @if(count($courses)<1)
+                                    @if(count($courseProgram)<1)
                                         <tr class="table-active">
                                             <th colspan="2">There are no courses for this program project.</th>
                                         </tr>
@@ -47,8 +47,8 @@
                                             <th>Status</th>
                                             <th width="30%"></th>
                                         </tr>
-
                                             @foreach($courseProgram as $course)
+                                            
                                                 <tr>
                                                     <td>{{$course->year}} {{$course->semester}} {{$course->course_code}}{{$course->course_num}} -
                                                         {{$course->course_title}}

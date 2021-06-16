@@ -146,11 +146,10 @@ class ProgramWizardController extends Controller
 
         $courseCount = count($courses);
 
-        //$courseProgram = CourseProgram::where('program_id', $program_id)->get();
         $courseProgram = CourseProgram::join('courses', 'course_programs.course_id', '=', 'courses.course_id')->where('course_programs.program_id', $program_id)->get();
 
 
-        return view('programs.wizard.step3')->with('program', $program)->with('courses', $courses)->with('courseUsers',$courseUsers)->with('existCourses',$existCourses)
+        return view('programs.wizard.step3')->with('program', $program)->with('courseUsers',$courseUsers)->with('existCourses',$existCourses)
                                             ->with("faculties", $faculties)->with("departments", $departments)->with("levels",$levels)->with('user', $user)->with('programUsers',$programUsers)
                                             ->with('ploCount',$ploCount)->with('msCount', $msCount)->with('courseCount', $courseCount)->with('courseProgram', $courseProgram);
     }
