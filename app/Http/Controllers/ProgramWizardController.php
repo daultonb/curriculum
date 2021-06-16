@@ -10,6 +10,7 @@ use App\Models\User;
 use App\Models\PLOCategory;
 use App\Models\ProgramLearningOutcome;
 use App\Models\Course;
+use App\Models\CourseProgram;
 use App\Models\MappingScale;
 use App\Models\LearningOutcome;
 use Illuminate\Support\Facades\Auth;
@@ -143,12 +144,12 @@ class ProgramWizardController extends Controller
         $msCount = MappingScale::join('mapping_scale_programs', 'mapping_scales.map_scale_id', "=", 'mapping_scale_programs.map_scale_id')
                                     ->where('mapping_scale_programs.program_id', $program_id)->count();
 
-        $courseCount = count($courses);
+        $courseProgram = CourseProgram::join('courses', 'course_programs.course_id', '=', 'courses.course_id')->where('course_programs.program_id', $program_id)->get();
 
 
-        return view('programs.wizard.step3')->with('program', $program)->with('courses', $courses)->with('courseUsers',$courseUsers)->with('existCourses',$existCourses)
+        return view('programs.wizard.step3')->with('program', $program)->with('courseUsers',$courseUsers)->with('existCourses',$existCourses)
                                             ->with("faculties", $faculties)->with("departments", $departments)->with("levels",$levels)->with('user', $user)->with('programUsers',$programUsers)
-                                            ->with('ploCount',$ploCount)->with('msCount', $msCount)->with('courseCount', $courseCount);
+                                            ->with('ploCount',$ploCount)->with('msCount', $msCount)->with('courseProgram', $courseProgram);
     }
 
     public function step4($program_id)
