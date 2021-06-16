@@ -15,6 +15,7 @@ use App\Models\OutcomeAssessment;
 use App\Models\OutcomeActivity;
 use App\Models\MappingScale;
 use App\Models\PLOCategory;
+use App\Models\CourseProgram;
 use PDF;
 use Illuminate\Support\Facades\DB;
 
@@ -88,7 +89,8 @@ class CourseController extends Controller
             ]);
 
         $course = new Course;
-        $course->program_id = $request->input('program_id');
+        // TODO Update name of column program-id to ministry standards 
+        $course->program_id = $request->input('ministry_standard_id');
         $course->course_title = $request->input('course_title');
         $course->course_num = $request->input('course_num');
         $course->course_code =  strtoupper($request->input('course_code'));
@@ -111,8 +113,15 @@ class CourseController extends Controller
             $courseUser->course_id = $course->course_id;
             $courseUser->user_id = $user->id;
 
+            //Store and associate in the course_programs table
+            $courseProgram = new CourseProgram;
+            $courseProgram->course_id = $course->course_id;
+            $courseProgram->program_id = $request->input('program_id');
+
             if($courseUser->save()){
-                $request->session()->flash('success', 'New course added');
+                if ($courseProgram->save()) {
+                    $request->session()->flash('success', 'New course added');
+                }
             }else{
                 $request->session()->flash('error', 'There was an error adding the course');
             }
@@ -293,13 +302,8 @@ class CourseController extends Controller
         }else{
             $request->session()->flash('error', 'There was an error deleting the course');
         }
-
-        if($type == 'assigned'){
-            return redirect()->route('programWizard.step3', $request->input('program_id'));
-        }else{
-            return redirect()->route('home');
-        }
-
+        
+        return redirect()->route('home');
     }
 
     // public function status(Request $request, $course_id)
@@ -422,11 +426,10 @@ class CourseController extends Controller
 
     // Removes the program id for a given course (Used In program wizard step 3).
     public function removeFromProgram(Request $request, $course_id) {
-    $course = Course::where('course_id', $course_id)->first();
-    // Sets program to Bachelor's degree standards, Best solution for the time being. But could be improved.
-    $course->program_id = 1;
+    //$course = Course::where('course_id', $course_id)->first();
+    //$courseProgram = CourseProgram::where('course_id',  $course_id)->where('program_id', $request->input('program_id'))->delete();
     
-    if($course->save()){
+    if(CourseProgram::where('course_id',  $course_id)->where('program_id', $request->input('program_id'))->delete()){
         $request->session()->flash('success', 'Course updated');
     }else{
         $request->session()->flash('error', 'There was an error removing the course');

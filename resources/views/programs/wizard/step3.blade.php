@@ -48,7 +48,7 @@
                                             <th width="30%"></th>
                                         </tr>
 
-                                            @foreach($courses as $course)
+                                            @foreach($courseProgram as $course)
                                                 <tr>
                                                     <td>{{$course->year}} {{$course->semester}} {{$course->course_code}}{{$course->course_num}} -
                                                         {{$course->course_title}}
@@ -596,6 +596,22 @@
                                             </div>
                                         </div>
 
+                                        <!-- Passes Information for Ministry Standards -->
+                                        <div class="form-group row">
+                                            <label for="ministry_standard_id" class="col-md-3 col-form-label text-md-right"> Map this course against</label>
+                                            <div class="col-md-8">
+                                                <select class="form-control" name="ministry_standard_id" id="ministry_standard_id" required>
+                                                    <option value="" disabled selected hidden>Please Choose...</option>
+                                                    <option value="1">Bachelor's degree level standards</option>
+                                                    <option value="2">Master's degree level standards</option>
+                                                    <option value="3">Doctoral degree level standards</option>
+                                                </select>
+                                                <small id="helpBlock" class="form-text text-muted">
+                                                    These are the standards from the Ministry of Advanced Education in BC.
+                                                </small>
+                                            </div>
+                                        </div>
+
                                         <div class="form-group row">
                                             <label for="required" class="col-md-3 col-form-label text-md-right">Required</label>
                                             <div class="col-md-6">
@@ -617,9 +633,8 @@
                                             </small>
                                             </div>
                                         </div>
-
-                                        <input type="hidden" class="form-check-input" name="program_id"
-                                            value={{$program->program_id}}>
+                                        <!-- Passes 'program_id', type='assigned', and 'user_id' to be used by the CourseController store method -->
+                                        <input type="hidden" class="form-check-input" name="program_id" value={{$program->program_id}}>
                                         <input type="hidden" class="form-check-input" name="type" value="assigned">
                                         <input type="hidden" class="form-check-input" name="user_id" value={{Auth::id()}}>
 
@@ -633,6 +648,7 @@
                             </div>
                         </div>
                     </div>
+                    <!-- End Create Course Modal -->
 
                     <!-- Add existing course Modal ( Drag and drop effect)-->
                     <div class="modal fade" id="addCourseModal" tabindex="-1" role="dialog" aria-labelledby="createCourseModalLabel" aria-hidden="true">
