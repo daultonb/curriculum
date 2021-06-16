@@ -680,7 +680,7 @@
                                         </div>
 
 
-                                        <form method="POST" id="addExistCourse" action="{{route('courses.addProgramToCourse', $program->program_id)}}">
+                                        <form method="POST" id="addExistCourse" action="{{route('courseProgram.addCoursesToProgram', $program->program_id)}}">
                                         @csrf
 
                                         <div class="drag_container" style="height:275px;float: right;overflow: auto;">
