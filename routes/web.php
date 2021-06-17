@@ -82,8 +82,8 @@ Route::get('/programWizard/{program}/step2','ProgramWizardController@step2')->na
 Route::get('/programWizard/{program}/step3','ProgramWizardController@step3')->name('programWizard.step3');
 Route::get('/programWizard/{program}/step4','ProgramWizardController@step4')->name('programWizard.step4');
 
-// Program step3 add existing course to the program
-Route::post('/programWizard/{program}/step3/addProgramToCourse', 'CourseController@addProgramToCourse')->name('courses.addProgramToCourse');
+// Program step3 add existing courses to a program
+Route::post('/programWizard/{program}/step3/addCoursesToProgram', 'CourseProgramController@addCoursesToProgram')->name('courseProgram.addCoursesToProgram');
 
 // Course wizard controller used to sent info from database to the blade page
 Route::get('/courseWizard/{course}/step1','CourseWizardController@step1')->name('courseWizard.step1');
