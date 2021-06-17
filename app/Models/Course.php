@@ -14,7 +14,7 @@ class Course extends Model
 
     protected $primaryKey ='course_id';
 
-    protected $fillable = ['course_code', 'course_num', 'course_title', 'program_id', 'status', 'assigned', 'type'];
+    protected $fillable = ['course_code', 'course_num', 'delivery_modality', 'year', 'semester', 'section', 'course_title', 'program_id', 'status', 'assigned', 'type'];
 
     protected $guarded = ['course_id'];
 
