@@ -104,7 +104,7 @@ class CourseController extends Controller
         $course->section = $request->input('course_section');
 
         if($request->input('type') == 'assigned'){
-
+            $isCourseRequired = $request->input('required');
             $course->assigned = -1;
             $course->save();
 
@@ -117,6 +117,7 @@ class CourseController extends Controller
             $courseProgram = new CourseProgram;
             $courseProgram->course_id = $course->course_id;
             $courseProgram->program_id = $request->input('program_id');
+            $courseProgram->course_required = $isCourseRequired;
 
             if($courseUser->save()){
                 if ($courseProgram->save()) {
