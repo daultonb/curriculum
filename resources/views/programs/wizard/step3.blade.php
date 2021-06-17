@@ -624,7 +624,7 @@
                                             </div>
                                             <div class="form-check">
                                                 <label class="form-check-label">
-                                                <input type="radio" class="form-check-input" name="required" value="-1">
+                                                <input type="radio" class="form-check-input" name="required" value="0">
                                                 Not Required
                                                 </label>
                                             </div>
@@ -655,7 +655,7 @@
                         <div class="modal-dialog modal-lg" role="document" style="width:1250px;">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h5 class="modal-title" id="createCourseModalLabel">Add Existing Course</h5>
+                                    <h5 class="modal-title" id="createCourseModalLabel">Add Existing Courses to {{$program->program}}</h5>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                     </button>
@@ -663,18 +663,17 @@
 
                                     <div class="modal-body" style="height: auto;">
 
-                                        <p style="text-align:left;">To use existing courses to map this program, drag them from the left box into the right box.</p>
-                                        <h5 style="float: left; width: 50%;text-align:center">Existing courses</h5>
-                                        <h5 style="float: right; width: 50%; text-align: center;">Courses for this program</h5>
-                                        <div class="drag_container" style="height:275px;float: left;overflow: auto">
+                                        <p style="text-align:left;">To add an existing course to this program, drag the course from the left box into the right box.</p>
+                                        <h5 style="float: left; width: 50%;text-align:center">Courses</h5>
+                                        <h5 style="float: right; width: 50%; text-align: center;">Program Courses</h5>
+                                        <div class="drag_container" style="height:300px;float: left;overflow: auto">
 
                                             @foreach($existCourses as $index => $course)
 
-                                            <div class="draggable" draggable="true">
+                                            <div class="draggable" draggable="true" style="margin:4px">
                                                 <input type="hidden" name="course_id[]" id= "course{{$index}}" value={{$course->course_id}}>
                                                 <label for="course{{$index}}" class="dragItem">
-                                                Course: {{$course->course_title}} {{$course->course_code}} {{$course->course_num}}
-                                                </label>
+                                                {{$course->course_code}} {{$course->course_num}}: {{$course->course_title}}                                                </label>
                                                 <small class="form-text text-muted" style="padding-left:0.50rem">
                                                     Is this course required by the program?
                                                     </small>
@@ -686,7 +685,7 @@
                                                 </div>
                                                 <div class="form-check" style="padding-left:2.00rem">
                                                     <label class="form-check-label" >
-                                                        <input type="radio" class="form-check-input" name="require{{$course->course_id}}" value="-1">
+                                                        <input type="radio" class="form-check-input" name="require{{$course->course_id}}" value="0">
                                                         Elective
                                                     </label>
                                                 </div>
@@ -697,12 +696,37 @@
 
 
                                         <form method="POST" id="addExistCourse" action="{{route('courseProgram.addCoursesToProgram', $program->program_id)}}">
-                                        @csrf
+                                            @csrf
 
-                                        <div class="drag_container" style="height:275px;float: right;overflow: auto;">
-                                        </div>
-                                        <input type="hidden" value= {{count($existCourses)}} name="count">
-                                        <input type="hidden" name="program_id" value="{{$program->program_id}}">
+                                            <div class="drag_container" style="height:300px;float: right;overflow: auto;">
+
+                                                @foreach($courseProgram as $index => $course)
+                                                    <div class="draggable" draggable="true" style="margin:4px">
+                                                        <input type="hidden" name="course_id[]" id= "course{{$index}}" value={{$course->course_id}}>
+                                                        <label for="course{{$index}}" class="dragItem">
+                                                        {{$course->course_code}} {{$course->course_num}}: {{$course->course_title}}
+                                                        </label>
+                                                        <small class="form-text text-muted" style="padding-left:0.50rem">
+                                                            Is this course required by the program?
+                                                            </small>
+                                                        <div class="form-check" style="padding-left:2.00rem;">
+                                                            <label class="form-check-label">
+                                                                <input type="radio" class="form-check-input" name="require{{$course->course_id}}" value="1" required {{($course->course_required == 1) ? 'checked' : ''}}>
+                                                                Core
+                                                            </label>
+                                                        </div>
+                                                        <div class="form-check" style="padding-left:2.00rem">
+                                                            <label class="form-check-label" >
+                                                                <input type="radio" class="form-check-input" name="require{{$course->course_id}}" value="0" {{($course->course_required == 0) ? 'checked' : ''}} >
+                                                                Elective
+                                                            </label>
+                                                        </div>
+                                                    </div>
+
+                                                @endforeach
+                                            </div>
+                                            <input type="hidden" value= {{count($existCourses)}} name="count">
+                                            <input type="hidden" name="program_id" value="{{$program->program_id}}">
                                         </form>
                                     </div>
 

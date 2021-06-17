@@ -9,7 +9,5 @@ class CourseProgram extends Model
 {
     use HasFactory;
 
-    public $incrementing = false;
-
-    protected $primaryKey = ['course_id','program_id'];
+    protected $fillable = ['course_id', 'program_id','course_required', 'instructor_assigned', 'map_status'];
 }
