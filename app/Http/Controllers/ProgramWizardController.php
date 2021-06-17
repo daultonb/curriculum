@@ -103,14 +103,22 @@ class ProgramWizardController extends Controller
         $faculties = array("Faculty of Arts and Social Sciences", "Faculty of Creative and Critical Studies", "Okanagan School of Education", "School of Engineering", "School of Health and Exercise Sciences", "Faculty of Management", "Faculty of Science", "Faculty of Medicine", "College of Graduate Studies", "School of Nursing", "School of Social Work", "Other");
         $departments = array("Community, Culture and Global Studies", "Economics, Philosophy and Political Science", "History and Sociology", "Psychology", "Creative Studies", "Languages and World Literature", "English and Cultural Studies", "Biology", "Chemistry", "Computer Science, Mathematics, Physics and Statistics", "Earth, Environmental and Geographic Sciences", "Other" );
         $levels = array("Undergraduate", "Graduate", "Other");
+
+        // get the current user
         $user = User::where('id',Auth::id())->first();
-        $programUsers = ProgramUser::join('users','program_users.user_id',"=","users.id")
-                                ->select('users.email','program_users.user_id','program_users.program_id')
-                                ->where('program_users.program_id','=',$program_id)->get();
-
-        //
-
+        // get the program
         $program = Program::where('program_id', $program_id)->first();
+        // get all the users that belong to this program
+        $programUsers = $program->users()->get();
+        // $programUsers = ProgramUser::join('users','program_users.user_id',"=","users.id")
+        //                         ->select('users.email','program_users.user_id','program_users.program_id')
+        //                         ->where('program_users.program_id','=',$program_id)->get();
+
+        // get all the courses that belong to this program
+        $programCourses = $program->courses()->get();
+        // $courseProgram = CourseProgram::join('courses', 'course_programs.course_id', '=', 'courses.course_id')->where('course_programs.program_id', $program_id)->get();
+
+
         $courses = Course::where('program_id', $program_id)->get();
 
         $usersCourses = CourseUser::where('user_id', $user->id)->get('course_id');
@@ -144,12 +152,10 @@ class ProgramWizardController extends Controller
         $msCount = MappingScale::join('mapping_scale_programs', 'mapping_scales.map_scale_id', "=", 'mapping_scale_programs.map_scale_id')
                                     ->where('mapping_scale_programs.program_id', $program_id)->count();
 
-        $courseProgram = CourseProgram::join('courses', 'course_programs.course_id', '=', 'courses.course_id')->where('course_programs.program_id', $program_id)->get();
-
 
         return view('programs.wizard.step3')->with('program', $program)->with('courseUsers',$courseUsers)->with('existCourses',$existCourses)
                                             ->with("faculties", $faculties)->with("departments", $departments)->with("levels",$levels)->with('user', $user)->with('programUsers',$programUsers)
-                                            ->with('ploCount',$ploCount)->with('msCount', $msCount)->with('courseProgram', $courseProgram);
+                                            ->with('ploCount',$ploCount)->with('msCount', $msCount)->with('programCourses', $programCourses);
     }
 
     public function step4($program_id)

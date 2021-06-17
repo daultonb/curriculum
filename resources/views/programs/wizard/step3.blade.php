@@ -33,7 +33,7 @@
                             <div class="col">
                                 <table class="table table-borderless">
 
-                                    @if(count($courseProgram)<1)
+                                    @if(count($programCourses)<1)
                                         <tr class="table-active">
                                             <th colspan="2">There are no courses for this program project.</th>
                                         </tr>
@@ -47,7 +47,7 @@
                                             <th>Status</th>
                                             <th width="30%"></th>
                                         </tr>
-                                            @foreach($courseProgram as $course)
+                                            @foreach($programCourses as $course)
                                             
                                                 <tr>
                                                     <td>{{$course->year}} {{$course->semester}} {{$course->course_code}}{{$course->course_num}} -
@@ -700,7 +700,7 @@
 
                                             <div class="drag_container" style="height:300px;float: right;overflow: auto;">
 
-                                                @foreach($courseProgram as $index => $course)
+                                                @foreach($programCourses as $index => $course)
                                                     <div class="draggable" draggable="true" style="margin:4px">
                                                         <input type="hidden" name="course_id[]" id= "course{{$index}}" value={{$course->course_id}}>
                                                         <label for="course{{$index}}" class="dragItem">
