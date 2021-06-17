@@ -12,7 +12,7 @@
 
                 <div class="col-md-8">
                     <label for="emailTitle" class="col-md-3 col-form-label text-md-right">Email Title</label>
-                    <input id="emailTitle" type="text"></input>
+                    <input id="emailTitle" name="emailTitle" type="text"></input>
                     <button id="submit" type="submit" class="btn btn-primary col-2 btn-sm">Send</button>
                 </div>
             </form>

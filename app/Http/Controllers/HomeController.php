@@ -61,6 +61,9 @@ class HomeController extends Controller
             ->where('courses.course_id','=',$course->course_id)->get();
         }
         */
+        //$program = Program::where('program_id', $program_id)->first();
+        // get all the courses that belong to this program
+        //$programCourses = $program->courses()->get();
 
         return view('pages.home')->with("activeCourses",$activeCourses)->with("activeProgram",$programs)->with('user', $user);
     }

@@ -108,7 +108,6 @@ Route::get('/construction', function () {
 });
 
 // Admin Email Page
-Route::resource('/email','AdminEmailController');
 Route::get('/email','AdminEmailController@index')->name('email');
 Route::post('/email', 'AdminEmailController@send')->name('email.send');
 

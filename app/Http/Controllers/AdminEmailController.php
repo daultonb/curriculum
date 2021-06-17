@@ -28,7 +28,9 @@ class AdminEmailController extends Controller
     }
 
     public function send(Request $request){
-        //ddd($request);
+        // Write code for the mail tool
+        $emailTitle = $request->input('emailTitle');
+        dd($emailTitle);
 
         return view('pages.email');
     }
