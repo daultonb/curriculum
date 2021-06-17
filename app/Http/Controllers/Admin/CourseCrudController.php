@@ -55,7 +55,58 @@ class CourseCrudController extends CrudController
             'label' => "Course Number", // Table column heading
             'type' => 'number'
           ]);
+
+        $this->crud->addColumn([   // radio
+            'name'        => 'delivery_modality', // the name of the db column
+            'label'       => 'Delivery Modality', // the input label
+            'type'        => 'radio',
+            'options'     => [
+                // the key will be stored in the db, the value will be shown as label; 
+                'o' => "Online",
+                'l' => "Lice"
+            ],
+            // optional
+            //'inline'      => false, // show the radios all on the same line?
+        ]);
+
+        $this->crud->addColumn([   // radio
+            'name'        => 'year', // the name of the db column
+            'label'       => 'Course Year (Level)', // the input label
+            'type'        => 'radio',
+            'options'     => [
+                // the key will be stored in the db, the value will be shown as label; 
+                1 => "1",
+                2 => "2",
+                3 => "3",
+                4 => "4",
+                5 => "5",
+                6 => "6"
+            ],
+            // optional
+            //'inline'      => true, // show the radios all on the same line?
+        ]);
         
+        $this->crud->addColumn([
+            'name'        => 'semester', // the name of the db column
+            'label'       => 'Semester', // the input label
+            'type'        => 'radio',
+            'options'     => [
+                // the key will be stored in the db, the value will be shown as label; 
+                'W1' => "Winter 1",
+                'W2' => "Winter 2",
+                'S1' => "Summer 1",
+                "S2" => "Summer 2"
+            ],
+            // optional
+            //'inline'       => true, // show the radios all on the same line?
+        ]);
+
+        $this->crud->addColumn([
+            'name'        => 'section', // The db column name
+            'label'       => 'Section ID', // Table column heading
+            'type'        => 'text',           
+        ]);
+
         $this->crud->addColumn([
             'name' => 'course_title', // The db column name
             'label' => "Course Title", // Table column heading
