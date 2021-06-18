@@ -42,7 +42,7 @@
                                         @else
 
                                         <tr class="table-active">
-                                            <th>Course(s)</th>
+                                            <th>Course</th>
                                             <th>Assigned</th>
                                             <th>Status</th>
                                             <th width="30%"></th>
@@ -50,15 +50,14 @@
                                             @foreach($programCourses as $course)
                                             
                                                 <tr>
-                                                    <td>{{$course->year}} {{$course->semester}} {{$course->course_code}}{{$course->course_num}} -
-                                                        {{$course->course_title}}
-                                                        <p class="form-text text-muted">@if($course->required == 1)Required @elseif($course->required == -1) Not Required @endif</p>
+                                                    <td>{{$course->course_code}}{{$course->course_num}}: {{$course->course_title}}, {{$course->year}} {{$course->semester}}
+                                                        <p class="form-text text-muted">@if($course->pivot->course_required == 1)Required @elseif($course->pivot->course_required == 0) Not Required @endif</p>
                                                     </td>
                                                     <td>
-                                                        @if($course->assigned == -1)
-                                                        ❗Unassigned
-                                                        @else
+                                                        @if(count($programCoursesUsers[$course->course_id]) > 0 )
                                                         ✔️Assigned
+                                                        @else
+                                                        ❗Unassigned                                                       
                                                         @endif
                                                     </td>
                                                     <td>
@@ -345,7 +344,7 @@
                                                             <div class="modal-dialog modal-lg" role="document">
                                                                 <div class="modal-content">
                                                                     <div class="modal-header">
-                                                                        <h5 class="modal-title" id="assignInstructorModalLabel">Assign Instructor to course</h5>
+                                                                        <h5 class="modal-title" id="assignInstructorModalLabel">Assign Instructor to Course</h5>
                                                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                                             <span aria-hidden="true">&times;</span>
                                                                         </button>
@@ -361,21 +360,23 @@
                                                                                 <th colspan="2">Instructor</th>
                                                                             </tr>
                                                                             <div>
-                                                                                @foreach($courseUsers as $instructor)
-
-                                                                                    @if($course->course_id == $instructor->course_id)
-                                                                                        <tr>
-                                                                                            <td>{{$instructor->email}}</td>
-                                                                                            <td>
-                                                                                                <form action="{{route('courses.unassign', $course->course_id)}}" method="POST" class="float-right ml-2">
-                                                                                                    @csrf
-                                                                                                    {{method_field('DELETE')}}
-                                                                                                    <input type="hidden" class="form-check-input" name="program_id" value="{{$course->program_id}}">
-                                                                                                    <input type="hidden" class="form-check-input" name="email" value="{{$instructor->email}}">
-                                                                                                    <button type="submit"class="btn btn-danger btn-sm">Unassign</button>
-                                                                                                </form>
-                                                                                            </td>
-                                                                                        </tr>
+                                                                                @foreach($programCoursesUsers as $programCourseId => $programCourseUsers)
+                                                                                    @if($course->course_id == $programCourseId)
+                                                                                        @foreach($programCourseUsers as $programCourseUser)
+                                                                                            <tr>
+                                                                                                <td>{{$programCourseUser->email}}</td>
+                                                                                                <td>
+                                                                                                    <form action="{{route('courses.unassign', $course->course_id)}}" method="POST" class="float-right ml-2">
+                                                                                                        <!-- TODO: unassign on user id not email -->
+                                                                                                        @csrf
+                                                                                                        {{method_field('DELETE')}}
+                                                                                                        <input type="hidden" class="form-check-input" name="program_id" value="{{$course->program_id}}">
+                                                                                                        <input type="hidden" class="form-check-input" name="email" value="{{$programCourseUser->email}}">
+                                                                                                        <button type="submit"class="btn btn-danger btn-sm">Unassign</button>
+                                                                                                    </form>
+                                                                                                </td>
+                                                                                            </tr>
+                                                                                        @endforeach
                                                                                     @endif
                                                                                 @endforeach
                                                                             </div>
@@ -668,7 +669,7 @@
                                         <h5 style="float: right; width: 50%; text-align: center;">Program Courses</h5>
                                         <div class="drag_container" style="height:300px;float: left;overflow: auto">
 
-                                            @foreach($existCourses as $index => $course)
+                                            @foreach($userCoursesNotInProgram as $index => $course)
 
                                             <div class="draggable" draggable="true" style="margin:4px">
                                                 <input type="hidden" name="course_id[]" id= "course{{$index}}" value={{$course->course_id}}>
@@ -725,7 +726,6 @@
 
                                                 @endforeach
                                             </div>
-                                            <input type="hidden" value= {{count($existCourses)}} name="count">
                                             <input type="hidden" name="program_id" value="{{$program->program_id}}">
                                         </form>
                                     </div>
