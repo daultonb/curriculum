@@ -34,7 +34,7 @@ class Course extends Model
         return $this->hasMany('App\Models\LearningOutcome', 'course_id','course_id');
     }
 
-    public function program() 
+    public function programs() 
     {
         return $this->belongsToMany(Program::class, 'course_programs', 'course_id', 'program_id');
     }

@@ -190,15 +190,14 @@ class CourseWizardController extends Controller
                         ->with('lo_count',$lo_count)->with('am_count', $am_count)->with('la_count', $la_count)->with('oAct', $oAct)->with('oAss', $oAss)->with('outcomeMaps', $outcomeMaps);
     }
 
+    // Program Outcome Mapping
     public function step5($course_id)
     {
-        //for header
+        // for header
         $user = User::where('id',Auth::id())->first();
-        $courseUsers = Course::join('course_users','courses.course_id',"=","course_users.course_id")
-                                ->join('users','course_users.user_id',"=","users.id")
-                                ->select('users.email')
-                                ->where('courses.course_id','=',$course_id)->get();
-
+        $course = Course::find($course_id);
+        $courseUsers = $course->users()->select('users.email')->get();
+        
         //for progress bar
         $lo_count = LearningOutcome::where('course_id', $course_id)->count();
         $am_count = AssessmentMethod::where('course_id', $course_id)->count();
@@ -216,9 +215,10 @@ class CourseWizardController extends Controller
                                 ->select('outcome_maps.map_scale_value','outcome_maps.pl_outcome_id','program_learning_outcomes.pl_outcome','outcome_maps.l_outcome_id', 'learning_outcomes.l_outcome')
                                 ->where('learning_outcomes.course_id','=',$course_id)->count();
 
+
         //
+        $coursePrograms = $course->programs()->get();
         $l_outcomes = LearningOutcome::where('course_id', $course_id)->get();
-        $course =  Course::where('course_id', $course_id)->first();
         $pl_outcomes = ProgramLearningOutcome::where('program_id', $course->program_id)->get();
         // $mappingScales = MappingScale::where('program_id', $course->program_id)->get();
         $mappingScales = MappingScale::join('mapping_scale_programs', 'mapping_scales.map_scale_id', "=", 'mapping_scale_programs.map_scale_id')
@@ -268,7 +268,7 @@ class CourseWizardController extends Controller
         return view('courses.wizard.step5')->with('l_outcomes', $l_outcomes)->with('course', $course)->with('pl_outcomes',$pl_outcomes)->with('mappingScales', $mappingScales)->with('courseUsers', $courseUsers)->with('user', $user)
                                         ->with('lo_count',$lo_count)->with('am_count', $am_count)->with('la_count', $la_count)->with('oAct', $oAct)->with('oAss', $oAss)->with('outcomeMaps', $outcomeMaps)
                                         ->with('bc_labour_market',$bc_labour_market)->with('shaping_ubc',$shaping_ubc)->with('ubc_mandate_letters',$ubc_mandate_letters)->with('okanagan_2040_outlook',$okanagan_2040_outlook)
-                                        ->with('ubc_indigenous_plan',$ubc_indigenous_plan)->with('ubc_climate_priorities',$ubc_climate_priorities)->with('shaping_ubc_link',$shaping_ubc_link)->with('optional_PLOs',$optional_PLOs);
+                                        ->with('ubc_indigenous_plan',$ubc_indigenous_plan)->with('ubc_climate_priorities',$ubc_climate_priorities)->with('shaping_ubc_link',$shaping_ubc_link)->with('optional_PLOs',$optional_PLOs)->with('coursePrograms', $coursePrograms);
     }
 
     public function step6($course_id)

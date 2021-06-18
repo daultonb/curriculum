@@ -200,7 +200,7 @@
 
                                     <table class="table table-borderless">
 
-                                            @if(count($courseUsers)===1)
+                                            @if(count($courseUsers) == 0)
                                                 <tr class="table-active">
                                                     <th colspan="2">You have not added any collaborators to this course
                                                     </th>
