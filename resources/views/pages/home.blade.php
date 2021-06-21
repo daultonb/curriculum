@@ -136,9 +136,9 @@
                                         <td>❗In Progress</td>
                                         <td>
                                             @if(count($coursesPrograms[$course->course_id]) > 0)
-                                                <button type="button" class="btn btn-secondary" data-toggle="tooltip" data-html="true" title="@foreach($coursesPrograms[$course->course_id] as $courseProgram){{$courseProgram->program}}<br>@endforeach">{{ count($coursesPrograms[$course->course_id]) }}</button>
+                                                <button type="button" style="border:1px solid black; background-color: #1E90FF; border-radius: 50%; font-weight:bold; color:White; opacity: 1; text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black; margin: 0 auto; display:block;" class="btn btn-secondary" data-toggle="tooltip" data-html="true" title="@foreach($coursesPrograms[$course->course_id] as $courseProgram){{$courseProgram->program}}<br>@endforeach" disabled>{{ count($coursesPrograms[$course->course_id]) }}</button>
                                             @else
-                                                None
+                                                <p style="text-align: center;">None</p>
                                             @endif
                                         </td>
                                     @else
@@ -150,9 +150,9 @@
                                         <td>
                                             @if(count($coursesPrograms[$course->course_id]) > 0)
                                                 {{ count($coursesPrograms[$course->course_id]) }}
-                                                <button type="button" class="btn btn-secondary" data-toggle="tooltip" data-html="true" title="@foreach($coursesPrograms[$course->course_id] as $courseProgram){{$courseProgram->program}}<br>@endforeach">{{ count($coursesPrograms[$course->course_id]) }}</button>
+                                                <button type="button" style="border:1px solid black; background-color: #1E90FF; border-radius: 50%; font-weight:bold; color:White; opacity: 1; text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black; margin: 0 auto; display:block;" class="btn btn-secondary" data-toggle="tooltip" data-html="true" title="@foreach($coursesPrograms[$course->course_id] as $courseProgram){{$courseProgram->program}}<br>@endforeach" disabled>{{ count($coursesPrograms[$course->course_id]) }}</button>
                                             @else
-                                                None
+                                                <p style="text-align: center;">None</p>
                                             @endif
                                         </td>
                                     @endif
