@@ -129,37 +129,32 @@
                                 <tbody>
                                 <tr>
                                     @if($course->status !== 1)
-                                        @if($course->program_id == 1 || $course->program_id == 2 || $course->program_id == 3)
-                                            <th scope="row">{{$index + 1}}</th>
-                                            <td><a href="{{route('courseWizard.step1', $course->course_id)}}">{{$course->course_title}}</a></td>
-                                            <td>{{$course->course_code}} {{$course->course_num}}</td>
-                                            <td>{{$course->year}} {{$course->semester}}</td>
-                                            <td>❗In Progress</td>
-                                            <td>None</td>
-                                        @else
-                                            <th scope="row">{{$index + 1}}</th>
-                                            <td><a href="{{route('courseWizard.step1', $course->course_id)}}">{{$course->course_title}}</a></td>
-                                            <td>{{$course->course_code}} {{$course->course_num}}</td>
-                                            <td>{{$course->year}} {{$course->semester}}</td>
-                                            <td>❗In Progress</td>
-                                            <td><a href="{{route('programWizard.step1', $course->program_id)}}">{{$course->program}}</a></td>
-                                        @endif
-                                    @else
-                                        @if($course->program_id == 1 || $course->program_id == 2 || $course->program_id == 3 )
                                         <th scope="row">{{$index + 1}}</th>
-                                            <td><a href="{{route('courseWizard.step1', $course->course_id)}}">{{$course->course_title}}</a></td>
-                                            <td>{{$course->course_code}} {{$course->course_num}}</td>
-                                            <td>{{$course->year}} {{$course->semester}}</td>
-                                            <td>✔️Completed</td>
-                                            <td>None</td>
-                                        @else
-                                            <th scope="row">{{$index + 1}}</th>
-                                            <td><a href="{{route('courseWizard.step1', $course->course_id)}}">{{$course->course_title}}</a></td>
-                                            <td>{{$course->course_code}} {{$course->course_num}}</td>
-                                            <td>{{$course->year}} {{$course->semester}}</td>
-                                            <td>✔️Completed</td>
-                                            <td><a href="{{route('programWizard.step1', $course->program_id)}}">{{$course->program}}</a></td>
-                                        @endif
+                                        <td><a href="{{route('courseWizard.step1', $course->course_id)}}">{{$course->course_title}}</a></td>
+                                        <td>{{$course->course_code}} {{$course->course_num}}</td>
+                                        <td>{{$course->year}} {{$course->semester}}</td>
+                                        <td>❗In Progress</td>
+                                        <td>
+                                            @if(count($coursesPrograms[$course->course_id]) > 0)
+                                                <button type="button" style="border:1px solid black; background-color: #1E90FF; border-radius: 50%; font-weight:bold; color:White; opacity: 1; text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black; margin: 0 auto; display:block;" class="btn btn-secondary" data-toggle="tooltip" data-html="true" title="@foreach($coursesPrograms[$course->course_id] as $courseProgram){{$courseProgram->program}}<br>@endforeach" disabled>{{ count($coursesPrograms[$course->course_id]) }}</button>
+                                            @else
+                                                <p style="text-align: center;">None</p>
+                                            @endif
+                                        </td>
+                                    @else
+                                        <th scope="row">{{$index + 1}}</th>
+                                        <td><a href="{{route('courseWizard.step1', $course->course_id)}}">{{$course->course_title}}</a></td>
+                                        <td>{{$course->course_code}} {{$course->course_num}}</td>
+                                        <td>{{$course->year}} {{$course->semester}}</td>
+                                        <td>✔️Completed</td>
+                                        <td>
+                                            @if(count($coursesPrograms[$course->course_id]) > 0)
+                                                {{ count($coursesPrograms[$course->course_id]) }}
+                                                <button type="button" style="border:1px solid black; background-color: #1E90FF; border-radius: 50%; font-weight:bold; color:White; opacity: 1; text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black; margin: 0 auto; display:block;" class="btn btn-secondary" data-toggle="tooltip" data-html="true" title="@foreach($coursesPrograms[$course->course_id] as $courseProgram){{$courseProgram->program}}<br>@endforeach" disabled>{{ count($coursesPrograms[$course->course_id]) }}</button>
+                                            @else
+                                                <p style="text-align: center;">None</p>
+                                            @endif
+                                        </td>
                                     @endif
 
                                     <!--<td></td>-->
@@ -510,4 +505,10 @@
 <!-- End Create Course Modal -->
 
 
+<script type="application/javascript">
+    $(document).ready(function () {
+        // Enables functionality of tool tips
+        $('[data-toggle="tooltip"]').tooltip({html:true});
+    });
+</script>
 @endsection

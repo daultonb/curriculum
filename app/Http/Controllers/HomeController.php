@@ -4,10 +4,12 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Course;
+use App\Models\CourseProgram;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use App\Models\CourseUser;
 use App\Models\ProgramUser;
+use Attribute;
 
 class HomeController extends Controller
 {
@@ -29,12 +31,15 @@ class HomeController extends Controller
     public function index()
     {
         $user = User::where('id', Auth::id())->first();
-
+        /*
         $activeCourses = User::join('course_users', 'users.id', '=', 'course_users.user_id')
                 ->join('courses', 'course_users.course_id', '=', 'courses.course_id')
-                ->join('programs', 'courses.program_id', '=', 'programs.program_id')
-                ->select('courses.program_id','courses.course_code','courses.delivery_modality','courses.semester','courses.year','courses.section',
-                'courses.course_id','courses.course_num','courses.course_title', 'courses.status','programs.program', 'programs.faculty', 'programs.department','programs.level')
+                //->join('programs', 'courses.program_id', '=', 'programs.program_id')
+                ->leftjoin('course_programs', 'courses.course_id', '=', 'course_programs.course_id')
+                //->select('courses.program_id','courses.course_code','courses.delivery_modality','courses.semester','courses.year','courses.section',
+                //'courses.course_id','courses.course_num','courses.course_title', 'courses.status','programs.program', 'programs.faculty', 'programs.department','programs.level')
+                ->select('courses.course_code','courses.delivery_modality','courses.semester','courses.year','courses.section',
+                'courses.course_id','courses.course_num','courses.course_title', 'courses.status')
                 ->where([
                     ['course_users.user_id','=',Auth::id()],
                     ['courses.status', '=', 1]
@@ -42,6 +47,17 @@ class HomeController extends Controller
                     ['course_users.user_id','=',Auth::id()],
                     ['courses.status', '=', -1]
                 ])->get();
+        */
+        $activeCourses = $user->courses()->join('programs', 'courses.program_id', '=', 'programs.program_id')
+        ->select('courses.program_id','courses.course_code','courses.delivery_modality','courses.semester','courses.year','courses.section',
+        'courses.course_id','courses.course_num','courses.course_title', 'courses.status','programs.program', 'programs.faculty', 'programs.department','programs.level')
+        ->where([
+            ['course_users.user_id','=',Auth::id()],
+            ['courses.status', '=', 1]
+        ])->orWhere([
+            ['course_users.user_id','=',Auth::id()],
+            ['courses.status', '=', -1]
+        ])->get();
 
         $programs = User::join('program_users', 'users.id', '=', 'program_users.user_id')
         ->join('programs', 'program_users.program_id', "=", 'programs.program_id')
@@ -49,20 +65,13 @@ class HomeController extends Controller
         ->where('program_users.user_id','=',Auth::id())
         ->get();
 
-        $user = User::where('id', Auth::id())->first();
-
-        /*
-        $courseUsers = array();
-        foreach($activeCourses as $course){
-            $courseUsers[] =
-            Course::join('course_users','courses.course_id',"=","course_users.course_id")
-            ->join('users','course_users.user_id',"=","users.id")
-            ->select('users.email')
-            ->where('courses.course_id','=',$course->course_id)->get();
+        $coursesPrograms = array();
+        foreach ($activeCourses as $course) {
+            $coursePrograms = $course->program()->get();
+            $coursesPrograms[$course->course_id] = $coursePrograms;
         }
-        */
-
-        return view('pages.home')->with("activeCourses",$activeCourses)->with("activeProgram",$programs)->with('user', $user);
+        
+        return view('pages.home')->with("activeCourses",$activeCourses)->with("activeProgram",$programs)->with('user', $user)->with('coursePrograms', $coursePrograms)->with('coursesPrograms', $coursesPrograms);
     }
 
 
