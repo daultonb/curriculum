@@ -48,13 +48,13 @@ class CourseCrudController extends CrudController
             'name' => 'course_code', // The db column name
             'label' => "Course Code", // Table column heading
             'type' => 'Text'
-          ]);
+        ]);
 
         $this->crud->addColumn([
             'name' => 'course_num', // The db column name
             'label' => "Course Number", // Table column heading
             'type' => 'number'
-          ]);
+        ]);
 
         $this->crud->addColumn([   // radio
             'name'        => 'delivery_modality', // the name of the db column
@@ -111,7 +111,7 @@ class CourseCrudController extends CrudController
             'name' => 'course_title', // The db column name
             'label' => "Course Title", // Table column heading
             'type' => 'Text'
-          ]);
+        ]);
 
         $this->crud->addColumn([
             // 1-n relationship
@@ -121,7 +121,7 @@ class CourseCrudController extends CrudController
             'entity'    => 'program', // the method that defines the relationship in your Model
             'attribute' => 'program', // foreign key attribute that is shown to user
             'model'     => "App\Models\Program", // foreign key model
-          ]);
+        ]);
 
         $this->crud->addColumn([   // radio
             'name'        => 'status', // the name of the db column
@@ -163,13 +163,164 @@ class CourseCrudController extends CrudController
             'name' => 'course_code', // The db column name
             'label' => "Course Code", // Table column heading
             'type' => 'Text'
+        ]);
+
+        $this->crud->addField([
+            'name' => 'course_num', // The db column name
+            'label' => "Course Number", // Table column heading
+            'type' => 'number'
+        ]);
+
+        $this->crud->addField([   // radio
+            'name'        => 'delivery_modality', // the name of the db column
+            'label'       => 'Delivery Modality', // the input label
+            'type'        => 'radio',
+            'options'     => [
+                // the key will be stored in the db, the value will be shown as label; 
+                'o' => "Online",
+                'l' => "Live"
+            ],
+            // optional
+            //'inline'      => false, // show the radios all on the same line?
+        ]);
+
+        $this->crud->addField([   // radio
+            'name'        => 'year', // the name of the db column
+            'label'       => 'Course Year (Level)', // the input label
+            'type'        => 'radio',
+            'options'     => [
+                // the key will be stored in the db, the value will be shown as label; 
+                1 => "1",
+                2 => "2",
+                3 => "3",
+                4 => "4",
+                5 => "5",
+                6 => "6"
+            ],
+            // optional
+            'inline'      => true, // show the radios all on the same line?
+        ]);
+
+        $this->crud->addField([
+            'name'        => 'semester', // the name of the db column
+            'label'       => 'Semester', // the input label
+            'type'        => 'radio',
+            'options'     => [
+                // the key will be stored in the db, the value will be shown as label; 
+                'W1' => "Winter 1",
+                'W2' => "Winter 2",
+                'S1' => "Summer 1",
+                "S2" => "Summer 2"
+            ],
+            // optional
+            'inline'       => true, // show the radios all on the same line?
+        ]);
+
+        $this->crud->addField([
+            'name'        => 'section', // The db column name
+            'label'       => 'Section ID', // Table column heading
+            'type'        => 'text',           
+        ]);
+        
+        $this->crud->addField([
+            'name' => 'course_title', // The db column name
+            'label' => "Course Title", // Table column heading
+            'type' => 'Text'
+        ]);
+
+        $this->crud->addField([
+            // 1-n relationship
+            'label'     => 'Program', // Table column heading
+            'type'      => 'select',
+            'name'      => 'program_id', // the column that contains the ID of that connected entity;
+            'entity'    => 'program', // the method that defines the relationship in your Model
+            'attribute' => 'program', // foreign key attribute that is shown to user
+            'model'     => "App\Models\Program", // foreign key model
+
+        ]);
+
+        
+        $this->crud->addField([   // radio
+            'name'        => 'status', // the name of the db column
+            'label'       => 'Status', // the input label
+            'type'        => 'radio',
+            'options'     => [
+                // the key will be stored in the db, the value will be shown as label; 
+                -1 => "In Progress",
+                1 => "Completed"
+            ],
+            // optional
+            //'inline'      => false, // show the radios all on the same line?
+        ]);
+
+        $this->crud->addField([   // Hidden
+            'name'  => 'type',
+            'type'  => 'hidden',
+            'value' => 'assigned',
+        ]);
+
+        $this->crud->addField([   // relationship
+            'label' => "Assigned Instructors",
+            'type' => "select2_multiple",
+            'name' => 'users', // the method on your model that defines the relationship
+
+            // OPTIONALS:
+            'entity' => 'users', // the method that defines the relationship in your Model
+            'attribute' => "email", // foreign key attribute that is shown to user (identifiable attribute)
+            'model' => "App\Models\User", // foreign key Eloquent model
+            'placeholder' => "Select a user", // placeholder for the select2 input
+            'pivot'     => true,
+            'select_all' => true,
+
+        ]);
+
+        $this->crud->addField([   // radio
+            'name'        => 'assigned', // the name of the db column
+            'label'       => 'Assigned to instructor', // the input label
+            'type'        => 'radio',
+            'options'     => [
+                // the key will be stored in the db, the value will be shown as label; 
+                -1 => "No",
+                1 => "Yes"
+            ],
+            // optional
+            //'inline'      => false, // show the radios all on the same line?
+        ]);
+
+        $this->crud->addField([   // CustomHTML
+            'name'  => 'helper',
+            'type'  => 'custom_html',
+            'value' => '<small class="form-text text-muted">If instructors have been assigned to this course please select yes else select no</small>'
+        ]);
+
+        /**
+         * Fields can be defined using the fluent syntax or array syntax:
+         * - CRUD::field('price')->type('number');
+         * - CRUD::addField(['name' => 'price', 'type' => 'number'])); 
+         */
+    }
+
+    /**
+     * Define what happens when the Update operation is loaded.
+     * 
+     * @see https://backpackforlaravel.com/docs/crud-operation-update
+     * @return void
+     */
+    protected function setupUpdateOperation()
+    {
+       // $this->setupCreateOperation();
+
+        $this->crud->addField([
+            'name' => 'course_code', // The db column name
+            'label' => "Course Code", // Table column heading
+            'type' => 'Text'
          ]);
 
         $this->crud->addField([
             'name' => 'course_num', // The db column name
             'label' => "Course Number", // Table column heading
             'type' => 'number'
-          ]);
+        ]);
 
         $this->crud->addField([   // radio
             'name'        => 'delivery_modality', // the name of the db column
@@ -237,107 +388,7 @@ class CourseCrudController extends CrudController
             'attribute' => 'program', // foreign key attribute that is shown to user
             'model'     => "App\Models\Program", // foreign key model
 
-          ]);
-
-        
-        $this->crud->addField([   // radio
-            'name'        => 'status', // the name of the db column
-            'label'       => 'Status', // the input label
-            'type'        => 'radio',
-            'options'     => [
-                // the key will be stored in the db, the value will be shown as label; 
-                -1 => "In Progress",
-                1 => "Completed"
-            ],
-            // optional
-            //'inline'      => false, // show the radios all on the same line?
         ]);
-
-        $this->crud->addField([   // Hidden
-            'name'  => 'type',
-            'type'  => 'hidden',
-            'value' => 'assigned',
-        ]);
-
-        $this->crud->addField([   // relationship
-            'label' => "Assigned Instructors",
-            'type' => "select2_multiple",
-            'name' => 'users', // the method on your model that defines the relationship
-
-            // OPTIONALS:
-            'entity' => 'users', // the method that defines the relationship in your Model
-            'attribute' => "email", // foreign key attribute that is shown to user (identifiable attribute)
-            'model' => "App\Models\User", // foreign key Eloquent model
-            'placeholder' => "Select a user", // placeholder for the select2 input
-            'pivot'     => true,
-            'select_all' => true,
-
-         ]);
-
-        $this->crud->addField([   // radio
-            'name'        => 'assigned', // the name of the db column
-            'label'       => 'Assigned to instructor', // the input label
-            'type'        => 'radio',
-            'options'     => [
-                // the key will be stored in the db, the value will be shown as label; 
-                -1 => "No",
-                1 => "Yes"
-            ],
-            // optional
-            //'inline'      => false, // show the radios all on the same line?
-        ]);
-
-        $this->crud->addField([   // CustomHTML
-            'name'  => 'helper',
-            'type'  => 'custom_html',
-            'value' => '<small class="form-text text-muted">If instructors have been assigned to this course please select yes else select no</small>'
-        ]);
-
-        /**
-         * Fields can be defined using the fluent syntax or array syntax:
-         * - CRUD::field('price')->type('number');
-         * - CRUD::addField(['name' => 'price', 'type' => 'number'])); 
-         */
-    }
-
-    /**
-     * Define what happens when the Update operation is loaded.
-     * 
-     * @see https://backpackforlaravel.com/docs/crud-operation-update
-     * @return void
-     */
-    protected function setupUpdateOperation()
-    {
-       // $this->setupCreateOperation();
-
-        $this->crud->addField([
-            'name' => 'course_code', // The db column name
-            'label' => "Course Code", // Table column heading
-            'type' => 'Text'
-         ]);
-
-        $this->crud->addField([
-            'name' => 'course_num', // The db column name
-            'label' => "Course Number", // Table column heading
-            'type' => 'number'
-          ]);
-        
-        $this->crud->addField([
-            'name' => 'course_title', // The db column name
-            'label' => "Course Title", // Table column heading
-            'type' => 'Text'
-          ]);
-
-        $this->crud->addField([
-            // 1-n relationship
-            'label'     => 'Program', // Table column heading
-            'type'      => 'select',
-            'name'      => 'program_id', // the column that contains the ID of that connected entity;
-            'entity'    => 'program', // the method that defines the relationship in your Model
-            'attribute' => 'program', // foreign key attribute that is shown to user
-            'model'     => "App\Models\Program", // foreign key model
-
-          ]);
 
         
         $this->crud->addField([   // radio
@@ -375,7 +426,7 @@ class CourseCrudController extends CrudController
 
             'select_all' => true,
 
-         ]);
+        ]);
 
          $this->crud->addField([   // radio
             'name'        => 'assigned', // the name of the db column
@@ -476,19 +527,70 @@ class CourseCrudController extends CrudController
             'name' => 'course_code', // The db column name
             'label' => "Course Code", // Table column heading
             'type' => 'Text'
-          ]);
+        ]);
 
         $this->crud->addColumn([
             'name' => 'course_num', // The db column name
             'label' => "Course Number", // Table column heading
             'type' => 'number'
-          ]);
+        ]);
+
+        $this->crud->addColumn([   // radio
+            'name'        => 'delivery_modality', // the name of the db column
+            'label'       => 'Delivery Modality', // the input label
+            'type'        => 'radio',
+            'options'     => [
+                // the key will be stored in the db, the value will be shown as label; 
+                'o' => "Online",
+                'l' => "Lice"
+            ],
+            // optional
+            //'inline'      => false, // show the radios all on the same line?
+        ]);
+
+        $this->crud->addColumn([   // radio
+            'name'        => 'year', // the name of the db column
+            'label'       => 'Course Year (Level)', // the input label
+            'type'        => 'radio',
+            'options'     => [
+                // the key will be stored in the db, the value will be shown as label; 
+                1 => "1",
+                2 => "2",
+                3 => "3",
+                4 => "4",
+                5 => "5",
+                6 => "6"
+            ],
+            // optional
+            //'inline'      => true, // show the radios all on the same line?
+        ]);
+        
+        $this->crud->addColumn([
+            'name'        => 'semester', // the name of the db column
+            'label'       => 'Semester', // the input label
+            'type'        => 'radio',
+            'options'     => [
+                // the key will be stored in the db, the value will be shown as label; 
+                'W1' => "Winter 1",
+                'W2' => "Winter 2",
+                'S1' => "Summer 1",
+                "S2" => "Summer 2"
+            ],
+            // optional
+            //'inline'       => true, // show the radios all on the same line?
+        ]);
+
+        $this->crud->addColumn([
+            'name'        => 'section', // The db column name
+            'label'       => 'Section ID', // Table column heading
+            'type'        => 'text',           
+        ]);
         
         $this->crud->addColumn([
             'name' => 'course_title', // The db column name
             'label' => "Course Title", // Table column heading
             'type' => 'Text'
-          ]);
+        ]);
 
         $this->crud->addColumn([
             // 1-n relationship
@@ -498,7 +600,7 @@ class CourseCrudController extends CrudController
             'entity'    => 'program', // the method that defines the relationship in your Model
             'attribute' => 'program', // foreign key attribute that is shown to user
             'model'     => App\Models\Program::class, // foreign key model
-          ]);
+        ]);
         
         $this->crud->addColumn([   // radio
             'name'        => 'status', // the name of the db column
@@ -535,7 +637,7 @@ class CourseCrudController extends CrudController
             'entity'       => 'users', // the method that defines the relationship in your Model
             'attribute'    => 'email', // foreign key attribute that is shown to user
             'model'        => App\Models\User::class, // foreign key model
-         ]);
+        ]);
 
         // $this->crud->addColumn([  
         //     // any type of relationship
