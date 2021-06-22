@@ -23,17 +23,17 @@ class Program extends Model
         return $this->belongsToMany(Course::class, 'course_programs', 'program_id', 'course_id')->withPivot('course_required', 'instructor_assigned', 'map_status')->withTimestamps();
     }
 
-    public function mappingScaleLevel()
+    public function mappingScaleLevels()
     {
-        return $this->belongsToMany('App\Models\MappingScale', 'mapping_scale_programs', 'map_scale_id', 'program_id');
+        return $this->belongsToMany('App\Models\MappingScale', 'mapping_scale_programs', 'program_id', 'map_scale_id');
     }
 
     public function users(){
-        return $this->belongsToMany('App\Models\User', 'program_users', 'user_id', 'program_id');
+        return $this->belongsToMany('App\Models\User', 'program_users', 'program_id', 'user_id');
     }
 
     // Eloquent automatically determines the FK column for the ProgramLearningOutcome model by taking the parent model (program) and suffix it with _id (program_id)
     public function programLearningOutcomes() {
-        return $this->hasMany(ProgramLearningOutcome::class);
+        return $this->hasMany(ProgramLearningOutcome::class, 'program_id', 'program_id');
     }
 }

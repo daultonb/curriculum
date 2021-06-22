@@ -11,43 +11,6 @@
         <div class="col-md-12">
             @include('courses.wizard.header')
 
-            <!-- progress bar -->
-            <div>
-                <table class="table table-borderless text-center table-sm" style="table-layout: fixed; width: 100%">
-                    <tbody>
-                        <tr>
-                            <td><a class="btn @if($lo_count < 1) btn-secondary @else  btn-success @endif" href="{{route('courseWizard.step1', $course->course_id)}}"
-                                    style="width: 30px; height: 30px; padding: 6px 0px; border-radius: 15px; text-align: center; font-size: 12px; line-height: 1.42857;">
-                                    <b>1</b> </a></td>
-                            <td><a class="btn @if($am_count < 1) btn-secondary @else  btn-success @endif" href="{{route('courseWizard.step2', $course->course_id)}}"
-                                    style="width: 30px; height: 30px; padding: 6px 0px; border-radius: 15px; text-align: center; font-size: 12px; line-height: 1.42857;">
-                                    <b>2</b> </a></td>
-                            <td><a class="btn @if($la_count < 1) btn-secondary @else  btn-success @endif" href="{{route('courseWizard.step3', $course->course_id)}}"
-                                    style="width: 30px; height: 30px; padding: 6px 0px; border-radius: 15px; text-align: center; font-size: 12px; line-height: 1.42857;">
-                                    <b>3</b> </a></td>
-                            <td><a class="btn @if($oAct < 1 && $oAss < 1) btn-secondary @else  btn-success @endif" href="{{route('courseWizard.step4', $course->course_id)}}"
-                                    style="width: 30px; height: 30px; padding: 6px 0px; border-radius: 15px; text-align: center; font-size: 12px; line-height: 1.42857;">
-                                    <b>4</b> </a></td>
-                            <td><a class="btn btn-primary" href="{{route('courseWizard.step5', $course->course_id)}}"
-                                    style="width: 30px; height: 30px; padding: 6px 0px; border-radius: 15px; text-align: center; font-size: 12px; line-height: 1.42857;">
-                                    <b>5</b> </a></td>
-                            <td><a class="btn btn-secondary" href="{{route('courseWizard.step6', $course->course_id)}}"
-                                    style="width: 30px; height: 30px; padding: 6px 0px; border-radius: 15px; text-align: center; font-size: 12px; line-height: 1.42857;">
-                                    <b>6</b> </a></td>
-                        </tr>
-
-                        <tr>
-                            <td>Course Learning Outcomes</td>
-                            <td>Student Assessment Methods</td>
-                            <td>Teaching and Learning Activities</td>
-                            <td>Course Alignment</td>
-                            <td>Program Outcome Mapping</td>
-                            <td>Course Summary</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-
             <div class="card">
                 <div class="card-body">
                     @if (count($l_outcomes) < 1)
@@ -88,92 +51,139 @@
                                                             </label>
                                                         </div>
 
-                                                        <form id="{{$courseProgram->program_id}}" action="" method="POST">
-                                                            @csrf
-
                                                             <div id="collapse{{$courseProgram->program_id}}" class="collapse" aria-labelledby="heading{{$courseProgram->program_id}}" data-parent="#accordionGroup{{$courseProgram->program_id}}">
                                                                 <div class="card-body">
-                                                                    @foreach($l_outcomes as $index => $courseLearningOutcome)
-                                                                        <div class="accordion" id="accordionGroup{{$courseProgram->program_id}}-{{$courseLearningOutcome->l_outcome_id}}">
+                                                                    @if ($programsMappingScales[$courseProgram->program_id]->count() > 0)
+                                                                        <!-- Mapping scale for this program -->
+                                                                        <p>Using the mapping scale provided, identify the alignment between each of your course learning outcomes (CLOs) and the program learning outcomes (PLOs).</p>
+                                                                        <p class="form-text text-primary container font-weight-bold ">Note: Remember to click save once you are done.</p>
+                                                                        
+                                                                        <div class="container row">
+                                                                            <div class="col">
+                                                                                    <table class="table table-bordered table-sm">
+                                                                                        <thead>
+                                                                                            <tr>
+                                                                                                <th colspan="2">Mapping Scale</th>
+                                                                                            </tr>
+                                                                                        </thead>
+                                                                                        <tbody>
+                                                                                            @foreach($programsMappingScales[$courseProgram->program_id] as $programMappingScaleLevel)
 
-                                                                            <div class="accordion-item">
-                                                                                <h2 class="accordion-header" id="header{{$courseProgram->program_id}}-{{$courseLearningOutcome->l_outcome_id}}">
-                                                                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{$courseProgram->program_id}}-{{$courseLearningOutcome->l_outcome_id}}" aria-expanded="false" aria-controls="collapse{{$courseProgram->program_id}}-{{$courseLearningOutcome->l_outcome_id}}">
-                                                                                        <b>CLO {{$index+1}} </b>. {{$courseLearningOutcome->clo_shortphrase}}
-                                                                                    </button>
-                                                                                </h2>
+                                                                                                <tr>
 
-                                                                                <div id="collapse{{$courseProgram->program_id}}-{{$courseLearningOutcome->l_outcome_id}}" class="accordion-collapse collapse" aria-labelledby="header{{$courseProgram->program_id}}-{{$courseLearningOutcome->l_outcome_id}}" data-bs-parent="#accordionGroup{{$courseProgram->program_id}}-{{$courseLearningOutcome->l_outcome_id}}">
-                                                                                    <div class="accordion-body">
-                                                                                        <form id="{{$courseProgram->program_id}}-{{$courseLearningOutcome->l_outcome_id}}" action="" method="POST">
-                                                                                            @csrf
-                                                                                            <input type="hidden" name="course_id" value="{{$course->course_id}}">
-                                                                                            <input type="hidden" name="l_outcome_id" value="{{$courseLearningOutcome->l_outcome_id}}">
+                                                                                                    <td style="width:20%">
+                                                                                                        <div style="background-color:{{$programMappingScaleLevel->colour}}; height: 10px; width: 10px;"></div>
+                                                                                                        {{$programMappingScaleLevel->title}}<br>
+                                                                                                        ({{$programMappingScaleLevel->abbreviation}})
+                                                                                                    </td>
+                                                                                                    <td>
+                                                                                                        {{$programMappingScaleLevel->description}}
+                                                                                                    </td>
 
-                                                                                            <div id="collapse{{$courseProgram->program_id}}-{{$courseLearningOutcome->l_outcome_id}}" class="collapse" aria-labelledby="heading{{$courseProgram->program_id}}-{{$courseLearningOutcome->l_outcome_id}}" data-parent="#accordionGroup{{$courseProgram->program_id}}-{{$courseLearningOutcome->l_outcome_id}}">
-                                                                                                <div class="card border-white">
-
-                                                                                                    <div class="card-body">
-                                                                                                        <h5>{{$courseLearningOutcome->l_outcome}}</h5>
-
-                                                                                                        <table class="table table-bordered table-sm">
-                                                                                                            <thead class="thead-light">
-                                                                                                                <tr class="table-active">
-                                                                                                                    <th>Program Learning Outcomes or Competencies</th>
-
-                                                                                                                    @foreach($mappingScales as $ms)
-                                                                                                                        <th data-toggle="tooltip" title="{{$ms->title}}: {{$ms->description}}">
-                                                                                                                            {{$ms->abbreviation}}
-                                                                                                                        </th>
-                                                                                                                    @endforeach
-                                                                                                                    <th data-toggle="tooltip" title="Not Aligned">N/A</th>
-                                                                                                                </tr>
-
-                                                                                                            </thead>
-                                                                                                            <tbody>
-                                                                                                                @foreach($pl_outcomes as $pl_outcome)
-                                                                                                                    <tr>
-                                                                                                                        <td>
-                                                                                                                            <b>{{$pl_outcome->plo_shortphrase}}</b><br>
-                                                                                                                                {{$pl_outcome->pl_outcome}}
-                                                                                                                        </td>
-
-                                                                                                                        @foreach($mappingScales as $ms)
-                                                                                                                            <td>
-                                                                                                                                <div class="form-check">
-                                                                                                                                    <input class="form-check-input position-static" type="radio" name="map[{{$courseLearningOutcome->l_outcome_id}}][{{$pl_outcome->pl_outcome_id}}]" value="{{$ms->abbreviation}}"
-                                                                                                                                    @if(isset($courseLearningOutcome->programLearningOutcomes->find($pl_outcome->pl_outcome_id)->pivot))
-                                                                                                                                    @if($courseLearningOutcome->programLearningOutcomes->find($pl_outcome->pl_outcome_id)->pivot->map_scale_value == $ms->abbreviation) checked=checked @endif @endif>
-                                                                                                                                </div>
-                                                                                                                            </td>
-                                                                                                                        @endforeach
-
-                                                                                                                        <td>
-                                                                                                                            <div class="form-check">
-                                                                                                                                <input class="form-check-input position-static" type="radio" name="map[{{$courseLearningOutcome->l_outcome_id}}][{{$pl_outcome->pl_outcome_id}}]" value="N/A"
-                                                                                                                                @if(isset($courseLearningOutcome->programLearningOutcomes->find($pl_outcome->pl_outcome_id)->pivot))
-                                                                                                                                @if($courseLearningOutcome->programLearningOutcomes->find($pl_outcome->pl_outcome_id)->pivot->map_scale_value =='N/A') checked=checked @endif @endif required>
-                                                                                                                            </div>
-                                                                                                                        </td>
-
-                                                                                                                    </tr>
-                                                                                                                @endforeach
-                                                                                                            </tbody>
-                                                                                                        </table>
-                                                                                                        <button disabled type="submit" class="btn btn-primary my-3 btn-sm float-right col-2">Save</button>
-                                                                                                    </div>                                                                                                    
-                                                                                                </div>
-                                                                                            </div>
-                                                                                        </form>
-                                                                                    </div>
-                                                                                </div>                                                                            
+                                                                                                </tr>
+                                                                                            @endforeach
+                                                                                        </tbody>
+                                                                                    </table>
                                                                             </div>
                                                                         </div>
-                                                                    @endforeach
-                                                                    
+
+                                                                        <!-- list of course learning outcome accordions with mapping form -->
+                                                                        @foreach($l_outcomes as $index => $courseLearningOutcome)
+                                                                            <div class="accordion" id="accordionGroup{{$courseProgram->program_id}}-{{$courseLearningOutcome->l_outcome_id}}">
+                                                                                <div class="accordion-item">
+                                                                                    <h2 class="accordion-header" id="header{{$courseProgram->program_id}}-{{$courseLearningOutcome->l_outcome_id}}">
+                                                                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{$courseProgram->program_id}}-{{$courseLearningOutcome->l_outcome_id}}" aria-expanded="false" aria-controls="collapse{{$courseProgram->program_id}}-{{$courseLearningOutcome->l_outcome_id}}">
+                                                                                            <b>CLO {{$index+1}} </b>. {{$courseLearningOutcome->clo_shortphrase}}
+                                                                                        </button>
+                                                                                    </h2>
+
+                                                                                    <div id="collapse{{$courseProgram->program_id}}-{{$courseLearningOutcome->l_outcome_id}}" class="accordion-collapse collapse" aria-labelledby="header{{$courseProgram->program_id}}-{{$courseLearningOutcome->l_outcome_id}}" data-bs-parent="#accordionGroup{{$courseProgram->program_id}}-{{$courseLearningOutcome->l_outcome_id}}">
+                                                                                        <div class="accordion-body">
+
+                                                                                            <form id="{{$courseProgram->program_id}}-{{$courseLearningOutcome->l_outcome_id}}" action="{{action('OutcomeMapController@store')}}" method="POST">
+                                                                                                @csrf
+                                                                                                <input type="hidden" name="program_id" value="{{$courseProgram->program_id}}">
+                                                                                                <input type="hidden" name="l_outcome_id" value="{{$courseLearningOutcome->l_outcome_id}}">
+
+                                                                                                <div id="collapse{{$courseProgram->program_id}}-{{$courseLearningOutcome->l_outcome_id}}" class="collapse" aria-labelledby="heading{{$courseProgram->program_id}}-{{$courseLearningOutcome->l_outcome_id}}" data-parent="#accordionGroup{{$courseProgram->program_id}}-{{$courseLearningOutcome->l_outcome_id}}">
+                                                                                                    <div class="card border-white">
+
+                                                                                                        <div class="card-body">
+                                                                                                            <h5 style="margin-bottom:16px;text-align:center;font-weight: bold;">{{$courseLearningOutcome->l_outcome}}</h5>
+
+                                                                                                            @if ($programsLearningOutcomes[$courseProgram->program_id]->count() > 0) 
+
+                                                                                                                <table class="table table-bordered table-sm">
+                                                                                                                    <thead class="thead-light">
+                                                                                                                        <tr class="table-active">
+                                                                                                                            <th>Program Learning Outcomes or Competencies</th>
+                                                                                                                            <!-- Mapping Table Levels -->
+                                                                                                                            @foreach($programsMappingScales[$courseProgram->program_id] as $programMappingScaleLevel)
+                                                                                                                                <th data-toggle="tooltip" title="{{$programMappingScaleLevel->title}}: {{$programMappingScaleLevel->description}}">
+                                                                                                                                    {{$programMappingScaleLevel->abbreviation}}
+                                                                                                                                </th>
+                                                                                                                            @endforeach
+                                                                                                                            
+                                                                                                                            <th data-toggle="tooltip" title="Not Aligned">N/A</th>
+                                                                                                                        </tr>
+
+                                                                                                                    </thead>
+                                                                                                                    <tbody>
+                                                                                                                        @foreach($programsLearningOutcomes[$courseProgram->program_id] as $pl_outcome)
+                                                                                                                            <tr>
+                                                                                                                                <td>
+                                                                                                                                    <b>{{$pl_outcome->plo_shortphrase}}</b><br>
+                                                                                                                                        {{$pl_outcome->pl_outcome}}
+                                                                                                                                </td>
+
+                                                                                                                                @foreach($programsMappingScales[$courseProgram->program_id] as $programMappingScaleLevel)
+                                                                                                                                    <td>
+                                                                                                                                        <div class="form-check">
+                                                                                                                                            <input class="form-check-input position-static" type="radio" name="map[{{$courseLearningOutcome->l_outcome_id}}][{{$pl_outcome->pl_outcome_id}}]" value="{{$programMappingScaleLevel->abbreviation}}"
+                                                                                                                                            @if(isset($courseLearningOutcome->programLearningOutcomes->find($pl_outcome->pl_outcome_id)->pivot))
+                                                                                                                                            @if($courseLearningOutcome->programLearningOutcomes->find($pl_outcome->pl_outcome_id)->pivot->map_scale_value == $programMappingScaleLevel->abbreviation) checked=checked @endif @endif>
+                                                                                                                                        </div>
+                                                                                                                                    </td>
+                                                                                                                                @endforeach
+
+                                                                                                                                <td>
+                                                                                                                                    <div class="form-check">
+                                                                                                                                        <input class="form-check-input position-static" type="radio" name="map[{{$courseLearningOutcome->l_outcome_id}}][{{$pl_outcome->pl_outcome_id}}]" value="N/A"
+                                                                                                                                        @if(isset($courseLearningOutcome->programLearningOutcomes->find($pl_outcome->pl_outcome_id)->pivot))
+                                                                                                                                        @if($courseLearningOutcome->programLearningOutcomes->find($pl_outcome->pl_outcome_id)->pivot->map_scale_value =='N/A') checked=checked @endif @endif required>
+                                                                                                                                    </div>
+                                                                                                                                </td>
+
+                                                                                                                            </tr>
+                                                                                                                        @endforeach
+                                                                                                                    </tbody>
+                                                                                                                </table>
+                                                                                                                <button type="submit" class="btn btn-primary my-3 btn-sm float-right col-2" >Save</button>
+                                                                                                            @else 
+                                                                                                                <table class="table table-bordered table-sm" style="text-align:center;margin-top:16px;margin-bottom:8px">
+                                                                                                                    <tr>
+                                                                                                                        <th class="table-light">Program learning outcomes have not been set for this program.</th>
+                                                                                                                    </tr>
+                                                                                                                </table>
+                                                                                                            @endif
+                                                                                                        </div>                                                                                                    
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </form>
+                                                                                        </div>
+                                                                                    </div>                                                                            
+                                                                                </div>
+                                                                            </div>
+                                                                        @endforeach
+                                                                    @else 
+                                                                        <table class="table table-bordered table-sm" style="text-align:center;margin-top:16px;margin-bottom:8px">
+                                                                            <tr>
+                                                                                <th class="table-light">A mapping scale has not been set for this program. </th>
+                                                                            </tr>
+                                                                        </table>
+                                                                    @endif
                                                                 </div>
                                                             </div>
-                                                        </form>
                                                     </div>
                                                 </div>
                                             @endforeach
@@ -189,7 +199,8 @@
                                 <p class="container form-text text-muted">In lieu of specific PLOs, the below are the <a href="https://www2.gov.bc.ca/assets/gov/education/post-secondary-education/institution-resources-administration/degree-authorization/degree-program-criteria.pdf#page=19" target="_blank"><i class="bi bi-box-arrow-up-right"></i> standards provided by the Ministry of Advanced Education in BC</a>. Using the mapping scale provided, identify the alignment between each of the CLOs against the standards.
                                 </p>
                                 <p class="form-text text-primary container font-weight-bold ">Note: Remember to click save once you are done.</p>
-
+                                
+                                <!-- Ministry Standards mapping scale -->
                                 <div class="container row">
                                     <div class="col">
                                         @if(count($mappingScales)>0)
@@ -259,7 +270,7 @@
 
                                                         <form id="{{$l_outcomes[$i]->l_outcome_id}}" action="{{action('OutcomeMapController@store')}}" method="POST">
                                                             @csrf
-                                                            <input type="hidden" name="course_id" value="{{$course->course_id}}">
+                                                            <input type="hidden" name="program_id" value="{{$course->program_id}}">
                                                             <input type="hidden" name="l_outcome_id" value="{{$l_outcomes[$i]->l_outcome_id}}">
 
                                                             <div id="collapse{{$l_outcomes[$i]->l_outcome_id}}" class="collapse" aria-labelledby="heading{{$l_outcomes[$i]->l_outcome_id}}" data-parent="#accordionGroup{{$l_outcomes[$i]->l_outcome_id}}">

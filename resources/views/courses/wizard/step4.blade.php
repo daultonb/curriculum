@@ -6,43 +6,6 @@
         <div class="col-md-12">
             @include('courses.wizard.header')
 
-            <!-- progress bar -->
-            <div>
-                <table class="table table-borderless text-center table-sm" style="table-layout: fixed; width: 100%">
-                    <tbody>
-                        <tr>
-                            <td><a class="btn @if($lo_count < 1) btn-secondary @else  btn-success @endif" href="{{route('courseWizard.step1', $course->course_id)}}"
-                                    style="width: 30px; height: 30px; padding: 6px 0px; border-radius: 15px; text-align: center; font-size: 12px; line-height: 1.42857;">
-                                    <b>1</b> </a></td>
-                            <td><a class="btn @if($am_count < 1) btn-secondary @else  btn-success @endif" href="{{route('courseWizard.step2', $course->course_id)}}"
-                                    style="width: 30px; height: 30px; padding: 6px 0px; border-radius: 15px; text-align: center; font-size: 12px; line-height: 1.42857;">
-                                    <b>2</b> </a></td>
-                            <td><a class="btn @if($la_count < 1) btn-secondary @else  btn-success @endif" href="{{route('courseWizard.step3', $course->course_id)}}"
-                                    style="width: 30px; height: 30px; padding: 6px 0px; border-radius: 15px; text-align: center; font-size: 12px; line-height: 1.42857;">
-                                    <b>3</b> </a></td>
-                            <td><a class="btn btn-primary" href="{{route('courseWizard.step4', $course->course_id)}}"
-                                    style="width: 30px; height: 30px; padding: 6px 0px; border-radius: 15px; text-align: center; font-size: 12px; line-height: 1.42857;">
-                                    <b>4</b> </a></td>
-                            <td><a class="btn @if($outcomeMaps < 1) btn-secondary @else  btn-success @endif" href="{{route('courseWizard.step5', $course->course_id)}}"
-                                    style="width: 30px; height: 30px; padding: 6px 0px; border-radius: 15px; text-align: center; font-size: 12px; line-height: 1.42857;">
-                                    <b>5</b> </a></td>
-                            <td><a class="btn btn-secondary" href="{{route('courseWizard.step6', $course->course_id)}}"
-                                    style="width: 30px; height: 30px; padding: 6px 0px; border-radius: 15px; text-align: center; font-size: 12px; line-height: 1.42857;">
-                                    <b>6</b> </a></td>
-                        </tr>
-
-                        <tr>
-                            <td>Course Learning Outcomes</td>
-                            <td>Student Assessment Methods</td>
-                            <td>Teaching and Learning Activities</td>
-                            <td>Course Alignment</td>
-                            <td>Program Outcome Mapping</td>
-                            <td>Course Summary</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-
             <div class="card">
 
                 <div class="card-body">
