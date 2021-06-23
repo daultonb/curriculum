@@ -49,6 +49,6 @@ class OptionalPriorities extends Controller
             $request->session()->flash('success', 'Alignment to UBC/Ministry priorities updated.');
         }
 
-        return redirect()->route('courseWizard.step5', $request->input('course_id'));
+        return redirect()->route('courseWizard.step6', $request->input('course_id'));
     }
 }

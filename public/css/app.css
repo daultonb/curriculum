@@ -5010,6 +5010,21 @@ input[type=button].btn-block {
   border-bottom: 1px solid rgba(0, 0, 0, 0.125);
 }
 
+.card-header.wizard {
+  text-align:center;
+  padding: 1.5rem;
+}
+
+
+.wizard.alert-warning {
+  text-align:center;
+}
+
+.wizard.alert-warning > i {
+  font-size: 1.25rem;
+  padding-right: 0.5rem;
+}
+
 .card-header:first-child {
   border-radius: calc(0.25rem - 1px) calc(0.25rem - 1px) 0 0;
 }

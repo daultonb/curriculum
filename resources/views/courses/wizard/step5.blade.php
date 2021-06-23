@@ -12,31 +12,24 @@
         <div class="col-md-12">
             @include('courses.wizard.header')
 
-            
-
-
             <div class="card">
-                <h3 class="card-header p-4 text-center" >
+                <h3 class="card-header wizard" >
                     Program Outcome Mapping
                 </h3>
                 <div class="card-body">
 
                     @if (count($l_outcomes) < 1)
-                        <div class="alert alert-warning text-center">
-                            <i class="bi bi-exclamation-circle-fill pr-2 fs-5"></i>There are no course learning outcomes set for this course. <a class="alert-link" href="{{route('courseWizard.step1', $course->course_id)}}">Add course learning outcomes.</a>                     
+                        <div class="alert alert-warning wizard">
+                            <i class="bi bi-exclamation-circle-fill"></i>There are no course learning outcomes set for this course. <a class="alert-link" href="{{route('courseWizard.step1', $course->course_id)}}">Add course learning outcomes.</a>                     
                         </div>
 
                     @else
 
-                        <!-- Mapping to programs card -->
-                        <h6 class="card-subtitle mb-3 text-muted lh-lg text-center">
+                        <h6 class="card-subtitle mb-3 text-muted lh-lg">
                             Now that you have inputted your course information, you are ready to map it to program learning outcomes (PLOs). Using the mapping scale provided by each program, identify the alignment between each of your course learning outcomes (CLOs) and PLOs.                        
                         </h6>
-                                <!-- <p class="container form-text text-muted">Now that you have inputted all your course information, you are ready to map it to the program-level learning outcomes (PLOs). Using the mapping scale provided, identify the alignment between each of the CLOs against the PLOs.
-                                </p>
-                                <p class="form-text text-primary container font-weight-bold ">Note: Remember to click save once you are done.</p> -->
-
-                                <!-- list of programs this course belongs to -->
+                        
+                        <!-- list of programs this course belongs to -->
                         <div class="jumbotron">
                             @if (count($coursePrograms) < 1)
                                 <div class="alert alert-warning text-center">
@@ -53,7 +46,7 @@
                                             <div class="accordion-item mb-2">
                                                 <!-- Program accordion header -->
                                                 <h2 class="accordion-header fs-2" id="programAccordionHeader{{$courseProgram->program_id}}">
-                                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseProgramAccordion{{$courseProgram->program_id}}" aria-expanded="false" aria-controls="collapseProgramAccordion{{$courseProgram->program_id}}">
+                                                    <button class="accordion-button collapsed program white-arrow" type="button" data-bs-toggle="collapse" data-bs-target="#collapseProgramAccordion{{$courseProgram->program_id}}" aria-expanded="false" aria-controls="collapseProgramAccordion{{$courseProgram->program_id}}">
                                                         <b>{{$index + 1}}</b>. {{$courseProgram->program}}                                                
                                                     </button>
                                                 </h2>
@@ -99,9 +92,9 @@
                                                             <div class="cloAccordions mb-4">
                                                                 @foreach($l_outcomes as $index => $courseLearningOutcome)
                                                                     <div class="accordion" id="accordionGroup{{$courseProgram->program_id}}-{{$courseLearningOutcome->l_outcome_id}}">
-                                                                        <div class="accordion-item">
+                                                                        <div class="accordion-item mb-2">
                                                                             <h2 class="accordion-header" id="header{{$courseProgram->program_id}}-{{$courseLearningOutcome->l_outcome_id}}">
-                                                                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{$courseProgram->program_id}}-{{$courseLearningOutcome->l_outcome_id}}" aria-expanded="false" aria-controls="collapse{{$courseProgram->program_id}}-{{$courseLearningOutcome->l_outcome_id}}">
+                                                                                <button class="accordion-button white-arrow clo collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{$courseProgram->program_id}}-{{$courseLearningOutcome->l_outcome_id}}" aria-expanded="false" aria-controls="collapse{{$courseProgram->program_id}}-{{$courseLearningOutcome->l_outcome_id}}">
                                                                                     <b>CLO {{$index+1}} </b>. {{$courseLearningOutcome->clo_shortphrase}}
                                                                                 </button>
                                                                             </h2>
