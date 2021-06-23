@@ -17,11 +17,12 @@ class TemplateEmail extends Mailable
      *
      * @return void
      */
-    public function __construct(String $email_subject, String $email_title, String $email_body)
+    public function __construct(String $email_subject, String $email_title, String $email_body, String $email_signature)
     {
         $this->subject = $email_subject;
         $this->title = $email_title;
         $this->body = $email_body;
+        $this->signature = $email_signature;
     }
 
     /**
@@ -34,6 +35,7 @@ class TemplateEmail extends Mailable
         return $this->markdown('emails.emailTemplate', [
                         'title' => $this->title,
                         'body' => $this->body,
+                        'signature' => $this->signature,
                         ])
                     ->subject($this->subject);
     }

@@ -35,7 +35,7 @@ class AdminEmailController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
+    {   // this Gate checks if user is an admin and redirects to home if they are not (security)
         if(Gate::denies('admin-privilege')){
             return redirect(route('home'));
         }
@@ -43,21 +43,30 @@ class AdminEmailController extends Controller
     }
 
     public function send(Request $request){
-        
+
         $subject = $request->input('email_subject');
         $title = $request->input('email_title');
         $body = $request->input('email_body');
-        //dd($subject, $title, $body);
-
-        // Query all emails in Users table
-        $emails = DB::table('users')->select('email')->get();
-        // For each email address, send separate email informing the Terms changes.
-        foreach ($emails as $recipient) {
-            Mail::to($recipient)->send(new TemplateEmail($subject, $title, $body));
-                                
-        }
-        $request->session()->flash('success', 'Your email has been sent!');
+        $signature = $request->input('email_signature');
+        //dd($subject, $title, $body); // request debug
         
-        return view('pages.email');
+        // Receive the role input from Emails blade
+        $role_id = $request->input('email_recipients');
+        // Query the role_user table for all user_id's that have role_id matching the role above.
+        $user_ids = DB::table('role_user')->where('role_id', $role_id)->get()->map(function($user) {
+            return $user->user_id;
+        });
+        //dd($user_ids); // query debug 
+        // Query all the email addresses from users table that have a user_id matching the ones from the role_user query. 
+        $email_recipients = DB::table('users')->whereIn('id', $user_ids)->get();
+        //dd($email_recipients); // query debug
+        // Loop over recipient emails and send each one a separate email
+        // if we want to add names to email we can with $recipient->name
+        foreach ($email_recipients as $recipient) {
+            Mail::to($recipient->email)->send(new TemplateEmail($subject, $title, $body, $signature));
+        }
+        // Add all users to the BCC list of email so they do not see each other's email addresses.
+        
+        return redirect()->back()->with('success', 'Email has been sent.');
     }
 }

@@ -3,10 +3,10 @@
 
 # {{ $title }}
 
-{{ $body }}
+<br>{!! $body !!}<br>
 
 
-Regards,<br>
+{{ $signature }},<br>
 
-{{ config('app.name') }}
+The UBC Curriculum MAP Team
 @endcomponent
