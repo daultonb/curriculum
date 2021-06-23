@@ -3,7 +3,7 @@
     width:100%; /* fill the div */
 }
 
-.card-header {
+/* .card-header {
     background-color: #002145; /*UBC branding*/
     height: 75px;
 }
@@ -14,7 +14,7 @@
 
 .card-header:hover .accordion-title{
     color: white;
-}
+} */
 
 .accordion-title {
     color: white;

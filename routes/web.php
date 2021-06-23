@@ -92,6 +92,8 @@ Route::get('/courseWizard/{course}/step3','CourseWizardController@step3')->name(
 Route::get('/courseWizard/{course}/step4','CourseWizardController@step4')->name('courseWizard.step4');
 Route::get('/courseWizard/{course}/step5','CourseWizardController@step5')->name('courseWizard.step5');
 Route::get('/courseWizard/{course}/step6','CourseWizardController@step6')->name('courseWizard.step6');
+Route::get('/courseWizard/{course}/step7','CourseWizardController@step7')->name('courseWizard.step7');
+
 
 // Save optional PLOs
 Route::post('/optionals','OptionalPriorities@store')->name('storeOptionalPLOs');
