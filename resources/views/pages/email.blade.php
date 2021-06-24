@@ -17,21 +17,16 @@
                 <label for="email_recipients" class="col-md-3 col-form-label text-md-right"><span class="requiredField">*</span>Email Recipients</label>
                     <?php
                         use Illuminate\Support\Facades\DB;
+                        echo '<select id="email_recipients" name="email_recipients">';  // create dropdown for recipient selection
+                        
+                        $user_roles = DB::table('roles')->pluck('role');  // retrieves role column from roles table in DB
+                        $role_id = DB::table('roles')->pluck('id');  // retrieves id column from roles table in DB
 
-                        
-                        // create dropdown for recipient selection
-                        echo '<select id="email_recipients" name="email_recipients">';
-                        // pulls role column from roles table in DB
-                        $user_roles = DB::table('roles')->pluck('role');
-                        
-                        
-                        // pulls id column from roles table in DB
-                        $role_id = DB::table('roles')->pluck('id');
-                        for($idx=0; $idx < 2; $idx++){
+                        for($idx=0; $idx < count($user_roles); $idx++){
                             // this will output the roles in the roles table, and the value returned is the role id (needed to query user table)
-                            echo '<option value="'.$role_id[$idx] . '">' . ucfirst($user_roles[$idx]) . '</option>';
+                            echo '<option value="'.$role_id[$idx] . '">' . ucfirst($user_roles[$idx]) . '</option>';  // ucfirst capitalizes first letter.
                         }
-                        echo '</select>';
+                        echo '</select>';  // close dropdown
                     ?>
                     <br>
                     <label for="email_subject" class="col-md-3 col-form-label text-md-right"><span class="requiredField">*</span>Email Subject</label>

@@ -3,6 +3,8 @@
 
 # {{ $title }}
 
+Dear {{$name}},
+
 <br>{!! $body !!}<br>
 
 

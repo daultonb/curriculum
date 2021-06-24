@@ -10,19 +10,14 @@ use Illuminate\Support\Facades\Gate;
 
 class AdminEmailController extends Controller
 {
-    /*    
-    SMTP SERVER WORKS LOCALLY ON VPN! :)
+    /*
+    SMTP SERVER WORKS LOCALLY ON VPN!
 
-    
     Mail docs: https://laravel.com/docs/8.x/mail
     Laravel queries: https://laravel.com/docs/8.x/queries
-    MD Syntax: markdownguide.org/basic-syntax/
-
-    GATE: app/Http/Controller/admin/UserController.php
-    
-    @canadmin -> views/layout/app.blade.php
 
     */
+
     public function __construct()
     {
         $this->middleware('auth');
@@ -35,38 +30,34 @@ class AdminEmailController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {   // this Gate checks if user is an admin and redirects to home if they are not (security)
-        if(Gate::denies('admin-privilege')){
-            return redirect(route('home'));
+    {  
+        if(Gate::denies('admin-privilege')){ // This Gate checks if user is an admin
+            return redirect(route('home'));  //   and redirects to home if they are not (security)
         }
-        return view('pages.email');
+        return view('pages.email');          // If they are, return email.blade page
     }
 
     public function send(Request $request){
 
-        $subject = $request->input('email_subject');
-        $title = $request->input('email_title');
-        $body = $request->input('email_body');
-        $signature = $request->input('email_signature');
-        //dd($subject, $title, $body); // request debug
-        
-        // Receive the role input from Emails blade
-        $role_id = $request->input('email_recipients');
+        $subject = $request->input('email_subject');     // Receive the Subject input from email.blade page
+        $title = $request->input('email_title');         // Receive the Title input from email.blade page
+        $body = $request->input('email_body');           // Receive the Body input from email.blade page
+        $signature = $request->input('email_signature'); // Receive the Signature input from email.blade page
+        $role_id = $request->input('email_recipients');  // Receive the Role input from email.blade page
+
         // Query the role_user table for all user_id's that have role_id matching the role above.
         $user_ids = DB::table('role_user')->where('role_id', $role_id)->get()->map(function($user) {
-            return $user->user_id;
+            return $user->user_id; // Map the results so that we only retrieve the use_id and remove irrelevant fields
         });
-        //dd($user_ids); // query debug 
-        // Query all the email addresses from users table that have a user_id matching the ones from the role_user query. 
-        $email_recipients = DB::table('users')->whereIn('id', $user_ids)->get();
-        //dd($email_recipients); // query debug
-        // Loop over recipient emails and send each one a separate email
-        // if we want to add names to email we can with $recipient->name
-        foreach ($email_recipients as $recipient) {
-            Mail::to($recipient->email)->send(new TemplateEmail($subject, $title, $body, $signature));
-        }
-        // Add all users to the BCC list of email so they do not see each other's email addresses.
         
-        return redirect()->back()->with('success', 'Email has been sent.');
+        // Query all the users from users table that have a user_id matching the ones from the role_user query. 
+        $email_recipients = DB::table('users')->whereIn('id', $user_ids)->get();
+        
+        foreach ($email_recipients as $recipient) {  // Loop over recipient emails and send each one a separate email.
+            // Pass subject, title, recipient name, body, and signature to TemplateEmail.blade
+            Mail::to($recipient->email)->send(new TemplateEmail($subject, $title, $recipient->name, $body, $signature));  
+        }
+        
+        return redirect()->back()->with('success', 'Email has been sent.');  // Green popup dialogue that confirms email has sent.
     }
 }
