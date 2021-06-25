@@ -166,7 +166,7 @@
                 
             <!--Optional Priorities Card -->
             <div class="card m-3">
-                <h5 class="card-header wizard">
+                <h5 class="card-header wizard text-start">
                     Alignment with Ministry and UBC Priorities <b>(Optional)</b>
                 </h5>
 

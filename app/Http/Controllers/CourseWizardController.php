@@ -400,6 +400,31 @@ class CourseWizardController extends Controller
                                 ->where('learning_outcomes.course_id','=',$course_id)->count();
 
         //
+
+        // get all the programs this course belongs to
+        $coursePrograms = Course::find($course_id)->programs;
+        // get the mapping scale for each program
+        $programsMappingScales = array();
+        foreach ($coursePrograms as $courseProgram) {
+            $programsMappingScales[$courseProgram->program_id] = $courseProgram->mappingScaleLevels;
+        }
+        // get the PLOs for each program
+        $programsLearningOutcomes = array();
+        foreach ($coursePrograms as $courseProgram) {
+            $programsLearningOutcomes[$courseProgram->program_id] = $courseProgram->programLearningOutcomes;
+        }
+
+        // courseProgramsOutcomeMaps[$program_id][$plo][$clo] = map_scale_value
+        $courseProgramsOutcomeMaps = array();
+        foreach ($programsLearningOutcomes as $programId => $programLearningOutcomes) {
+            foreach ($programLearningOutcomes as $programLearningOutcome) {
+                $outcomeMaps = $programLearningOutcome->learningOutcomes->where('course_id', $course_id);
+                foreach($outcomeMaps as $outcomeMap){
+                    $courseProgramsOutcomeMaps[$programId][$programLearningOutcome->pl_outcome_id][$outcomeMap->l_outcome_id] = $outcomeMap->pivot->map_scale_value;
+                } 
+            }
+        }
+
         $course =  Course::where('course_id', $course_id)->first();
         $program = Program::where('program_id', $course->program_id)->first();
         $a_methods = AssessmentMethod::where('course_id', $course_id)->get();
@@ -425,7 +450,8 @@ class CourseWizardController extends Controller
                                 ->join('learning_outcomes', 'outcome_maps.l_outcome_id', '=', 'learning_outcomes.l_outcome_id' )
                                 ->select('outcome_maps.map_scale_value','outcome_maps.pl_outcome_id','program_learning_outcomes.pl_outcome','outcome_maps.l_outcome_id', 'learning_outcomes.l_outcome')
                                 ->where('learning_outcomes.course_id','=',$course_id)->get();
-
+            
+        
         $optional_PLOs = Optional_priorities::where('course_id', $course_id)->get();
 
         return view('courses.wizard.step7')->with('course', $course)
@@ -440,7 +466,11 @@ class CourseWizardController extends Controller
                                         ->with('mappingScales', $mappingScales)
                                         ->with('ploCategories', $ploCategories)
                                         ->with('courseUsers', $courseUsers)->with('user', $user)->with('lo_count',$lo_count)->with('am_count', $am_count)->with('la_count', $la_count)->with('oAct', $oAct)->with('oAss', $oAss)->with('outcomeMapsCount', $outcomeMapsCount)
-                                        ->with('optional_PLOs',$optional_PLOs);
+                                        ->with('optional_PLOs',$optional_PLOs)
+                                        ->with('coursePrograms', $coursePrograms)
+                                        ->with('programsMappingScales', $programsMappingScales)
+                                        ->with('programsLearningOutcomes', $programsLearningOutcomes)
+                                        ->with('courseProgramsOutcomeMaps', $courseProgramsOutcomeMaps);
     }
 
     
