@@ -15,7 +15,7 @@
                 <div class="card-body m-2">
                     <div class="row justify-content-between">
                         <div class="col-8">
-                            <h6 class="card-subtitle wizard mb-3 text-muted lh-lg text-center">
+                            <h6 class="card-subtitle wizard mb-4 text-muted lh-lg text-center">
                                 You can review	and	download the mapped course here. To edit information, select from the numbered tabs above. Click finish only when you have completed the mapping process.                    
                             </h6>
                         </div>
@@ -417,8 +417,8 @@
                             @else
                                 <table class="table table-light table-bordered table mb-4" >
                                     <tr class="table-primary">
-                                        <th  class="table-light">Course Outcomes</th>
-                                        <th  class="table-light"colspan="{{count($pl_outcomes)}}">Program Learning Outcomes</th>
+                                        <th >Course Learning Outcome</th>
+                                        <th colspan="{{count($pl_outcomes)}}">Ministry Standard</th>
                                     </tr>
                                     <tr>
                                         <td></td>
@@ -512,7 +512,7 @@
                             <button class="btn btn-sm btn-primary col-3 float-left"><i class="bi bi-arrow-left mr-2"></i> Ministry Standards Mapping</button>
                         </a>
                         <a href="{{route('courses.submit', $course->course_id)}}">
-                            <button class="btn btn-sm btn-success col-3 float-right">Finish</button>
+                            <button class="btn btn-sm btn-success col-3 float-right">Finish <i class="bi bi-check2-circle ml-2 fs-6"></i></button>
                         </a>
                     </div>
                 </div>

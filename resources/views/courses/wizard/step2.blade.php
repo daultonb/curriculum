@@ -9,23 +9,29 @@
 
             <div class="card">
 
+                <h3 class="card-header wizard" >
+                    Student Assessment Methods
+                </h3>
+
                 <div class="card-body">
-                    <p class="form-text text-muted">Input all <a href="https://ctlt.ubc.ca/resources/webliography/assessmentevaluation/" target="_blank"><i class="bi bi-box-arrow-up-right"></i> assessment methods</a> of the course individually.
-                        You may also choose to use the <a href="https://ubcoapps.elearning.ubc.ca/" target="_blank"><i class="bi bi-box-arrow-up-right"></i> UBCO's Workload Calculator</a> to estimate the student time commitment in this course based on the chosen assignments.</p>
+
+                    <h6 class="card-subtitle mb-4 text-muted lh-lg">
+                        Input all <a href="https://ctlt.ubc.ca/resources/webliography/assessmentevaluation/" target="_blank"><i class="bi bi-box-arrow-up-right"></i> assessment methods</a> of the course individually. You may also choose to use the <a href="https://ubcoapps.elearning.ubc.ca/" target="_blank"><i class="bi bi-box-arrow-up-right"></i> UBCO's Workload Calculator</a> to estimate the student time commitment in this course based on the chosen assignments.              
+                    </h6>
 
                     <div id="admins">
                         <div class="row">
                             <div class="col">
-                                <table class="table table-borderless" id="a_method_table">
 
                                     @if(count($a_methods)<1)
-                                        <tr class="table-active">
-                                            <th colspan="3">There are no student assessment methods set for this course.</th>
-                                        </tr>
-
+                                        <div class="alert alert-warning wizard">
+                                            <i class="bi bi-exclamation-circle-fill"></i>There are no student assessment methods set for this course.                     
+                                        </div>
                                     @else
+                                    
+                                    <table class="table table-light table-bordered" id="a_method_table">
 
-                                        <tr class="table-active">
+                                        <tr class="table-primary">
                                             <th>Student Assesment Methods</th>
                                             <th colspan="2">Weight</th>
                                         </tr>
@@ -109,10 +115,11 @@
                                             <tr>
                                                 <td><b>TOTAL</b></td>
                                                 <td style="padding-left:25px"><b id="sum">{{$totalWeight}}%</b></td>
+                                                <td></td>
                                             </tr>
-
-                                    @endif
-                                </table>
+                                            </table>                                    
+                                        @endif
+                                
                             </div>
 
                         </div>
@@ -120,7 +127,7 @@
 
                     <form method="POST" id="a_method_form" action="{{ action('AssessmentMethodController@store') }}">
                         @csrf
-                        <button type="submit" class="btn btn-primary mt-3 float-right" id="btnSave" style="margin-right:15px;">
+                        <button type="submit" class="btn btn-primary btn-sm mt-3 col-2 float-right" id="btnSave" style="margin-right:15px;">
                             Save
                         </button>
                         <input type="hidden" name="course_id" value="{{$course->course_id}}" form="a_method_form">
@@ -132,14 +139,17 @@
 
                 </div>
 
+                <!-- card footer -->
                 <div class="card-footer">
-                    <a href="{{route('courseWizard.step1', $course->course_id)}}">
-                        <button class="btn btn-sm btn-primary mt-3 col-3 float-left">⬅ Course Learning Outcomes</button>
-                    </a>
-                    <a href="{{route('courseWizard.step3', $course->course_id)}}">
-                        <button class="btn btn-sm btn-primary mt-3 col-3 float-right">Teaching and Learning Activities ➡</button>
-                    </a>
-                </div>
+                    <div class="card-body mb-4">
+                        <a href="{{route('courseWizard.step1', $course->course_id)}}">
+                            <button class="btn btn-sm btn-primary col-3 float-left"><i class="bi bi-arrow-left mr-2"></i> Course Learning Outcomes</button>
+                        </a>
+                        <a href="{{route('courseWizard.step3', $course->course_id)}}">
+                            <button class="btn btn-sm btn-primary col-3 float-right">Teaching and Learning Activities <i class="bi bi-arrow-right ml-2"></i></button>
+                        </a>
+                    </div>
+                </div>            
             </div>
         </div>
     </div>

@@ -14,7 +14,7 @@
             <div class="card">
                 
                 <h3 class="card-header wizard" >
-                    Ministry Standards Mapping
+                    Ministry Standards and Strategic Priorities
                 </h3>
 
                 <div class="card-body">
@@ -26,7 +26,7 @@
 
                     @else
                     
-                        <h6 class="card-subtitle wizard mb-3 text-muted lh-lg ">
+                        <h6 class="card-subtitle wizard mb-4 text-muted lh-lg ">
                             In lieu of specific PLOs, the below are the <a href="https://www2.gov.bc.ca/assets/gov/education/post-secondary-education/institution-resources-administration/degree-authorization/degree-program-criteria.pdf#page=19" target="_blank"><i class="bi bi-box-arrow-up-right"></i> standards provided by the Ministry of Advanced Education in BC</a>. Using the mapping scale provided, identify the alignment between each of the CLOs against the standards.                        
                         </h6>
                         
