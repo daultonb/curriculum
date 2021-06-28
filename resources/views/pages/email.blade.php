@@ -38,8 +38,8 @@
                     <label for="email_body" class="col-md-3 col-form-label text-md-right"><span class="requiredField">*</span>Email Body</label>
                     <textarea id="email_body" name="email_body" type="text" cols="60" rows="10" style="vertical-align: top;" required spellcheck="true"></textarea>
                     <br><br>
-                    <label for="email_signature" class="col-md-3 col-form-label text-md-right"><span class="requiredField">*</span>Email Signature (without comma)</label>
-                    <textarea id="email_signature" name="email_signature" type="text" cols="60" rows="1" style="vertical-align: middle;" required spellcheck="true"></textarea>
+                    <label for="email_signature" class="col-md-3 col-form-label text-md-right">Email Signature (with comma)</label>
+                    <textarea id="email_signature" name="email_signature" type="text" cols="60" rows="1" style="vertical-align: middle;" spellcheck="true"></textarea>
                     <br>
                     <button id="submit" type="submit" class="btn btn-primary col-2 btn-sm">Send</button>
                 </div>
