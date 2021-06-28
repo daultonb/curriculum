@@ -21,7 +21,7 @@
                         
                         $user_roles = DB::table('roles')->pluck('role');  // retrieves role column from roles table in DB
                         $role_id = DB::table('roles')->pluck('id');  // retrieves id column from roles table in DB
-
+                        echo '<option value="" selected disabled hidden>Select a role</option>';
                         for($idx=0; $idx < count($user_roles); $idx++){
                             // this will output the roles in the roles table, and the value returned is the role id (needed to query user table)
                             echo '<option value="'.$role_id[$idx] . '">' . ucfirst($user_roles[$idx]) . '</option>';  // ucfirst capitalizes first letter.
