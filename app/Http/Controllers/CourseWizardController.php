@@ -20,6 +20,7 @@ use App\Models\MappingScale;
 use App\Models\PLOCategory;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Optional_priorities;
+use Illuminate\Support\Facades\Log;
 
 class CourseWizardController extends Controller
 {
@@ -400,7 +401,6 @@ class CourseWizardController extends Controller
                                 ->where('learning_outcomes.course_id','=',$course_id)->count();
 
         //
-
         // get all the programs this course belongs to
         $coursePrograms = Course::find($course_id)->programs;
         // get the mapping scale for each program
@@ -450,10 +450,13 @@ class CourseWizardController extends Controller
                                 ->join('learning_outcomes', 'outcome_maps.l_outcome_id', '=', 'learning_outcomes.l_outcome_id' )
                                 ->select('outcome_maps.map_scale_value','outcome_maps.pl_outcome_id','program_learning_outcomes.pl_outcome','outcome_maps.l_outcome_id', 'learning_outcomes.l_outcome')
                                 ->where('learning_outcomes.course_id','=',$course_id)->get();
-            
-        
         $optional_PLOs = Optional_priorities::where('course_id', $course_id)->get();
 
+        $assessmentMethodsTotal = 0;
+        foreach ($a_methods as $a_method) {
+            $assessmentMethodsTotal += $a_method->weight;
+        }
+        
         return view('courses.wizard.step7')->with('course', $course)
                                         ->with('program', $program)
                                         ->with('l_outcomes', $l_outcomes)
@@ -470,7 +473,8 @@ class CourseWizardController extends Controller
                                         ->with('coursePrograms', $coursePrograms)
                                         ->with('programsMappingScales', $programsMappingScales)
                                         ->with('programsLearningOutcomes', $programsLearningOutcomes)
-                                        ->with('courseProgramsOutcomeMaps', $courseProgramsOutcomeMaps);
+                                        ->with('courseProgramsOutcomeMaps', $courseProgramsOutcomeMaps)
+                                        ->with('assessmentMethodsTotal', $assessmentMethodsTotal);
     }
 
     

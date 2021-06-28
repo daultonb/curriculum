@@ -92,6 +92,12 @@
                                     </tr>
                                     @endforeach
 
+                                    <tr class="table-secondary fw-bold">
+                                        <td></td>
+                                        <td>Total</td>
+                                        <td>{{$assessmentMethodsTotal}}%</td>
+                                    </tr>
+
                                 </table>
                             @endif
                         </div>
@@ -141,36 +147,42 @@
                                 </div>
 
                             @else
-                                <table class="table table-light table-bordered table" >
-                                    <tr class="table-primary">
-                                        <th class="text-center">#</th>
-                                        <th>Course Learning Outcome</th>
-                                        <th>Student Assessment Method</th>
-                                        <th>Teaching and Learning Activity</th>
-                                    </tr>
-                                
-                                    @foreach($l_outcomes as $index => $l_outcome)
-                                    <tr>
-                                        <td style="width:5%" >{{$index+1}}</td>
-                                        <td>{{$l_outcome->l_outcome}}</td>
-                                        <td>
-                                            @foreach($outcomeAssessments as $oa)
-                                                @if($oa->l_outcome_id == $l_outcome->l_outcome_id )
-                                                    {{$oa->a_method}}<br>
-                                                @endif
+                                @if ($oAct < 1 && $oAss < 1)
+                                    <div class="alert alert-warning wizard">
+                                        <i class="bi bi-exclamation-circle-fill"></i>Course learning outcomes have not been constructively aligned with student assessment methods and teaching and learning activities for this course.  <a class="alert-link" href="{{route('courseWizard.step4', $course->course_id)}}">Constructively align course.</a>                     
+                                    </div>
+                                @else 
+                                    <table class="table table-light table-bordered table" >
+                                        <tr class="table-primary">
+                                            <th class="text-center">#</th>
+                                            <th>Course Learning Outcome</th>
+                                            <th>Student Assessment Method</th>
+                                            <th>Teaching and Learning Activity</th>
+                                        </tr>
+                                    
+                                        @foreach($l_outcomes as $index => $l_outcome)
+                                        <tr>
+                                            <td style="width:5%" >{{$index+1}}</td>
+                                            <td>{{$l_outcome->l_outcome}}</td>
+                                            <td>
+                                                @foreach($outcomeAssessments as $oa)
+                                                    @if($oa->l_outcome_id == $l_outcome->l_outcome_id )
+                                                        {{$oa->a_method}}<br>
+                                                    @endif
 
-                                            @endforeach
-                                        </td>
-                                        <td>
-                                            @foreach($outcomeActivities as $oa)
-                                                @if($oa->l_outcome_id == $l_outcome->l_outcome_id )
-                                                    {{$oa->l_activity}}<br>
-                                                @endif
+                                                @endforeach
+                                            </td>
+                                            <td>
+                                                @foreach($outcomeActivities as $oa)
+                                                    @if($oa->l_outcome_id == $l_outcome->l_outcome_id )
+                                                        {{$oa->l_activity}}<br>
+                                                    @endif
 
-                                            @endforeach
-                                        </td>
-                                    </tr>
-                                    @endforeach
+                                                @endforeach
+                                            </td>
+                                        </tr>
+                                        @endforeach
+                                    @endif
                                 </table>
                             @endif
                         </div>
@@ -306,11 +318,23 @@
                                                             @endif
                                                         </td>
                                                         @foreach($programsLearningOutcomes[$courseProgram->program_id] as $pl_outcome)
-                                                        <td @foreach($programsMappingScales[$courseProgram->program_id] as $programMappingScale) @if($programMappingScale->abbreviation == $courseProgramsOutcomeMaps[$courseProgram->program_id][$pl_outcome->pl_outcome_id][$l_outcome->l_outcome_id]) style="background-color:{{$programMappingScale->colour}}" @endif @endforeach class="text-center align-middle">
+                                                            <!-- Check if this CLO has been mapped to this PLO -->
+                                                            @if (!array_key_exists($l_outcome->l_outcome_id, $courseProgramsOutcomeMaps[$courseProgram->program_id][$pl_outcome->pl_outcome_id]))
+                                                            <td></td>
+                                                            
+                                                            @else 
+                                                            <td 
+                                                            @foreach($programsMappingScales[$courseProgram->program_id] as $programMappingScale) 
+                                                                @if($programMappingScale->abbreviation == $courseProgramsOutcomeMaps[$courseProgram->program_id][$pl_outcome->pl_outcome_id][$l_outcome->l_outcome_id])             
+                                                                    style="background-color:{{$programMappingScale->colour}}" 
+                                                                @endif 
+                                                            @endforeach 
+                                                            class="text-center align-middle">
                                                             <span @if($courseProgramsOutcomeMaps[$courseProgram->program_id][$pl_outcome->pl_outcome_id][$l_outcome->l_outcome_id] == 'A') style="color:white" @endif>
                                                                 {{$courseProgramsOutcomeMaps[$courseProgram->program_id][$pl_outcome->pl_outcome_id][$l_outcome->l_outcome_id]}}
                                                             </span>
-                                                        </td>                                                         
+                                                            </td>
+                                                            @endif                                                         
                                                         @endforeach
                                                     </tr>
                                                     @endforeach
@@ -328,14 +352,14 @@
 
                     <div class="card mt-4 mb-4">
                         <h5 class="card-header">
-                            Ministry Standards Outcome Maps
+                            Standards Outcome Maps
                         </h5>
                         <div class="body m-4 mb-2">
-                            <h5 class="card-title">Ministry Standards</h5>
+                            <h5 class="card-title">Standards</h5>
                             
                             @if(count($pl_outcomes)<1)
                                 <div class="alert alert-warning wizard">
-                                    <i class="bi bi-exclamation-circle-fill pr-2 fs-5"></i>Program learning outcomes have not been set for this program.                    
+                                    <i class="bi bi-exclamation-circle-fill pr-2 fs-5"></i>Standards have not been set for this course.                    
                                 </div>
                             @else
                                 <table class="table table-light table-bordered table mb-4" >

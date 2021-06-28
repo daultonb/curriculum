@@ -14,30 +14,34 @@
 
 
                 <div class="card-body">
-                    <h6 class="card-subtitle mb-2 text-muted lh-lg">
-                        Input all teaching and learning activities or <a target="_blank" href="https://teaching.cornell.edu/teaching-resources/teaching-cornell-guide/instructional-strategies"><i class="bi bi-box-arrow-up-right"></i> instructional strategies</a> of the course individually. <br>                   
-                    </h6>
-                    <p class="form-text mb-4 text-muted lh-lg">For increased accessibility and enhanced student participation, while still offering challenging learning opportunities,
+                    <h6 class="card-subtitle mb-4 text-muted lh-lg">
+                        Input all teaching and learning activities or <a target="_blank" href="https://teaching.cornell.edu/teaching-resources/teaching-cornell-guide/instructional-strategies"><i class="bi bi-box-arrow-up-right"></i> instructional strategies</a> of the course individually. For increased accessibility and enhanced student participation, while still offering challenging learning opportunities,
                         use there <a target="_blank" href="https://udlguidelines.cast.org/binaries/content/assets/udlguidelines/udlg-v2-2/udlg_graphicorganizer_v2-2_numbers-no.pdf"><i class="bi bi-box-arrow-up-right"></i> Universal Design for Learning Guildlines</a>
-                        (Offered by CAST) to design your course. You may also use <a target="_blank" href="https://udlguidelines.cast.org/binaries/content/assets/common/publications/articles/cast-udl-planningq-a11y.pdf"><i class="bi bi-box-arrow-up-right"></i> these key questions to guide</a> you.
-                    </p>
+                        (Offered by CAST) to design your course. You may also use <a target="_blank" href="https://udlguidelines.cast.org/binaries/content/assets/common/publications/articles/cast-udl-planningq-a11y.pdf"><i class="bi bi-box-arrow-up-right"></i> these key questions to guide</a> you.               
+                    </h6>
 
                     <div id="admins">
                         <div class="row">
                             <div class="col">
+                                
+                                <table class="table table-light table-bordered" id="l_activity_table">
+                                    <tr class="table-primary">
+                                        <th>Teaching and Learning Activities</th>
+                                        <th class="text-center">Actions</th>
+                                    </tr>
+
 
                                     @if(count($l_activities)<1)
-                                        <div class="alert alert-warning wizard">
-                                            <i class="bi bi-exclamation-circle-fill"></i>There are no teaching and learning activities set for this course.                    
-                                        </div>
+                                        <tr>
+                                            <td colspan="2">
+                                                <div class="alert alert-warning wizard">
+                                                    <i class="bi bi-exclamation-circle-fill"></i>There are no teaching and learning activities set for this course.                    
+                                                </div>
+                                            </td>
+                                        </tr>
                                     @else
-                                        <table class="table table-light table-bordered" id="l_activity_table">
 
-                                            <tr class="table-primary">
-                                                <th colspan="2">Teaching and Learning Activities</th>
-                                            </tr>
-
-                                                @foreach($l_activities as $index => $l_activity)
+                                        @foreach($l_activities as $index => $l_activity)
 
                                                 <tr>
                                                     <td>
@@ -81,35 +85,37 @@
                                                         <input type="hidden" name="l_activity_id[]" value="{{$l_activity->l_activity_id}}" form="l_activity_form">
                                                     </td>
 
-                                                    <td>
-                                                        <form action="{{route('la.destroy', $l_activity->l_activity_id)}}" method="POST" class="float-right">
+                                                    <td class="text-center">
+                                                        <form action="{{route('la.destroy', $l_activity->l_activity_id)}}" method="POST" >
                                                             @csrf
                                                             {{method_field('DELETE')}}
                                                             <input type="hidden" name="course_id" value="{{$course->course_id}}">
-                                                            <button type="submit" style="width:60px;" class="btn btn-danger btn-sm float-right">Delete</button>
+                                                            <button type="submit" style="width:60px;" class="btn btn-danger btn-sm">Delete</button>
                                                         </form>
                                                     </td>
                                                 </tr>
-                                                @endforeach
-                                            </table>
+                                        @endforeach
 
-                                        @endif
-
+                                    @endif
+                                </table>
                             </div>
                         </div>
                     </div>
 
-                    <form method="POST" id="l_activity_form" action="{{ action('LearningActivityController@store') }}">
-                        @csrf
-                        <button type="submit" class="btn btn-primary mt-3 btn-sm col-2 float-right" id="btnSave" style="margin-right:15px">
-                            Save
-                        </button>
-                        <input type="hidden" name="course_id" value="{{$course->course_id}}" form="l_activity_form">
-                    </form>
+                    <div class="card-body mb-4">
+                        <form method="POST" id="l_activity_form" action="{{ action('LearningActivityController@store') }}">
+                            @csrf
+                            <button type="submit" class="btn btn-success btn-sm col-2 float-right" id="btnSave">
+                                Save
+                            </button>
+                            <input type="hidden" name="course_id" value="{{$course->course_id}}" form="l_activity_form">
+                        </form>
 
-                    <button type="button" class="btn btn-primary btn-sm col-3 mt-3 float-left" id="btnAdd" style="margin-left: 12px">
-                        ＋ Add Teaching and Learning Activity
-                    </button>
+                        <button type="button" class="btn btn-primary btn-sm col-3 float-left" id="btnAdd" style="background-color:#002145;color:white;">
+                            ＋ Add Teaching and Learning Activity
+                        </button>
+                    </div>
+
                 </div>
 
                 <!-- card footer -->
@@ -209,6 +215,7 @@
                         @endif
                         </datalist>
                     </td>
+                    <td></td>
                 </tr>`;
 
             var container = $('#l_activity_table');

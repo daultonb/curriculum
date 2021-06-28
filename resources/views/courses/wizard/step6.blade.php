@@ -14,7 +14,7 @@
             <div class="card">
                 
                 <h3 class="card-header wizard" >
-                    Ministry Standards and Strategic Priorities
+                    Standards and Strategic Priorities
                 </h3>
 
                 <div class="card-body">
@@ -142,7 +142,7 @@
                                                                                                             </tbody>
                                                                                                         </table>
                                                                                                                 
-                                                                                                        <button type="submit" class="btn btn-primary my-3 btn-sm float-right col-2" >Save</button>
+                                                                                                        <button type="submit" class="btn btn-success my-3 btn-sm float-right col-2" >Save</button>
                                                                                                     @else 
                                                                                                         <div class="alert alert-warning text-center">
                                                                                                             <i class="bi bi-exclamation-circle-fill pr-2 fs-5"></i>Program learning outcomes have not been set for this program                    
@@ -413,7 +413,7 @@
                                 </div>
                             </div>
 
-                            <button type="submit" class="btn btn-primary my-3 btn-sm float-right col-2">Save</button>
+                            <button type="submit" class="btn btn-success my-3 btn-sm float-right col-2">Save</button>
                         </form>
                     </div>
                 </div>

@@ -22,22 +22,23 @@
                     <div id="admins">
                         <div class="row">
                             <div class="col">
+                                <table class="table table-light table-bordered" id="a_method_table">
+                                    <tr class="table-primary">
+                                        <th>Student Assesment Methods</th>
+                                        <th>Weight</th>
+                                        <th class="text-center">Actions</th>
+                                    </tr>
 
                                     @if(count($a_methods)<1)
-                                        <div class="alert alert-warning wizard">
-                                            <i class="bi bi-exclamation-circle-fill"></i>There are no student assessment methods set for this course.                     
-                                        </div>
-                                    @else
-                                    
-                                    <table class="table table-light table-bordered" id="a_method_table">
-
-                                        <tr class="table-primary">
-                                            <th>Student Assesment Methods</th>
-                                            <th colspan="2">Weight</th>
+                                        <tr>
+                                            <td colspan="3">
+                                                <div class="alert alert-warning wizard">
+                                                    <i class="bi bi-exclamation-circle-fill"></i>There are no student assessment methods set for this course.                    
+                                                </div>
+                                            </td>
                                         </tr>
-
-
-                                            @foreach($a_methods as $index=>$a_method)
+                                    @else
+                                        @foreach($a_methods as $index=>$a_method)
 
                                             <tr>
                                                 <td>
@@ -92,15 +93,14 @@
                                                     </datalist>
                                                 </td>
 
-                                                    <input type="hidden" name="a_method_id[]" value="{{$a_method->a_method_id}}" form="a_method_form">
-                                                    <td style="display: flex">
-                                                        <input id="a_method_weight{{$a_method->a_method_id}}" type="number" step="1" form="a_method_form" style="width:auto"
-                                                        class="form-control @error('weight') is-invalid @enderror" value="{{$a_method->weight}}" name="weight[]" min="0" max="100" required autofocus>
-                                                        <label for="a_method_weight{{$a_method->a_method_id}}" style="font-size: medium; margin-top:5px;margin-left:5px"><strong>%</strong></label>
-                                                    </td>
+                                                <input type="hidden" name="a_method_id[]" value="{{$a_method->a_method_id}}" form="a_method_form">
+                                                <td style="display: flex">
+                                                    <input id="a_method_weight{{$a_method->a_method_id}}" type="number" step="1" form="a_method_form" style="width:auto class="form-control @error('weight') is-invalid @enderror" value="{{$a_method->weight}}" name="weight[]" min="0" max="100" required autofocus>
+                                                    <label for="a_method_weight{{$a_method->a_method_id}}" style="font-size: medium; margin-top:5px;margin-left:5px"><strong>%</strong></label>
+                                                </td>
 
-                                                <td>
-                                                    <form action="{{route('am.destroy', $a_method->a_method_id)}}" method="POST" class="float-right ml-2">
+                                                <td class="text-center">
+                                                    <form action="{{route('am.destroy', $a_method->a_method_id)}}" method="POST" >
                                                         @csrf
                                                         {{method_field('DELETE')}}
                                                         <input type="hidden" name="course_id" value="{{$course->course_id}}">
@@ -110,33 +110,32 @@
 
                                             </tr>
 
-                                            @endforeach
+                                        @endforeach
 
-                                            <tr>
-                                                <td><b>TOTAL</b></td>
-                                                <td style="padding-left:25px"><b id="sum">{{$totalWeight}}%</b></td>
-                                                <td></td>
-                                            </tr>
-                                            </table>                                    
-                                        @endif
-                                
+                                        <tr class="table-secondary">
+                                            <td><b>TOTAL</b></td>
+                                            <td><b id="sum">{{$totalWeight}}%</b></td>
+                                            <td></td>
+                                        </tr>
+                                    @endif
+                                </table>                                    
                             </div>
-
                         </div>
                     </div>
 
-                    <form method="POST" id="a_method_form" action="{{ action('AssessmentMethodController@store') }}">
-                        @csrf
-                        <button type="submit" class="btn btn-primary btn-sm mt-3 col-2 float-right" id="btnSave" style="margin-right:15px;">
-                            Save
+                    <div class="card-body mb-4">
+                        <form method="POST" id="a_method_form" action="{{ action('AssessmentMethodController@store') }}">
+                            @csrf
+                            <button type="submit" class="btn btn-success btn-sm col-2 float-right" id="btnSave" >
+                                Save
+                            </button>
+                            <input type="hidden" name="course_id" value="{{$course->course_id}}" form="a_method_form">
+                        </form>
+
+                        <button type="button" class="btn btn-sm col-3 float-left" id="btnAdd" style="background-color:#002145;color:white;">
+                            ＋ Add Student Assessment Method
                         </button>
-                        <input type="hidden" name="course_id" value="{{$course->course_id}}" form="a_method_form">
-                    </form>
-
-                    <button type="button" class="btn btn-primary btn-sm col-3 mt-3 float-left" id="btnAdd" style="margin-left: 12px">
-                        ＋ Add Student Assessment Method
-                    </button>
-
+                    </div>
                 </div>
 
                 <!-- card footer -->
@@ -204,7 +203,7 @@
     //Add a new row of assesment method
     function add() {
         var rowCount = calculateRow();
-            var element =
+        var element =
             `<tr>
                 <td>
                     <input list="a_methods`+rowCount+`" name= "a_method[]" id="a_new_method`+rowCount+`" type="text" class="form-control
@@ -258,12 +257,13 @@
 
                     </datalist>
                 </td>
-                    <td style="display: flex">
-                        <input id="a_new_method_weight`+rowCount+`" type="number" step="1" form="a_method_form" style="width:auto"
-                        class="form-control @error('weight') is-invalid @enderror" value = 0 name="weight[]" min="0" max="100" required autofocus>
-                        <label for="a_new_method_weight`+rowCount+`" style="font-size: medium; margin-top:5px;margin-left:5px"><strong>%</strong></label>
-                    </td>
-                </tr>`;
+                <td style="display: flex">
+                    <input id="a_new_method_weight`+rowCount+`" type="number" step="1" form="a_method_form" style="width:auto" class="form-control @error('weight') is-invalid @enderror" value = 0 name="weight[]" min="0" max="100" required autofocus>
+                    <label for="a_new_method_weight`+rowCount+`" style="font-size: medium; margin-top:5px;margin-left:5px"><strong>%</strong></label>
+                </td>
+                <td></td>
+
+            </tr>`;
 
             if($('#sum').length === 0){
                 var container = $('#a_method_table');
@@ -292,6 +292,7 @@
         }else{
             rowCount = $('#a_method_table tr').length-1;
         }
+        console.log(rowCount);
         return rowCount;
     }
 
