@@ -19,24 +19,32 @@ class Course extends Model
     protected $guarded = ['course_id'];
 
     public function users(){
-        return $this->belongsToMany('App\Models\User', 'course_users', 'course_id', 'user_id');
+        return $this->belongsToMany(User::class, 'course_users', 'course_id', 'user_id');
     }
 
     public function learningActivities(){
-        return $this->hasMany('App\Models\LearningActivity', 'course_id','course_id');
+        return $this->hasMany(LearningActivity::class, 'course_id','course_id');
     }
 
     public function assessmentMethods(){
-        return $this->hasMany('App\Models\AssessmentMethod', 'course_id','course_id');
+        return $this->hasMany(AssessmentMethod::class, 'course_id','course_id');
     }
 
     public function learningOutcomes(){
-        return $this->hasMany('App\Models\LearningOutcome', 'course_id','course_id');
+        return $this->hasMany(LearningOutcome::class, 'course_id','course_id');
     }
 
     public function program() 
     {
         return $this->belongsToMany(Program::class, 'course_programs', 'course_id', 'program_id');
+    }
+
+    public function msScaleCategories() {
+        return $this->belongsTo(MSScaleCategory::class, 'ms_scale_category_id', 'ms_scale_category_id');
+    }
+
+    public function ministryStandardCategory() {
+        return $this->belongsTo(MinistryStandardCategory::class, 'msc_id', 'msc_id');
     }
 }
 

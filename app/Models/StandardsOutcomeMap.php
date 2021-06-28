@@ -6,13 +6,13 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 //use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\Pivot;
 
-class MSOutcomeMap extends Pivot
+class StandardsOutcomeMap extends Pivot
 {
     use HasFactory;
 
-    protected $table = "m_s_outcome_maps";
+    protected $table = "standards_outcome_maps";
 
-    protected $primaryKey = ['ministry_standard_id', 'l_outcome_id'];
+    protected $primaryKey = ['standard_id', 'l_outcome_id'];
 
     public $incrementing = false;
 }

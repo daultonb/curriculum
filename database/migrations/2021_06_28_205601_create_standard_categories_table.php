@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateMinistryStandardCategoriesTable extends Migration
+class CreateStandardCategoriesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,9 @@ class CreateMinistryStandardCategoriesTable extends Migration
      */
     public function up()
     {
-        Schema::create('ministry_standard_categories', function (Blueprint $table) {
-            $table->bigIncrements('msc_id');
-            $table->string('msc_name');
+        Schema::create('standard_categories', function (Blueprint $table) {
+            $table->bigIncrements('sc_id');
+            $table->string('sc_name');
             $table->timestamps();
         });
     }
@@ -27,6 +27,6 @@ class CreateMinistryStandardCategoriesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('ministry_standard_categories');
+        Schema::dropIfExists('standard_categories');
     }
 }
