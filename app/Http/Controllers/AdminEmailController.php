@@ -42,8 +42,13 @@ class AdminEmailController extends Controller
         $subject = $request->input('email_subject');     // Receive the Subject input from email.blade page
         $title = $request->input('email_title');         // Receive the Title input from email.blade page
         $body = $request->input('email_body');           // Receive the Body input from email.blade page
-        $signature = $request->input('email_signature'); // Receive the Signature input from email.blade page
         $role_id = $request->input('email_recipients');  // Receive the Role input from email.blade page
+        $signature = $request->input('email_signature'); // Receive the Signature input from email.blade page
+
+        if(is_null($signature)){
+            $signature = "";
+        }
+
 
         // Query the role_user table for all user_id's that have role_id matching the role above.
         $user_ids = DB::table('role_user')->where('role_id', $role_id)->get()->map(function($user) {
