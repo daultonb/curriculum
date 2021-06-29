@@ -4,6 +4,7 @@
 <div class="container" style="padding-bottom:246px;">
     <div class="row">
 
+
         <div style="width: 100%;border-bottom: 1px solid #DCDCDC">
         <h2 style="float: left;">My Dashboard</h2>
         </div>
@@ -15,7 +16,8 @@
                     <div class="card-title" style="background-color:#1E90FF;margin-bottom: 0.00rem;">
                         <h3 style="color: white;margin:22px">
                         <a style="color: white;text-decoration: none;">
-                        My Programs
+                        My Programs         
+
                         <div style="float:right; padding-right:10px;">
                             <button style="border: none; background: none; outline: none;" data-toggle="modal" data-target="#createProgramModal">
                                 <img src="{{ asset('dashboard-icons/add_White.png') }}" style="width:20px;height:20px;"/>
@@ -43,7 +45,7 @@
                             <tr>
                                 <th scope="row">{{$index + 1}}</th>
                                 <td><a href="{{route('programWizard.step1', $program->program_id)}}">{{$program->program}}</a></td>
-                                <td>{{$program->faculty}}</td>
+                                <td>{{$program->faculty}} </td>
                                 <td>{{$program->level}}</td>
                                 <td style="display: inline-block">
                                     <a class="dropdown-item btn-icon" href="{{route('programWizard.step1', $program->program_id)}}">
@@ -93,12 +95,13 @@
                     </div>
                 </div>
 
+
                 <div class="card shadow rounded" style="margin:20px;border-style: solid;
                 border-color: #6495ED;">
                     <div class="card-title" style="background-color: #6495ED;margin-bottom: 0.00rem;">
                         <h3 style="color: white;margin:22px">
                         <a style="color: white;text-decoration: none;">
-                        My Courses
+                        My Courses 
                         <div style="float:right; padding-right:10px;">
                             <button style="border: none; background: none; outline: none;" data-toggle="modal" data-target="#createCourseModal">
                                 <img src="{{ asset('dashboard-icons/add_White.png') }}" style="width:20px;height:20px;"/>
@@ -119,7 +122,7 @@
                                     <th scope="col">Term</th>
                                     <!--<th scope="col">Invite Collaborators</th>-->
                                     <th scope="col">Status</th>
-                                    <th scope="col">Program</th>
+                                    <th scope="col">Program </th>
                                     <th scope="col">Actions</th>
                                 </tr>
                                 </thead>
@@ -136,7 +139,9 @@
                                         <td>❗In Progress</td>
                                         <td>
                                             @if(count($coursesPrograms[$course->course_id]) > 0)
-                                                <button type="button" style="border:1px solid black; background-color: #1E90FF; border-radius: 50%; font-weight:bold; color:White; opacity: 1; text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black; margin: 0 auto; display:block;" class="btn btn-secondary" data-toggle="tooltip" data-html="true" title="@foreach($coursesPrograms[$course->course_id] as $courseProgram){{$courseProgram->program}}<br>@endforeach" disabled>{{ count($coursesPrograms[$course->course_id]) }}</button>
+                                                <div data-toggle="tooltip" data-html="true" title="@foreach($coursesPrograms[$course->course_id] as $index => $courseProgram){{$index + 1}}. {{$courseProgram->program}}<br>@endforeach" data-bs-placement="right">
+                                                    <button type="button" style="border:1px solid black; background-color: #1E90FF; border-radius: 50%; font-weight:bold; color:White; opacity: 1; text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black; margin: 0 auto; display:block;" class="btn btn-secondary" disabled>{{ count($coursesPrograms[$course->course_id]) }}</button>
+                                                </div>
                                             @else
                                                 <p style="text-align: center;">None</p>
                                             @endif
@@ -149,7 +154,9 @@
                                         <td>✔️Completed</td>
                                         <td>
                                             @if(count($coursesPrograms[$course->course_id]) > 0)
-                                                <button type="button" style="border:1px solid black; background-color: #1E90FF; border-radius: 50%; font-weight:bold; color:White; opacity: 1; text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black; margin: 0 auto; display:block;" class="btn btn-secondary" data-toggle="tooltip" data-html="true" title="@foreach($coursesPrograms[$course->course_id] as $courseProgram){{$courseProgram->program}}<br>@endforeach" disabled>{{ count($coursesPrograms[$course->course_id]) }}</button>
+                                                <div data-toggle="tooltip" data-html="true" title="@foreach($coursesPrograms[$course->course_id] as $index => $courseProgram){{$index + 1}}. {{$courseProgram->program}}<br>@endforeach" data-bs-placement="right">
+                                                    <button type="button" style="border:1px solid black; background-color: #1E90FF; border-radius: 50%; font-weight:bold; color:White; opacity: 1; text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black; margin: 0 auto; display:block;" class="btn btn-secondary" disabled>{{ count($coursesPrograms[$course->course_id]) }}</button>
+                                                </div>
                                             @else
                                                 <p style="text-align: center;">None</p>
                                             @endif
@@ -506,6 +513,7 @@
 
 <script type="application/javascript">
     $(document).ready(function () {
+
         // Enables functionality of tool tips
         $('[data-toggle="tooltip"]').tooltip({html:true});
     });
