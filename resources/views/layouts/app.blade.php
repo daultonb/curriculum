@@ -103,6 +103,12 @@
                                         </a>
                                     @endcan
 
+                                    @can('admin-privilege')
+                                        <a class="dropdown-item" href="{{ route('email') }}">
+                                            Email Tool
+                                        </a>
+                                    @endcan
+
                                     <a class="dropdown-item" href="{{ route('requestInvitation') }}">
                                         Registration invite
                                     </a>
