@@ -335,7 +335,7 @@
                                                         </div>
 
                                                         <!-- Assign instructor button  -->
-                                                        <button type="button" style="width:120px" class="btn btn-outline-primary btn-sm ml-2 float-right" data-toggle="modal" data-target="#assignInstructorModal{{$course->course_id}}">
+                                                        <button type="button" class="btn btn-outline-primary btn-sm ml-2 float-right" data-toggle="modal" data-target="#assignInstructorModal{{$course->course_id}}">
                                                         Assign Instructor
                                                         </button>
 
@@ -360,9 +360,7 @@
                                                                                 <th colspan="2">Instructor</th>
                                                                             </tr>
                                                                             <div>
-                                                                                @foreach($programCoursesUsers as $programCourseId => $programCourseUsers)
-                                                                                    @if($course->course_id == $programCourseId)
-                                                                                        @foreach($programCourseUsers as $programCourseUser)
+                                                                                @foreach($programCoursesUsers[$course->course_id] as $programCourseUser)
                                                                                             <tr>
                                                                                                 <td>{{$programCourseUser->email}}</td>
                                                                                                 <td>
@@ -376,8 +374,6 @@
                                                                                                     </form>
                                                                                                 </td>
                                                                                             </tr>
-                                                                                        @endforeach
-                                                                                    @endif
                                                                                 @endforeach
                                                                             </div>
 
@@ -755,12 +751,12 @@
 <script type="application/javascript" src="{{ asset('js/drag_drop.js') }}">
     $(document).ready(function () {
 
-      $("form").submit(function () {
+    $("form").submit(function () {
         // prevent duplicate form submissions
         $(this).find(":submit").attr('disabled', 'disabled');
         $(this).find(":submit").html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>');
 
-      });
+        });
     });
-  </script>
+</script>
 @endsection
