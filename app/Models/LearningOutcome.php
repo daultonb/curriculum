@@ -30,7 +30,7 @@ class LearningOutcome extends Model
         return $this->belongsToMany('App\Models\ProgramLearningOutcome', 'outcome_maps','l_outcome_id', 'pl_outcome_id')->using('App\Models\OutcomeMap')->withPivot('map_scale_value')->withTimeStamps();
     }
 
-    public function ministryOutcomeMap() {
-        return $this->belongsToMany(MinistryStandard::class, 'ministry_standard_outcome_maps','ministry_standard_id', 'l_outcome_id')->using(MSOutcomeMap::class)->withPivot('map_scale_value')->withTimeStamps();
+    public function standardOutcomeMap() {
+        return $this->belongsToMany(Standard::class, 'standards_outcome_maps','l_outcome_id', 'standard_id')->using(StandardsOutcomeMap::class)->withPivot('map_scale_value')->withTimeStamps();
     }
 }

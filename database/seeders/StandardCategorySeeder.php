@@ -15,17 +15,17 @@ class StandardCategorySeeder extends Seeder
     public function run()
     {
         $msc = new StandardCategory;
-        $msc->sc_id = 1;
+        $msc->standard_category_id = 1;
         $msc->sc_name = "Bachelor's degree level standards";
         $msc->save();
 
         $msc2 = new StandardCategory;
-        $msc2->sc_id = 2;
+        $msc2->standard_category_id = 2;
         $msc2->sc_name = "Master's degree level standards";
         $msc2->save();
 
         $msc3 = new StandardCategory;
-        $msc3->sc_id = 3;
+        $msc3->standard_category_id = 3;
         $msc3->sc_name = "Doctoral degree level standards";
         $msc3->save();
     }

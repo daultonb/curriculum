@@ -14,10 +14,10 @@ class UpdateMSCourses extends Migration
     public function up()
     {
         Schema::table('courses', function (Blueprint $table) {
-            $table->unsignedBigInteger('sc_id')->default(1);
+            $table->unsignedBigInteger('standard_category_id')->default(1);
             $table->unsignedBigInteger('scale_category_id')->default(1);
 
-            $table->foreign('sc_id')->references('sc_id')->on('standard_categories')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('standard_category_id')->references('standard_category_id')->on('standard_categories')->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('scale_category_id')->references('scale_category_id')->on('standards_scale_categories')->onDelete('cascade')->onUpdate('cascade');
 
         });
@@ -32,8 +32,8 @@ class UpdateMSCourses extends Migration
     {
         Schema::table('courses', function (Blueprint $table) {
             //
-            $table->dropForeign('courses_sc_id_foreign');
-            $table->dropColumn('sc_id');
+            $table->dropForeign('courses_standard_category_id_foreign');
+            $table->dropColumn('standard_category_id');
 
             $table->dropForeign('courses_scale_category_id_foreign');
             $table->dropColumn('scale_category_id');

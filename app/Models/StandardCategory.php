@@ -11,16 +11,16 @@ class StandardCategory extends Model
 
     protected $table = "standard_categories";
 
-    protected $primaryKey = 'sc_id';
+    protected $primaryKey = 'standard_category_id';
 
     protected $fillable = ['sc_name'];
     
     public function courses()
     {
-        return $this->hasMany(Course::class, 'sc_id', 'sc_id');
+        return $this->hasMany(Course::class, 'standard_category_id', 'standard_category_id');
     }
 
     public function standards() {
-        return $this->hasMany(Standard::class, 'sc_id', 'sc_id');
+        return $this->hasMany(Standard::class, 'standard_category_id', 'standard_category_id');
     }
 }

@@ -14,7 +14,7 @@ class CreateStandardCategoriesTable extends Migration
     public function up()
     {
         Schema::create('standard_categories', function (Blueprint $table) {
-            $table->bigIncrements('sc_id');
+            $table->bigIncrements('standard_category_id');
             $table->string('sc_name');
             $table->timestamps();
         });

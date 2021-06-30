@@ -357,7 +357,7 @@
                         <div class="body m-4 mb-2">
                             <h5 class="card-title">Standards</h5>
                             
-                            @if(count($pl_outcomes)<1)
+                            @if(count($standard_outcomes)<1)
                                 <div class="alert alert-warning wizard">
                                     <i class="bi bi-exclamation-circle-fill pr-2 fs-5"></i>Standards have not been set for this course.                    
                                 </div>
@@ -366,35 +366,25 @@
                                     <tr class="table-primary">
                                         <th class="text-center">#</th>
                                         <th>Ministry Standard</th>
-                                        @if(count($ploCategories)>0)
-                                        <th class="table-light">PLO Category</th>
-                                        @endif
                                     </tr>
                                                 
-                                    @foreach($pl_outcomes as $index => $pl_outcome)
+                                    @foreach($standard_outcomes as $index => $standard_outcome)
                                     <tr>
                                         <td style="width:5%" >{{$index + 1}}</td>
                                         <td>
-                                            <b>{{$pl_outcome->plo_shortphrase}}</b><br>
-                                                {{$pl_outcome->pl_outcome}}
+                                            <b>{{$standard_outcome->s_shortphrase}}</b><br>
+                                                {{$standard_outcome->s_outcome}}
                                         </td>
-                                        @if(count($ploCategories)>0)
-                                            @if(isset($pl_outcome->category->plo_category))
-                                                <td>{{$pl_outcome->category->plo_category}}</td>
-                                            @else
-                                                <td>Uncategorised</td>
-                                            @endif
-                                        @endif
                                     </tr>
                                     @endforeach
                                 
                                 </table>
                             @endif
 
-                            <h5 class="card-title">Ministry Standards Mapping Scale</h5>
+                            <h5 class="card-title">Standards and Priorities Mapping Scale</h5>
                             <p>The mapping scale indicates the degree to which a ministry standard is addressed by a course learning outcome.</p>
 
-                            @if(count($mappingScales) < 1)
+                            @if(count($standardsMappingScales) < 1)
                                 <div class="alert alert-warning wizard">
                                     <i class="bi bi-exclamation-circle-fill"></i>A mapping scale has not been set for this program.                  
                                 </div>
@@ -408,7 +398,7 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                @foreach($mappingScales as $ms)
+                                                @foreach($standardsMappingScales as $ms)
 
                                                     <tr>
 
@@ -429,10 +419,10 @@
                                 </div>
                             @endif
 
-                            <h5 class="card-title">OutcomeMap: {{$program->program}}</h5>
+                            <h5 class="card-title">Outcome Map:</h5>
                             <p>This chart shows the alignment of course learning outcomes to ministry standards.</p>
 
-                            @if(count($outcomeMaps)<1)
+                            @if(count($standardsOutcomeMap)<1)
 
                                 <div class="alert alert-warning wizard">
                                     <i class="bi bi-exclamation-circle-fill"></i>Course learning outcomes have not been mapped to this programs learning outcomes. <a class="alert-link" href="{{route('courseWizard.step6', $course->course_id)}}">Map CLOs to Ministry Standards.</a>                 
@@ -442,17 +432,17 @@
                                 <table class="table table-light table-bordered table mb-4" >
                                     <tr class="table-primary">
                                         <th >Course Learning Outcome</th>
-                                        <th colspan="{{count($pl_outcomes)}}">Ministry Standard</th>
+                                        <th colspan="{{count($standard_outcomes)}}">Ministry Standard</th>
                                     </tr>
                                     <tr>
                                         <td></td>
-                                        @for($i = 0; $i < count($pl_outcomes); $i++)
+                                        @for($i = 0; $i < count($standard_outcomes); $i++)
 
                                             <td style="height:0; vertical-align: bottom; text-align: left;">
                                                 <span style="writing-mode: vertical-rl; transform: rotate(180deg);">
-                                                    @if(isset($pl_outcomes[$i]->plo_shortphrase))
+                                                    @if(isset($standard_outcomes[$i]->s_shortphrase))
                                                         {{$i+1}}.<br>
-                                                        {{$pl_outcomes[$i]->plo_shortphrase}}
+                                                        {{$standard_outcomes[$i]->s_shortphrase}}
                                                     @else
                                                         PLO {{$i+1}}
                                                     @endif
@@ -475,10 +465,10 @@
                                                 @endif
                                             </td>
 
-                                            @for($j = 0; $j < count($pl_outcomes); $j++)
-                                                @foreach ($outcomeMaps as $om)
-                                                    @if( $om->pl_outcome_id == $pl_outcomes[$j]->pl_outcome_id && $om->l_outcome_id == $l_outcomes[$i]->l_outcome_id )
-                                                        <td @foreach($mappingScales as $ms) @if($ms->abbreviation == $om->map_scale_value) style="background-color:{{$ms->colour}}" @endif @endforeach class="text-center align-middle" >
+                                            @for($j = 0; $j < count($standard_outcomes); $j++)
+                                                @foreach ($standardsOutcomeMap as $om)
+                                                    @if( $om->pl_outcome_id == $standard_outcomes[$j]->pl_outcome_id && $om->l_outcome_id == $l_outcomes[$i]->l_outcome_id )
+                                                        <td @foreach($standardsMappingScales as $ms) @if($ms->abbreviation == $om->map_scale_value) style="background-color:{{$ms->colour}}" @endif @endforeach class="text-center align-middle" >
                                                             <span @if($om->map_scale_value == 'A') style="color:white" @endif>
                                                                 {{$om->map_scale_value}}
                                                             </span>

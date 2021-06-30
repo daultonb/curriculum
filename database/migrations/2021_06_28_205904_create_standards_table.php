@@ -15,12 +15,12 @@ class CreateStandardsTable extends Migration
     {
         Schema::create('standards', function (Blueprint $table) {
             $table->bigIncrements('standard_id');
-            $table->unsignedBigInteger('sc_id')->default(1);
+            $table->unsignedBigInteger('standard_category_id')->default(1);
             $table->string('s_shortphrase');
             $table->text('s_outcome');
             $table->timestamps();
 
-            $table->foreign('sc_id')->references('sc_id')->on('standard_categories')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('standard_category_id')->references('standard_category_id')->on('standard_categories')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 

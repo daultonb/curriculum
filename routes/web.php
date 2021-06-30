@@ -66,6 +66,8 @@ Route::post('/ajax/custom_methods','CustomAssessmentMethodsController@store' );
 Route::resource('/am','AssessmentMethodController');
 
 Route::resource('/outcomeMap','OutcomeMapController');
+//Route for standards mapping
+Route::resource('/standardsOutcomeMap', 'StandardsOutcomeMapController');
 
 Route::resource('/mappingScale','MappingScaleController');
 Route::post('/mappingScale/default','MappingScaleController@default')->name('mappingScale.default');
