@@ -7,13 +7,13 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 use Illuminate\Database\Eloquent\Relations\Pivot;
 
-class OutcomeMap extends Pivot
+class Course_optional_priorities extends Pivot
 {
     use HasFactory;
 
-    protected $primaryKey = ['l_outcome_id','pl_outcome_id'];
+    protected $primaryKey = ['op_id','course_id'];
     
-    protected $table = 'outcome_maps';
+    protected $table = 'course_optional_priorities';
 
     public $incrementing = false;
 }

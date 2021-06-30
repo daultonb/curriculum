@@ -9,11 +9,13 @@ class Optional_priorities extends Model
 {
     use HasFactory;
 
-    protected $primaryKey ='id';
+    protected $primaryKey ='op_id';
+     
+    protected $table = 'optional_priorities';
 
     protected $fillable = [
-        'course_id',
-        'custom_PLO',
-        'input_status',
+        //'course_id',
+        'optional_priority',
+        //'input_status',
     ];
 }

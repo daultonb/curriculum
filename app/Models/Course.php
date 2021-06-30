@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Course extends Model
 {
+    use \Backpack\CRUD\app\Models\Traits\HasIdentifiableAttribute;
     use \Backpack\CRUD\app\Models\Traits\CrudTrait;
     use HasFactory;
 
@@ -14,7 +15,7 @@ class Course extends Model
 
     protected $primaryKey ='course_id';
 
-    protected $fillable = ['course_code', 'course_num', 'course_title', 'program_id', 'status', 'assigned', 'type'];
+    protected $fillable = ['course_code', 'course_num', 'course_title', 'program_id', 'status', 'assigned', 'type', 'year', 'semester','section', 'delivery_modality'];
 
     protected $guarded = ['course_id'];
 
