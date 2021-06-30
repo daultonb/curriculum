@@ -52,7 +52,7 @@ class LoginController extends Controller
         $request->validate([
             $this->username() => 'required|string',
             'password' => 'required|string',
-            // 'g-recaptcha-response' => ['required', new GoogleRecaptcha],
+            /*'g-recaptcha-response' => ['required', new GoogleRecaptcha],*/  //this is commented for use on localhost as captcha does not work on local instance.
         ]);
     }
 }
