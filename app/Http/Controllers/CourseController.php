@@ -471,6 +471,10 @@ class CourseController extends Controller
         
         $optional_PLOs = Optional_priorities::where('course_id', $course_id)->get();
 
+        $assessmentMethodsTotal = 0;
+        foreach ($a_methods as $a_method) {
+            $assessmentMethodsTotal += $a_method->weight;
+        }
         //
         // $course =  Course::where('course_id', $course_id)->first();
         // $program = Program::where('program_id', $course->program_id)->first();
@@ -521,7 +525,7 @@ class CourseController extends Controller
 
         // $pdf = PDF::loadView('courses\wizard\step7', ['course' => $course, 'program' => $program, 'l_outcomes' => $l_outcomes, 'pl_outcomes' => $pl_outcomes, 'l_activities' => $l_activities, 'a_methods' => $a_methods, 'outcomeActivities' => $outcomeActivities, 'outcomeAssessments'=>$outcomeAssessments, 'outcomeMaps'=>$outcomeMaps, 'mappingScales'=>$mappingScales, 'ploCategories'=>$ploCategories, 'courseUsers' => $courseUsers, 'user'=>$user, 'lo_count' => $lo_count, 'am_count' => $am_count, 'la_count' => $la_count, 'oAct' => $oAct, 'oAss' => $oAss, 'optional_PLOs' => $optional_PLOs, 'coursePrograms' => $coursePrograms, 'programsMappingScales' => $programsMappingScales, 'programsLearningOutcomes' => $programsLearningOutcomes, 'courseProgramsOutcomeMaps' => $courseProgramsOutcomeMaps]);
         
-        $pdf = PDF::loadView('courses.downloadSummary', compact('course','program','l_outcomes','pl_outcomes','l_activities','a_methods','outcomeActivities', 'outcomeAssessments', 'outcomeMaps','mappingScales', 'ploCategories')) ;
+        $pdf = PDF::loadView('courses.downloadSummary', compact('course','program','l_outcomes','pl_outcomes','l_activities','a_methods','outcomeActivities', 'outcomeAssessments', 'outcomeMaps','mappingScales', 'ploCategories', 'assessmentMethodsTotal', 'coursePrograms', 'programsLearningOutcomes', 'programsMappingScales', 'courseProgramsOutcomeMaps', 'optional_PLOs')) ;
         
         return $pdf->download('summary.pdf');
     }
