@@ -87,16 +87,19 @@
                                                                             <div id="collapse{{$course->program_id}}-{{$courseLearningOutcome->l_outcome_id}}" class="accordion-collapse collapse" aria-labelledby="header{{$course->program_id}}-{{$courseLearningOutcome->l_outcome_id}}" data-bs-parent="#accordionGroup{{$course->program_id}}-{{$courseLearningOutcome->l_outcome_id}}">
                                                                                 <div class="accordion-body">
 
-                                                                                    <form id="{{$course->program_id}}-{{$courseLearningOutcome->l_outcome_id}}" action="{{action('OutcomeMapController@store')}}" method="POST">
+                                                                                    <form id="{{$course->program_id}}-{{$courseLearningOutcome->l_outcome_id}}" action="{{action('StandardsOutcomeMapController@store')}}" method="POST">
                                                                                         @csrf
                                                                                         <input type="hidden" name="program_id" value="{{$course->program_id}}">
                                                                                         <input type="hidden" name="l_outcome_id" value="{{$courseLearningOutcome->l_outcome_id}}">
+                                                                                        <input type="hidden" name="standard_category_id" value="{{$course->standard_category_id}}">
+                                                                                        <input type="hidden" name="course_id" value="{{$course->course_id}}">
+                    
 
                                                                                         <div class="card border-white">
                                                                                             <div class="card-body">
                                                                                                 <h5 style="margin-bottom:16px;text-align:center;font-weight: bold;">{{$courseLearningOutcome->l_outcome}}</h5>
 
-                                                                                                    @if ($pl_outcomes->count() > 0) 
+                                                                                                    @if ($standard_outcomes->count() > 0) 
 
                                                                                                         <table class="table table-bordered table-sm">
                                                                                                             <thead class="thead-light">
@@ -115,25 +118,25 @@
                                                                                                             </thead>
                                                                                                             
                                                                                                             <tbody>
-                                                                                                                @foreach($pl_outcomes as $pl_outcome)
+                                                                                                                @foreach($standard_outcomes as $standard_outcome)
                                                                                                                     <tr>
                                                                                                                         <td>
-                                                                                                                            <b>{{$pl_outcome->plo_shortphrase}}</b>
+                                                                                                                            <b>{{$standard_outcome->s_shortphrase}}</b>
                                                                                                                             <br>
-                                                                                                                            {{$pl_outcome->pl_outcome}}
+                                                                                                                            {{$standard_outcome->s_outcome}}
                                                                                                                         </td>
 
                                                                                                                         @foreach($mappingScales as $mappingScaleLevel)
                                                                                                                             <td>
                                                                                                                                 <div class="form-check">
-                                                                                                                                    <input class="form-check-input position-static" type="radio" name="map[{{$courseLearningOutcome->l_outcome_id}}][{{$pl_outcome->pl_outcome_id}}]" value="{{$mappingScaleLevel->abbreviation}}" @if(isset($courseLearningOutcome->programLearningOutcomes->find($pl_outcome->pl_outcome_id)->pivot)) @if($courseLearningOutcome->programLearningOutcomes->find($pl_outcome->pl_outcome_id)->pivot->map_scale_value == $mappingScaleLevel->abbreviation) checked=checked @endif @endif>
+                                                                                                                                    <input class="form-check-input position-static" type="radio" name="map[{{$courseLearningOutcome->l_outcome_id}}][{{$standard_outcome->standard_id}}]" value="{{$mappingScaleLevel->abbreviation}}" @if(isset($courseLearningOutcome->standardOutcomeMap->find($standard_outcome->standard_id)->pivot)) @if($courseLearningOutcome->standardOutcomeMap->find($standard_outcome->standard_id)->pivot->map_scale_value == $mappingScaleLevel->abbreviation) checked=checked @endif @endif>
                                                                                                                                 </div>
                                                                                                                             </td>
                                                                                                                         @endforeach
 
                                                                                                                         <td>
                                                                                                                             <div class="form-check">
-                                                                                                                                <input class="form-check-input position-static" type="radio" name="map[{{$courseLearningOutcome->l_outcome_id}}][{{$pl_outcome->pl_outcome_id}}]" value="N/A" @if(isset($courseLearningOutcome->programLearningOutcomes->find($pl_outcome->pl_outcome_id)->pivot)) @if($courseLearningOutcome->programLearningOutcomes->find($pl_outcome->pl_outcome_id)->pivot->map_scale_value =='N/A') checked=checked @endif @endif required>
+                                                                                                                                <input class="form-check-input position-static" type="radio" name="map[{{$courseLearningOutcome->l_outcome_id}}][{{$standard_outcome->standard_id}}]" value="N/A" @if(isset($courseLearningOutcome->standardOutcomeMap->find($standard_outcome->standard_id)->pivot)) @if($courseLearningOutcome->standardOutcomeMap->find($standard_outcome->standard_id)->pivot->map_scale_value =='N/A') checked=checked @endif @endif required>
                                                                                                                             </div>
                                                                                                                         </td>
 
@@ -141,7 +144,6 @@
                                                                                                                 @endforeach
                                                                                                             </tbody>
                                                                                                         </table>
-                                                                                                                
                                                                                                         <button type="submit" class="btn btn-success my-3 btn-sm float-right col-2" >Save</button>
                                                                                                     @else 
                                                                                                         <div class="alert alert-warning text-center">

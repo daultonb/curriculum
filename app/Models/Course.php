@@ -39,12 +39,16 @@ class Course extends Model
         return $this->belongsToMany(Program::class, 'course_programs', 'course_id', 'program_id');
     }
 
-    public function msScaleCategories() {
-        return $this->belongsTo(MSScaleCategory::class, 'ms_scale_category_id', 'ms_scale_category_id');
+    public function scaleCategories() {
+        return $this->belongsTo(StandardsScaleCategory::class, 'scale_category_id', 'scale_category_id');
     }
 
     public function ministryStandardCategory() {
-        return $this->belongsTo(MinistryStandardCategory::class, 'msc_id', 'msc_id');
+        return $this->belongsTo(StandardCategory::class, 'standard_category_id', 'standard_category_id');
+    }
+
+    public function courseStandardOutcomes() {
+        return $this->hasMany(Standard::class, 'standard_category_id', 'standard_category_id');
     }
 }
 

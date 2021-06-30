@@ -66,6 +66,8 @@ Route::post('/ajax/custom_methods','CustomAssessmentMethodsController@store' );
 Route::resource('/am','AssessmentMethodController');
 
 Route::resource('/outcomeMap','OutcomeMapController');
+//Route for standards mapping
+Route::resource('/standardsOutcomeMap', 'StandardsOutcomeMapController');
 
 Route::resource('/mappingScale','MappingScaleController');
 Route::post('/mappingScale/default','MappingScaleController@default')->name('mappingScale.default');
@@ -74,7 +76,7 @@ Route::post('/mappingScale/default2','MappingScaleController@default2')->name('m
 Route::resource('/ploCategory','PLOCategoryController');
 
 Route::resource('/programUser','ProgramUserController', ['except'=>'destroy']);
-Route::delete('/programUser/{program}/{user}','ProgramUserController@delete')->name('programUser.destroy');
+Route::delete('/programUser','ProgramUserController@delete')->name('programUser.destroy');
 
 // Program wizard controller used to sent info from database to the blade page
 Route::get('/programWizard/{program}/step1','ProgramWizardController@step1')->name('programWizard.step1');

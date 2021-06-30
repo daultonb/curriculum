@@ -105,13 +105,19 @@ class ProgramWizardController extends Controller
         $faculties = array("Faculty of Arts and Social Sciences", "Faculty of Creative and Critical Studies", "Okanagan School of Education", "School of Engineering", "School of Health and Exercise Sciences", "Faculty of Management", "Faculty of Science", "Faculty of Medicine", "College of Graduate Studies", "School of Nursing", "School of Social Work", "Other");
         $departments = array("Community, Culture and Global Studies", "Economics, Philosophy and Political Science", "History and Sociology", "Psychology", "Creative Studies", "Languages and World Literature", "English and Cultural Studies", "Biology", "Chemistry", "Computer Science, Mathematics, Physics and Statistics", "Earth, Environmental and Geographic Sciences", "Other" );
         $levels = array("Undergraduate", "Graduate", "Other");
+        $programUsers = ProgramUser::join('users','program_users.user_id',"=","users.id")
+                                ->select('users.email','program_users.user_id','program_users.program_id')
+                                ->where('program_users.program_id','=',$program_id)->get();
 
         // get the current user
         $user = User::where('id',Auth::id())->first();
         // get the program
         $program = Program::where('program_id', $program_id)->first();
         // get all the users that belong to this program (using relationship defined in Program model)
-        $programUsers = $program->users()->get();
+        //$programUsers = $program->users()->where('program_id', $program_id)->get();
+        $programUsers = ProgramUser::join('users','program_users.user_id',"=","users.id")
+                                ->select('users.email','program_users.user_id','program_users.program_id')
+                                ->where('program_users.program_id','=',$program_id)->get();
         // get all the courses that belong to this program
         $programCourses = $program->courses()->get();
         // get ids of all the courses that belong to this program
