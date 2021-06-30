@@ -216,7 +216,7 @@
                                                         <th class="text-center">#</th>
                                                         <th>Program Learning Outcome</th>
                                                         @if(count($ploCategories)>0)
-                                                        <th class="table-light">PLO Category</th>
+                                                        <th>PLO Category</th>
                                                         @endif
                                                     </tr>
                                                 
@@ -252,11 +252,10 @@
                                                 </div>
                                             @else 
                                                 <table class="table table-bordered table-sm">
-                                                    <thead>
-                                                        <tr>
-                                                            <th colspan="2">Mapping Scale</th>
-                                                        </tr>
-                                                    </thead>
+                                                        
+                                                    <tr class="table-primary">
+                                                        <th colspan="2">Mapping Scale</th>
+                                                    </tr>
                                                     <tbody>
                                                         @foreach($programsMappingScales[$courseProgram->program_id] as $programMappingScale)
                                                             <tr>
