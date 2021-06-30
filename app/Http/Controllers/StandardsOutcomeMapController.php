@@ -37,7 +37,7 @@ class StandardsOutcomeMapController extends Controller
         // get the learning outcome 
         $l_outcome = LearningOutcome::where('l_outcome_id', $request->input('l_outcome_id'))->first();
         // get the standard priorities and outcomes
-        $courseStandardOutcomes = Course::find($request->input('standard_category_id'))->courseStandardOutcomes;
+        $courseStandardOutcomes = Course::find($request->input('course_id'))->courseStandardOutcomes;
         // get the program learning outcomes for this program
         //$programLearningOutcomes = Program::find($request->input('program_id'))->programLearningOutcomes;
         // courseToProgramOutcome is a 2-D array => map[CLO][standard] = map_scale_value

@@ -92,6 +92,8 @@
                                                                                         <input type="hidden" name="program_id" value="{{$course->program_id}}">
                                                                                         <input type="hidden" name="l_outcome_id" value="{{$courseLearningOutcome->l_outcome_id}}">
                                                                                         <input type="hidden" name="standard_category_id" value="{{$course->standard_category_id}}">
+                                                                                        <input type="hidden" name="course_id" value="{{$course->course_id}}">
+                    
 
                                                                                         <div class="card border-white">
                                                                                             <div class="card-body">

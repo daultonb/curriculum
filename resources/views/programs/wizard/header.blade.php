@@ -164,10 +164,12 @@
                                                         <tr>
                                                             <td>{{$admin->email}}</td>
                                                             <td>
-                                                                <form action="{{route('programUser.destroy', [$admin->program_id, $admin->user_id])}}" method="POST" class="float-left">
+                                                                <form action="{{ route('programUser.destroy') }}" method="POST" class="float-left">
                                                                     @csrf
                                                                     {{method_field('DELETE')}}
 
+                                                                    <input type="hidden" class="form-check-input" name="program_id" value="{{$admin->program_id}}">
+                                                                    <input type="hidden" class="form-check-input" name="user_id" value="{{$admin->user_id}}">
                                                                     <button type="submit" class="btn btn-danger btn-sm ">Unassign</button>
                                                                 </form>
                                                             </td>

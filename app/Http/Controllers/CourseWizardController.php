@@ -391,6 +391,8 @@ class CourseWizardController extends Controller
                                 ->join('learning_outcomes', 'standards_outcome_maps.l_outcome_id', '=', 'learning_outcomes.l_outcome_id' )
                                 ->select('standards_outcome_maps.map_scale_value','standards_outcome_maps.standard_id','standards.s_outcome','standards_outcome_maps.l_outcome_id', 'learning_outcomes.l_outcome')
                                 ->where('learning_outcomes.course_id','=',$course_id)->get();
+        // get standards outcome map
+        //$standardsOutcomeMap='';
 
         $pl_outcomes = ProgramLearningOutcome::where('program_id', $course->program_id)->get();
 
