@@ -6,149 +6,129 @@
         <div class="col-md-12">
             @include('courses.wizard.header')
 
-            <!-- progress bar -->
-            <div>
-                <table class="table table-borderless text-center table-sm" style="table-layout: fixed; width: 100%">
-                    <tbody>
-                        <tr>
-                            <td><a class="btn @if($lo_count < 1) btn-secondary @else  btn-success @endif" href="{{route('courseWizard.step1', $course->course_id)}}"
-                                    style="width: 30px; height: 30px; padding: 6px 0px; border-radius: 15px; text-align: center; font-size: 12px; line-height: 1.42857;">
-                                    <b>1</b> </a></td>
-                            <td><a class="btn @if($am_count < 1) btn-secondary @else  btn-success @endif" href="{{route('courseWizard.step2', $course->course_id)}}"
-                                    style="width: 30px; height: 30px; padding: 6px 0px; border-radius: 15px; text-align: center; font-size: 12px; line-height: 1.42857;">
-                                    <b>2</b> </a></td>
-                            <td><a class="btn btn-primary" href="{{route('courseWizard.step3', $course->course_id)}}"
-                                    style="width: 30px; height: 30px; padding: 6px 0px; border-radius: 15px; text-align: center; font-size: 12px; line-height: 1.42857;">
-                                    <b>3</b> </a></td>
-                            <td><a class="btn @if($oAct < 1 && $oAss < 1) btn-secondary @else  btn-success @endif" href="{{route('courseWizard.step4', $course->course_id)}}"
-                                    style="width: 30px; height: 30px; padding: 6px 0px; border-radius: 15px; text-align: center; font-size: 12px; line-height: 1.42857;">
-                                    <b>4</b> </a></td>
-                            <td><a class="btn @if($outcomeMaps < 1) btn-secondary @else  btn-success @endif" href="{{route('courseWizard.step5', $course->course_id)}}"
-                                    style="width: 30px; height: 30px; padding: 6px 0px; border-radius: 15px; text-align: center; font-size: 12px; line-height: 1.42857;">
-                                    <b>5</b> </a></td>
-                            <td><a class="btn btn-secondary" href="{{route('courseWizard.step6', $course->course_id)}}"
-                                    style="width: 30px; height: 30px; padding: 6px 0px; border-radius: 15px; text-align: center; font-size: 12px; line-height: 1.42857;">
-                                    <b>6</b> </a></td>
-                        </tr>
-
-                        <tr>
-                            <td>Course Learning Outcomes</td>
-                            <td>Student Assessment Methods</td>
-                            <td>Teaching and Learning Activities</td>
-                            <td>Course Alignment</td>
-                            <td>Program Outcome Mapping</td>
-                            <td>Course Summary</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-
             <div class="card">
 
+                <h3 class="card-header wizard" >
+                    Teaching and Learning Activities
+                </h3>
+
+
                 <div class="card-body">
-                    <p class="form-text text-muted">Input all teaching and learning activities or <a target="_blank" href="https://teaching.cornell.edu/teaching-resources/teaching-cornell-guide/instructional-strategies"><i class="bi bi-box-arrow-up-right"></i> instructional strategies</a> of the course individually.</p>
-                    <p class="form-text">For increased accessibility and enhanced student participation, while still offering challenging learning opportunities,
+                    <h6 class="card-subtitle mb-4 text-muted lh-lg">
+                        Input all teaching and learning activities or <a target="_blank" href="https://teaching.cornell.edu/teaching-resources/teaching-cornell-guide/instructional-strategies"><i class="bi bi-box-arrow-up-right"></i> instructional strategies</a> of the course individually. For increased accessibility and enhanced student participation, while still offering challenging learning opportunities,
                         use there <a target="_blank" href="https://udlguidelines.cast.org/binaries/content/assets/udlguidelines/udlg-v2-2/udlg_graphicorganizer_v2-2_numbers-no.pdf"><i class="bi bi-box-arrow-up-right"></i> Universal Design for Learning Guildlines</a>
-                        (Offered by CAST) to design your course. You may also use <a target="_blank" href="https://udlguidelines.cast.org/binaries/content/assets/common/publications/articles/cast-udl-planningq-a11y.pdf"><i class="bi bi-box-arrow-up-right"></i> these key questions to guide</a> you.
-                    </p>
+                        (Offered by CAST) to design your course. You may also use <a target="_blank" href="https://udlguidelines.cast.org/binaries/content/assets/common/publications/articles/cast-udl-planningq-a11y.pdf"><i class="bi bi-box-arrow-up-right"></i> these key questions to guide</a> you.               
+                    </h6>
 
                     <div id="admins">
                         <div class="row">
                             <div class="col">
-                                <table class="table table-borderless" id="l_activity_table">
+                                
+                                <table class="table table-light table-bordered" id="l_activity_table">
+                                    <tr class="table-primary">
+                                        <th>Teaching and Learning Activities</th>
+                                        <th class="text-center">Actions</th>
+                                    </tr>
+
 
                                     @if(count($l_activities)<1)
-                                        <tr class="table-active">
-                                            <th colspan="2">There are no teaching and learning activities set for this course.</th>
+                                        <tr>
+                                            <td colspan="2">
+                                                <div class="alert alert-warning wizard">
+                                                    <i class="bi bi-exclamation-circle-fill"></i>There are no teaching and learning activities set for this course.                    
+                                                </div>
+                                            </td>
                                         </tr>
-
                                     @else
-                                        <tr class="table-active">
-                                            <th colspan="2">Teaching and Learning Activities</th>
-                                        </tr>
 
-                                            @foreach($l_activities as $index => $l_activity)
+                                        @foreach($l_activities as $index => $l_activity)
 
-                                            <tr>
-                                                <td>
-                                                    <input list="l_activities{{$index}}" name="l_activity[]" id="l_activity{{$l_activity->l_activity_id}}" form="l_activity_form" class="form-control" type="text"
-                                                    type= "method" placeholder="Choose from the dropdown list or type your own" value="{{$l_activity->l_activity}}" required autofocus style="white-space: pre"
-                                                    spellcheck="true">
-                                                    <datalist id="l_activities{{$index}}" name="l_activities" >
-                                                            <option value="Discussion">
-                                                            <option value="Gallery walk">
-                                                            <option value="Group discussion">
-                                                            <option value="Group work">
-                                                            <option value="Guest Speaker">
-                                                            <option value="Independent study">
-                                                            <option value="Issue-based inquiry">
-                                                            <option value="Jigsaw">
-                                                            <option value="Journals and learning logs">
-                                                            <option value="Lab">
-                                                            <option value="Lecture">
-                                                            <option value="Literature response">
-                                                            <option value="Mind map">
-                                                            <option value="Poll">
-                                                            <option value="Portfolio development">
-                                                            <option value="Problem-solving">
-                                                            <option value="Reflection piece">
-                                                            <option value="Role-playing">
-                                                            <option value="Service learning">
-                                                            <option value="Seminar">
-                                                            <option value="Sorting">
-                                                            <option value="Think-pair-share">
-                                                            <option value="Tutorial">
-                                                            <option value="Venn diagram">
+                                                <tr>
+                                                    <td>
+                                                        <input list="l_activities{{$index}}" name="l_activity[]" id="l_activity{{$l_activity->l_activity_id}}" form="l_activity_form" class="form-control" type="text"
+                                                        type= "method" placeholder="Choose from the dropdown list or type your own" value="{{$l_activity->l_activity}}" required autofocus style="white-space: pre"
+                                                        spellcheck="true">
+                                                        <datalist id="l_activities{{$index}}" name="l_activities" >
+                                                                <option value="Discussion">
+                                                                <option value="Gallery walk">
+                                                                <option value="Group discussion">
+                                                                <option value="Group work">
+                                                                <option value="Guest Speaker">
+                                                                <option value="Independent study">
+                                                                <option value="Issue-based inquiry">
+                                                                <option value="Jigsaw">
+                                                                <option value="Journals and learning logs">
+                                                                <option value="Lab">
+                                                                <option value="Lecture">
+                                                                <option value="Literature response">
+                                                                <option value="Mind map">
+                                                                <option value="Poll">
+                                                                <option value="Portfolio development">
+                                                                <option value="Problem-solving">
+                                                                <option value="Reflection piece">
+                                                                <option value="Role-playing">
+                                                                <option value="Service learning">
+                                                                <option value="Seminar">
+                                                                <option value="Sorting">
+                                                                <option value="Think-pair-share">
+                                                                <option value="Tutorial">
+                                                                <option value="Venn diagram">
 
-                                                            @if(isset($custom_activities))
-                                                            @foreach($custom_activities as $activity)
-                                                                <option value={{$activity->custom_activities}}>
-                                                            @endforeach
-                                                            @endif
-                                                        </datalist>
+                                                                @if(isset($custom_activities))
+                                                                @foreach($custom_activities as $activity)
+                                                                    <option value={{$activity->custom_activities}}>
+                                                                @endforeach
+                                                                @endif
+                                                            </datalist>
+                                                        </td>
+
+                                                        <input type="hidden" name="l_activity_id[]" value="{{$l_activity->l_activity_id}}" form="l_activity_form">
                                                     </td>
 
-                                                    <input type="hidden" name="l_activity_id[]" value="{{$l_activity->l_activity_id}}" form="l_activity_form">
-                                                </td>
+                                                    <td class="text-center">
+                                                        <form action="{{route('la.destroy', $l_activity->l_activity_id)}}" method="POST" >
+                                                            @csrf
+                                                            {{method_field('DELETE')}}
+                                                            <input type="hidden" name="course_id" value="{{$course->course_id}}">
+                                                            <button type="submit" style="width:60px;" class="btn btn-danger btn-sm">Delete</button>
+                                                        </form>
+                                                    </td>
+                                                </tr>
+                                        @endforeach
 
-                                                <td>
-                                                    <form action="{{route('la.destroy', $l_activity->l_activity_id)}}" method="POST" class="float-right">
-                                                        @csrf
-                                                        {{method_field('DELETE')}}
-                                                        <input type="hidden" name="course_id" value="{{$course->course_id}}">
-                                                        <button type="submit" style="width:60px;" class="btn btn-danger btn-sm float-right">Delete</button>
-                                                    </form>
-                                                </td>
-                                            </tr>
-                                            @endforeach
-                                        @endif
+                                    @endif
                                 </table>
-
                             </div>
                         </div>
                     </div>
 
-                    <form method="POST" id="l_activity_form" action="{{ action('LearningActivityController@store') }}">
-                        @csrf
-                        <button type="submit" class="btn btn-primary mt-3 float-right" id="btnSave" style="margin-right:15px">
-                            Save
+                    <div class="card-body mb-4">
+                        <form method="POST" id="l_activity_form" action="{{ action('LearningActivityController@store') }}">
+                            @csrf
+                            <button type="submit" class="btn btn-success btn-sm col-2 float-right" id="btnSave">
+                                Save
+                            </button>
+                            <input type="hidden" name="course_id" value="{{$course->course_id}}" form="l_activity_form">
+                        </form>
+
+                        <button type="button" class="btn btn-primary btn-sm col-3 float-left" id="btnAdd" style="background-color:#002145;color:white;">
+                            ＋ Add Teaching and Learning Activity
                         </button>
-                        <input type="hidden" name="course_id" value="{{$course->course_id}}" form="l_activity_form">
-                    </form>
+                    </div>
 
-                    <button type="button" class="btn btn-primary btn-sm col-3 mt-3 float-left" id="btnAdd" style="margin-left: 12px">
-                        ＋ Add Teaching and Learning Activity
-                    </button>
                 </div>
 
+                <!-- card footer -->
                 <div class="card-footer">
-                    <a href="{{route('courseWizard.step2', $course->course_id)}}">
-                        <button class="btn btn-sm btn-primary mt-3 col-3 float-left">⬅ Student Assessment Methods</button>
-                    </a>
-                    <a href="{{route('courseWizard.step4', $course->course_id)}}">
-                        <button class="btn btn-sm btn-primary mt-3 col-3 float-right">Course Outcome Mapping ➡</button>
-                    </a>
-                </div>
+                    <div class="card-body mb-4">
+                        <a href="{{route('courseWizard.step2', $course->course_id)}}">
+                            <button class="btn btn-sm btn-primary col-3 float-left"><i class="bi bi-arrow-left mr-2"></i> Student Assessment Methods</button>
+                        </a>
+                        <a href="{{route('courseWizard.step4', $course->course_id)}}">
+                            <button class="btn btn-sm btn-primary col-3 float-right">Course Alignment <i class="bi bi-arrow-right ml-2"></i></button>
+                        </a>
+                    </div>
+                </div>            
             </div>
         </div>
    </div>
@@ -235,6 +215,7 @@
                         @endif
                         </datalist>
                     </td>
+                    <td></td>
                 </tr>`;
 
             var container = $('#l_activity_table');

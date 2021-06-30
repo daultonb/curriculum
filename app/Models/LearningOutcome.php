@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+// model for CourseLearningOutcomes
 class LearningOutcome extends Model
 {
     use \Backpack\CRUD\app\Models\Traits\CrudTrait;
@@ -30,5 +31,9 @@ class LearningOutcome extends Model
 
     public function programLearningOutcomes(){
         return $this->belongsToMany('App\Models\ProgramLearningOutcome', 'outcome_maps','l_outcome_id', 'pl_outcome_id')->using('App\Models\OutcomeMap')->withPivot('map_scale_value')->withTimeStamps();
+    }
+
+    public function standardOutcomeMap() {
+        return $this->belongsToMany(Standard::class, 'standards_outcome_maps','l_outcome_id', 'standard_id')->using(StandardsOutcomeMap::class)->withPivot('map_scale_value')->withTimeStamps();
     }
 }

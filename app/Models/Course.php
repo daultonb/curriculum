@@ -20,25 +20,36 @@ class Course extends Model
     protected $guarded = ['course_id'];
 
     public function users(){
-        return $this->belongsToMany('App\Models\User', 'course_users', 'course_id', 'user_id');
+        return $this->belongsToMany(User::class, 'course_users', 'course_id', 'user_id');
     }
 
     public function learningActivities(){
-        return $this->hasMany('App\Models\LearningActivity', 'course_id','course_id');
+        return $this->hasMany(LearningActivity::class, 'course_id','course_id');
     }
 
     public function assessmentMethods(){
-        return $this->hasMany('App\Models\AssessmentMethod', 'course_id','course_id');
+        return $this->hasMany(AssessmentMethod::class, 'course_id','course_id');
     }
 
     public function learningOutcomes(){
-        return $this->hasMany('App\Models\LearningOutcome', 'course_id','course_id');
+        return $this->hasMany(LearningOutcome::class, 'course_id','course_id');
     }
 
-
-    public function program() 
+    public function programs() 
     {
-        return $this->belongsTo('App\Models\Program', 'program_id', 'program_id');
+        return $this->belongsToMany(Program::class, 'course_programs', 'course_id', 'program_id');
+    }
+
+    public function scaleCategories() {
+        return $this->belongsTo(StandardsScaleCategory::class, 'scale_category_id', 'scale_category_id');
+    }
+
+    public function ministryStandardCategory() {
+        return $this->belongsTo(StandardCategory::class, 'standard_category_id', 'standard_category_id');
+    }
+
+    public function courseStandardOutcomes() {
+        return $this->hasMany(Standard::class, 'standard_category_id', 'standard_category_id');
     }
 }
 
