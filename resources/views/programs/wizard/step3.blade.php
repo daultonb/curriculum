@@ -33,7 +33,7 @@
                             <div class="col">
                                 <table class="table table-borderless">
 
-                                    @if(count($courses)<1)
+                                    @if(count($programCourses)<1)
                                         <tr class="table-active">
                                             <th colspan="2">There are no courses for this program project.</th>
                                         </tr>
@@ -42,23 +42,22 @@
                                         @else
 
                                         <tr class="table-active">
-                                            <th>Course(s)</th>
+                                            <th>Course</th>
                                             <th>Assigned</th>
                                             <th>Status</th>
                                             <th width="30%"></th>
                                         </tr>
-
-                                            @foreach($courses as $course)
+                                            @foreach($programCourses as $course)
+                                            
                                                 <tr>
-                                                    <td>{{$course->year}} {{$course->semester}} {{$course->course_code}}{{$course->course_num}} -
-                                                        {{$course->course_title}}
-                                                        <p class="form-text text-muted">@if($course->required == 1)Required @elseif($course->required == -1) Not Required @endif</p>
+                                                    <td>{{$course->course_code}}{{$course->course_num}}: {{$course->course_title}}, {{$course->year}} {{$course->semester}}
+                                                        <p class="form-text text-muted">@if($course->pivot->course_required == 1)Required @elseif($course->pivot->course_required == 0) Not Required @endif</p>
                                                     </td>
                                                     <td>
-                                                        @if($course->assigned == -1)
-                                                        ❗Unassigned
-                                                        @else
+                                                        @if(count($programCoursesUsers[$course->course_id]) > 0 )
                                                         ✔️Assigned
+                                                        @else
+                                                        ❗Unassigned                                                       
                                                         @endif
                                                     </td>
                                                     <td>
@@ -336,7 +335,7 @@
                                                         </div>
 
                                                         <!-- Assign instructor button  -->
-                                                        <button type="button" style="width:120px" class="btn btn-outline-primary btn-sm ml-2 float-right" data-toggle="modal" data-target="#assignInstructorModal{{$course->course_id}}">
+                                                        <button type="button" class="btn btn-outline-primary btn-sm ml-2 float-right" data-toggle="modal" data-target="#assignInstructorModal{{$course->course_id}}">
                                                         Assign Instructor
                                                         </button>
 
@@ -345,7 +344,7 @@
                                                             <div class="modal-dialog modal-lg" role="document">
                                                                 <div class="modal-content">
                                                                     <div class="modal-header">
-                                                                        <h5 class="modal-title" id="assignInstructorModalLabel">Assign Instructor to course</h5>
+                                                                        <h5 class="modal-title" id="assignInstructorModalLabel">Assign Instructor to Course</h5>
                                                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                                             <span aria-hidden="true">&times;</span>
                                                                         </button>
@@ -361,22 +360,20 @@
                                                                                 <th colspan="2">Instructor</th>
                                                                             </tr>
                                                                             <div>
-                                                                                @foreach($courseUsers as $instructor)
-
-                                                                                    @if($course->course_id == $instructor->course_id)
-                                                                                        <tr>
-                                                                                            <td>{{$instructor->email}}</td>
-                                                                                            <td>
-                                                                                                <form action="{{route('courses.unassign', $course->course_id)}}" method="POST" class="float-right ml-2">
-                                                                                                    @csrf
-                                                                                                    {{method_field('DELETE')}}
-                                                                                                    <input type="hidden" class="form-check-input" name="program_id" value="{{$course->program_id}}">
-                                                                                                    <input type="hidden" class="form-check-input" name="email" value="{{$instructor->email}}">
-                                                                                                    <button type="submit"class="btn btn-danger btn-sm">Unassign</button>
-                                                                                                </form>
-                                                                                            </td>
-                                                                                        </tr>
-                                                                                    @endif
+                                                                                @foreach($programCoursesUsers[$course->course_id] as $programCourseUser)
+                                                                                            <tr>
+                                                                                                <td>{{$programCourseUser->email}}</td>
+                                                                                                <td>
+                                                                                                    <form action="{{route('courses.unassign', $course->course_id)}}" method="POST" class="float-right ml-2">
+                                                                                                        <!-- TODO: unassign on user id not email -->
+                                                                                                        @csrf
+                                                                                                        {{method_field('DELETE')}}
+                                                                                                        <input type="hidden" class="form-check-input" name="program_id" value="{{$course->program_id}}">
+                                                                                                        <input type="hidden" class="form-check-input" name="email" value="{{$programCourseUser->email}}">
+                                                                                                        <button type="submit"class="btn btn-danger btn-sm">Unassign</button>
+                                                                                                    </form>
+                                                                                                </td>
+                                                                                            </tr>
                                                                                 @endforeach
                                                                             </div>
 
@@ -596,6 +593,22 @@
                                             </div>
                                         </div>
 
+                                        <!-- Passes Information for Ministry Standards -->
+                                        <div class="form-group row">
+                                            <label for="ministry_standard_id" class="col-md-3 col-form-label text-md-right"> Map this course against</label>
+                                            <div class="col-md-8">
+                                                <select class="form-control" name="ministry_standard_id" id="ministry_standard_id" required>
+                                                    <option value="" disabled selected hidden>Please Choose...</option>
+                                                    <option value="1">Bachelor's degree level standards</option>
+                                                    <option value="2">Master's degree level standards</option>
+                                                    <option value="3">Doctoral degree level standards</option>
+                                                </select>
+                                                <small id="helpBlock" class="form-text text-muted">
+                                                    These are the standards from the Ministry of Advanced Education in BC.
+                                                </small>
+                                            </div>
+                                        </div>
+
                                         <div class="form-group row">
                                             <label for="required" class="col-md-3 col-form-label text-md-right">Required</label>
                                             <div class="col-md-6">
@@ -608,7 +621,7 @@
                                             </div>
                                             <div class="form-check">
                                                 <label class="form-check-label">
-                                                <input type="radio" class="form-check-input" name="required" value="-1">
+                                                <input type="radio" class="form-check-input" name="required" value="0">
                                                 Not Required
                                                 </label>
                                             </div>
@@ -617,9 +630,8 @@
                                             </small>
                                             </div>
                                         </div>
-
-                                        <input type="hidden" class="form-check-input" name="program_id"
-                                            value={{$program->program_id}}>
+                                        <!-- Passes 'program_id', type='assigned', and 'user_id' to be used by the CourseController store method -->
+                                        <input type="hidden" class="form-check-input" name="program_id" value={{$program->program_id}}>
                                         <input type="hidden" class="form-check-input" name="type" value="assigned">
                                         <input type="hidden" class="form-check-input" name="user_id" value={{Auth::id()}}>
 
@@ -633,13 +645,14 @@
                             </div>
                         </div>
                     </div>
+                    <!-- End Create Course Modal -->
 
                     <!-- Add existing course Modal ( Drag and drop effect)-->
                     <div class="modal fade" id="addCourseModal" tabindex="-1" role="dialog" aria-labelledby="createCourseModalLabel" aria-hidden="true">
                         <div class="modal-dialog modal-lg" role="document" style="width:1250px;">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h5 class="modal-title" id="createCourseModalLabel">Add Existing Course</h5>
+                                    <h5 class="modal-title" id="createCourseModalLabel">Add Existing Courses to {{$program->program}}</h5>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                     </button>
@@ -647,18 +660,17 @@
 
                                     <div class="modal-body" style="height: auto;">
 
-                                        <p style="text-align:left;">To use existing courses to map this program, drag them from the left box into the right box.</p>
-                                        <h5 style="float: left; width: 50%;text-align:center">Existing courses</h5>
-                                        <h5 style="float: right; width: 50%; text-align: center;">Courses for this program</h5>
-                                        <div class="drag_container" style="height:275px;float: left;overflow: auto">
+                                        <p style="text-align:left;">To add an existing course to this program, drag the course from the left box into the right box.</p>
+                                        <h5 style="float: left; width: 50%;text-align:center">Courses</h5>
+                                        <h5 style="float: right; width: 50%; text-align: center;">Program Courses</h5>
+                                        <div class="drag_container" style="height:300px;float: left;overflow: auto">
 
-                                            @foreach($existCourses as $index => $course)
+                                            @foreach($userCoursesNotInProgram as $index => $course)
 
-                                            <div class="draggable" draggable="true">
+                                            <div class="draggable" draggable="true" style="margin:4px">
                                                 <input type="hidden" name="course_id[]" id= "course{{$index}}" value={{$course->course_id}}>
                                                 <label for="course{{$index}}" class="dragItem">
-                                                Course: {{$course->course_title}} {{$course->course_code}} {{$course->course_num}}
-                                                </label>
+                                                {{$course->course_code}} {{$course->course_num}}: {{$course->course_title}}                                                </label>
                                                 <small class="form-text text-muted" style="padding-left:0.50rem">
                                                     Is this course required by the program?
                                                     </small>
@@ -670,7 +682,7 @@
                                                 </div>
                                                 <div class="form-check" style="padding-left:2.00rem">
                                                     <label class="form-check-label" >
-                                                        <input type="radio" class="form-check-input" name="require{{$course->course_id}}" value="-1">
+                                                        <input type="radio" class="form-check-input" name="require{{$course->course_id}}" value="0">
                                                         Elective
                                                     </label>
                                                 </div>
@@ -680,13 +692,37 @@
                                         </div>
 
 
-                                        <form method="POST" id="addExistCourse" action="{{route('courses.addProgramToCourse', $program->program_id)}}">
-                                        @csrf
+                                        <form method="POST" id="addExistCourse" action="{{route('courseProgram.addCoursesToProgram', $program->program_id)}}">
+                                            @csrf
 
-                                        <div class="drag_container" style="height:275px;float: right;overflow: auto;">
-                                        </div>
-                                        <input type="hidden" value= {{count($existCourses)}} name="count">
-                                        <input type="hidden" name="program_id" value="{{$program->program_id}}">
+                                            <div class="drag_container" style="height:300px;float: right;overflow: auto;">
+
+                                                @foreach($programCourses as $index => $course)
+                                                    <div class="draggable" draggable="true" style="margin:4px">
+                                                        <input type="hidden" name="course_id[]" id= "course{{$index}}" value={{$course->course_id}}>
+                                                        <label for="course{{$index}}" class="dragItem">
+                                                        {{$course->course_code}} {{$course->course_num}}: {{$course->course_title}}
+                                                        </label>
+                                                        <small class="form-text text-muted" style="padding-left:0.50rem">
+                                                            Is this course required by the program?
+                                                            </small>
+                                                        <div class="form-check" style="padding-left:2.00rem;">
+                                                            <label class="form-check-label">
+                                                                <input type="radio" class="form-check-input" name="require{{$course->course_id}}" value="1" required {{($course->course_required == 1) ? 'checked' : ''}}>
+                                                                Core
+                                                            </label>
+                                                        </div>
+                                                        <div class="form-check" style="padding-left:2.00rem">
+                                                            <label class="form-check-label" >
+                                                                <input type="radio" class="form-check-input" name="require{{$course->course_id}}" value="0" {{($course->course_required == 0) ? 'checked' : ''}} >
+                                                                Elective
+                                                            </label>
+                                                        </div>
+                                                    </div>
+
+                                                @endforeach
+                                            </div>
+                                            <input type="hidden" name="program_id" value="{{$program->program_id}}">
                                         </form>
                                     </div>
 
@@ -715,12 +751,12 @@
 <script type="application/javascript" src="{{ asset('js/drag_drop.js') }}">
     $(document).ready(function () {
 
-      $("form").submit(function () {
+    $("form").submit(function () {
         // prevent duplicate form submissions
         $(this).find(":submit").attr('disabled', 'disabled');
         $(this).find(":submit").html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>');
 
-      });
+        });
     });
-  </script>
+</script>
 @endsection

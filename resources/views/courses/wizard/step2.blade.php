@@ -7,68 +7,38 @@
         <div class="col-md-12">
             @include('courses.wizard.header')
 
-            <!-- progress bar -->
-            <div>
-                <table class="table table-borderless text-center table-sm" style="table-layout: fixed; width: 100%">
-                    <tbody>
-                        <tr>
-                            <td><a class="btn @if($lo_count < 1) btn-secondary @else  btn-success @endif" href="{{route('courseWizard.step1', $course->course_id)}}"
-                                    style="width: 30px; height: 30px; padding: 6px 0px; border-radius: 15px; text-align: center; font-size: 12px; line-height: 1.42857;">
-                                    <b>1</b> </a></td>
-                            <td><a class="btn btn-primary" href="{{route('courseWizard.step2', $course->course_id)}}"
-                                    style="width: 30px; height: 30px; padding: 6px 0px; border-radius: 15px; text-align: center; font-size: 12px; line-height: 1.42857;">
-                                    <b>2</b> </a></td>
-                            <td><a class="btn @if($la_count < 1) btn-secondary @else  btn-success @endif" href="{{route('courseWizard.step3', $course->course_id)}}"
-                                    style="width: 30px; height: 30px; padding: 6px 0px; border-radius: 15px; text-align: center; font-size: 12px; line-height: 1.42857;">
-                                    <b>3</b> </a></td>
-                            <td><a class="btn @if($oAct < 1 && $oAss < 1) btn-secondary @else  btn-success @endif" href="{{route('courseWizard.step4', $course->course_id)}}"
-                                    style="width: 30px; height: 30px; padding: 6px 0px; border-radius: 15px; text-align: center; font-size: 12px; line-height: 1.42857;">
-                                    <b>4</b> </a></td>
-                            <td><a class="btn @if($outcomeMaps < 1) btn-secondary @else  btn-success @endif" href="{{route('courseWizard.step5', $course->course_id)}}"
-                                    style="width: 30px; height: 30px; padding: 6px 0px; border-radius: 15px; text-align: center; font-size: 12px; line-height: 1.42857;">
-                                    <b>5</b> </a></td>
-                            <td><a class="btn btn-secondary" href="{{route('courseWizard.step6', $course->course_id)}}"
-                                    style="width: 30px; height: 30px; padding: 6px 0px; border-radius: 15px; text-align: center; font-size: 12px; line-height: 1.42857;">
-                                    <b>6</b> </a></td>
-                        </tr>
-
-                        <tr>
-                            <td>Course Learning Outcomes</td>
-                            <td>Student Assessment Methods</td>
-                            <td>Teaching and Learning Activities</td>
-                            <td>Course Alignment</td>
-                            <td>Program Outcome Mapping</td>
-                            <td>Course Summary</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-
             <div class="card">
 
+                <h3 class="card-header wizard" >
+                    Student Assessment Methods
+                </h3>
+
                 <div class="card-body">
-                    <p class="form-text text-muted">Input all <a href="https://ctlt.ubc.ca/resources/webliography/assessmentevaluation/" target="_blank"><i class="bi bi-box-arrow-up-right"></i> assessment methods</a> of the course individually.
-                        You may also choose to use the <a href="https://ubcoapps.elearning.ubc.ca/" target="_blank"><i class="bi bi-box-arrow-up-right"></i> UBCO's Workload Calculator</a> to estimate the student time commitment in this course based on the chosen assignments.</p>
+
+                    <h6 class="card-subtitle mb-4 text-muted lh-lg">
+                        Input all <a href="https://ctlt.ubc.ca/resources/webliography/assessmentevaluation/" target="_blank"><i class="bi bi-box-arrow-up-right"></i> assessment methods</a> of the course individually. You may also choose to use the <a href="https://ubcoapps.elearning.ubc.ca/" target="_blank"><i class="bi bi-box-arrow-up-right"></i> UBCO's Workload Calculator</a> to estimate the student time commitment in this course based on the chosen assignments.              
+                    </h6>
 
                     <div id="admins">
                         <div class="row">
                             <div class="col">
-                                <table class="table table-borderless" id="a_method_table">
+                                <table class="table table-light table-bordered" id="a_method_table">
+                                    <tr class="table-primary">
+                                        <th>Student Assesment Methods</th>
+                                        <th>Weight</th>
+                                        <th class="text-center">Actions</th>
+                                    </tr>
 
                                     @if(count($a_methods)<1)
-                                        <tr class="table-active">
-                                            <th colspan="3">There are no student assessment methods set for this course.</th>
+                                        <tr>
+                                            <td colspan="3">
+                                                <div class="alert alert-warning wizard">
+                                                    <i class="bi bi-exclamation-circle-fill"></i>There are no student assessment methods set for this course.                    
+                                                </div>
+                                            </td>
                                         </tr>
-
                                     @else
-
-                                        <tr class="table-active">
-                                            <th>Student Assesment Methods</th>
-                                            <th colspan="2">Weight</th>
-                                        </tr>
-
-
-                                            @foreach($a_methods as $index=>$a_method)
+                                        @foreach($a_methods as $index=>$a_method)
 
                                             <tr>
                                                 <td>
@@ -123,15 +93,14 @@
                                                     </datalist>
                                                 </td>
 
-                                                    <input type="hidden" name="a_method_id[]" value="{{$a_method->a_method_id}}" form="a_method_form">
-                                                    <td style="display: flex">
-                                                        <input id="a_method_weight{{$a_method->a_method_id}}" type="number" step="1" form="a_method_form" style="width:auto"
-                                                        class="form-control @error('weight') is-invalid @enderror" value="{{$a_method->weight}}" name="weight[]" min="0" max="100" required autofocus>
-                                                        <label for="a_method_weight{{$a_method->a_method_id}}" style="font-size: medium; margin-top:5px;margin-left:5px"><strong>%</strong></label>
-                                                    </td>
+                                                <input type="hidden" name="a_method_id[]" value="{{$a_method->a_method_id}}" form="a_method_form">
+                                                <td style="display: flex">
+                                                    <input id="a_method_weight{{$a_method->a_method_id}}" type="number" step="1" form="a_method_form" style="width:auto class="form-control @error('weight') is-invalid @enderror" value="{{$a_method->weight}}" name="weight[]" min="0" max="100" required autofocus>
+                                                    <label for="a_method_weight{{$a_method->a_method_id}}" style="font-size: medium; margin-top:5px;margin-left:5px"><strong>%</strong></label>
+                                                </td>
 
-                                                <td>
-                                                    <form action="{{route('am.destroy', $a_method->a_method_id)}}" method="POST" class="float-right ml-2">
+                                                <td class="text-center">
+                                                    <form action="{{route('am.destroy', $a_method->a_method_id)}}" method="POST" >
                                                         @csrf
                                                         {{method_field('DELETE')}}
                                                         <input type="hidden" name="course_id" value="{{$course->course_id}}">
@@ -141,42 +110,45 @@
 
                                             </tr>
 
-                                            @endforeach
+                                        @endforeach
 
-                                            <tr>
-                                                <td><b>TOTAL</b></td>
-                                                <td style="padding-left:25px"><b id="sum">{{$totalWeight}}%</b></td>
-                                            </tr>
-
+                                        <tr class="table-secondary">
+                                            <td><b>TOTAL</b></td>
+                                            <td><b id="sum">{{$totalWeight}}%</b></td>
+                                            <td></td>
+                                        </tr>
                                     @endif
-                                </table>
+                                </table>                                    
                             </div>
-
                         </div>
                     </div>
 
-                    <form method="POST" id="a_method_form" action="{{ action('AssessmentMethodController@store') }}">
-                        @csrf
-                        <button type="submit" class="btn btn-primary mt-3 float-right" id="btnSave" style="margin-right:15px;">
-                            Save
+                    <div class="card-body mb-4">
+                        <form method="POST" id="a_method_form" action="{{ action('AssessmentMethodController@store') }}">
+                            @csrf
+                            <button type="submit" class="btn btn-success btn-sm col-2 float-right" id="btnSave" >
+                                Save
+                            </button>
+                            <input type="hidden" name="course_id" value="{{$course->course_id}}" form="a_method_form">
+                        </form>
+
+                        <button type="button" class="btn btn-sm col-3 float-left" id="btnAdd" style="background-color:#002145;color:white;">
+                            ＋ Add Student Assessment Method
                         </button>
-                        <input type="hidden" name="course_id" value="{{$course->course_id}}" form="a_method_form">
-                    </form>
-
-                    <button type="button" class="btn btn-primary btn-sm col-3 mt-3 float-left" id="btnAdd" style="margin-left: 12px">
-                        ＋ Add Student Assessment Method
-                    </button>
-
+                    </div>
                 </div>
 
+                <!-- card footer -->
                 <div class="card-footer">
-                    <a href="{{route('courseWizard.step1', $course->course_id)}}">
-                        <button class="btn btn-sm btn-primary mt-3 col-3 float-left">⬅ Course Learning Outcomes</button>
-                    </a>
-                    <a href="{{route('courseWizard.step3', $course->course_id)}}">
-                        <button class="btn btn-sm btn-primary mt-3 col-3 float-right">Teaching and Learning Activities ➡</button>
-                    </a>
-                </div>
+                    <div class="card-body mb-4">
+                        <a href="{{route('courseWizard.step1', $course->course_id)}}">
+                            <button class="btn btn-sm btn-primary col-3 float-left"><i class="bi bi-arrow-left mr-2"></i> Course Learning Outcomes</button>
+                        </a>
+                        <a href="{{route('courseWizard.step3', $course->course_id)}}">
+                            <button class="btn btn-sm btn-primary col-3 float-right">Teaching and Learning Activities <i class="bi bi-arrow-right ml-2"></i></button>
+                        </a>
+                    </div>
+                </div>            
             </div>
         </div>
     </div>
@@ -231,7 +203,7 @@
     //Add a new row of assesment method
     function add() {
         var rowCount = calculateRow();
-            var element =
+        var element =
             `<tr>
                 <td>
                     <input list="a_methods`+rowCount+`" name= "a_method[]" id="a_new_method`+rowCount+`" type="text" class="form-control
@@ -285,12 +257,13 @@
 
                     </datalist>
                 </td>
-                    <td style="display: flex">
-                        <input id="a_new_method_weight`+rowCount+`" type="number" step="1" form="a_method_form" style="width:auto"
-                        class="form-control @error('weight') is-invalid @enderror" value = 0 name="weight[]" min="0" max="100" required autofocus>
-                        <label for="a_new_method_weight`+rowCount+`" style="font-size: medium; margin-top:5px;margin-left:5px"><strong>%</strong></label>
-                    </td>
-                </tr>`;
+                <td style="display: flex">
+                    <input id="a_new_method_weight`+rowCount+`" type="number" step="1" form="a_method_form" style="width:auto" class="form-control @error('weight') is-invalid @enderror" value = 0 name="weight[]" min="0" max="100" required autofocus>
+                    <label for="a_new_method_weight`+rowCount+`" style="font-size: medium; margin-top:5px;margin-left:5px"><strong>%</strong></label>
+                </td>
+                <td></td>
+
+            </tr>`;
 
             if($('#sum').length === 0){
                 var container = $('#a_method_table');
@@ -319,6 +292,7 @@
         }else{
             rowCount = $('#a_method_table tr').length-1;
         }
+        console.log(rowCount);
         return rowCount;
     }
 
