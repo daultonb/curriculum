@@ -94,8 +94,8 @@
                                                 </td>
 
                                                 <input type="hidden" name="a_method_id[]" value="{{$a_method->a_method_id}}" form="a_method_form">
-                                                <td style="display: flex">
-                                                    <input id="a_method_weight{{$a_method->a_method_id}}" type="number" step="1" form="a_method_form" style="width:auto class="form-control @error('weight') is-invalid @enderror" value="{{$a_method->weight}}" name="weight[]" min="0" max="100" required autofocus>
+                                                <td>
+                                                    <input class="p-1" id="a_method_weight{{$a_method->a_method_id}}" type="number" step="1" form="a_method_form" style="width:auto class="form-control @error('weight') is-invalid @enderror" value="{{$a_method->weight}}" name="weight[]" min="0" max="100" required autofocus>
                                                     <label for="a_method_weight{{$a_method->a_method_id}}" style="font-size: medium; margin-top:5px;margin-left:5px"><strong>%</strong></label>
                                                 </td>
 
@@ -132,7 +132,7 @@
                             <input type="hidden" name="course_id" value="{{$course->course_id}}" form="a_method_form">
                         </form>
 
-                        <button type="button" class="btn btn-sm col-3 float-left" id="btnAdd" style="background-color:#002145;color:white;">
+                        <button type="button" class="btn btn-sm col-3 float-left ml-3" id="btnAdd" style="background-color:#002145;color:white;">
                             ＋ Add Student Assessment Method
                         </button>
                     </div>

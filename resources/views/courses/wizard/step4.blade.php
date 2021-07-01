@@ -38,7 +38,6 @@
 
                                         @else
 
-                                            <div class="card mt-1">
                                                 <div class="card-body">
                                                     <div class="container mb-3">
                                                         <h6 class="card-subtitle wizard mb-4 text-primary fw-bold">
@@ -88,17 +87,11 @@
                                                                 @endfor
                                                             </tbody>
                                                         </table>
-
-                                                        <div class="card-body mb-4">
-                                                            <button type="submit" class="btn btn-success btn-sm float-right col-2">Save</button>
-                                                        </div>
-
-
-
                                                     </form>
+                                                    <div class="mt-4">
+                                                        <button type="submit" class="btn btn-success btn-sm float-right col-2">Save</button>
+                                                    </div>
                                                 </div>
-
-
                                             @endif
                                         </div>
 
