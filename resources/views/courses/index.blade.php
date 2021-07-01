@@ -155,7 +155,7 @@
                                     name="delivery_modality" required autofocus>
                                         <option value="O">online</option>
                                         <option value="I">in-person</option>
-                                        <option value="B">blended</option>
+                                        <option value="B">blended</option> <!-- I think this is supposed to be <option value="H">hybrid</option>, not sure if the value will mess up existing courses though. -->
 
                                     @error('delivery_modality')
                                     <span class="invalid-feedback" role="alert">
