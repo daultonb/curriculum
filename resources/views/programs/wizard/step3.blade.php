@@ -368,7 +368,7 @@
                                                                                                         <!-- TODO: unassign on user id not email -->
                                                                                                         @csrf
                                                                                                         {{method_field('DELETE')}}
-                                                                                                        <input type="hidden" class="form-check-input" name="program_id" value="{{$course->program_id}}">
+                                                                                                        <input type="hidden" class="form-check-input" name="program_id" value="{{$program->program_id}}">
                                                                                                         <input type="hidden" class="form-check-input" name="email" value="{{$programCourseUser->email}}">
                                                                                                         <button type="submit"class="btn btn-danger btn-sm">Unassign</button>
                                                                                                     </form>
@@ -402,7 +402,7 @@
                                                                                 </div>
                                                                             </div>
 
-                                                                            <input type="hidden" class="form-input" name="program_id" value="{{$course->program_id}}">
+                                                                            <input type="hidden" class="form-input" name="program_id" value="{{$program->program_id}}">
 
                                                                         </div>
                                                                         <div class="modal-footer">
@@ -414,7 +414,7 @@
                                                                         <form method="POST" action="{{route('courses.assign', $course->course_id)}}">
                                                                             @csrf
                                                                             <input id="self" type="hidden" class="form-control" name="email" value="{{Auth::User()->email}}">
-                                                                            <input type="hidden" class="form-input" name="program_id" value={{$course->program_id}}>
+                                                                            <input type="hidden" class="form-input" name="program_id" value={{$program->program_id}}>
                                                                             <button type="submit" style="width:120px" class="btn btn-outline-primary btn-sm" >Assign to Self</button>
                                                                         </form>
                                                                         </div>

@@ -212,6 +212,7 @@
                                         </tr>
                                     </table>
                                 @else
+                                
                                     @if(count($ploCategories)<1)
                                         @foreach($plos as $plo)
 
@@ -224,10 +225,10 @@
                                                 <td style="width:15%">
 
                                                     <button type="submit" style="width:60px" class="btn btn-danger btn-sm"
-                                                    data-toggle="modal" data-target="#deletePLO{{$category->plo_category_id}}">Delete</button>
+                                                    data-toggle="modal" data-target="#deletePLO{{$plo->pl_outcome_id}}">Deleteee</button>
 
                                                     <!-- Confirmation Model -->
-                                                    <div class="modal fade" id="deletePLO{{$category->plo_category_id}}" tabindex="-1" role="dialog" aria-labelledby="deletePLO{{$category->plo_category_id}}" aria-hidden="true">
+                                                    <div class="modal fade" id="deletePLO{{$plo->pl_outcome_id}}" tabindex="-1" role="dialog" aria-labelledby="deletePLO{{$plo->pl_outcome_id}}" aria-hidden="true">
                                                         <div class="modal-dialog" role="document">
                                                             <div class="modal-content">
                                                                 <div class="modal-header">
@@ -238,7 +239,7 @@
                                                                 </div>
 
                                                                 <div class="modal-body">
-                                                                Are you sure you want to delete {{$category->plo_category}}?
+                                                                Are you sure you want to delete {{$plo->plo_shortphrase}}?
                                                                 </div>
 
                                                                 <form action="{{route('plo.destroy', $plo->pl_outcome_id)}}" method="POST">
@@ -258,7 +259,7 @@
                                                     </div>
 
                                                     <button type="button" class="btn btn-secondary btn-sm float-right" data-toggle="modal" style="width:60px; " data-target="#editPLOModal{{$plo->pl_outcome_id}}">
-                                                        Edit
+                                                        Editeee
                                                     </button>
 
                                                     <!-- Modal -->
@@ -328,6 +329,7 @@
                                         </table>
                                         @endforeach
                                     @else
+                                    
                                         @foreach($ploCategories as $category)
 
                                             <div class="card my-2">
@@ -661,7 +663,7 @@
                                                         </small>
                                                     </div>
                                                 </div>
-
+                                                
                                                 @if(count($ploCategories)>0)
                                                     <div class="form-group row">
                                                         <label for="category" class="col-md-4 col-form-label text-md-right">PLO Category</label>
@@ -684,7 +686,7 @@
                                                         </div>
                                                     </div>
                                                 @endif
-
+                                                
                                                 <input type="hidden" class="form-check-input" name="program_id"
                                                     value={{$program->program_id}}>
 
