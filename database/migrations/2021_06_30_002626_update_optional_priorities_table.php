@@ -13,11 +13,17 @@ class UpdateOptionalPrioritiesTable extends Migration
      */
     public function up()
     {
-        Schema::table('optional_priorities', function ($table) {
-            $table->unsignedBigInteger('op_id');
+        Schema::table('optional_priorities', function (Blueprint $table) {
+            $table->dropColumn('id');
+            $table->dropForeign('optional_priorities_course_id_foreign');
+            $table->dropColumn('course_id');
+            $table->dropColumn('custom_PLO');
+            $table->dropColumn('input_status');
+
+            $table->unsignedBigInteger('op_id')->first();
             $table->primary('op_id');
-            $table->unsignedBigInteger('subcat_id');
-            $table->text('optional_priority');
+            $table->unsignedBigInteger('subcat_id')->after('op_id');
+            $table->text('optional_priority')->after('subcat_id');
 
             $table->foreign('subcat_id')->references('subcat_id')->on('optional_priority_subcategories')->onDelete('cascade')->onUpdate('cascade');
         });
@@ -30,13 +36,6 @@ class UpdateOptionalPrioritiesTable extends Migration
      */
     public function down()
     {
-        Schema::table('optional_priorities', function ($table) {
-            $table->id();
-            $table->unsignedBigInteger('course_id');
-            $table->string('custom_PLO');
-            $table->unsignedBigInteger('input_status');
-
-            $table->foreign('course_id')->references('course_id')->on('courses')->onDelete('cascade')->onUpdate('cascade');
-        });
+        Schema::dropIfExists('optional_priorities');
     }
 }
