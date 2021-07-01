@@ -68,7 +68,7 @@ class CourseCrudController extends CrudController
             'label'     => 'Program', // Table column heading
             'type'      => 'select',
             'name'      => 'program_id', // the column that contains the ID of that connected entity;
-            'entity'    => 'program', // the method that defines the relationship in your Model
+            'entity'    => 'programs', // the method that defines the relationship in your Model
             'attribute' => 'program', // foreign key attribute that is shown to user
             'model'     => "App\Models\Program", // foreign key model
           ]);
@@ -126,13 +126,27 @@ class CourseCrudController extends CrudController
             'label' => "Course Title", // Table column heading
             'type' => 'Text'
           ]);
-
+        
+        $this->crud->addField([
+            'name' => 'standard_category_id', // The db column name
+            'label' => "cat_id", // Table column heading
+            'type' => 'Text',
+            'default' => '1',
+          ]);
+        
+        $this->crud->addField([
+            'name' => 'scale_category_id', // The db column name
+            'label' => "scale_id", // Table column heading
+            'type' => 'Text',
+            'default' => '1',
+          ]);
+       
         $this->crud->addField([
             // 1-n relationship
             'label'     => 'Program', // Table column heading
             'type'      => 'select',
             'name'      => 'program_id', // the column that contains the ID of that connected entity;
-            'entity'    => 'program', // the method that defines the relationship in your Model
+            'entity'    => 'programs', // the method that defines the relationship in your Model
             'attribute' => 'program', // foreign key attribute that is shown to user
             'model'     => "App\Models\Program", // foreign key model
 
@@ -275,18 +289,33 @@ class CourseCrudController extends CrudController
             'label' => "Course Title", // Table column heading
             'type' => 'Text'
           ]);
-
-        $this->crud->addField([
+        
+            
+        /*$this->crud->addField([
             // 1-n relationship
             'label'     => 'Program', // Table column heading
             'type'      => 'select',
             'name'      => 'program_id', // the column that contains the ID of that connected entity;
-            'entity'    => 'program', // the method that defines the relationship in your Model
+            'entity'    => 'programs', // the method that defines the relationship in your Model
             'attribute' => 'program', // foreign key attribute that is shown to user
             'model'     => "App\Models\Program", // foreign key model
 
           ]);
+            */
+          //this is necesary to accommodate the new course_program relationship
+          $this->crud->addField([
+            // 1-n relationship
+            'label'     => 'Program', // Table column heading
+            'type'      => 'select2_multiple',
+            'name'      => 'programs', // the column that contains the ID of that connected entity;
+            'entity'    => 'programs', // the method that defines the relationship in your Model
+            'attribute' => 'program', // foreign key attribute that is shown to user
+            'model'     => "App\Models\Program", // foreign key model
+            'placeholder' => "Select a program", // placeholder for the select2 input
 
+            'pivot'     => true,
+
+          ]);
         
         $this->crud->addField([   // radio
             'name'        => 'status', // the name of the db column
@@ -344,6 +373,20 @@ class CourseCrudController extends CrudController
             'value' => '<small class="form-text text-muted">If instructors have been assigned to this course please select yes else select no</small>'
         ]);
         /*code added by matt*/
+        
+        $this->crud->addField([
+            'name' => 'standard_category_id', // The db column name
+            'label' => "cat_id", // Table column heading
+            'type' => 'Text',
+            'default' => '1',
+          ]);
+        
+        $this->crud->addField([
+            'name' => 'scale_category_id', // The db column name
+            'label' => "scale_id", // Table column heading
+            'type' => 'Text',
+            'default' => '1',
+          ]);
         
           //added this block as fix for bug03 (MD)
         $this->crud->addField([   // radio
@@ -595,7 +638,7 @@ class CourseCrudController extends CrudController
             
             //create custom html for mapping table: data collected as an array of radio buttons for each mapping with name code: map_CLOid_PLOid
            
-            
+            /*
             $custHTML = "<div><label>Objective Mapping</label><table class=\"table table-sm table-striped m-b-0\">";
             $PLOs = DB::table('program_learning_outcomes')->where('program_id', $crsData->program_id)->get();
             $OCmaps = DB::table('outcome_maps')->whereIn('l_outcome_id', $setOfCLO)->get();
@@ -645,7 +688,7 @@ class CourseCrudController extends CrudController
                                                 ->where('pl_outcome_id', $exKey[2])
                                                 ->update(['map_scale_value'=>$val[0]]);
                 }//DB::update('update outcome_maps set map_scale_value = 100 where l_outcome_id = ? and pl_outcome_id = ?' , [$clo->l_outcome_id,$plo->pl_outcome_id]);
-            }
+            }*/
             /*end code added by mat*/
     }
 
@@ -677,7 +720,7 @@ class CourseCrudController extends CrudController
             'label'     => 'Program', // Table column heading
             'type'      => 'select',
             'name'      => 'program_id', // the column that contains the ID of that connected entity;
-            'entity'    => 'program', // the method that defines the relationship in your Model
+            'entity'    => 'programs', // the method that defines the relationship in your Model
             'attribute' => 'program', // foreign key attribute that is shown to user
             'model'     => App\Models\Program::class, // foreign key model
           ]);
