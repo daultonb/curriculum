@@ -48,9 +48,8 @@ class HomeController extends Controller
                     ['courses.status', '=', -1]
                 ])->get();
         */
-        $activeCourses = $user->courses()->join('programs', 'courses.program_id', '=', 'programs.program_id')
-        ->select('courses.program_id','courses.course_code','courses.delivery_modality','courses.semester','courses.year','courses.section',
-        'courses.course_id','courses.course_num','courses.course_title', 'courses.status','programs.program', 'programs.faculty', 'programs.department','programs.level')
+        $activeCourses = $user->courses()->select('courses.course_code','courses.delivery_modality','courses.semester','courses.year','courses.section',
+        'courses.course_id','courses.course_num','courses.course_title', 'courses.status')
         ->where([
             ['course_users.user_id','=',Auth::id()],
             ['courses.status', '=', 1]
@@ -101,7 +100,7 @@ class HomeController extends Controller
             ]);
 
         $course = new Course;
-        $course->program_id = $request->input('program_id');
+        //$course->program_id = $request->input('program_id');
         $course->course_title = $request->input('course_title');
         $course->course_num = $request->input('course_num');
         $course->course_code =  strtoupper($request->input('course_code'));

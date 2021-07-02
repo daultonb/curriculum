@@ -423,7 +423,7 @@ class CourseCrudController extends CrudController
             'type'        => 'text',           
         ]); 
         
-       // $crsID = $GLOBALS['uri'];     
+           
         $crsID = filter_input(INPUT_SERVER,'PATH_INFO');
         
            $crsID = explode("/",$crsID)[3];
@@ -437,25 +437,6 @@ class CourseCrudController extends CrudController
            foreach($AMs as $am)array_push($setOfAM,$am->a_method_id);
            $setOfLA = [];
            foreach($LAs as $la)array_push($setOfLA,$la->l_activity_id); 
-        
-            //this is being implemented as a table to simplify edits and deletes (which will recurse to child records)
-          /*$this->crud->addField([   // relationship
-             'label' => "Course Learning Outcomes",
-
-             'type' => "relationship",
-
-             'name' => 'learningOutcomes', // the method on your model that defines the relationship
-             
-             'ajax' => true,      
-              
-             'inline_create' => [
-                'include_main_form_fields' => true,
-                'entity' => 'learningOutcome',   
-                'modal_class' => 'modal-dialog modal-xl', 
-                'modal_route' => route('learningOutcome-inline-create'),                
-                'create_route' =>  route('learningOutcome-inline-create-save'),
-            ]
-            ]);*/
            
             $this->crud->addField([   // relationship
              'label' => "Course Learning Outcomes",
@@ -589,7 +570,7 @@ class CourseCrudController extends CrudController
                    $amID = $am->a_method_id;
                    $oas = $OAS->where('a_method_id', '=', $amID)->where('l_outcome_id', '=', $cID);
                    $ckd = (count($oas)> 0)?"checked":"";
-                   $amStr .= "<li>". $am->a_method ."<input type=\"checkbox\" name=\"oas-$cID-$amID\" $ckd></li>";
+                   $amStr .= "<li>". $am->a_method ."<input type=\"checkbox\" name=\"outcomea-oas-$cID-$amID\" $ckd></li>";
                }
                $tRow .= "<td id=\am-$cID\">$amStr</td>";
                //now the outcome_activities
@@ -598,7 +579,7 @@ class CourseCrudController extends CrudController
                    $laID = $la->l_activity_id;
                    $oac = $OAC->where('l_activity_id', '=', $laID)->where('l_outcome_id', '=', $cID);
                    $ckd = (count($oac)> 0)?"checked":"";
-                   $laStr .= "<li>". $la->l_activity ."<input type=\"checkbox\" name=\"oac-$cID-$laID\" $ckd></li>";
+                   $laStr .= "<li>". $la->l_activity ."<input type=\"checkbox\" name=\"outcomea-oac-$cID-$laID\" $ckd></li>";
                }
                $tRow .= "<td id=\am-$cID\">$laStr</ul></td></tr>";
                $custHTML .= $tRow;  
@@ -617,20 +598,18 @@ class CourseCrudController extends CrudController
            //using set of CLO IDs delete all existing records connecting with these parameters
            
             if($req && count($req)){
-                ///$setOfCLO = []; included above without condition
-                //foreach($CLOs as $clo)array_push($setOfCLO,$clo->l_outcome_id);
                 $r = DB::table('outcome_assessments')->whereIn('l_outcome_id',  $setOfCLO)->delete();
                 $r = DB::table('outcome_activities')->whereIn('l_outcome_id',  $setOfCLO)->delete();
-                $searchFor = "on";               
-                $chk = array_filter($_POST, function($element) use($searchFor){
-                    return  $element == $searchFor;
-                });
+                $searchFor = "outcomea";               
+                $chk = array_filter($_POST, function($key) use($searchFor){
+                    return (strpos($key, $searchFor)!== false);
+                },ARRAY_FILTER_USE_KEY);
                 $newOAS = [];
                 $newOAC = [];
                 foreach($chk as $bx => $val){
                     $ids = explode("-",$bx);
-                    ($ids[0] == "oas")? array_push($newOAS,['l_outcome_id' => $ids[1], 'a_method_id' => $ids[2]]) 
-                                      : array_push($newOAC,['l_outcome_id' => $ids[1], 'l_activity_id' => $ids[2]]) ;
+                    ($ids[1] == "oas")? array_push($newOAS,['l_outcome_id' => $ids[2], 'a_method_id' => $ids[3]]) 
+                                      : array_push($newOAC,['l_outcome_id' => $ids[2], 'l_activity_id' => $ids[3]]) ;
                 }
                 if(count($newOAS))$r = DB::table('outcome_assessments')->insert($newOAS);
                 if(count($newOAC))$r = DB::table('outcome_activities')->insert($newOAC);
@@ -638,33 +617,42 @@ class CourseCrudController extends CrudController
             
             //create custom html for mapping table: data collected as an array of radio buttons for each mapping with name code: map_CLOid_PLOid
            
-            /*
-            $custHTML = "<div><label>Objective Mapping</label><table class=\"table table-sm table-striped m-b-0\">";
-            $PLOs = DB::table('program_learning_outcomes')->where('program_id', $crsData->program_id)->get();
-            $OCmaps = DB::table('outcome_maps')->whereIn('l_outcome_id', $setOfCLO)->get();
-            $MScP = DB::table('mapping_scale_programs')->where('program_id',$crsData->program_id)->get();
-            $setOfMScP = [];
-            foreach($MScP as $msp)array_push($setOfMScP,$msp->map_scale_id);
-            $MScales = DB::table('mapping_scales')->whereIn('map_scale_id', $setOfMScP)->get();
-            $msStr = "";
-            foreach($MScales as $scale)$msStr .= "<th title=\"".$scale->description."\">". $scale->abbreviation."</th>";
-            $msStr .= "<th title=\"Not Applicable\">N/A</th>";
-            foreach($CLOs as $clo){
-                $custHTML .= "<tr><th colspan=\"5\">$clo->clo_shortphrase</th></tr><tr><th>" . 
-                        \App\Models\Program::where('program_id', '=', $crsData->program_id)->get()[0]->program .
-                        "</th>" . $msStr . "</tr>";
-                foreach($PLOs as $plo){
-                    $custHTML .= "<tr><td title=\"" . $plo->pl_outcome. "\">". $plo->plo_shortphrase."</td>";
-                    for($i = 1; $i <= $MScales->count()+1; $i++){
-                        $map = $OCmaps->where('l_outcome_id', $clo->l_outcome_id)->where('pl_outcome_id', $plo->pl_outcome_id);                        
-                        $chk = (($map->count() != 0 && $map->first()->map_scale_value == $i) || 
-                                ($i == $MScales->count()+1 && $map->count() != 0 && $map->first()->map_scale_value == 0))?"checked" : "";
-                        $val = "value=\"0\"";
-                        if($i <= $MScales->count())$val = "value=\"".$MScales[$i-1]->map_scale_id."\"";
-                        $custHTML.="<td><input type=\"radio\" name=\"map_".$clo->l_outcome_id."_".$plo->pl_outcome_id."[]\" $chk $val></td>";
+            
+            $custHTML = "<div><label>Objective Mapping</label><table class=\"table table-sm table-striped m-b-0\">";           
+            //standards are roughly analogous to program outcomes, but there is one standard category per course. 
+            //the scales are categorized in the standards versus select any from list with PLOs
+            $Progs = DB::table('course_programs')->where('course_id', $crsID)
+                             ->join('programs', 'programs.program_id', '=', 'course_programs.program_id')
+                             ->select('programs.program_id','programs.program')
+                             ->get();
+            //this all needs to happen per program as these can be related optionally many to one with the course
+            foreach ($Progs as $program){
+                $PLOs = DB::table('program_learning_outcomes')->where('program_id', $program->program_id)->get();
+                $OCmaps = DB::table('outcome_maps')->whereIn('l_outcome_id', $setOfCLO)->get();
+                $MScP = DB::table('mapping_scale_programs')->where('program_id',$program->program_id)->get();
+                $setOfMScP = [];
+                foreach($MScP as $msp)array_push($setOfMScP,$msp->map_scale_id);
+                $MScales = DB::table('mapping_scales')->whereIn('map_scale_id', $setOfMScP)->get();
+                $msStr = "";
+                foreach($MScales as $scale)$msStr .= "<th title=\"".$scale->description."\">". $scale->abbreviation."</th>";
+                $msStr .= "<th title=\"Not Applicable\">N/A</th>";
+                foreach($CLOs as $clo){
+                    $custHTML .= "<tr><th colspan=\"5\">$clo->clo_shortphrase</th></tr><tr><th>" . 
+                            $program->program .
+                            "</th>" . $msStr . "</tr>";
+                    foreach($PLOs as $plo){
+                        $custHTML .= "<tr><td title=\"" . $plo->pl_outcome. "\">". $plo->plo_shortphrase."</td>";
+                        for($i = 1; $i <= $MScales->count()+1; $i++){
+                            $map = $OCmaps->where('l_outcome_id', $clo->l_outcome_id)->where('pl_outcome_id', $plo->pl_outcome_id);                        
+                            $chk = (($map->count() != 0 && $map->first()->map_scale_value == $i) || 
+                                    ($i == $MScales->count()+1 && $map->count() != 0 && $map->first()->map_scale_value == 0))?"checked" : "";
+                            $val = "value=\"0\"";
+                            if($i <= $MScales->count())$val = "value=\"".$MScales[$i-1]->map_scale_id."\"";
+                            $custHTML.="<td><input type=\"radio\" name=\"map_".$clo->l_outcome_id."_".$plo->pl_outcome_id."[]\" $chk $val></td>";
+                        }
                     }
                 }
-            }
+            }            
             $custHTML .= "</table></div>";
             $this->crud->addField([
                'label' => 'Outcome Mappings',
@@ -672,7 +660,7 @@ class CourseCrudController extends CrudController
                 'type' => 'custom_html',   
                 'value' => $custHTML,
             ]);
-            
+            //code to CrUD the program lo mapping . should still work with multiple prgrams
             if($req && count($req)){                
                 $chk = array_filter($_POST, function($element) {
                     return  !(false===strpos($element, "map"));
@@ -687,9 +675,61 @@ class CourseCrudController extends CrudController
                         \App\Models\OutcomeMap::where('l_outcome_id', $exKey[1])
                                                 ->where('pl_outcome_id', $exKey[2])
                                                 ->update(['map_scale_value'=>$val[0]]);
-                }//DB::update('update outcome_maps set map_scale_value = 100 where l_outcome_id = ? and pl_outcome_id = ?' , [$clo->l_outcome_id,$plo->pl_outcome_id]);
-            }*/
-            /*end code added by mat*/
+                }
+            }
+            
+             
+            //Code for Optional Priorities
+            $setOpPr = DB::table('course_optional_priorities')->where('course_id', $crsID)->get();                         
+            $setOfOpPr = DB::table('optional_priorities')
+                         ->join('optional_priority_subcategories', 'optional_priorities.subcat_id', '=', 'optional_priority_subcategories.subcat_id')
+                         ->join('optional_priority_categories', 'optional_priority_categories.cat_id', '=', 'optional_priority_subcategories.cat_id')
+                         ->select('optional_priorities.op_id as id','optional_priorities.optional_priority as op', 'optional_priority_categories.cat_id as cat_id','optional_priority_subcategories.subcat_id as subcat_id',
+                                  'optional_priority_categories.cat_name as cat_name', 'optional_priority_subcategories.subcat_name as subcat_name', 'optional_priority_subcategories.subcat_desc as subcat_desc')
+                         ->get();
+            $setCat = DB::table('optional_priority_categories')->get();
+            //loop x3 to create hierarchical html
+            $custHTML = "<div><label>Optional Priorities</label><table class=\"table table-sm table-striped m-b-0\">";  
+            foreach($setCat as $cat){
+                $custHTML .= "<tr><th colspan=\"2\">$cat->cat_name</th></tr>" ;
+                //create header for cat
+                $setSubCat = DB::table('optional_priority_subcategories')->where('cat_id', $cat->cat_id)->get();
+                foreach($setSubCat as $subcat){
+                    $custHTML .= "<tr><th colspan=\"2\">$subcat->subcat_name</th></tr>" ;
+                    //create header for subcat
+                    $scop = DB::table('optional_priorities')->where('subcat_id',$subcat->subcat_id)->get();
+                    foreach($scop as $op){
+                        //create row with checkbox for each OP
+                        $opid = $op->op_id;
+                        $chk = (count($setOpPr->where('op_id', $opid)) > 0) ? "checked" : "";
+                        $custHTML .= "<tr><td >". $op->optional_priority."</td><td><input type=\"checkbox\" name=\"opp_$opid\" $chk></td>";
+                        
+                    }
+                }
+            }
+            $custHTML .= "</table></div>";
+            $this->crud->addField([
+               'label' => 'Optional Priorities',
+                'name' => 'optional_priorities',
+                'type' => 'custom_html',   
+                'value' => $custHTML,
+            ]);
+             //code to CrUD the Optional Priorities. 
+            if($req && count($req)){           
+                $chkOP = [];
+                $chk = array_filter($_POST, function($element) {
+                    return  !(false===strpos($element, "opp"));
+                },ARRAY_FILTER_USE_KEY);
+                foreach($chk as $key => $val){
+                    $exKey = explode('_',$key);
+                    array_push($chkOP, $exKey[1]);
+                    $map = $setOpPr->where('op_id', $exKey[1]);
+                    //if no entry already exists in DB, enter it. 
+                    if(!($map->count() > 0))
+                        DB::table('course_optional_priorities')->insert(['op_id'=>$exKey[1],'course_id'=>$crsID]);  
+                }//have to delete those in database not checked here.
+                DB::table('course_optional_priorities')->where('course_id',$crsID)->whereNotIn('op_id', $chkOP)->delete();
+            }
     }
 
     protected function setupShowOperation()
