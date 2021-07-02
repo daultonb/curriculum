@@ -150,7 +150,7 @@
                             </table>
                         </div>
                         <div class="card-footer">
-                            <button type="button" class="btn btn-primary btn-sm col-2 mt-3 float-right" data-toggle="modal" data-target="#addCategoryModal">
+                            <button type="button" class="btn btn-primary btn-sm col-2 mt-3 float-right" data-toggle="modal" data-target="#addCategoryModal" style="background-color:#002145;color:white;">
                                 ＋ Add PLO Category
                             </button>
 
@@ -223,9 +223,8 @@
                                                     {{$plo->pl_outcome}}
                                                 </td>
                                                 <td style="width:15%">
-
-                                                    <button type="submit" style="width:60px" class="btn btn-danger btn-sm"
-                                                    data-toggle="modal" data-target="#deletePLO{{$plo->pl_outcome_id}}">Deleteee</button>
+                                                    <button type="button" style="width:60px;float: right;margin-left:10px" class="btn btn-danger btn-sm "
+                                                    data-toggle="modal" data-target="#deletePLO{{$plo->pl_outcome_id}}">Delete</button>
 
                                                     <!-- Confirmation Model -->
                                                     <div class="modal fade" id="deletePLO{{$plo->pl_outcome_id}}" tabindex="-1" role="dialog" aria-labelledby="deletePLO{{$plo->pl_outcome_id}}" aria-hidden="true">
@@ -258,8 +257,8 @@
                                                         </div>
                                                     </div>
 
-                                                    <button type="button" class="btn btn-secondary btn-sm float-right" data-toggle="modal" style="width:60px; " data-target="#editPLOModal{{$plo->pl_outcome_id}}">
-                                                        Editeee
+                                                    <button type="button" class="btn btn-secondary btn-sm float-right" data-toggle="modal" style="width:60px;" data-target="#editCategoryModal{{$plo->pl_outcome_id}}">
+                                                    Edit
                                                     </button>
 
                                                     <!-- Modal -->
@@ -608,7 +607,7 @@
 
                         </div>
                         <div class="card-footer">
-                            <button type="button" class="btn btn-primary btn-sm col-2 mt-3 float-right" data-toggle="modal" data-target="#addPLOModal">
+                            <button type="button" class="btn btn-primary btn-sm col-2 mt-3 float-right" data-toggle="modal" data-target="#addPLOModal" style="background-color:#002145;color:white;">
                                 ＋ Add PLO
                             </button>
 
@@ -708,7 +707,7 @@
                 <div class="card-footer">
 
                     <a href="{{route('programWizard.step2', $program->program_id)}}"><button
-                            class="btn btn-sm btn-primary mt-3 col-3 float-right">Mapping Scale ➡</button></a>
+                            class="btn btn-sm btn-primary mt-3 col-3 float-right">Mapping Scale <i class="bi bi-arrow-right mr-2"></i></button></a>
                 </div>
 
 

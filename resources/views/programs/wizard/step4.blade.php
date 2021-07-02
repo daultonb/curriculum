@@ -66,7 +66,7 @@
                 </div>
 
                 <div class="card-footer">
-                    <a href="{{route('programWizard.step3', $program->program_id)}}"><button class="btn btn-sm btn-primary mt-3 col-3 float-left">⬅ Courses</button></a>
+                    <a href="{{route('programWizard.step3', $program->program_id)}}"><button class="btn btn-sm btn-primary mt-3 col-3 float-left"><i class="bi bi-arrow-left mr-2"></i> Courses</button></a>
                 </div>
 
 

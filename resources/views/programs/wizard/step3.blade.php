@@ -438,10 +438,10 @@
 
                     <div class="row">
                         <div class="col">
-                            <button type="button" class="btn btn-primary btn-sm col-2 mt-2 float-right" data-toggle="modal" data-target="#createCourseModal">
+                            <button type="button" class="btn btn-primary btn-sm col-2 mt-2 float-right" data-toggle="modal" data-target="#createCourseModal" style="background-color:#002145;color:white;">
                                 ＋ Add New Course
                             </button>
-                            <button type="button" class="btn btn-primary btn-sm col-2 mt-2 float-right" data-toggle="modal" data-target="#addCourseModal" style="margin-right: 10px">
+                            <button type="button" class="btn btn-primary btn-sm col-2 mt-2 float-right" data-toggle="modal" data-target="#addCourseModal" style="margin-right: 10px; background-color:#002145;color:white;">
                                 ＋ Add Exist Course
                             </button>
                         </div>
@@ -738,8 +738,8 @@
                 </div>
 
                 <div class="card-footer">
-                    <a href="{{route('programWizard.step2', $program->program_id)}}"><button class="btn btn-sm btn-primary mt-3 col-3  float-left">⬅ Mapping Scale</button></a>
-                    <a href="{{route('programWizard.step4', $program->program_id)}}"><button class="btn btn-sm btn-primary mt-3 col-3 float-right">Begin Mapping Program ➡</button></a>
+                    <a href="{{route('programWizard.step2', $program->program_id)}}"><button class="btn btn-sm btn-primary mt-3 col-3  float-left"><i class="bi bi-arrow-left ml-2"></i> Mapping Scale</button></a>
+                    <a href="{{route('programWizard.step4', $program->program_id)}}"><button class="btn btn-sm btn-primary mt-3 col-3 float-right">Begin Mapping Program <i class="bi bi-arrow-right ml-2"></i></button></a>
                 </div>
 
             </div>

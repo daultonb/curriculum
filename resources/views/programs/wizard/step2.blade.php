@@ -93,13 +93,13 @@
                             <form action="{{route('mappingScale.default')}}" method="POST" >
                                 @csrf
                                 <input type="hidden" class="form-check-input" name="program_id" value="{{$program->program_id}}">
-                                <button type="submit" style="width:250px" class="btn btn-secondary btn-sm "> + Use the Default Mapping Scale Levels</button>
+                                <button type="submit" style="width:250px; background-color:#002145;color:white;" class="btn btn-secondary btn-sm float-left"> + Use the Default Mapping Scale Levels</button>
                             </form>
 
                             <form action="{{route('mappingScale.default2')}}" method="POST" >
                                 @csrf
                                 <input type="hidden" class="form-check-input" name="program_id" value="{{$program->program_id}}">   
-                                <button type="submit" style="width:250px" class="btn btn-secondary btn-sm "> + Use the Other Mapping Scale Levels</button>
+                                <button type="submit" style="width:250px; background-color:#002145;color:white;" class="btn btn-secondary btn-sm "> + Use the Other Mapping Scale Levels</button>
                             </form>
 
                         </div>
@@ -284,7 +284,7 @@
                     </div>
 
                     <button type="button" class="btn btn-primary btn-sm col-3 mt-3 float-right" data-toggle="modal"
-                        data-target="#addMSModal">
+                        data-target="#addMSModal" style="background-color:#002145;color:white;">
                         ＋ Add My Own Mapping Scale Level
                     </button>
 
@@ -411,10 +411,10 @@
 
                 <div class="card-footer">
                     <a href="{{route('programWizard.step1', $program->program_id)}}"><button
-                            class="btn btn-sm btn-primary mt-3 col-3 float-left">⬅ Program Learning Outcomes</button></a>
+                            class="btn btn-sm btn-primary mt-3 col-3 float-left"><i class="bi bi-arrow-left ml-2"></i> Program Learning Outcomes</button></a>
 
                     <a href="{{route('programWizard.step3', $program->program_id)}}"><button
-                            class="btn btn-sm btn-primary mt-3 col-3 float-right">Courses ➡</button></a>
+                            class="btn btn-sm btn-primary mt-3 col-3 float-right">Courses <i class="bi bi-arrow-right ml-2"></i></button></a>
                 </div>
 
 
