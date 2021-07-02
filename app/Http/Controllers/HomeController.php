@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\CourseUser;
 use App\Models\ProgramUser;
 use Attribute;
+use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
 {
@@ -31,26 +32,10 @@ class HomeController extends Controller
     public function index()
     {
         $user = User::where('id', Auth::id())->first();
-        /*
-        $activeCourses = User::join('course_users', 'users.id', '=', 'course_users.user_id')
-                ->join('courses', 'course_users.course_id', '=', 'courses.course_id')
-                //->join('programs', 'courses.program_id', '=', 'programs.program_id')
-                ->leftjoin('course_programs', 'courses.course_id', '=', 'course_programs.course_id')
-                //->select('courses.program_id','courses.course_code','courses.delivery_modality','courses.semester','courses.year','courses.section',
-                //'courses.course_id','courses.course_num','courses.course_title', 'courses.status','programs.program', 'programs.faculty', 'programs.department','programs.level')
-                ->select('courses.course_code','courses.delivery_modality','courses.semester','courses.year','courses.section',
-                'courses.course_id','courses.course_num','courses.course_title', 'courses.status')
-                ->where([
-                    ['course_users.user_id','=',Auth::id()],
-                    ['courses.status', '=', 1]
-                ])->orWhere([
-                    ['course_users.user_id','=',Auth::id()],
-                    ['courses.status', '=', -1]
-                ])->get();
-        */
-        $activeCourses = $user->courses()->join('programs', 'courses.program_id', '=', 'programs.program_id')
-        ->select('courses.program_id','courses.course_code','courses.delivery_modality','courses.semester','courses.year','courses.section',
-        'courses.course_id','courses.course_num','courses.course_title', 'courses.status','programs.program', 'programs.faculty', 'programs.department','programs.level')
+
+        $activeCourses = $user->courses()
+        ->select('courses.course_code','courses.delivery_modality','courses.semester','courses.year','courses.section',
+        'courses.course_id','courses.course_num','courses.course_title', 'courses.status')
         ->where([
             ['course_users.user_id','=',Auth::id()],
             ['courses.status', '=', 1]
@@ -64,14 +49,16 @@ class HomeController extends Controller
         ->select('programs.program_id','programs.program', 'programs.faculty', 'programs.level', 'programs.department', 'programs.status')
         ->where('program_users.user_id','=',Auth::id())
         ->get();
-
+        
         $coursesPrograms = array();
         foreach ($activeCourses as $course) {
             $coursePrograms = $course->programs;
             $coursesPrograms[$course->course_id] = $coursePrograms;
         }
+
+        $standard_categories = DB::table('standard_categories')->get();
         
-        return view('pages.home')->with("activeCourses",$activeCourses)->with("activeProgram",$programs)->with('user', $user)->with('coursePrograms', $coursePrograms)->with('coursesPrograms', $coursesPrograms);
+        return view('pages.home')->with("activeCourses",$activeCourses)->with("activeProgram",$programs)->with('user', $user)->with('coursePrograms', $coursePrograms)->with('coursesPrograms', $coursesPrograms)->with('standard_categories', $standard_categories);
     }
 
 
@@ -101,7 +88,6 @@ class HomeController extends Controller
             ]);
 
         $course = new Course;
-        $course->program_id = $request->input('program_id');
         $course->course_title = $request->input('course_title');
         $course->course_num = $request->input('course_num');
         $course->course_code =  strtoupper($request->input('course_code'));
@@ -113,6 +99,7 @@ class HomeController extends Controller
         $course->year = $request->input('course_year');
         $course->semester = $request->input('course_semester');
         $course->section = $request->input('course_section');
+        $course->standard_category_id = $request->input('standard_category_id');
 
         if($request->input('type') == 'assigned'){
 

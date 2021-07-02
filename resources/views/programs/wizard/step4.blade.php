@@ -24,49 +24,9 @@
                 </table>
             </div>
 
-            <div class="card">
-
-                <div class="card-header">
-                    <b>Begin Mapping Program</b>
-                </div>
-
-                <div class="card-body">
-
-                    <p>
-                    Please select the course you would like to map.
-                    </p>
-
-                            <div>
-                                <div>
-                                    <table class="table table-hover dashBoard">
-                                        <thead>
-                                            <tr>
-                                                <th scope="col">Course Title</th>
-                                                <th scope="col">Course Code</th>
-                                                <th></th>
-                                            </tr>
-                                        </thead>
-                                        @foreach ($courses as $index => $course)
-                                        <tbody>
-                                        <tr>
-                                            <td>{{$course->course_title}}</td>
-                                            <td>{{$course->course_code}} {{$course->course_num}}</td>
-                                            <td>
-                                                <!-- Redirect to Map Course to PLO's --> 
-                                                <a href="{{route('map.index',[$course->course_id, $program->program_id])}}"><button type="button" style="width: 100px;" class="btn btn-outline-primary btn-sm ml-2 float-right">Map Course</button></a>
-                                                <!-- Redirect to Map CLO's to PLO's -->
-                                                <a href="{{route('ploclomap.index',[$course->course_id, $program->program_id])}}"><button type="button" style="width: 150px;" class="btn btn-outline-primary btn-sm ml-2 float-right">Map CLO's to PLO's</button></a>
-                                            </td>
-                                        </tr>
-                                        </tbody>
-                                        @endforeach
-                                    </table>
-                                </div>
-                        </div>
-                </div>
 
                 <div class="card-footer">
-                    <a href="{{route('programWizard.step3', $program->program_id)}}"><button class="btn btn-sm btn-primary mt-3 col-3 float-left">⬅ Courses</button></a>
+                    <a href="{{route('programWizard.step3', $program->program_id)}}"><button class="btn btn-sm btn-primary mt-3 col-3 float-left"><i class="bi bi-arrow-left mr-2"></i> Courses</button></a>
                 </div>
 
 

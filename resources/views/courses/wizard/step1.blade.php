@@ -123,7 +123,7 @@
 
                                                                                 <div class="col-md-8">
                                                                                     <input id="title" type="text" class="form-control @error('title') is-invalid @enderror"
-                                                                                    name="title" autofocus placeholder="Experiment..." value={{$l_outcome->clo_shortphrase}}>
+                                                                                    name="title" autofocus placeholder="Experiment..." value="{{$l_outcome->clo_shortphrase}}">
 
                                                                                     @error('title')
                                                                                     <span class="invalid-feedback" role="alert">
@@ -221,7 +221,7 @@
                         </div>
                     </div>
 
-                    <button type="button" class="btn btn-primary btn-sm col-2 mt-2 float-left" data-toggle="modal" data-target="#addLearningOutcomeModal" style="margin-left: 10px">
+                    <button type="button" class="btn btn-primary btn-sm col-2 mt-2 float-left"  data-toggle="modal" data-target="#addLearningOutcomeModal" style="background-color:#002145; color:white; margin-left: 10px">
                         ＋ Add Course Learning Outcome
                     </button>
 

@@ -466,7 +466,7 @@
 
                                             @for($j = 0; $j < count($standard_outcomes); $j++)
                                                 @foreach ($standardsOutcomeMap as $om)
-                                                    @if( $om->pl_outcome_id == $standard_outcomes[$j]->pl_outcome_id && $om->l_outcome_id == $l_outcomes[$i]->l_outcome_id )
+                                                    @if( $om->standard_id == $standard_outcomes[$j]->standard_id && $om->l_outcome_id == $l_outcomes[$i]->l_outcome_id )
                                                         <td @foreach($standardsMappingScales as $ms) @if($ms->abbreviation == $om->map_scale_value) style="background-color:{{$ms->colour}}" @endif @endforeach class="text-center align-middle" >
                                                             <span @if($om->map_scale_value == 'A') style="color:white" @endif>
                                                                 {{$om->map_scale_value}}

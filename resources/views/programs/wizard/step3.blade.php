@@ -368,7 +368,7 @@
                                                                                                         <!-- TODO: unassign on user id not email -->
                                                                                                         @csrf
                                                                                                         {{method_field('DELETE')}}
-                                                                                                        <input type="hidden" class="form-check-input" name="program_id" value="{{$course->program_id}}">
+                                                                                                        <input type="hidden" class="form-check-input" name="program_id" value="{{$program->program_id}}">
                                                                                                         <input type="hidden" class="form-check-input" name="email" value="{{$programCourseUser->email}}">
                                                                                                         <button type="submit"class="btn btn-danger btn-sm">Unassign</button>
                                                                                                     </form>
@@ -402,7 +402,7 @@
                                                                                 </div>
                                                                             </div>
 
-                                                                            <input type="hidden" class="form-input" name="program_id" value="{{$course->program_id}}">
+                                                                            <input type="hidden" class="form-input" name="program_id" value="{{$program->program_id}}">
 
                                                                         </div>
                                                                         <div class="modal-footer">
@@ -414,7 +414,7 @@
                                                                         <form method="POST" action="{{route('courses.assign', $course->course_id)}}">
                                                                             @csrf
                                                                             <input id="self" type="hidden" class="form-control" name="email" value="{{Auth::User()->email}}">
-                                                                            <input type="hidden" class="form-input" name="program_id" value={{$course->program_id}}>
+                                                                            <input type="hidden" class="form-input" name="program_id" value={{$program->program_id}}>
                                                                             <button type="submit" style="width:120px" class="btn btn-outline-primary btn-sm" >Assign to Self</button>
                                                                         </form>
                                                                         </div>
@@ -438,10 +438,10 @@
 
                     <div class="row">
                         <div class="col">
-                            <button type="button" class="btn btn-primary btn-sm col-2 mt-2 float-right" data-toggle="modal" data-target="#createCourseModal">
+                            <button type="button" class="btn btn-primary btn-sm col-2 mt-2 float-right" data-toggle="modal" data-target="#createCourseModal" style="background-color:#002145;color:white;">
                                 ＋ Add New Course
                             </button>
-                            <button type="button" class="btn btn-primary btn-sm col-2 mt-2 float-right" data-toggle="modal" data-target="#addCourseModal" style="margin-right: 10px">
+                            <button type="button" class="btn btn-primary btn-sm col-2 mt-2 float-right" data-toggle="modal" data-target="#addCourseModal" style="margin-right: 10px; background-color:#002145;color:white;">
                                 ＋ Add Exist Course
                             </button>
                         </div>
@@ -595,13 +595,13 @@
 
                                         <!-- Passes Information for Ministry Standards -->
                                         <div class="form-group row">
-                                            <label for="ministry_standard_id" class="col-md-3 col-form-label text-md-right"> Map this course against</label>
+                                            <label for="standard_category_id" class="col-md-3 col-form-label text-md-right"> Map this course against</label>
                                             <div class="col-md-8">
-                                                <select class="form-control" name="ministry_standard_id" id="ministry_standard_id" required>
+                                                <select class="form-control" name="standard_category_id" id="standard_category_id" required>
                                                     <option value="" disabled selected hidden>Please Choose...</option>
-                                                    <option value="1">Bachelor's degree level standards</option>
-                                                    <option value="2">Master's degree level standards</option>
-                                                    <option value="3">Doctoral degree level standards</option>
+                                                    @foreach($standard_categories as $standard_category)
+                                                        <option value="{{ $standard_category->standard_category_id }}">{{$standard_category->sc_name}}</option>
+                                                    @endforeach
                                                 </select>
                                                 <small id="helpBlock" class="form-text text-muted">
                                                     These are the standards from the Ministry of Advanced Education in BC.
@@ -738,8 +738,8 @@
                 </div>
 
                 <div class="card-footer">
-                    <a href="{{route('programWizard.step2', $program->program_id)}}"><button class="btn btn-sm btn-primary mt-3 col-3  float-left">⬅ Mapping Scale</button></a>
-                    <a href="{{route('programWizard.step4', $program->program_id)}}"><button class="btn btn-sm btn-primary mt-3 col-3 float-right">Begin Mapping Program ➡</button></a>
+                    <a href="{{route('programWizard.step2', $program->program_id)}}"><button class="btn btn-sm btn-primary mt-3 col-3  float-left"><i class="bi bi-arrow-left ml-2"></i> Mapping Scale</button></a>
+                    <a href="{{route('programWizard.step4', $program->program_id)}}"><button class="btn btn-sm btn-primary mt-3 col-3 float-right">Begin Mapping Program <i class="bi bi-arrow-right ml-2"></i></button></a>
                 </div>
 
             </div>
