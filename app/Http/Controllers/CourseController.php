@@ -90,7 +90,6 @@ class CourseController extends Controller
 
         $course = new Course;
         // TODO Update name of column program-id to ministry standards 
-        $course->program_id = $request->input('ministry_standard_id');
         $course->course_title = $request->input('course_title');
         $course->course_num = $request->input('course_num');
         $course->course_code =  strtoupper($request->input('course_code'));
@@ -102,6 +101,7 @@ class CourseController extends Controller
         $course->year = $request->input('course_year');
         $course->semester = $request->input('course_semester');
         $course->section = $request->input('course_section');
+        $course->standard_category_id = $request->input('standard_category_id');
 
         if($request->input('type') == 'assigned'){
             $isCourseRequired = $request->input('required');

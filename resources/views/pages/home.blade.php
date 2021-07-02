@@ -191,8 +191,6 @@
                                                     <form action="{{route('courses.destroy', $course->course_id)}}" method="POST">
                                                         @csrf
                                                         {{method_field('DELETE')}}
-                                                        <input type="hidden" class="form-check-input " name="program_id"
-                                                            value={{$course->program_id}}>
 
                                                         <div class="modal-footer">
                                                             <button style="width:60px" type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Cancel</button>
@@ -484,13 +482,13 @@
                             </div>
 
                             <div class="form-group row">
-                                <label for="program_id" class="col-md-3 col-form-label text-md-right"> Map this course against</label>
+                                <label for="standard_category_id" class="col-md-3 col-form-label text-md-right"> Map this course against</label>
                                 <div class="col-md-8">
-                                    <select class="form-control" name="program_id" id="program_id" required>
+                                    <select class="form-control" name="standard_category_id" id="standard_category_id" required>
                                         <option value="" disabled selected hidden>Please Choose...</option>
-                                        <option value="1">Bachelor's degree level standards</option>
-                                        <option value="2">Master's degree level standards</option>
-                                        <option value="3">Doctoral degree level standards</option>
+                                        @foreach($standard_categories as $standard_category)
+                                            <option value="{{ $standard_category->standard_category_id }}">{{$standard_category->sc_name}}</option>
+                                        @endforeach
                                     </select>
                                     <small id="helpBlock" class="form-text text-muted">
                                         These are the standards from the Ministry of Advanced Education in BC.
