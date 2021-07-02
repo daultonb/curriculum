@@ -53,7 +53,6 @@ Route::post('/courses/{course}/outcomeDetails','CourseController@outcomeDetails'
 Route::get('/courses/{course}/pdf','CourseController@pdf')->name('courses.pdf');
 Route::get('/courses/{course}/remove','CourseController@removeFromProgram')->name('courses.remove');
 
-
 Route::resource('/lo','LearningOutcomeController')->only(['store','update','edit', 'destroy']);
 
 Route::resource('/plo','ProgramLearningOutcomeController');
@@ -121,3 +120,4 @@ Route::get('/courseMap/{course}/{program}', 'CourseMapController@index')->name('
 Route::get('/ploMap/{course}/{program}', 'PLOCLOMapController@index')->name('ploclomap.index');
 
 Auth::routes();
+
