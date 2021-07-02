@@ -5601,20 +5601,6 @@ a.badge-dark.focus {
   color: #284257;
 }
 
-.alert-warning {
-  color: #857b26;
-  background-color: #fffbdb;
-  border-color: #fffacc;
-}
-
-.alert-warning hr {
-  border-top-color: #fff8b3;
-}
-
-.alert-warning .alert-link {
-  color: #5d561b;
-}
-
 .alert-danger {
   color: #761b18;
   background-color: #f9d6d5;
@@ -11002,6 +10988,13 @@ margin-left:-15px;
   margin-right:auto; 
   object-fit:cover; 
   border-radius:50%;
+}
+
+/* Cell padding for optional priorities tables (standards and strategic priorities step of course wizard) */
+#optinal td {
+  padding-top: 0.5rem;
+  padding-bottom:0.5rem;
+  padding-left: 0.5rem;
 }
 
 

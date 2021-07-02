@@ -23,7 +23,7 @@
                         <div class="col-4 align-self-start">
                             <a href="{{route('courses.pdf', $course->course_id)}}">
                                 <button class="btn btn-primary col mr-5" onclick="{{route('courses.pdf', $course->course_id)}}">
-                                    Download PDF ⭳
+                                    Download PDF<i class="bi bi-download pl-2"></i>
                                 </button>
                             </a>
                         </div>

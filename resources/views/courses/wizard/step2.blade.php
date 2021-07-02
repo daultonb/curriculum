@@ -95,7 +95,7 @@
 
                                                 <input type="hidden" name="a_method_id[]" value="{{$a_method->a_method_id}}" form="a_method_form">
                                                 <td>
-                                                    <input class="p-1" id="a_method_weight{{$a_method->a_method_id}}" type="number" step="1" form="a_method_form" style="width:auto class="form-control @error('weight') is-invalid @enderror" value="{{$a_method->weight}}" name="weight[]" min="0" max="100" required autofocus>
+                                                    <input id="a_method_weight{{$a_method->a_method_id}}" type="number" step="1" form="a_method_form" style="width:auto" class="p-1 form-control @error('weight') is-invalid @enderror" value="{{$a_method->weight}}" name="weight[]" min="0" max="100" required autofocus>
                                                     <label for="a_method_weight{{$a_method->a_method_id}}" style="font-size: medium; margin-top:5px;margin-left:5px"><strong>%</strong></label>
                                                 </td>
 
@@ -111,13 +111,12 @@
                                             </tr>
 
                                         @endforeach
-
-                                        <tr class="table-secondary">
-                                            <td><b>TOTAL</b></td>
-                                            <td><b id="sum">{{$totalWeight}}%</b></td>
-                                            <td></td>
-                                        </tr>
                                     @endif
+                                    <tr class="table-secondary">
+                                        <td><b>TOTAL</b></td>
+                                        <td><b id="sum">{{$totalWeight}}%</b></td>
+                                        <td></td>
+                                    </tr>
                                 </table>                                    
                             </div>
                         </div>
@@ -257,11 +256,12 @@
 
                     </datalist>
                 </td>
-                <td style="display: flex">
-                    <input id="a_new_method_weight`+rowCount+`" type="number" step="1" form="a_method_form" style="width:auto" class="form-control @error('weight') is-invalid @enderror" value = 0 name="weight[]" min="0" max="100" required autofocus>
+                <td>
+                    <input class="p-1" id="a_new_method_weight`+rowCount+`" type="number" step="1" form="a_method_form" style="width:auto" class="form-control @error('weight') is-invalid @enderror" value = 0 name="weight[]" min="0" max="100" required autofocus>
                     <label for="a_new_method_weight`+rowCount+`" style="font-size: medium; margin-top:5px;margin-left:5px"><strong>%</strong></label>
                 </td>
                 <td></td>
+
 
             </tr>`;
 
@@ -292,7 +292,6 @@
         }else{
             rowCount = $('#a_method_table tr').length-1;
         }
-        console.log(rowCount);
         return rowCount;
     }
 
