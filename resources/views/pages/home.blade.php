@@ -1,7 +1,9 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container" style="padding-bottom:246px;">
+
+
+<div class="container">
     <div class="row">
 
 
@@ -11,33 +13,31 @@
 
         <div class="col-md-12">
 
-                <div class="card shadow rounded" style="margin:20px;border-style: solid;
+                <div class="card shadow rounded m-4" style="border-style: solid;
                 border-color: #1E90FF;">
-                    <div class="card-title" style="background-color:#1E90FF;margin-bottom: 0.00rem;">
-                        <h3 style="color: white;margin:22px">
-                        <a style="color: white;text-decoration: none;">
+                    <div class="card-title bg-primary p-3">
+                        <h3 style="color: white;">
                         My Programs         
 
-                        <div style="float:right; padding-right:10px;">
+                        <div style="float:right;">
                             <button style="border: none; background: none; outline: none;" data-toggle="modal" data-target="#createProgramModal">
-                                <img src="{{ asset('dashboard-icons/add_White.png') }}" style="width:20px;height:20px;"/>
+                                <i class="bi bi-plus-circle text-white"></i>
                             </button>
                         </div>
-                        </a>
                         </h3>
                     </div>
 
-                    <div class="card-body" style="padding:0%;">
-                        @if(count($activeProgram)>0)
+                    
+                    @if(count($activeProgram)>0)
                         <table class="table table-hover dashBoard">
                             <thead>
-                            <tr>
-                                <th scope="col"></th>
-                                <th scope="col">Program</th>
-                                <th scope="col">Faculty and Department/School</th>
-                                <th scope="col">Level</th>
-                                <th scope="col">Actions</th>
-                            </tr>
+                                <tr>
+                                    <th scope="col"></th>
+                                    <th scope="col">Program</th>
+                                    <th scope="col">Faculty and Department/School</th>
+                                    <th scope="col">Level</th>
+                                    <th scope="col">Actions</th>
+                                </tr>
                             </thead>
                             <!-- Displays 'My Programs' -->
                             @foreach ($activeProgram as $index => $program)
@@ -47,11 +47,11 @@
                                 <td><a href="{{route('programWizard.step1', $program->program_id)}}">{{$program->program}}</a></td>
                                 <td>{{$program->faculty}} </td>
                                 <td>{{$program->level}}</td>
-                                <td style="display: inline-block">
-                                    <a class="dropdown-item btn-icon" href="{{route('programWizard.step1', $program->program_id)}}">
-                                    <img src=" {{ asset('dashboard-icons/edit.png') }}" style="width:15px;height:15px"/></a>
-                                    <a class="dropdown-item btn-icon" data-toggle="modal" data-target="#deleteProgram{{$index}}" href=#>
-                                    <img src="{{ asset('dashboard-icons/delete.png') }}" style="width:15px;height:15px"/></a>
+                                <td>
+                                    <a class="pr-2" href="{{route('programWizard.step1', $program->program_id)}}">
+                                    <i class="bi bi-pencil-fill btn-icon dropdown-item"></i></a>
+                                    <a data-toggle="modal" data-target="#deleteProgram{{$index}}" href=#>
+                                    <i class="bi bi-trash-fill text-danger btn-icon dropdown-item"></i></a>
                                     <!-- Collaborators Icon
                                     <a class="dropdown-item btn-icon" data-toggle="modal">
                                     <i class="bi bi-people-fill" data-toggle="tooltip" data-bs-placement="right"></i></a> -->
@@ -90,24 +90,20 @@
                             </tbody>
                             @endforeach
                         </table>
-                        @endif
-
-                    </div>
+                    @endif
                 </div>
 
+                <div class="card shadow rounded m-4" style="border-style: solid;
+                border-color: #1E90FF;">
+                    <div class="card-title bg-primary p-3">
+                        <h3 style="color: white;">
+                        My Courses         
 
-                <div class="card shadow rounded" style="margin:20px;border-style: solid;
-                border-color: #6495ED;">
-                    <div class="card-title" style="background-color: #6495ED;margin-bottom: 0.00rem;">
-                        <h3 style="color: white;margin:22px">
-                        <a style="color: white;text-decoration: none;">
-                        My Courses 
-                        <div style="float:right; padding-right:10px;">
+                        <div style="float:right;">
                             <button style="border: none; background: none; outline: none;" data-toggle="modal" data-target="#createCourseModal">
-                                <img src="{{ asset('dashboard-icons/add_White.png') }}" style="width:20px;height:20px;"/>
+                                <i class="bi bi-plus-circle text-white"></i>
                             </button>
                         </div>
-                        </a>           
                         </h3>
                     </div>
 
@@ -122,7 +118,7 @@
                                     <th scope="col">Term</th>
                                     <!--<th scope="col">Invite Collaborators</th>-->
                                     <th scope="col">Status</th>
-                                    <th scope="col">Program </th>
+                                    <th scope="col" class="text-center">Programs </th>
                                     <th scope="col">Actions</th>
                                 </tr>
                                 </thead>
@@ -136,39 +132,53 @@
                                         <td><a href="{{route('courseWizard.step1', $course->course_id)}}">{{$course->course_title}}</a></td>
                                         <td>{{$course->course_code}} {{$course->course_num}}</td>
                                         <td>{{$course->year}} {{$course->semester}}</td>
-                                        <td>❗In Progress</td>
                                         <td>
-                                            @if(count($coursesPrograms[$course->course_id]) > 0)
-                                                <div data-toggle="tooltip" data-html="true" title="@foreach($coursesPrograms[$course->course_id] as $index => $courseProgram){{$index + 1}}. {{$courseProgram->program}}<br>@endforeach" data-bs-placement="right">
-                                                    <button type="button" style="border:1px solid black; background-color: white; border-radius: 50%; font-weight:bold; color:#40B4E5; opacity: 1; text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black; margin: 0 auto; display:block; box-shadow: 2px 2px 10px #888888; font-size: 120%" class="btn btn-secondary" disabled>{{ count($coursesPrograms[$course->course_id]) }}</button>
+                                            <i class="bi bi-exclamation-circle-fill fs-5 text-warning pr-2"></i>In Progress
+                                        </td>
+
+                                        <td> 
+                                            <div class="row">
+                                                <div class="d-flex justify-content-center">
+                                                    @if(count($coursesPrograms[$course->course_id]) > 0)
+                                                        <div data-toggle="tooltip" data-html="true" title="@foreach($coursesPrograms[$course->course_id] as $index => $courseProgram){{$index + 1}}. {{$courseProgram->program}}<br>@endforeach" data-bs-placement="right">
+                                                            <button class="btn rounded-circle text-white fw-bold text-center btn-info" style="text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;">{{ count($coursesPrograms[$course->course_id]) }}</button>
+                                                        </div>
+                                                    @else
+                                                        <button class="btn  text-center" disabled>None</button>
+                                                    @endif
                                                 </div>
-                                            @else
-                                                <p style="text-align: center;">None</p>
-                                            @endif
+                                            </div>                                           
                                         </td>
                                     @else
                                         <th scope="row">{{$index + 1}}</th>
                                         <td><a href="{{route('courseWizard.step1', $course->course_id)}}">{{$course->course_title}}</a></td>
                                         <td>{{$course->course_code}} {{$course->course_num}}</td>
                                         <td>{{$course->year}} {{$course->semester}}</td>
-                                        <td>✔️Completed</td>
                                         <td>
-                                            @if(count($coursesPrograms[$course->course_id]) > 0)
-                                                <div data-toggle="tooltip" data-html="true" title="@foreach($coursesPrograms[$course->course_id] as $index => $courseProgram){{$index + 1}}. {{$courseProgram->program}}<br>@endforeach" data-bs-placement="right">
-                                                    <button type="button" style="border:1px solid black; background-color: white; border-radius: 50%; font-weight:bold; color:#40B4E5; opacity: 1; text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black; margin: 0 auto; display:block; box-shadow: 2px 2px 10px #888888; font-size: 120%" class="btn btn-secondary" disabled>{{ count($coursesPrograms[$course->course_id]) }}</button>
+                                            <i class="bi bi-check-circle-fill fs-5 text-success pr-2"></i>Completed
+                                        </td>
+                                        <td> 
+                                            <div class="row">
+                                                <div class="d-flex justify-content-center">
+                                                    @if(count($coursesPrograms[$course->course_id]) > 0)
+                                                        <div data-toggle="tooltip" data-html="true" title="@foreach($coursesPrograms[$course->course_id] as $index => $courseProgram){{$index + 1}}. {{$courseProgram->program}}<br>@endforeach" data-bs-placement="right">
+                                                            <button class="btn rounded-circle text-white fw-bold text-center btn-info" style="text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;">{{ count($coursesPrograms[$course->course_id]) }}</button>
+                                                        </div>
+                                                    @else
+                                                        <button class="btn  text-center" disabled>None</button>
+                                                    @endif
                                                 </div>
-                                            @else
-                                                <p style="text-align: center;">None</p>
-                                            @endif
+                                            </div>                                           
                                         </td>
                                     @endif
 
                                     <!--<td></td>-->
-                                    <td style="display: inline-block">
-                                        <a class="dropdown-item btn-icon" href="{{route('courseWizard.step1', $course->course_id)}}">
-                                        <img src="{{ asset('dashboard-icons/edit.png') }}" style="width:15px;height:15px"/></a>
-                                        <a class="dropdown-item btn-icon" data-toggle="modal" data-target="#deleteConfirmation{{$index}}" href=#>
-                                        <img src="{{ asset('dashboard-icons/delete.png') }}" style="width:15px;height:15px"/></a>
+                                    <td>
+                                        <a  class="pr-2" href="{{route('courseWizard.step1', $course->course_id)}}">
+                                        <i class="bi bi-pencil-fill btn-icon dropdown-item"></i></a>
+                                        <a data-toggle="modal" data-target="#deleteConfirmation{{$index}}" href=#>
+                                        <i class="bi bi-trash-fill text-danger btn-icon dropdown-item"></i></a>
+
                                         <!-- Collaborators Icon
                                         <a class="dropdown-item btn-icon" data-toggle="modal">
                                         <i class="bi bi-people-fill" data-toggle="tooltip" data-bs-placement="right"></i></a>-->

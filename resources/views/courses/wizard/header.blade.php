@@ -3,13 +3,13 @@
         <div class="col">
             <h3>Course: {{$course->year}} {{$course->semester}} {{$course->course_code}}{{$course->course_num}}  {{$course->section}}</h3>
             <h5 class="text-muted">{{$course->course_title}}</h5>
-            <h5>Delivery modality:
+            <h5>Mode of Delivery:
             @switch($course->delivery_modality)
                 @case('O')
                     Online
                     @break
                 @case('B')
-                    Blended
+                    Hybrid
                     @break
                 @default
                     In-person
@@ -143,7 +143,7 @@
                                         </div>
 
                                         <div class="form-group row">
-                                            <label for="delivery_modality" class="col-md-3 col-form-label text-md-right">Delivery Modality</label>
+                                            <label for="delivery_modality" class="col-md-3 col-form-label text-md-right">Mode of Delivery</label>
 
                                             <div class="col-md-3 float-right">
                                                 <select id="delivery_modality" class="form-control @error('delivery_modality') is-invalid @enderror"
