@@ -46,40 +46,33 @@
                                         <div class="modal-header">
                                             <h5 class="modal-title">Default Mapping Scale</h5>
                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                              <span aria-hidden="true">&times;</span>
+                                            <span aria-hidden="true">&times;</span>
                                             </button>
-                                          </div>
-                                          <div class="modal-body">
+                                        </div>
+                                        <div class="modal-body">
                                             <table class="table table-bordered table-sm">
                                                 <thead>
                                                     <tr>
-                                                        <th colspan="2">Maping Scale</th>
+                                                        <th colspan="2">Mapping Scale</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
+                                                @foreach($mappingScales as $ms)
                                                     <tr>
-                                                        <td scope="row"><div style="background-color:#80bdff; height: 10px; width: 10px;"></div>Introduced (I)</td>
-                                                        <td>Key ideas, concepts or skills related to the learning outcome are demonstrated at an introductory level. 
-                                                            Learning activities focus on basic knowledge, skills, and/or competencies and entry-level complexity.</td>
+                                                        <td style="width:20%">
+                                                            <div style="background-color:{{$ms->colour}}; height: 10px; width: 10px;"></div>
+                                                            {{$ms->title}}<br>
+                                                            ({{$ms->abbreviation}})
+                                                        </td>
+                                                        <td>
+                                                            {{$ms->description}}
+                                                        </td>
                                                         
                                                     </tr>
-                                                    <tr>
-                                                        <td scope="row"><div style="background-color:#1aa7ff; height: 10px; width: 10px;"></div>Developing (D)</td>
-                                                        <td>Learning outcome is reinforced with feedback; students demonstrate the outcome at an increasing level of proficiency. 
-                                                            Learning activities concentrate on enhancing and strengthening existing knowledge and skills as well as expanding complexity.</td>
-                                                        
-                                                    </tr>
-                                                    <tr>
-                                                        <td scope="row"><div style="background-color:#0065bd; height: 10px; width: 10px;"></div>Advanced (A)</td>
-                                                        <td>Students demonstrate the learning outcomes with a high level of independence, expertise and sophistication expected upon graduation. 
-                                                            Learning activities focus on and integrate the use of content or skills in multiple.</td>
-                                                        
-                                                    </tr>
+                                                    @endforeach
                                                 </tbody>
                                             </table>
-                                          </div>
-                                          
-                                       
+                                        </div>
                                     </div>
                                 </div>
                             </div>
