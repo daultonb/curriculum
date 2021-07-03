@@ -65,8 +65,7 @@ class HomeController extends Controller
         ->where('program_users.user_id','=',Auth::id())
         ->get();
 
-        $coursesPrograms = array();
-        $coursePrograms = array();
+        $coursesPrograms = array();       
         foreach ($activeCourses as $course) {
             $coursePrograms = $course->programs;
             $coursesPrograms[$course->course_id] = $coursePrograms;
