@@ -63,7 +63,7 @@ class CourseCrudController extends CrudController
             'type' => 'Text'
           ]);
 
-        $this->crud->addColumn([
+        /*$this->crud->addColumn([
             // 1-n relationship
             'label'     => 'Program', // Table column heading
             'type'      => 'select',
@@ -71,7 +71,7 @@ class CourseCrudController extends CrudController
             'entity'    => 'programs', // the method that defines the relationship in your Model
             'attribute' => 'program', // foreign key attribute that is shown to user
             'model'     => "App\Models\Program", // foreign key model
-          ]);
+          ]);*/
 
         $this->crud->addColumn([   // radio
             'name'        => 'status', // the name of the db column
@@ -141,14 +141,18 @@ class CourseCrudController extends CrudController
             'default' => '1',
           ]);
        
-        $this->crud->addField([
+        //this is necesary to accommodate the new course_program relationship
+          $this->crud->addField([
             // 1-n relationship
             'label'     => 'Program', // Table column heading
-            'type'      => 'select',
-            'name'      => 'program_id', // the column that contains the ID of that connected entity;
+            'type'      => 'select2_multiple',
+            'name'      => 'programs', // the column that contains the ID of that connected entity;
             'entity'    => 'programs', // the method that defines the relationship in your Model
             'attribute' => 'program', // foreign key attribute that is shown to user
             'model'     => "App\Models\Program", // foreign key model
+            'placeholder' => "Select a program", // placeholder for the select2 input
+
+            'pivot'     => true,
 
           ]);
 
