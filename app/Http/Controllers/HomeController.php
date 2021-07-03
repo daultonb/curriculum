@@ -66,6 +66,7 @@ class HomeController extends Controller
         ->get();
 
         $coursesPrograms = array();
+        $coursePrograms = array();
         foreach ($activeCourses as $course) {
             $coursePrograms = $course->programs;
             $coursesPrograms[$course->course_id] = $coursePrograms;
