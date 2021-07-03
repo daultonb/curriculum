@@ -29,10 +29,10 @@
                                             <i class="bi bi-exclamation-circle-fill"></i>There are no course learning outcomes set for this course.                    
                                         </div>
                                     @else
-                                        <table class="table table-light table-bordered align-middle" >
+                                        <table class="table table-light table-bordered" >
                                             <tr class="table-primary">
                                                 <th>Course Learning Outcomes or Competencies</th>
-                                                <th class="text-center">Actions</th>
+                                                <th class="text-center w-25">Actions</th>
                                             </tr>
 
                                                 @foreach($l_outcomes as $l_outcome)
@@ -42,10 +42,15 @@
                                                         <b>{{$l_outcome->clo_shortphrase}}</b><br>
                                                         {{$l_outcome->l_outcome}}
                                                     </td>
-                                                    <td class="text-center">
+                                                    <td class="text-center align-middle">
 
-                                                        <button type="button" style="width:60px;" class="btn btn-secondary btn-sm" data-toggle="modal" data-target="#editLearningOutcomeModal{{$l_outcome->l_outcome_id}}">
-                                                                Edit
+                                                        <button type="button" style="width:60px;" class="btn btn-secondary btn-sm m-1" data-toggle="modal" data-target="#editLearningOutcomeModal{{$l_outcome->l_outcome_id}}">
+                                                            Edit
+                                                        </button>
+
+                                                        <button style="width:60px;" type="button" class="btn btn-danger btn-sm btn btn-danger btn-sm m-1"
+                                                        data-toggle="modal" data-target="#CLOdeleteConfirmation{{$l_outcome->l_outcome_id}}">
+                                                            Delete
                                                         </button>
 
                                                         <!-- Bloom’s Taxonomy of Learning Modal -->
@@ -176,10 +181,6 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-
-                                                        <button style="width:60px;margin-left:10px;" type="button" class="btn btn-danger btn-sm btn btn-danger btn-sm"
-                                                        data-toggle="modal" data-target="#CLOdeleteConfirmation{{$l_outcome->l_outcome_id}}">
-                                                        Delete</button>
 
                                                         <!-- Delete Confirmation Modal -->
                                                         <div class="modal fade" id="CLOdeleteConfirmation{{$l_outcome->l_outcome_id}}" tabindex="-1" role="dialog" aria-labelledby="CLOdeleteConfirmation" aria-hidden="true">
