@@ -50,7 +50,8 @@
             <thead>
                 <tr>
                     @foreach( $field['columns'] as $column )
-                    <?php $colname = explode('-', $column)[0]?>
+                    <?php $colname = explode('-', $column)[0];
+                    if($colname == "id")$colname = "";?>
                     <th style="font-weight: 600!important;">
                         {{ $colname }}
                     </th>
@@ -65,7 +66,7 @@
                 <tr class="array-row clonable" style="display: none;">
                     @foreach( $field['columns'] as $column => $label)
                     <td>
-                        <input class="form-control form-control-sm" <?php   $typ =  "type=" . explode('-',$label)[1] ?> {{ $typ }} data-cell-name="item.{{ $column }}">
+                        <input class="form-control form-control-sm" <?php   $typ =  "type=" . explode('-',$label)[1]; ?> {{ $typ }} data-cell-name="item.{{ $column }}">
                     </td>
                     @endforeach
                     <td>

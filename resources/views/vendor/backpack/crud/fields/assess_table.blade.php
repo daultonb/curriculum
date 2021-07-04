@@ -50,7 +50,8 @@
             <thead>
                 <tr>
                     @foreach( $field['columns'] as $column )
-                    <?php $colname = explode('-', $column)[0]?>
+                    <?php $colname = explode('-', $column)[0];
+                    if($colname == "id")$colname = "";?>
                     <th style="font-weight: 600!important;">
                         {{ $colname }}
                     </th>
@@ -64,8 +65,9 @@
 
                 <tr class="array-row clonable" style="display: none;">
                     @foreach( $field['columns'] as $column => $label)
+                    <?php $totalcol = ((explode('-', $label)[1]) == "number") ? " totaled_".$column."_" : "" ?>
                     <td>
-                        <input class="form-control form-control-sm"  <?php   $typ =  "type=" . explode('-',$label)[1] ?> {{ $typ }} data-cell-name="item.{{ $column }}">
+                        <input class="form-control form-control-sm{{ $totalcol }}"  <?php   $typ =  "type=" . explode('-',$label)[1]; ?> {{ $typ }} data-cell-name="item.{{ $column }}">
                     </td>
                     @endforeach
                     <td>
@@ -74,9 +76,19 @@
                     <td>
                         <button class="btn btn-sm btn-light removeItem" type="button"><span class="sr-only">delete item</span><i class="la la-trash" role="presentation" aria-hidden="true"></i></button>
                     </td>
-                </tr>
-
+                </tr>            
             </tbody>
+            <tfoot>
+                <tr>
+                @foreach( $field['columns'] as $column => $label)
+                    <?php $coltype = explode('-', $label)[1];
+                    if($coltype == "number")$coltype = "<input type=\"number\" id=\"total_".$column."_\">";
+                    else $coltype = "";
+                    ?>  
+                <td>{!! $coltype !!}</td>
+                @endforeach
+                </tr>
+            </tfoot>
 
         </table>
 
@@ -104,7 +116,7 @@
     @push('crud_fields_scripts')
         {{-- YOUR JS HERE --}}
         <script type="text/javascript" src="{{ asset('packages/jquery-ui-dist/jquery-ui.min.js') }}"></script>
-
+        
         <script>
             function bpFieldInitTableElement(element) {
                 var $tableWrapper = element.parent('[data-field-type=table]');
@@ -221,6 +233,23 @@
                 // on page load, make sure the input has the old values
                 updateTableFieldJson();
             }
+        </script>
+        <script>
+        $(document).ready(function(){
+            let test = $('input[class*="totaled"]');
+            $(document).on('change', 'input[class*="totaled"]' ,function(e){
+                //finds the name of the totaled column eg. weight
+                let totaltype = $(e.target).attr('class').match('totaled_.*_')
+                totaltype = totaltype[0].split("_")[1];
+                //sums up all columns in this class and writes the value to the total in that column
+                let cols = $('input[class*="totaled_' + totaltype + '_"]');
+                let totalVal = 0;
+                $.each(cols,function(key, value){
+                    if(value.value)totalVal += parseInt(value.value);
+                });
+                document.getElementById("total_" + totaltype + "_").value = totalVal;
+            });
+        });
         </script>
     @endpush
 @endif

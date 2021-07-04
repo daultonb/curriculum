@@ -63,7 +63,7 @@ class CourseCrudController extends CrudController
             'type' => 'Text'
           ]);
 
-        $this->crud->addColumn([
+        /*$this->crud->addColumn([
             // 1-n relationship
             'label'     => 'Program', // Table column heading
             'type'      => 'select',
@@ -71,7 +71,7 @@ class CourseCrudController extends CrudController
             'entity'    => 'programs', // the method that defines the relationship in your Model
             'attribute' => 'program', // foreign key attribute that is shown to user
             'model'     => "App\Models\Program", // foreign key model
-          ]);
+          ]);*/
 
         $this->crud->addColumn([   // radio
             'name'        => 'status', // the name of the db column
@@ -141,14 +141,17 @@ class CourseCrudController extends CrudController
             'default' => '1',
           ]);
        
-        $this->crud->addField([
+         $this->crud->addField([
             // 1-n relationship
             'label'     => 'Program', // Table column heading
-            'type'      => 'select',
-            'name'      => 'program_id', // the column that contains the ID of that connected entity;
+            'type'      => 'select2_multiple',
+            'name'      => 'programs', // the column that contains the ID of that connected entity;
             'entity'    => 'programs', // the method that defines the relationship in your Model
             'attribute' => 'program', // foreign key attribute that is shown to user
             'model'     => "App\Models\Program", // foreign key model
+            'placeholder' => "Select a program", // placeholder for the select2 input
+
+            'pivot'     => true,
 
           ]);
 
@@ -271,18 +274,30 @@ class CourseCrudController extends CrudController
     protected function setupUpdateOperation()
     {
        // $this->setupCreateOperation();
-
+        $codeStyle = "'size' => '3',"
+                   . "'maxwidth' => '3'";
+        
         $this->crud->addField([
             'name' => 'course_code', // The db column name
             'label' => "Course Code", // Table column heading
-            'type' => 'Text'
+            'type' => 'Text',
+            'attributes' => [ 'size' => '4',
+                             'maxwidth' => '4']
          ]);
 
         $this->crud->addField([
             'name' => 'course_num', // The db column name
             'label' => "Course Number", // Table column heading
-            'type' => 'number'
+            'type' => 'number',
+             'attributes' => [$codeStyle]
           ]);
+        
+        $this->crud->addField([
+            'name'        => 'section',
+            'label'       => 'Section ID',
+            'type'        => 'text', 
+             'attributes' => [$codeStyle]
+        ]); 
         
         $this->crud->addField([
             'name' => 'course_title', // The db column name
@@ -379,6 +394,7 @@ class CourseCrudController extends CrudController
             'label' => "cat_id", // Table column heading
             'type' => 'Text',
             'default' => '1',
+             'attributes' => [$codeStyle]
           ]);
         
         $this->crud->addField([
@@ -386,6 +402,7 @@ class CourseCrudController extends CrudController
             'label' => "scale_id", // Table column heading
             'type' => 'Text',
             'default' => '1',
+             'attributes' => [$codeStyle]
           ]);
         
           //added this block as fix for bug03 (MD)
@@ -417,11 +434,7 @@ class CourseCrudController extends CrudController
             'inline'       => true,
         ]);
         
-        $this->crud->addField([
-            'name'        => 'section',
-            'label'       => 'Section ID',
-            'type'        => 'text',           
-        ]); 
+       
         
            
         $crsID = filter_input(INPUT_SERVER,'PATH_INFO');
@@ -616,9 +629,10 @@ class CourseCrudController extends CrudController
             }     
             
             //create custom html for mapping table: data collected as an array of radio buttons for each mapping with name code: map_CLOid_PLOid
-           
+            $buttonClass1 = "margin:0;padding:.5em;border:2px outset rgb(30,50,220,.9);background-color:rgb(30,50,220,.6);";
+            $buttonClass2 = "margin:0;padding:.5em;border:2px outset rgb(30,220,50,.9);background-color:rgb(30,220,50,.6);";
             
-            $custHTML = "<div><label>Objective Mapping</label><table class=\"table table-sm table-striped m-b-0\">";           
+            $custHTML = "<div><label>Objective Mapping</label>";           
             //standards are roughly analogous to program outcomes, but there is one standard category per course. 
             //the scales are categorized in the standards versus select any from list with PLOs
             $Progs = DB::table('course_programs')->where('course_id', $crsID)
@@ -626,7 +640,14 @@ class CourseCrudController extends CrudController
                              ->select('programs.program_id','programs.program')
                              ->get();
             //this all needs to happen per program as these can be related optionally many to one with the course
-            foreach ($Progs as $program){
+            
+            foreach ($Progs as $program){ 
+                $PFunc = "onClick=\"(function(){\n"
+                            . "let ch = document.getElementById(&quot;plomap_".$program->program_id."&quot;);\n"
+                            . "ch.hidden = !(ch.hidden);\n"
+                          . "})();\"";
+                $custHTML .= "<div $PFunc><div style=\"$buttonClass1\"><h3 >$program->program</h3></div></div>"
+                           . "<table id=\"plomap_$program->program_id\" class=\"table table-sm table-striped m-b-0\" hidden>";
                 $PLOs = DB::table('program_learning_outcomes')->where('program_id', $program->program_id)->get();
                 $OCmaps = DB::table('outcome_maps')->whereIn('l_outcome_id', $setOfCLO)->get();
                 $MScP = DB::table('mapping_scale_programs')->where('program_id',$program->program_id)->get();
@@ -652,8 +673,9 @@ class CourseCrudController extends CrudController
                         }
                     }
                 }
+                $custHTML .= "</table>";
             }            
-            $custHTML .= "</table></div>";
+            $custHTML .= "</div>";
             $this->crud->addField([
                'label' => 'Outcome Mappings',
                 'name' => 'outcome_mapping',
@@ -677,8 +699,7 @@ class CourseCrudController extends CrudController
                                                 ->update(['map_scale_value'=>$val[0]]);
                 }
             }
-            
-             
+    
             //Code for Optional Priorities
             $setOpPr = DB::table('course_optional_priorities')->where('course_id', $crsID)->get();                         
             $setOfOpPr = DB::table('optional_priorities')
@@ -689,13 +710,22 @@ class CourseCrudController extends CrudController
                          ->get();
             $setCat = DB::table('optional_priority_categories')->get();
             //loop x3 to create hierarchical html
-            $custHTML = "<div><label>Optional Priorities</label><table class=\"table table-sm table-striped m-b-0\">";  
+            $custHTML = "<div><label>Optional Priorities</label>";  
             foreach($setCat as $cat){
-                $custHTML .= "<tr><th colspan=\"2\">$cat->cat_name</th></tr>" ;
+                $catFunc = "onClick=\"(function(){\n"
+                            . "let ch = document.getElementById(&quot;category_".$cat->cat_id."&quot;);\n"
+                            . "ch.hidden = !(ch.hidden);\n"
+                          . "})();\"";
+                $custHTML .= "<div $catFunc><div style=\"$buttonClass1\"><h3>$cat->cat_name</h3></div></div><div id=\"category_".$cat->cat_id."\"  hidden>";
                 //create header for cat
                 $setSubCat = DB::table('optional_priority_subcategories')->where('cat_id', $cat->cat_id)->get();
                 foreach($setSubCat as $subcat){
-                    $custHTML .= "<tr><th colspan=\"2\">$subcat->subcat_name</th></tr>" ;
+                    $subcatFunc = "onClick=\"(function(){\n"
+                            . "let ch = document.getElementById(&quot;subcategory_".$subcat->subcat_id."&quot;);\n"
+                            . "ch.hidden = !(ch.hidden);\n"
+                          . "})();\"";
+                    $custHTML .= "<div $subcatFunc><div style=\"$buttonClass2\"><h4>$subcat->subcat_name</h4></div></div><table id=\"subcategory_".$subcat->subcat_id."\" class=\"table table-sm table-striped m-b-0\"  hidden>";
+                              
                     //create header for subcat
                     $scop = DB::table('optional_priorities')->where('subcat_id',$subcat->subcat_id)->get();
                     foreach($scop as $op){
@@ -705,9 +735,11 @@ class CourseCrudController extends CrudController
                         $custHTML .= "<tr><td >". $op->optional_priority."</td><td><input type=\"checkbox\" name=\"opp_$opid\" $chk></td>";
                         
                     }
+                    $custHTML .= "</table>";
                 }
+                $custHTML .= "</div>";
             }
-            $custHTML .= "</table></div>";
+            $custHTML .= "</div>";
             $this->crud->addField([
                'label' => 'Optional Priorities',
                 'name' => 'optional_priorities',
