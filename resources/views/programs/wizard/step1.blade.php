@@ -15,7 +15,7 @@
 
                 <div class="card-body">
 
-                    <h6 class="card-subtitle mb-4 text-muted lh-lg">
+                    <h6 class="card-subtitle mb-4 text-center lh-lg">
                         Program-level learning outcomes (PLOs) are the knowledge, skills and attributes that students are expected to attain by the end of a program of study.
                         You can add, edit and delete program outcomes. <strong>It is recommended that a program has 6 - 8 PLOs max</strong>. You can also add program outcome categories to group outcomes (optional).                    
                     </h6>
