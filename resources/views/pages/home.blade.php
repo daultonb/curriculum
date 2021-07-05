@@ -122,7 +122,7 @@
                                     <th scope="col">Term</th>
                                     <!--<th scope="col">Invite Collaborators</th>-->
                                     <th scope="col">Status</th>
-                                    <th scope="col">Program </th>
+                                    <th scope="col"  style="text-align:center;">Program </th>
                                     <th scope="col">Actions</th>
                                 </tr>
                                 </thead>
@@ -140,7 +140,15 @@
                                         <td>
                                             @if(count($coursesPrograms[$course->course_id]) > 0)
                                                 <div data-toggle="tooltip" data-html="true" title="@foreach($coursesPrograms[$course->course_id] as $index => $courseProgram){{$index + 1}}. {{$courseProgram->program}}<br>@endforeach" data-bs-placement="right">
-                                                    <button type="button" style="border:1px solid black; background-color: white; border-radius: 50%; font-weight:bold; color:#40B4E5; opacity: 1; text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black; margin: 0 auto; display:block; box-shadow: 2px 2px 10px #888888; font-size: 120%" class="btn btn-secondary" disabled>{{ count($coursesPrograms[$course->course_id]) }}</button>
+                                                    <!--<button type="button" style="border:1px solid black; background-color: white; border-radius: 50%; font-weight:bold; color:#40B4E5; opacity: 1; text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black; margin: 0 auto; display:block; box-shadow: 2px 2px 10px #888888; font-size: 120%" class="btn btn-secondary" disabled>{{ count($coursesPrograms[$course->course_id]) }}</button>
+                                                    -->
+                                                    <p style=" text-align:center;">
+                                                        <i class="bi bi-map" style="font-size:x-large; text-align:center;">
+                                                            <sup>
+                                                                <span class="badge badge-primary" style="font-size:small;">{{ count($coursesPrograms[$course->course_id]) }}</span>
+                                                            </sup>
+                                                        </i>
+                                                    </p>
                                                 </div>
                                             @else
                                                 <p style="text-align: center;">None</p>
@@ -155,10 +163,19 @@
                                         <td>
                                             @if(count($coursesPrograms[$course->course_id]) > 0)
                                                 <div data-toggle="tooltip" data-html="true" title="@foreach($coursesPrograms[$course->course_id] as $index => $courseProgram){{$index + 1}}. {{$courseProgram->program}}<br>@endforeach" data-bs-placement="right">
-                                                    <button type="button" style="border:1px solid black; background-color: white; border-radius: 50%; font-weight:bold; color:#40B4E5; opacity: 1; text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black; margin: 0 auto; display:block; box-shadow: 2px 2px 10px #888888; font-size: 120%" class="btn btn-secondary" disabled>{{ count($coursesPrograms[$course->course_id]) }}</button>
+                                                    <!--<button type="button" style="border:1px solid black; background-color: white; border-radius: 50%; font-weight:bold; color:#40B4E5; opacity: 1; text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black; margin: 0 auto; display:block; box-shadow: 2px 2px 10px #888888; font-size: 120%" class="btn btn-secondary" disabled>{{ count($coursesPrograms[$course->course_id]) }}</button>
+                                                    -->
+                                                    <p style=" text-align:center; ">
+                                                        <i class="bi bi-map" style="font-size:x-large;">
+                                                            <sup> <!-- the sup tag is to make the badge an exponent (superscript)-->
+                                                                <span class="badge badge-primary" style="font-size:small;">{{ count($coursesPrograms[$course->course_id]) }}</span>
+                                                            </sup>
+                                                        </i>
+                                                    </p>
+                                                    
                                                 </div>
                                             @else
-                                                <p style="text-align: center;">None</p>
+                                                <p style="text-align: center; display:inline-block; margin: 0 auto;">None</p>
                                             @endif
                                         </td>
                                     @endif
