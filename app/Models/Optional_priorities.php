@@ -18,4 +18,7 @@ class Optional_priorities extends Model
         'optional_priority',
         //'input_status',
     ];
+    public function course(){
+        return $this->belongsToMany(Course::class, 'course_id','course_id');
+    }
 }

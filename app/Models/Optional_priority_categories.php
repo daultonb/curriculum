@@ -16,4 +16,7 @@ class Optional_priority_categories extends Model
     protected $fillable = [        
         'cat_name',   
     ];
+    public function OptionalPrioritySubcategories(){
+        return $this->hasMany(OptionalPrioritySubcategories::class, 'category_id', 'category_id');
+    }
 }
