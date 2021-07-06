@@ -6,29 +6,15 @@
         <div class="col-md-12">
             @include('programs.wizard.header')
 
-            <!-- progress bar -->
-            <div>
-                <table class="table table-borderless text-center table-sm" style="table-layout: fixed; width: 100%">
-                    <tr>
-                        <td><a class="btn @if($ploCount<1) btn-secondary @else btn-success @endif" href="{{route('programWizard.step1', $program->program_id)}}" style="width: 30px; height: 30px; padding: 6px 0px; border-radius: 15px; text-align: center; font-size: 12px; line-height: 1.42857;"> <b>1</b> </a></td>
-                        <td><a class="btn @if($msCount<1) btn-secondary @else btn-success @endif" href="{{route('programWizard.step2', $program->program_id)}}" style="width: 30px; height: 30px; padding: 6px 0px; border-radius: 15px; text-align: center; font-size: 12px; line-height: 1.42857;"> <b>2</b> </a></td>
-                        <td><a class="btn @if($courseCount<1) btn-secondary @else btn-success @endif" href="{{route('programWizard.step3', $program->program_id)}}" style="width: 30px; height: 30px; padding: 6px 0px; border-radius: 15px; text-align: center; font-size: 12px; line-height: 1.42857;"> <b>3</b> </a></td>
-                        <td><a class="btn btn-primary" href="{{route('programWizard.step4', $program->program_id)}}" style="width: 30px; height: 30px; padding: 6px 0px; border-radius: 15px; text-align: center; font-size: 12px; line-height: 1.42857;"> <b>4</b> </a></td>
-                    </tr>
-                    <tr>
-                        <td>Program Learning Outcomes</td>
-                        <td>Mapping Scale</td>
-                        <td>Courses</td>
-                        <td>Begin Mapping Program</td>
-                    </tr>
-                </table>
-            </div>
-
+            <div class="card">
 
                 <div class="card-footer">
-                    <a href="{{route('programWizard.step3', $program->program_id)}}"><button class="btn btn-sm btn-primary mt-3 col-3 float-left"><i class="bi bi-arrow-left mr-2"></i> Courses</button></a>
+                    <div class="card-body mb-4">
+                        <a href="{{route('programWizard.step3', $program->program_id)}}">
+                            <button class="btn btn-sm btn-primary col-3 float-left"><i class="bi bi-arrow-left mr-2"></i> Courses</button>
+                        </a>
+                    </div>
                 </div>
-
 
             </div>
 

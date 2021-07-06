@@ -15,7 +15,7 @@
 
                 <div class="card-body">
 
-                    <h6 class="card-subtitle mb-4 text-muted lh-lg">
+                    <h6 class="card-subtitle mb-4 lh-lg">
                         Input all <a href="https://ctlt.ubc.ca/resources/webliography/assessmentevaluation/" target="_blank"><i class="bi bi-box-arrow-up-right"></i> assessment methods</a> of the course individually. You may also choose to use the <a href="https://ubcoapps.elearning.ubc.ca/" target="_blank"><i class="bi bi-box-arrow-up-right"></i> UBCO's Workload Calculator</a> to estimate the student time commitment in this course based on the chosen assignments.              
                     </h6>
 
@@ -112,13 +112,12 @@
                                             </tr>
 
                                         @endforeach
-
-                                        <tr class="table-secondary">
-                                            <td><b>TOTAL</b></td>
-                                            <td><b id="sum">{{$totalWeight}}%</b></td>
-                                            <td></td>
-                                        </tr>
                                     @endif
+                                    <tr class="table-secondary">
+                                        <td><b>TOTAL</b></td>
+                                        <td><b id="sum">{{$totalWeight}}%</b></td>
+                                        <td></td>
+                                    </tr>
                                 </table>                                    
                             </div>
                         </div>
@@ -133,7 +132,7 @@
                             <input type="hidden" name="course_id" value="{{$course->course_id}}" form="a_method_form">
                         </form>
 
-                        <button type="button" class="btn btn-sm col-3 float-left" id="btnAdd" style="background-color:#002145;color:white;">
+                        <button type="button" class="btn btn-sm col-3 float-left ml-3" id="btnAdd" style="background-color:#002145;color:white;">
                             ＋ Add Student Assessment Method
                         </button>
                     </div>
@@ -258,11 +257,12 @@
 
                     </datalist>
                 </td>
-                <td style="display: flex">
+                <td style="display:flex">
                     <input id="a_new_method_weight`+rowCount+`" type="number" step="1" form="a_method_form" style="width:auto" class="form-control @error('weight') is-invalid @enderror" value = 0 name="weight[]" min="0" max="100" required autofocus>
                     <label for="a_new_method_weight`+rowCount+`" style="font-size: medium; margin-top:5px;margin-left:5px"><strong>%</strong></label>
                 </td>
                 <td></td>
+
 
             </tr>`;
 
@@ -293,7 +293,6 @@
         }else{
             rowCount = $('#a_method_table tr').length-1;
         }
-        console.log(rowCount);
         return rowCount;
     }
 

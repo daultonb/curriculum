@@ -7,32 +7,16 @@
         <div class="col-md-12">
             @include('programs.wizard.header')
 
-            <!-- progress bar -->
-            <div>
-                <table class="table table-borderless text-center table-sm" style="table-layout: fixed; width: 100%">
-                    <tr>
-                        <td><a class="btn @if($ploCount<1) btn-secondary @else btn-success @endif" href="{{route('programWizard.step1', $program->program_id)}}" style="width: 30px; height: 30px; padding: 6px 0px; border-radius: 15px; text-align: center; font-size: 12px; line-height: 1.42857;"> <b>1</b> </a></td>
-                        <td><a class="btn btn-primary" href="{{route('programWizard.step2', $program->program_id)}}" style="width: 30px; height: 30px; padding: 6px 0px; border-radius: 15px; text-align: center; font-size: 12px; line-height: 1.42857;"> <b>2</b> </a></td>
-                        <td><a class="btn @if($courseCount<1) btn-secondary @else btn-success @endif" href="{{route('programWizard.step3', $program->program_id)}}" style="width: 30px; height: 30px; padding: 6px 0px; border-radius: 15px; text-align: center; font-size: 12px; line-height: 1.42857;"> <b>3</b> </a></td>
-                        <td><a class="btn btn-secondary" href="{{route('programWizard.step4', $program->program_id)}}" style="width: 30px; height: 30px; padding: 6px 0px; border-radius: 15px; text-align: center; font-size: 12px; line-height: 1.42857;"> <b>4</b> </a></td>
-                    </tr>
-                    <tr>
-                        <td>Program Learning Outcomes</td>
-                        <td>Mapping Scale</td>
-                        <td>Courses</td>
-                        <td>Begin Mapping Program</td>
-                    </tr>
-                </table>
-            </div>
-
             <div class="card">
 
+                <h3 class="card-header wizard" >
+                    Mapping Scales
+                </h3>
+
                 <div class="card-body">
-                    <p class="form-text text-muted">
-                        The mapping scale is the scale that will be used to indicate the degree to which a program-level
-                        learning outcome is addressed by a course outcome, or the degree of alignment between the
-                        course outcome and program-level learning outcome.
-                    </p>
+                    <h6 class="card-subtitle mb-4 text-center lh-lg">
+                        The mapping scale is the scale that will be used to indicate the degree to which a program-level learning outcome is addressed by a course outcome, or the degree of alignment between the course outcome and program-level learning outcome.
+                    </h6>
 
                     <div class="row mb-3 container">
                         <div class="float-left">
@@ -100,27 +84,28 @@
                         
                     </div>
 
+
+                    
+
+
                     <div id="plos">
                         <div class="row">
                             <div class="col">
-                                <table class="table table-borderless">
+                            @if ($mappingScales->count() < 1)
+                                <div class="alert alert-warning wizard">
+                                    <i class="bi bi-exclamation-circle-fill pr-2 fs-5"></i>There are no mapping scale levels set for this program yet.                    
+                                </div>
+                            @else 
+                                <table class="table table-light table-bordered" >
+                                    <tr class="table-primary">
+                                                <th class="w-25">Mapping Scale Level</th>
+                                                <th>Description</th>
+                                                <th class="text-center">Actions</th>
+                                    </tr>
 
-                                    @if(count($mappingScales)<1) 
-                                        <tr class="table-active">
-                                            <th colspan="2">There are no mapping scale levels set for this program project.</th>
-                                        </tr>
-
-                                    @else
-
-                                        <tr class="table-active">
-                                            <th colspan="4">Mapping Scale</th>
-                                        </tr>
-                                        
-                                            @foreach($mappingScales as $ms)
-                                            
+                                    @foreach($mappingScales as $ms)                                            
                                             <tr>
-                                                
-                                                <td style="width:20%">
+                                                <td>
                                                     <div style="background-color:{{$ms->colour}}; height: 10px; width: 10px;"></div>
                                                     {{$ms->title}}<br>
                                                     ({{$ms->abbreviation}})
@@ -128,14 +113,21 @@
                                                 <td>
                                                     {{$ms->description}}
                                                 </td>
-                                                <td style="width:5%" >
-                                                    @if($ms->mapping_scale_categories_id == NULL)
-                                                        <button type="button" class="btn btn-secondary btn-sm float-right" data-toggle="modal" style="width:60px;" data-target="#editMSModal{{$ms->map_scale_id}}">
-                                                            Edit
-                                                        </button>
-                                                    @endif
 
-                                                    <!-- Modal -->
+                                                <td class="text-center align-middle">
+                                                    <form action="{{route('mappingScale.destroy', $ms->map_scale_id)}}" method="POST">
+                                                        @csrf
+                                                        {{method_field('DELETE')}}
+                                                        <input type="hidden" class="form-check-input" name="program_id" value="{{$program->program_id}}">
+                                                        @if($ms->mapping_scale_categories_id == NULL)
+                                                            <button type="button" class="btn btn-secondary btn-sm m-1" data-toggle="modal" style="width:60px;" data-target="#editMSModal{{$ms->map_scale_id}}">
+                                                                Edit
+                                                            </button>
+                                                        @endif
+                                                        <button type="submit" style="width:60px" class="btn btn-danger btn-sm m-1">Delete</button>
+                                                        
+                                                    </form>
+                                                    <!-- Edit MS Modal -->
                                                     <div class="modal fade" id="editMSModal{{$ms->map_scale_id}}" tabindex="-1" role="dialog" aria-labelledby="editMSModalLabel" aria-hidden="true">
                                                         <div class="modal-dialog modal-lg" role="document">
                                                             <div class="modal-content">
@@ -251,31 +243,16 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                               
-                                                    
-                                                </td>
-                                                <td style="width:5%" >
-                                                    <form action="{{route('mappingScale.destroy', $ms->map_scale_id)}}" method="POST" class="float-right ml-2">
-                                                        @csrf
-                                                        {{method_field('DELETE')}}
-                                                        <input type="hidden" class="form-check-input" name="program_id" value="{{$program->program_id}}">
-                                                        <button type="submit" style="width:60px" class="btn btn-danger btn-sm ">Delete</button>
-                                                    </form>
+                                                    <!-- End of Edit MS Modal -->
                                                 </td>
                                             </tr>
-
-
-
-                                            @endforeach
-
-                                       
-
-                                    @endif
+                                    @endforeach
                                 </table>
-                            </div>
-
+                            @endif
                         </div>
+
                     </div>
+                </div>
 
                     <button type="button" class="btn btn-primary btn-sm col-3 mt-3 float-right" data-toggle="modal"
                         data-target="#addMSModal" style="background-color:#002145;color:white;">
@@ -400,22 +377,21 @@
                             </div>
                         </div>
                     </div>
-
                 </div>
 
                 <div class="card-footer">
-                    <a href="{{route('programWizard.step1', $program->program_id)}}"><button
-                            class="btn btn-sm btn-primary mt-3 col-3 float-left"><i class="bi bi-arrow-left ml-2"></i> Program Learning Outcomes</button></a>
+                    <div class="card-body mb-4">
+                        <a href="{{route('programWizard.step1', $program->program_id)}}">
+                            <button class="btn btn-sm btn-primary col-3 float-left"><i class="bi bi-arrow-left ml-2"></i> Program Learning Outcomes</button>
+                        </a>
 
-                    <a href="{{route('programWizard.step3', $program->program_id)}}"><button
-                            class="btn btn-sm btn-primary mt-3 col-3 float-right">Courses <i class="bi bi-arrow-right ml-2"></i></button></a>
+                        <a href="{{route('programWizard.step3', $program->program_id)}}">
+                            <button class="btn btn-sm btn-primary col-3 float-right">Courses <i class="bi bi-arrow-right ml-2"></i></button>
+                        </a>
+                    </div>
                 </div>
-
-
             </div>
         </div>
-
-
     </div>
 </div>
 

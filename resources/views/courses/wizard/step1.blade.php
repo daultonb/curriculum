@@ -15,7 +15,7 @@
 
                 <div class="card-body">
 
-                    <h6 class="card-subtitle mb-4 text-muted lh-lg">
+                    <h6 class="card-subtitle mb-4 lh-lg">
                         Input the <a href="https://ctl.ok.ubc.ca/teaching-development/classroom-practices/learning-outcomes/" target="_blank"><i class="bi bi-box-arrow-up-right"></i> course learning outcomes (CLOs)</a> or <a href="https://sph.uth.edu/content/uploads/2012/01/Competencies-and-Learning-Objectives.pdf" target="_blank"><i class="bi bi-box-arrow-up-right"></i> competencies</a> of the course individually.
                         <strong>It is recommended that a course has 5-7 CLOs maximum</strong>.                    
                     </h6>
@@ -29,9 +29,10 @@
                                             <i class="bi bi-exclamation-circle-fill"></i>There are no course learning outcomes set for this course.                    
                                         </div>
                                     @else
-                                        <table class="table table-light table-bordered align-middle" >
+                                        <table class="table table-light table-bordered" >
                                             <tr class="table-primary">
-                                                <th colspan="2">Course Learning Outcomes or Competencies</th>
+                                                <th>Course Learning Outcomes or Competencies</th>
+                                                <th class="text-center w-25">Actions</th>
                                             </tr>
 
                                                 @foreach($l_outcomes as $l_outcome)
@@ -41,43 +42,15 @@
                                                         <b>{{$l_outcome->clo_shortphrase}}</b><br>
                                                         {{$l_outcome->l_outcome}}
                                                     </td>
-                                                    <td width="250px" >
-                                                        <button style="width:60px;margin-left:10px;" type="button" class="btn btn-danger btn-sm btn btn-danger btn-sm float-right "
-                                                        data-toggle="modal" data-target="#CLOdeleteConfirmation{{$l_outcome->l_outcome_id}}">
-                                                        Delete</button>
+                                                    <td class="text-center align-middle">
 
-                                                        <!-- Delete Confirmation Modal -->
-                                                        <div class="modal fade" id="CLOdeleteConfirmation{{$l_outcome->l_outcome_id}}" tabindex="-1" role="dialog" aria-labelledby="CLOdeleteConfirmation" aria-hidden="true">
-                                                            <div class="modal-dialog" role="document">
-                                                                <div class="modal-content">
-                                                                    <div class="modal-header">
-                                                                        <h5 class="modal-title" id="CLOdeleteConfirmation">Delete Confirmation</h5>
-                                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                            <span aria-hidden="true">&times;</span>
-                                                                        </button>
-                                                                    </div>
-
-                                                                    <div class="modal-body">
-                                                                    Are you sure you want to delete {{$l_outcome->l_outcome}}
-                                                                    </div>
-
-                                                                    <form class="float-right ml-2" action="{{route('lo.destroy', $l_outcome->l_outcome_id)}}" method="POST">
-                                                                        @csrf
-                                                                        {{method_field('DELETE')}}
-                                                                        <input type="hidden" name="course_id" value="{{$course->course_id}}">
-
-                                                                        <div class="modal-footer">
-                                                                            <button style="width:60px" type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Cancel</button>
-                                                                            <button style="width:60px;" type="submit" class="btn btn-danger btn-sm ">Delete</button>
-                                                                        </div>
-
-                                                                    </form>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-
-                                                        <button type="button" style="width:60px;" class="btn btn-secondary btn-sm float-right" data-toggle="modal" data-target="#editLearningOutcomeModal{{$l_outcome->l_outcome_id}}">
+                                                        <button type="button" style="width:60px;" class="btn btn-secondary btn-sm m-1" data-toggle="modal" data-target="#editLearningOutcomeModal{{$l_outcome->l_outcome_id}}">
                                                             Edit
+                                                        </button>
+
+                                                        <button style="width:60px;" type="button" class="btn btn-danger btn-sm btn btn-danger btn-sm m-1"
+                                                        data-toggle="modal" data-target="#CLOdeleteConfirmation{{$l_outcome->l_outcome_id}}">
+                                                            Delete
                                                         </button>
 
                                                         <!-- Bloom’s Taxonomy of Learning Modal -->
@@ -209,6 +182,35 @@
                                                             </div>
                                                         </div>
 
+                                                        <!-- Delete Confirmation Modal -->
+                                                        <div class="modal fade" id="CLOdeleteConfirmation{{$l_outcome->l_outcome_id}}" tabindex="-1" role="dialog" aria-labelledby="CLOdeleteConfirmation" aria-hidden="true">
+                                                            <div class="modal-dialog" role="document">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <h5 class="modal-title" id="CLOdeleteConfirmation">Delete Confirmation</h5>
+                                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                            <span aria-hidden="true">&times;</span>
+                                                                        </button>
+                                                                    </div>
+
+                                                                    <div class="modal-body">
+                                                                    Are you sure you want to delete {{$l_outcome->l_outcome}}
+                                                                    </div>
+
+                                                                    <form class="float-right ml-2" action="{{route('lo.destroy', $l_outcome->l_outcome_id)}}" method="POST">
+                                                                        @csrf
+                                                                        {{method_field('DELETE')}}
+                                                                        <input type="hidden" name="course_id" value="{{$course->course_id}}">
+
+                                                                        <div class="modal-footer">
+                                                                            <button style="width:60px" type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Cancel</button>
+                                                                            <button style="width:60px;" type="submit" class="btn btn-danger btn-sm ">Delete</button>
+                                                                        </div>
+
+                                                                    </form>
+                                                                </div>
+                                                            </div>
+                                                        </div>
 
                                                     </td>
                                                 </tr>

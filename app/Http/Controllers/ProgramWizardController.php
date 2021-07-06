@@ -67,8 +67,6 @@ class ProgramWizardController extends Controller
                                     ->where('mapping_scale_programs.program_id', $program_id)->count();
         $courseCount = CourseProgram::where('program_id', $program_id)->count();
 
-
-
         return view('programs.wizard.step1')->with('plos', $plos)->with('program', $program)->with('ploCategories', $ploCategories)
                                             ->with("faculties", $faculties)->with("departments", $departments)->with("levels",$levels)->with('user', $user)->with('programUsers',$programUsers)
                                             ->with('ploCount',$ploCount)->with('msCount', $msCount)->with('courseCount', $courseCount);

@@ -25,7 +25,7 @@
 
                     @else
 
-                        <h6 class="card-subtitle mb-4 text-muted lh-lg">
+                        <h6 class="card-subtitle mb-4 lh-lg">
                             Now that you have inputted your course information, you are ready to map it to program learning outcomes (PLOs). Using the mapping scale provided by each program, identify the alignment between each of your course learning outcomes (CLOs) and PLOs.                        
                         </h6>
                         

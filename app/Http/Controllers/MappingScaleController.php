@@ -142,6 +142,7 @@ class MappingScaleController extends Controller
         if ($mapping_scale_categories_id != null) {
             // if the mapping scale is null delete from the mapping scale program
             $msp = MappingScaleProgram::where('program_id', $request->input('program_id'))->where('map_scale_id', $map_scale_id);
+          
             if($msp->delete()){
                 $request->session()->flash('success', 'Mapping scale level deleted');
             }else{
