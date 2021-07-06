@@ -17,9 +17,6 @@ class Optional_priorities extends Model
     protected $guarded = ['op_id'];
     protected $fillable = ['category_title', 'category_desc', 'subcat_title', 'subcat_desc', 'optional_priority'];
     
-    public function course(){
-        return $this->belongsToMany(Course::class, 'course_id','course_id');
-    }
     public function OptionalPrioritySubcategories(){
         return $this -> belongsTo(OptionalPrioritySubcategories::class, 'subcategory_id', 'subcategory_id');
     }
