@@ -15,7 +15,7 @@
                 <div class="card-body m-2">
                     <div class="row justify-content-between">
                         <div class="col-8">
-                            <h6 class="card-subtitle wizard mb-4 text-muted lh-lg text-center">
+                            <h6 class="card-subtitle wizard mb-4 lh-lg text-center">
                                 You can review	and	download the mapped course here. To edit information, select from the numbered tabs above. Click finish only when you have completed the mapping process.                    
                             </h6>
                         </div>

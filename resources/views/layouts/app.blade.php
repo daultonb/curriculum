@@ -10,7 +10,7 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
+    <script src="{{ asset('js/app.js') }}"></script>
     <script src="{{ asset('js/jquery-3.5.1.js') }}" ></script>
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
     <script src="https://code.iconify.design/1/1.0.7/iconify.min.js"></script>
