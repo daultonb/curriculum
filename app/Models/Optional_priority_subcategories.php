@@ -22,4 +22,7 @@ class Optional_priority_subcategories extends Model
     public function OptionalPriority(){
         return $this-> hasMany(OptionalPriority::class,'subcategory_id','subcategory_id');
     }
+    public function OptionalPriorityCategories(){
+        return $this->belongsTo(OptionalPriorityCategories::class, 'category_id','category_id');
+    }
 }
