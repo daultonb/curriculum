@@ -33,6 +33,7 @@ class HomeController extends Controller
     {
         $user = User::where('id', Auth::id())->first();
 
+        // get courses belonging to a user
         $activeCourses = $user->courses()
         ->select('courses.course_code','courses.delivery_modality','courses.semester','courses.year','courses.section',
         'courses.course_id','courses.course_num','courses.course_title', 'courses.status')

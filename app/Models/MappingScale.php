@@ -11,6 +11,7 @@ class MappingScale extends Model
 
     protected $primaryKey = 'map_scale_id';
 
+
     public function programs()
     {
         return $this->belongsToMany('App\Models\Program','mapping_scale_programs' ,'map_scale_id', 'program_id');

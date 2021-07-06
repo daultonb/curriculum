@@ -30,40 +30,47 @@
                                         <div class="modal-header">
                                             <h5 class="modal-title">Default Mapping Scale</h5>
                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                              <span aria-hidden="true">&times;</span>
+                                            <span aria-hidden="true">&times;</span>
                                             </button>
-                                          </div>
-                                          <div class="modal-body">
+                                        </div>
+                                        <div class="modal-body">
+                                        <!-- Loops through all mapping scale categories, as well as the associated mapping scales -->
+                                        @foreach($msCategories as $msCategory)
+                                            <div>
                                             <table class="table table-bordered table-sm">
                                                 <thead>
                                                     <tr>
-                                                        <th colspan="2">Maping Scale</th>
+                                                        <th colspan="2">{{$msCategory->msc_title}}</th>
                                                     </tr>
                                                 </thead>
+                                                
                                                 <tbody>
-                                                    <tr>
-                                                        <td scope="row"><div style="background-color:#80bdff; height: 10px; width: 10px;"></div>Introduced (I)</td>
-                                                        <td>Key ideas, concepts or skills related to the learning outcome are demonstrated at an introductory level. 
-                                                            Learning activities focus on basic knowledge, skills, and/or competencies and entry-level complexity.</td>
-                                                        
-                                                    </tr>
-                                                    <tr>
-                                                        <td scope="row"><div style="background-color:#1aa7ff; height: 10px; width: 10px;"></div>Developing (D)</td>
-                                                        <td>Learning outcome is reinforced with feedback; students demonstrate the outcome at an increasing level of proficiency. 
-                                                            Learning activities concentrate on enhancing and strengthening existing knowledge and skills as well as expanding complexity.</td>
-                                                        
-                                                    </tr>
-                                                    <tr>
-                                                        <td scope="row"><div style="background-color:#0065bd; height: 10px; width: 10px;"></div>Advanced (A)</td>
-                                                        <td>Students demonstrate the learning outcomes with a high level of independence, expertise and sophistication expected upon graduation. 
-                                                            Learning activities focus on and integrate the use of content or skills in multiple.</td>
-                                                        
-                                                    </tr>
+                                                    @foreach ($mscScale as $ms)
+                                                        @if ($msCategory->mapping_scale_categories_id == $ms->mapping_scale_categories_id)
+                                                            <tr>
+                                                
+                                                                <td style="width:20%">
+                                                                    <div style="background-color:{{$ms->colour}}; height: 10px; width: 10px;"></div>
+                                                                    {{$ms->title}}<br>
+                                                                    ({{$ms->abbreviation}})
+                                                                </td>
+                                                                <td>
+                                                                    {{$ms->description}}
+                                                                </td>
+                                                            </tr>
+                                                        @endif
+                                                    @endforeach
                                                 </tbody>
-                                            </table>
-                                          </div>
-                                          
-                                       
+                                                </table>
+                                                <form action="{{route('mappingScale.addDefaultMappingScale')}}" method="POST" >
+                                                    @csrf
+                                                    <input type="hidden" class="form-check-input" name="mapping_scale_categories_id" value="{{$msCategory->mapping_scale_categories_id}}">
+                                                    <input type="hidden" class="form-check-input" name="program_id" value="{{$program->program_id}}">
+                                                    <button type="submit" style="width:250px; background-color:#002145;color:white; margin-bottom:4%; margin-top:1%;" class="btn btn-secondary btn-sm float-right">+ Import Mapping Scales</button>
+                                                </form>
+                                            </div>
+                                        @endforeach
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -72,19 +79,6 @@
 
 
                         <div class="float-left">
-
-
-                            <form action="{{route('mappingScale.default')}}" method="POST" >
-                                @csrf
-                                <input type="hidden" class="form-check-input" name="program_id" value="{{$program->program_id}}">
-                                <button type="submit" style="width:250px; background-color:#002145;color:white;" class="btn btn-secondary btn-sm float-left"> + Use the Default Mapping Scale Levels</button>
-                            </form>
-
-                            <form action="{{route('mappingScale.default2')}}" method="POST" >
-                                @csrf
-                                <input type="hidden" class="form-check-input" name="program_id" value="{{$program->program_id}}">   
-                                <button type="submit" style="width:250px; background-color:#002145;color:white;" class="btn btn-secondary btn-sm "> + Use the Other Mapping Scale Levels</button>
-                            </form>
 
                         </div>
                         
@@ -119,12 +113,13 @@
                                                 <td>
                                                     {{$ms->description}}
                                                 </td>
+
                                                 <td class="text-center align-middle">
                                                     <form action="{{route('mappingScale.destroy', $ms->map_scale_id)}}" method="POST">
                                                         @csrf
                                                         {{method_field('DELETE')}}
                                                         <input type="hidden" class="form-check-input" name="program_id" value="{{$program->program_id}}">
-                                                        @if($ms->map_scale_id !== 1 && $ms->map_scale_id !== 2 && $ms->map_scale_id !== 3 && $ms->map_scale_id !== 4 && $ms->map_scale_id !== 5 && $ms->map_scale_id !== 6 && $ms->map_scale_id !== 7)
+                                                        @if($ms->mapping_scale_categories_id == NULL)
                                                             <button type="button" class="btn btn-secondary btn-sm m-1" data-toggle="modal" style="width:60px;" data-target="#editMSModal{{$ms->map_scale_id}}">
                                                                 Edit
                                                             </button>
