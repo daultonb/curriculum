@@ -5,7 +5,9 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Requests\OptionalPriorityRequest;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
+use Illuminate\Support\Facades\DB;
 
+use App\Models\Optional_priorities;
 /**
  * Class OptionalPriorityCrudController
  * @package App\Http\Controllers\Admin
@@ -29,6 +31,7 @@ class OptionalPriorityCrudController extends CrudController
         CRUD::setModel(\App\Models\optional_priorities::class);
         CRUD::setRoute(config('backpack.base.route_prefix') . '/optional-priority');
         CRUD::setEntityNameStrings('optional priority', 'optional priorities');
+        $this->crud->enableDetailsRow();
     }
 
     /**
@@ -39,13 +42,42 @@ class OptionalPriorityCrudController extends CrudController
      */
     protected function setupListOperation()
     {
-        CRUD::setFromDb(); // columns
+        $this->crud->addColumn([
+            'name' => 'op_id', // The db column name
+            'label' => "OptionalPriority Id",// Table column heading
+            'type' => 'Text',
+           ]);
 
-        /**
-         * Columns can be defined using the fluent syntax or array syntax:
-         * - CRUD::column('price')->type('number');
-         * - CRUD::addColumn(['name' => 'price', 'type' => 'number']); 
-         */
+        $this->crud->addColumn([
+            'name' => 'cat_name', // The db column name
+            'label' => "Category Name",// Table column heading
+            'type' => 'Text'
+         ]);
+
+      /* $this->crud->addColumn([
+        'name' => 'cat_desc', // The db column name
+        'label' => "Category desc",// Table column heading
+         'type' => 'Text'
+       ]);*/
+
+       $this->crud->addColumn([
+        'name' => 'subcat_name', // The db column name
+        'label' => "Subcategory Name",// Table column heading
+        'type' => 'Text'
+       ]);
+
+       $this->crud->addColumn([
+        'name' => 'subcat_desc', // The db column name
+        'label' => "Subcategory desc",// Table column heading
+        'type' => 'Text'
+       ]);
+
+       $this->crud->addColumn([
+        'name' => 'optional_priority', // The db column name
+        'label' => "Optional Priority",// Table column heading
+        'type' => 'Text'
+       ]);
+
     }
 
     /**
@@ -57,14 +89,41 @@ class OptionalPriorityCrudController extends CrudController
     protected function setupCreateOperation()
     {
         CRUD::setValidation(OptionalPriorityRequest::class);
+        $this->crud->addColumn([
+            'name' => 'op_id', // The db column name
+            'label' => "OptionalPriority Id",// Table column heading
+            'type' => 'number',
+            'default' => '1'
+           ]);
+        $this->crud->addColumn([
+            'name' => 'cat_name', // The db column name
+            'label' => "Category Name",// Table column heading
+            'type' => 'Text'
+           ]);
 
-        CRUD::setFromDb(); // fields
+        /* $this->crud->addColumn([
+        'name' => 'cat_desc', // The db column name
+        'label' => "Category desc",// Table column heading
+         'type' => 'Text'
+       ]);*/
 
-        /**
-         * Fields can be defined using the fluent syntax or array syntax:
-         * - CRUD::field('price')->type('number');
-         * - CRUD::addField(['name' => 'price', 'type' => 'number'])); 
-         */
+        $this->crud->addColumn([
+            'name' => 'subcat_name', // The db column name
+            'label' => "Subcategory Name",// Table column heading
+            'type' => 'Text'
+        ]);
+
+        $this->crud->addColumn([
+            'name' => 'subcat_desc', // The db column name
+            'label' => "Subcategory desc",// Table column heading
+            'type' => 'HTML'
+        ]);
+
+        $this->crud->addColumn([
+            'name' => 'optional_priority', // The db column name
+            'label' => "Optional Priority",// Table column heading
+            'type' => 'Text'
+        ]);
     }
 
     /**
@@ -77,4 +136,5 @@ class OptionalPriorityCrudController extends CrudController
     {
         $this->setupCreateOperation();
     }
+
 }
