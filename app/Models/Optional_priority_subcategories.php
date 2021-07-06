@@ -20,9 +20,9 @@ class Optional_priority_subcategories extends Model
         //'input_status',
     ];
     public function OptionalPriority(){
-        return $this-> hasMany(OptionalPriority::class,'subcategory_id','subcategory_id');
+        return $this-> hasMany(OptionalPriority::class,'subcat_id','subcat_id');
     }
     public function OptionalPriorityCategories(){
-        return $this->belongsTo(OptionalPriorityCategories::class, 'category_id','category_id');
+        return $this->belongsTo(OptionalPriorityCategories::class, 'cat_id','cat_id');
     }
 }

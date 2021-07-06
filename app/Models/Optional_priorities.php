@@ -18,7 +18,7 @@ class Optional_priorities extends Model
     protected $fillable = ['category_title', 'category_desc', 'subcat_title', 'subcat_desc', 'optional_priority'];
     
     public function OptionalPrioritySubcategories(){
-        return $this -> belongsTo(OptionalPrioritySubcategories::class, 'subcategory_id', 'subcategory_id');
+        return $this -> belongsTo(OptionalPrioritySubcategories::class, 'subcat_id', 'subcat_id');
     }
     public function CourseOptionalPriorities(){
         return $this -> belongsToMany(CourseOptionalPriorities::class, 'op_id', 'op_id');
