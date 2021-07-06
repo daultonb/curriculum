@@ -136,7 +136,6 @@ class MappingScaleController extends Controller
      */
     public function destroy(Request $request, $map_scale_id)
     {
-        //
         if($map_scale_id == 1 || $map_scale_id == 2 || $map_scale_id == 3 || $map_scale_id == 4 || $map_scale_id == 5 || $map_scale_id == 6 || $map_scale_id == 7){
             $msp = MappingScaleProgram::where('program_id', $request->input('program_id'))
                                         ->where('map_scale_id', $map_scale_id);

@@ -15,7 +15,7 @@
 
                 <div class="card-body">
 
-                    <h6 class="card-subtitle mb-2 text-muted lh-lg">
+                    <h6 class="card-subtitle mb-2 lh-lg">
                         This step, requires instructors to intentionally evaluate all course elements to achieve <a target="_blank" href="https://centre.cc.umanitoba.ca/development/resources/course-alignment/"><i class="bi bi-box-arrow-up-right"></i> course alignment.</a> This means, ensuring that the targeted learning outcomes are in alignment with the assessment methods and teaching/instructional practices. This can be an iterative process and may take a long time. Intentional evaluation and re-thinking of some course elements is encouraged to achieve better alignment. <b>Review CLOs/competencies you have identified, and map assessment methods to teaching and learning activities to initiate curriculum alignment.</b>      
                     </h6>
 

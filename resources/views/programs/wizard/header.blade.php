@@ -257,7 +257,24 @@
 
         </div>
 
-
     </div>
+    <!-- progress bar -->
+    <div class="mt-5">
+        <table class="table table-borderless text-center table-sm" style="table-layout: fixed; width: 100%">
+            <tr>
+                <td><a class="btn @if (Route::current()->getName() == 'programWizard.step1') btn-primary @else @if ($ploCount < 1) btn-secondary @else btn-success @endif @endif" href="{{route('programWizard.step1', $program->program_id)}}" style="width: 30px; height: 30px; padding: 6px 0px; border-radius: 15px; text-align: center; font-size: 12px; line-height: 1.42857;"> <b>1</b> </a></td>
+                <td><a class="btn @if (Route::current()->getName() == 'programWizard.step2') btn-primary @else @if ($msCount < 1) btn-secondary @else btn-success @endif @endif" href="{{route('programWizard.step2', $program->program_id)}}" style="width: 30px; height: 30px; padding: 6px 0px; border-radius: 15px; text-align: center; font-size: 12px; line-height: 1.42857;"> <b>2</b> </a></td>
+                <td><a class="btn @if (Route::current()->getName() == 'programWizard.step3') btn-primary @else @if ($courseCount < 1) btn-secondary @else btn-success @endif @endif" href="{{route('programWizard.step3', $program->program_id)}}" style="width: 30px; height: 30px; padding: 6px 0px; border-radius: 15px; text-align: center; font-size: 12px; line-height: 1.42857;"> <b>3</b> </a></td>
+                <!-- <td><a class="btn @if (Route::current()->getName() == 'programWizard.step4') btn-primary @else btn-secondary @endif" href="{{route('programWizard.step4', $program->program_id)}}" style="width: 30px; height: 30px; padding: 6px 0px; border-radius: 15px; text-align: center; font-size: 12px; line-height: 1.42857;"> <b>4</b> </a></td> -->
+            </tr>
+            <tr>
+                <td>Program Learning Outcomes</td>
+                <td>Mapping Scale</td>
+                <td>Courses</td>
+                <!-- <td>Begin Mapping Program</td> -->
+            </tr>
+        </table>
+    </div>
+
 
 </div>
