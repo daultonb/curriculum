@@ -50,28 +50,42 @@
                                             </button>
                                         </div>
                                         <div class="modal-body">
+                                        <!-- Loops through all mapping scale categories, as well as the associated mapping scales -->
+                                        @foreach($msCategories as $msCategory)
+                                            <div>
                                             <table class="table table-bordered table-sm">
                                                 <thead>
                                                     <tr>
-                                                        <th colspan="2">Mapping Scale</th>
+                                                        <th colspan="2">{{$msCategory->msc_title}}</th>
                                                     </tr>
                                                 </thead>
+                                                
                                                 <tbody>
-                                                @foreach($mappingScales as $ms)
-                                                    <tr>
-                                                        <td style="width:20%">
-                                                            <div style="background-color:{{$ms->colour}}; height: 10px; width: 10px;"></div>
-                                                            {{$ms->title}}<br>
-                                                            ({{$ms->abbreviation}})
-                                                        </td>
-                                                        <td>
-                                                            {{$ms->description}}
-                                                        </td>
-                                                        
-                                                    </tr>
+                                                    @foreach ($mscScale as $ms)
+                                                        @if ($msCategory->mapping_scale_categories_id == $ms->mapping_scale_categories_id)
+                                                            <tr>
+                                                
+                                                                <td style="width:20%">
+                                                                    <div style="background-color:{{$ms->colour}}; height: 10px; width: 10px;"></div>
+                                                                    {{$ms->title}}<br>
+                                                                    ({{$ms->abbreviation}})
+                                                                </td>
+                                                                <td>
+                                                                    {{$ms->description}}
+                                                                </td>
+                                                            </tr>
+                                                        @endif
                                                     @endforeach
                                                 </tbody>
-                                            </table>
+                                                </table>
+                                                <form action="{{route('mappingScale.addDefaultMappingScale')}}" method="POST" >
+                                                    @csrf
+                                                    <input type="hidden" class="form-check-input" name="mapping_scale_categories_id" value="{{$msCategory->mapping_scale_categories_id}}">
+                                                    <input type="hidden" class="form-check-input" name="program_id" value="{{$program->program_id}}">
+                                                    <button type="submit" style="width:250px; background-color:#002145;color:white; margin-bottom:4%; margin-top:1%;" class="btn btn-secondary btn-sm float-right">+ Import Mapping Scales</button>
+                                                </form>
+                                            </div>
+                                        @endforeach
                                         </div>
                                     </div>
                                 </div>
@@ -81,19 +95,6 @@
 
 
                         <div class="float-left">
-
-
-                            <form action="{{route('mappingScale.default')}}" method="POST" >
-                                @csrf
-                                <input type="hidden" class="form-check-input" name="program_id" value="{{$program->program_id}}">
-                                <button type="submit" style="width:250px; background-color:#002145;color:white;" class="btn btn-secondary btn-sm float-left"> + Use the Default Mapping Scale Levels</button>
-                            </form>
-
-                            <form action="{{route('mappingScale.default2')}}" method="POST" >
-                                @csrf
-                                <input type="hidden" class="form-check-input" name="program_id" value="{{$program->program_id}}">   
-                                <button type="submit" style="width:250px; background-color:#002145;color:white;" class="btn btn-secondary btn-sm "> + Use the Other Mapping Scale Levels</button>
-                            </form>
 
                         </div>
                         
@@ -128,7 +129,7 @@
                                                     {{$ms->description}}
                                                 </td>
                                                 <td style="width:5%" >
-                                                    @if($ms->map_scale_id !== 1 && $ms->map_scale_id !== 2 && $ms->map_scale_id !== 3 && $ms->map_scale_id !== 4 && $ms->map_scale_id !== 5 && $ms->map_scale_id !== 6 && $ms->map_scale_id !== 7)
+                                                    @if($ms->mapping_scale_categories_id == NULL)
                                                         <button type="button" class="btn btn-secondary btn-sm float-right" data-toggle="modal" style="width:60px;" data-target="#editMSModal{{$ms->map_scale_id}}">
                                                             Edit
                                                         </button>

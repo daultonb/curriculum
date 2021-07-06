@@ -15,7 +15,7 @@ class CreateMappingScaleCategoriesTable extends Migration
     {
         Schema::create('mapping_scale_categories', function (Blueprint $table) {
             $table->bigIncrements('mapping_scale_categories_id');
-            $table->string('title');
+            $table->string('msc_title');
             $table->text('description')->nullable();
             $table->timestamps();
         });

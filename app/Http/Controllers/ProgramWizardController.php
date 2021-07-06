@@ -13,6 +13,7 @@ use App\Models\Course;
 use App\Models\CourseProgram;
 use App\Models\MappingScale;
 use App\Models\LearningOutcome;
+use App\Models\MappingScaleCategory;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\DB;
@@ -87,6 +88,12 @@ class ProgramWizardController extends Controller
         //
         $mappingScales = MappingScale::join('mapping_scale_programs', 'mapping_scales.map_scale_id', "=", 'mapping_scale_programs.map_scale_id')
                                     ->where('mapping_scale_programs.program_id', $program_id)->get();
+
+        // Returns all mapping scale categories 
+        $msCategories = DB::table('mapping_scale_categories')->get();
+        // Returns all mapping scales
+        $mscScale = DB::table('mapping_scales')->get();
+
         $program = Program::where('program_id', $program_id)->first();
 
         //progress bar
@@ -97,7 +104,7 @@ class ProgramWizardController extends Controller
 
         return view('programs.wizard.step2')->with('mappingScales', $mappingScales)->with('program', $program)
                                             ->with("faculties", $faculties)->with("departments", $departments)->with("levels",$levels)->with('user', $user)->with('programUsers',$programUsers)
-                                            ->with('ploCount',$ploCount)->with('msCount', $msCount)->with('courseCount', $courseCount);
+                                            ->with('ploCount',$ploCount)->with('msCount', $msCount)->with('courseCount', $courseCount)->with('msCategories', $msCategories)->with('mscScale', $mscScale);
     }
 
     public function step3($program_id)
