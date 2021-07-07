@@ -13,5 +13,6 @@ class OutcomeMap extends Pivot
 
     protected $primaryKey = ['l_outcome_id','pl_outcome_id'];
 
+    public $table = 'outcome_maps';
     public $incrementing = false;
 }

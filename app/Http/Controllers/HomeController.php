@@ -5,10 +5,12 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Course;
 use App\Models\CourseProgram;
+use App\Models\Program;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use App\Models\CourseUser;
 use App\Models\ProgramUser;
+use App\Models\OutcomeMap;
 use Attribute;
 use Illuminate\Support\Facades\DB;
 
@@ -31,6 +33,7 @@ class HomeController extends Controller
      */
     public function index()
     {
+
         $user = User::where('id', Auth::id())->first();
 
         // get courses belonging to a user
