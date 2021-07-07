@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Optional_priority_categories extends Model
+class OptionalPriorityCategories extends Model
 {
     use HasFactory;
 

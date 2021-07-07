@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Optional_priorities extends Model
+class OptionalPriorities extends Model
 {
     use \Backpack\CRUD\app\Models\Traits\HasIdentifiableAttribute;
     use \Backpack\CRUD\app\Models\Traits\CrudTrait;

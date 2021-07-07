@@ -7,7 +7,7 @@ use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 use Illuminate\Support\Facades\DB;
 
-use App\Models\Optional_priorities;
+use App\Models\OptionalPriorities;
 /**
  * Class OptionalPriorityCrudController
  * @package App\Http\Controllers\Admin
@@ -28,7 +28,7 @@ class OptionalPriorityCrudController extends CrudController
      */
     public function setup()
     {
-        CRUD::setModel(\App\Models\Optional_priorities::class);
+        CRUD::setModel(\App\Models\OptionalPriorities::class);
         CRUD::setRoute(config('backpack.base.route_prefix') . '/optional-priority');
         CRUD::setEntityNameStrings('optional priority', 'optional priorities');
         $this->crud->enableDetailsRow();
@@ -47,36 +47,46 @@ class OptionalPriorityCrudController extends CrudController
             'label' => "OptionalPriority Id",// Table column heading
             'type' => 'Text',
            ]);
-
         $this->crud->addColumn([
-            'name' => 'cat_name', // The db column name
-            'label' => "Category Name",// Table column heading
+            'name' => 'subcat_id', // The db column name
+            'label' => "subcat id",// Table column heading
             'type' => 'Text'
          ]);
 
-      /* $this->crud->addColumn([
-        'name' => 'cat_desc', // The db column name
-        'label' => "Category desc",// Table column heading
-         'type' => 'Text'
-       ]);*/
+        /*$this->crud->addColumn([
+            'name' => 'cat_name', // The db column name
+            'label' => "Category Name",// Table column heading
+            'type' => 'Text'
+         ]);*/
 
-       $this->crud->addColumn([
-        'name' => 'subcat_name', // The db column name
-        'label' => "Subcategory Name",// Table column heading
-        'type' => 'Text'
-       ]);
+        /* $this->crud->addColumn([
+            'name' => 'cat_desc', // The db column name
+            'label' => "Category desc",// Table column heading
+            'type' => 'Text'
+        ]);*/
 
-       $this->crud->addColumn([
-        'name' => 'subcat_desc', // The db column name
-        'label' => "Subcategory desc",// Table column heading
-        'type' => 'Text'
-       ]);
+        $this->crud->addColumn([
+            'label' => "Subcategory Name",// Table column heading
+            'type' => 'select',
+            'name' => 'subcat_name', // The db column name
+            'entity' =>'OptionalPrioritySubcategories',
+            'attribute' =>'subcat_name',
+            'model' => "App\Models\OptionalPrioritySubcategories"
+        ]);
 
-       $this->crud->addColumn([
-        'name' => 'optional_priority', // The db column name
-        'label' => "Optional Priority",// Table column heading
-        'type' => 'Text'
-       ]);
+        $this->crud->addColumn([
+            'name' => 'subcat_desc', // The db column name
+            'label' => "Subcategory desc",// Table column heading
+            'type' => 'Text'
+         ]);
+
+        $this->crud->addColumn([
+            'name' => 'optional_priority', // The db column name
+            'label' => "Optional Priority",// Table column heading
+            'type' => 'Text'
+        ]);
+       
+       
 
     }
 
@@ -107,11 +117,7 @@ class OptionalPriorityCrudController extends CrudController
          'type' => 'Text'
        ]);*/
 
-        $this->crud->addColumn([
-            'name' => 'subcat_id', // The db column name
-            'label' => "subcat id",// Table column heading
-            'type' => 'Text'
-         ]);
+       
 
         $this->crud->addColumn([
             'name' => 'subcat_name', // The db column name
