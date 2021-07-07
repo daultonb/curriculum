@@ -7,24 +7,73 @@
     <div class="home">
         <div class="card">
             <div class="card-body">
-                <h2> Syllabus Generator
-                    <!-- Campus dropdown -->
-                    <span class="requiredField" style="margin-left: 32px;font-size:15px;">*
-                        <select  class="form-group" id="campus" name="campus" form="sylabusGenerator" style="text-align:center; margin-right: 8px" required>
-                            <option disabled selected value=""> -- Campus -- </option>
-                            <option value="O">
-                                UBC Okanagan
-                            </option>
-                            <option value="V">UBC Vancouver</option>
-                        </select>
-                    </span>
-                    <!-- land acknowledgment -->
-                    <input type="checkbox" name="landAcknowledgement" id="landAcknowledgement" form = "sylabusGenerator" checked>
-                    <label for="landAcknowledgement" style="font-size: 14px;">Land acknowledgement</label>
-                    <button type="button" class="btn btn-primary btn-sm col-2 mt-2 float-right" data-toggle="modal" data-target="#importExistingCourse" style="margin-right: 10px">
-                        Import existing courses
-                    </button>
-                </h2>
+                <div class="row">
+                    <div class="col-4 mb-2">
+                        <!-- Heading -->
+                        <h2>Syllabus Generator</h2>                      
+                    </div>
+                    <!-- Import an existing course button -->
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#importExistingCourse" style="margin-bottom:24px;">Import an existing course</button>                                        
+                                    
+                </div>                
+
+                <!-- Import existing course Modal -->
+                <div class="modal fade" id="importExistingCourse" tabindex="-1" role="dialog" aria-labelledby="importExistingCourse" aria-hidden="true">
+                    <div class="modal-dialog modal-lg" role="document" style="width:1250px;">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="importExistingCourse">Import an existing Course</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+
+                                <div class="modal-body" style="height: auto;">
+
+                                    <p style="text-align:left;">Select one course from the below existing courses</p>
+                                    <table class="table table-hover dashBoard">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col"></th>
+                                                <th scope="col">Course Title</th>
+                                                <th scope="col">Course Code</th>
+                                                <th scope="col">Semester</th>
+                                            </tr>
+                                        </thead>
+                                        @foreach ($myCourses as $index => $course)
+                                        <tbody>
+                                        <tr>
+                                            <th scope="row">
+                                                <input value = {{$course->course_id}} class="form-check-input" type="radio" name="importCourse" id="importCourse"
+                                                form = "sylabusGenerator" style="margin-left: 0px">
+                                            </th>
+                                            <td>{{$course->course_title}}</td>
+                                            <td>{{$course->course_code}} {{$course->course_num}}</td>
+                                            <td>
+                                                @if($course->semester == "W1")
+                                                Winter {{$course->year}} Term 1
+                                                @elseif ($course->semester == "W2")
+                                                Winter {{$course->year}} Term 2
+                                                @elseif ($course->semester == "S1")
+                                                Summer {{$course->year}} Term 1
+                                                @else
+                                                Summer {{$course->year}} Term 2
+                                                @endif
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                        @endforeach
+                                    </table>
+                                </div>
+
+                                <div class="modal-footer">
+                                    <button style="width:60px" type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Cancel</button>
+                                    <button style="width:60px" type="button" class="btn btn-primary btn-sm"
+                                    id="importButton" name="importButton" data-dismiss="modal">Import</button>
+                                </div>
+                        </div>
+                    </div>
+                </div>
 
                 <div class="card">
                     <div class="card-body">
@@ -33,6 +82,26 @@
                             <form method="POST" id="sylabusGenerator" action="{{!empty($syllabus) ? action('SyllabusController@save', $syllabus->id) : action('SyllabusController@save')}}">
                                 @csrf
                                 <div class="container">
+                                    <div class="row">
+                                        <div class="col-3 mb-2">
+                                            <!-- Campus dropdown -->
+                                            <span class="requiredField" style="font-size:14px;">*
+                                                <select  class="form-group" id="campus" name="campus" form="sylabusGenerator" style="text-align:center;" required>
+                                                    <option disabled selected value=""> -- Campus -- </option>
+                                                    <option value="O">
+                                                        UBC Okanagan
+                                                    </option>
+                                                    <option value="V">UBC Vancouver</option>
+                                                </select>
+                                            </span>
+                                        </div>
+                                        <div class="col mb-2 ml-2">
+                                            <!-- land acknowledgment -->
+                                            <input type="checkbox" name="landAcknowledgement" id="landAcknowledgement" form = "sylabusGenerator" checked>
+                                            <label for="landAcknowledgement" style="font-size: 14px;">Land acknowledgement</label>
+                                        </div>
+                                    </div>
+                                    
                                     <!-- Course Title -->
                                     <div class="row">
                                         <div class="col mb-2">
@@ -312,7 +381,13 @@
                                     </div>
 
                                     <!-- Course Learning Resources -->
-                                    <div class="row" id="courseLearningResources"></div>
+                                    <div class="row">
+                                        <div class="col mb-2">
+                                                <label for="courseLearningResources">Learning Resources</label>
+                                                <i class="bi bi-info-circle-fill" data-toggle="tooltip" data-bs-placement="right" title="{{$inputFieldDescriptions['courseLearningResources']}}"></i>
+                                                <textarea id = "courseLearningResources" name = "courseLearningResources" class ="form-control" form="sylabusGenerator" spellcheck="true">{{old('courseLearningResources')}}</textarea>
+                                        </div>
+                                    </div>
 
                                     <!-- Course Optional Resources -->
                                     <div class="row">
@@ -360,6 +435,12 @@
                                                 <input id="equity" type="checkbox" name="equity" value= "equity" checked>
                                                 <label for="equity">UBC Okanagan Equity and Inclusion Office</label>
                                                 </li>
+
+                                                <li>
+                                                <input id="copyright" type="checkbox" name="copyright" value= "copyright" checked>
+                                                <label for="equity">Copyright Statement</label>
+                                                </li>
+
                                             </ul>
                                         </div>
 
@@ -435,7 +516,6 @@
 </div>
 
 <script type="application/javascript">
-
     // Function changes optional verison of syllabus
     function onChangeCampus() {
         // the optionalList variables need to match the optional syllabus list above (default is to display Okanagan)
@@ -456,7 +536,14 @@
             <li>
             <input id="disabilities" type="checkbox" name="disabilities" value="disabilities" checked>
             <label for="disabilities">Accommodations for students with disabilities</label>
-            </li>`;
+            </li>
+
+            <li>
+            <input id="copyright" type="checkbox" name="copyright" value= "copyright" checked>
+            <label for="equity">Copyright Statement</label>
+            </li>
+
+            `;
         var okanaganOptionalList = `
             <li>
             <input id="academic" type="checkbox" name="academic" value="academic" checked>
@@ -496,7 +583,13 @@
             <li>
             <input id="equity" type="checkbox" name="equity" value= "equity" checked>
             <label for="equity">UBC Okanagan Equity and Inclusion Office</label>
-            </li>`;
+            </li>
+
+            <li>
+            <input id="copyright" type="checkbox" name="copyright" value= "copyright" checked>
+            <label for="equity">Copyright Statement</label>
+            </li>            
+            `;
 
         var courseCredit = `
             <label for="courseCredit">
@@ -574,14 +667,6 @@
             </div>
             `;
 
-        var courseLearningResources = `
-            <div class="col mb-2">
-                    <label for="courseLearningResources">Learning Resources</label>
-                    <i class="bi bi-info-circle-fill has-tooltip" data-bs-placement="right" title="{{$inputFieldDescriptions['courseLearningResources']}}"></i>
-                    <textarea id = "courseLearningResources" name = "courseLearningResources" class ="form-control" form="sylabusGenerator" spellcheck="true">{{old('courseLearningResources')}}</textarea>
-            </div>
-            `;
-
         var courseFormat = `
             <div class="col mb-3">
                 <label for="courseFormat">Course Format</label>
@@ -606,7 +691,6 @@
             $('#courseSchedule').html(courseSchedule);
             $('#courseInstructorBio').html(courseInstructorBio);
             $('#courseDescription').html(courseDescription);
-            $('#courseLearningResources').html(courseLearningResources);
 
             $('#courseFormat').empty();
             $('#courseOverview').empty();
@@ -626,7 +710,6 @@
             $('#courseSchedule').empty();
             $('#courseInstructorBio').empty();
             $('#courseDescription').empty();
-            $('#courseLearningResources').empty();
         }
 
     }

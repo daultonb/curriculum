@@ -30,12 +30,9 @@ class SyllabusController extends Controller
     public function index($syllabusId = null){
 
         $user = User::where('id', Auth::id())->first();
-        // get completed courses (status = 1) and in progress courses (status = -1) for the current user
-        $myCourses = User::join('course_users', 'users.id', '=', 'course_users.user_id')
-            ->join('courses', 'course_users.course_id', '=', 'courses.course_id')
-            ->join('programs', 'courses.program_id', '=', 'programs.program_id')
-            ->select('courses.program_id','courses.course_code','courses.delivery_modality','courses.semester','courses.year','courses.section',
-            'courses.course_id','courses.course_num','courses.course_title', 'courses.status','programs.program', 'programs.faculty', 'programs.department','programs.level')
+        $myCourses = $user->courses()
+            ->select('courses.course_code','courses.delivery_modality','courses.semester','courses.year','courses.section',
+            'courses.course_id','courses.course_num','courses.course_title', 'courses.status')
             ->where([
                 ['course_users.user_id','=',Auth::id()],
                 ['courses.status', '=', 1]
@@ -426,6 +423,7 @@ class SyllabusController extends Controller
     
 
     // get existing course information
+    // Ajax to get course infomation
     public function getCourseInfo(Request $request) {
 
         $this->validate($request, [
@@ -450,21 +448,29 @@ class SyllabusController extends Controller
         return $data;
     }
 
-
-
-    // helper function to download syllabus as a word document
-    private function wordExport(Request $request){
-
+    //Syllabus Word file
+    public function WordExport(Request $request){
+        
+        // validate request
+        $request->validate([
+            'campus' => ['required'],
+            'courseTitle' => ['required'],
+            'courseCode' => ['required'],
+            'courseNumber' => ['required'],
+            'courseinstructor' => ['required'],
+            'courseYear' => ['required'],
+            'courseSemester' => ['required'],
+        ]);
         $campus = $request->input('campus');
         $courseTitle = $request->input('courseTitle');
         $courseCode = $request->input('courseCode');
         $courseNumber = $request->input('courseNumber');
-        $courseInstructor = $request->input('courseInstructor');
+        $courseInstructor = $request->input('courseinstructor');
         $courseYear = $request->input('courseYear');
         $semester = $request->input('courseSemester');
 
         switch($campus){
-            // generate word syllabus for Okanagan campus course using given template
+            // generate word syllabus for Okanagan campus course
             case 'O':
                 $templateProcessor = new TemplateProcessor('word-template/UBC-O_default.docx');
 
@@ -531,7 +537,7 @@ class SyllabusController extends Controller
                     'courseCredit' => ['required'],
                 ]);
                 $courseCredit = $request->input('courseCredit');
-                // generate word syllabus for Vancouver campus course using given template
+                // generate word syllabus for Vancouver campus course
                 $templateProcessor = new TemplateProcessor('word-template/UBC-V_default.docx');
 
                 // add required form fields specific to Vancouver campus to template
@@ -627,15 +633,6 @@ class SyllabusController extends Controller
                 }else{
                     $templateProcessor->cloneBlock('NoTopicsSchedule', 0);
                 }
-
-                // include vancouver course learning resources in template
-                if($courseLearningResources = $request->input('courseLearningResources')){
-                    $templateProcessor->cloneBlock('NoCourseLearningResources');
-                    $templateProcessor->setValue('courseLearningResources', $courseLearningResources);
-                }else{
-                    $templateProcessor->cloneBlock('NoCourseLearningActivities', 0);
-                }
-
 
                 if($request->input('disabilities')){
                     $templateProcessor->cloneBlock('disabilities');
@@ -812,6 +809,14 @@ class SyllabusController extends Controller
             $templateProcessor->cloneBlock('NopassingCriteria',0);
         }
 
+        // include vancouver course learning resources in template
+        if($courseLearningResources = $request->input('courseLearningResources')){
+            $templateProcessor->cloneBlock('NoCourseLearningResources');
+            $templateProcessor->setValue('courseLearningResources', $courseLearningResources);
+        }else{
+            $templateProcessor->cloneBlock('NoCourseLearningResources', 0);
+        }
+
         if($learningMaterials = $request->input('learningMaterials')){
             $templateProcessor->cloneBlock('NoLearningMaterials');
             $templateProcessor->setValue('learningMaterials',$learningMaterials);
@@ -824,9 +829,14 @@ class SyllabusController extends Controller
         }else{
             $templateProcessor->cloneBlock('academic', 0);
         }
+        if($request->input('copyright')){
+            $templateProcessor->cloneBlock('copyright');
+        }else{
+            $templateProcessor->cloneBlock('copyright', 0);
+        }
 
-        return $templateProcessor;
-
+        $templateProcessor->saveAs($courseCode.$courseNumber. '-Syllabus.docx');
+        return response()->download($courseCode.$courseNumber.  '-Syllabus.docx')->deleteFileAfterSend(true);
     }
 
 }
