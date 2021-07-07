@@ -141,7 +141,15 @@
                                                 <div class="d-flex justify-content-center">
                                                     @if(count($coursesPrograms[$course->course_id]) > 0)
                                                         <div data-toggle="tooltip" data-html="true" title="@foreach($coursesPrograms[$course->course_id] as $index => $courseProgram){{$index + 1}}. {{$courseProgram->program}}<br>@endforeach" data-bs-placement="right">
-                                                            <button class="btn rounded-circle text-white fw-bold text-center btn-info" style="text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;">{{ count($coursesPrograms[$course->course_id]) }}</button>
+                                                            <!--<button type="button" style="border:1px solid black; background-color: white; border-radius: 50%; font-weight:bold; color:#40B4E5; opacity: 1; text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black; margin: 0 auto; display:block; box-shadow: 2px 2px 10px #888888; font-size: 120%" class="btn btn-secondary" disabled>{{ count($coursesPrograms[$course->course_id]) }}</button>
+                                                            -->
+                                                            <p style="text-align:center;">
+                                                                <i class="bi bi-map" style="font-size:x-large; text-align:center;">
+                                                                    <sup>
+                                                                        <span class="badge badge-dark" style="font-size:small;">{{ count($coursesPrograms[$course->course_id]) }}</span>
+                                                                    </sup>
+                                                                </i>
+                                                            </p>
                                                         </div>
                                                     @else
                                                         <button class="btn  text-center" disabled>None</button>
@@ -162,10 +170,18 @@
                                                 <div class="d-flex justify-content-center">
                                                     @if(count($coursesPrograms[$course->course_id]) > 0)
                                                         <div data-toggle="tooltip" data-html="true" title="@foreach($coursesPrograms[$course->course_id] as $index => $courseProgram){{$index + 1}}. {{$courseProgram->program}}<br>@endforeach" data-bs-placement="right">
-                                                            <button class="btn rounded-circle text-white fw-bold text-center btn-info" style="text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;">{{ count($coursesPrograms[$course->course_id]) }}</button>
+                                                            <!--<button type="button" style="border:1px solid black; background-color: white; border-radius: 50%; font-weight:bold; color:#40B4E5; opacity: 1; text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black; margin: 0 auto; display:block; box-shadow: 2px 2px 10px #888888; font-size: 120%" class="btn btn-secondary" disabled>{{ count($coursesPrograms[$course->course_id]) }}</button>
+                                                            -->
+                                                            <p style="text-align:center;">
+                                                                <i class="bi bi-map" style="font-size:x-large; text-align:center;">
+                                                                    <sup>
+                                                                        <span class="badge badge-dark" style="font-size:small;">{{ count($coursesPrograms[$course->course_id]) }}</span>
+                                                                    </sup>
+                                                                </i>
+                                                            </p>
                                                         </div>
                                                     @else
-                                                        <button class="btn  text-center" disabled>None</button>
+                                                    <p style="text-align: center; display:inline-block; margin-left:-15px;">None</p>
                                                     @endif
                                                 </div>
                                             </div>                                           
