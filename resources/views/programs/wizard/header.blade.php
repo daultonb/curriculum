@@ -128,7 +128,7 @@
 
             <div class="row my-2">
                 <div class="col">
-                    <!-- Assign instructor button  -->
+                    <!-- Assign Collaborator button  -->
                     <button type="button" class="btn btn-outline-primary btn-sm float-right" style="width:200px" data-toggle="modal" data-target="#addCollaboratorModal">Add Collaborators</button>
 
                     <!-- Add Collaborator Modal -->
@@ -164,15 +164,13 @@
                                                         <tr>
                                                             <td>{{$admin->email}}</td>
                                                             <td>
-                                                                <form action="{{route('programUser.destroy', [$admin->program_id, $admin->user_id])}}" method="POST" class="float-left">
+                                                                <form action="{{ route('programUser.destroy') }}" method="POST" class="float-left">
                                                                     @csrf
                                                                     {{method_field('DELETE')}}
 
+                                                                    <input type="hidden" class="form-check-input" name="program_id" value="{{$admin->program_id}}">
+                                                                    <input type="hidden" class="form-check-input" name="user_id" value="{{$admin->user_id}}">
                                                                     <button type="submit" class="btn btn-danger btn-sm ">Unassign</button>
-                                                                    <select>
-                                                                        <option>View Only</option>
-                                                                        <option>Can Edit</option>
-                                                                    </select>
                                                                 </form>
                                                             </td>
                                                         </tr>
@@ -201,10 +199,6 @@
                                                     </span>
                                                 @enderror
                                             </div>
-                                            <select>
-                                                <option>View Only</option>
-                                                <option>Can Edit</option>
-                                            </select>
                                         </div>
 
                                         <input type="hidden" class="form-check-input" name="program_id" value={{$program->program_id}}>
@@ -263,7 +257,24 @@
 
         </div>
 
-
     </div>
+    <!-- progress bar -->
+    <div class="mt-5">
+        <table class="table table-borderless text-center table-sm" style="table-layout: fixed; width: 100%">
+            <tr>
+                <td><a class="btn @if (Route::current()->getName() == 'programWizard.step1') btn-primary @else @if ($ploCount < 1) btn-secondary @else btn-success @endif @endif" href="{{route('programWizard.step1', $program->program_id)}}" style="width: 30px; height: 30px; padding: 6px 0px; border-radius: 15px; text-align: center; font-size: 12px; line-height: 1.42857;"> <b>1</b> </a></td>
+                <td><a class="btn @if (Route::current()->getName() == 'programWizard.step2') btn-primary @else @if ($msCount < 1) btn-secondary @else btn-success @endif @endif" href="{{route('programWizard.step2', $program->program_id)}}" style="width: 30px; height: 30px; padding: 6px 0px; border-radius: 15px; text-align: center; font-size: 12px; line-height: 1.42857;"> <b>2</b> </a></td>
+                <td><a class="btn @if (Route::current()->getName() == 'programWizard.step3') btn-primary @else @if ($courseCount < 1) btn-secondary @else btn-success @endif @endif" href="{{route('programWizard.step3', $program->program_id)}}" style="width: 30px; height: 30px; padding: 6px 0px; border-radius: 15px; text-align: center; font-size: 12px; line-height: 1.42857;"> <b>3</b> </a></td>
+                <!-- <td><a class="btn @if (Route::current()->getName() == 'programWizard.step4') btn-primary @else btn-secondary @endif" href="{{route('programWizard.step4', $program->program_id)}}" style="width: 30px; height: 30px; padding: 6px 0px; border-radius: 15px; text-align: center; font-size: 12px; line-height: 1.42857;"> <b>4</b> </a></td> -->
+            </tr>
+            <tr>
+                <td>Program Learning Outcomes</td>
+                <td>Mapping Scale</td>
+                <td>Courses</td>
+                <!-- <td>Begin Mapping Program</td> -->
+            </tr>
+        </table>
+    </div>
+
 
 </div>
