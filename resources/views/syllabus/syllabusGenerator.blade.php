@@ -373,7 +373,7 @@
                                     <div class="row">
                                         <div class="col mb-2">
                                                 <label for="courseLearningResources">Learning Resources</label>
-                                                <i class="bi bi-info-circle-fill has-tooltip" data-toggle="tooltip" data-bs-placement="right" title="{{$inputFieldDescriptions['courseLearningResources']}}"></i>
+                                                <i class="bi bi-info-circle-fill" data-toggle="tooltip" data-bs-placement="right" title="{{$inputFieldDescriptions['courseLearningResources']}}"></i>
                                                 <textarea id = "courseLearningResources" name = "courseLearningResources" class ="form-control" form="sylabusGenerator" spellcheck="true">{{old('courseLearningResources')}}</textarea>
                                         </div>
                                     </div>
@@ -666,7 +666,6 @@
                 <textarea name = "courseStructure" class ="form-control" type="text" form="sylabusGenerator" spellcheck="true">{{old('courseStructure')}}</textarea>
             </div>
             `;
-
 
         var courseFormat = `
             <div class="col mb-3">
