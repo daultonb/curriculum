@@ -116,9 +116,11 @@ class ProgramUserController extends Controller
      * @param  \App\Models\ProgramUser  $programUser
      * @return \Illuminate\Http\Response
      */
-    public function delete(Request $request, $program_id, $user_id)
+    public function delete(Request $request)
     {
         //
+        $program_id = $request->input('program_id');
+        $user_id = $request->input('user_id');
         $pu = ProgramUser::where('program_id', $program_id)->where('user_id', $user_id);
 
         if($pu->delete()){
@@ -128,6 +130,5 @@ class ProgramUserController extends Controller
         }
 
         return redirect()->back();
-
     }
 }

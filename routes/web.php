@@ -53,7 +53,6 @@ Route::post('/courses/{course}/outcomeDetails','CourseController@outcomeDetails'
 Route::get('/courses/{course}/pdf','CourseController@pdf')->name('courses.pdf');
 Route::get('/courses/{course}/remove','CourseController@removeFromProgram')->name('courses.remove');
 
-
 Route::resource('/lo','LearningOutcomeController')->only(['store','update','edit', 'destroy']);
 
 Route::resource('/plo','ProgramLearningOutcomeController');
@@ -66,15 +65,16 @@ Route::post('/ajax/custom_methods','CustomAssessmentMethodsController@store' );
 Route::resource('/am','AssessmentMethodController');
 
 Route::resource('/outcomeMap','OutcomeMapController');
+//Route for standards mapping
+Route::resource('/standardsOutcomeMap', 'StandardsOutcomeMapController');
 
 Route::resource('/mappingScale','MappingScaleController');
-Route::post('/mappingScale/default','MappingScaleController@default')->name('mappingScale.default');
-Route::post('/mappingScale/default2','MappingScaleController@default2')->name('mappingScale.default2');
+Route::post('/mappingScale/addDefaultMappingScale','MappingScaleController@addDefaultMappingScale')->name('mappingScale.addDefaultMappingScale');
 
 Route::resource('/ploCategory','PLOCategoryController');
 
 Route::resource('/programUser','ProgramUserController', ['except'=>'destroy']);
-Route::delete('/programUser/{program}/{user}','ProgramUserController@delete')->name('programUser.destroy');
+Route::delete('/programUser','ProgramUserController@delete')->name('programUser.destroy');
 
 // Program wizard controller used to sent info from database to the blade page
 Route::get('/programWizard/{program}/step1','ProgramWizardController@step1')->name('programWizard.step1');
@@ -82,8 +82,8 @@ Route::get('/programWizard/{program}/step2','ProgramWizardController@step2')->na
 Route::get('/programWizard/{program}/step3','ProgramWizardController@step3')->name('programWizard.step3');
 Route::get('/programWizard/{program}/step4','ProgramWizardController@step4')->name('programWizard.step4');
 
-// Program step3 add existing course to the program
-Route::post('/programWizard/{program}/step3/addProgramToCourse', 'CourseController@addProgramToCourse')->name('courses.addProgramToCourse');
+// Program step3 add existing courses to a program
+Route::post('/programWizard/{program}/step3/addCoursesToProgram', 'CourseProgramController@addCoursesToProgram')->name('courseProgram.addCoursesToProgram');
 
 // Course wizard controller used to sent info from database to the blade page
 Route::get('/courseWizard/{course}/step1','CourseWizardController@step1')->name('courseWizard.step1');
@@ -92,6 +92,8 @@ Route::get('/courseWizard/{course}/step3','CourseWizardController@step3')->name(
 Route::get('/courseWizard/{course}/step4','CourseWizardController@step4')->name('courseWizard.step4');
 Route::get('/courseWizard/{course}/step5','CourseWizardController@step5')->name('courseWizard.step5');
 Route::get('/courseWizard/{course}/step6','CourseWizardController@step6')->name('courseWizard.step6');
+Route::get('/courseWizard/{course}/step7','CourseWizardController@step7')->name('courseWizard.step7');
+
 
 // Save optional PLOs
 Route::post('/optionals','OptionalPriorities@store')->name('storeOptionalPLOs');
@@ -117,3 +119,4 @@ Route::get('/courseMap/{course}/{program}', 'CourseMapController@index')->name('
 Route::get('/ploMap/{course}/{program}', 'PLOCLOMapController@index')->name('ploclomap.index');
 
 Auth::routes();
+
