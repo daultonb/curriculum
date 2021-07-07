@@ -26,7 +26,7 @@
                                 @else 
                                     <table class="table table-light table-bordered" >
                                         <tr class="table-primary">
-                                            <th>Course Title</th>
+                                            <th class="w-25">Course Title</th>
                                             <th>Course Code</th>
                                             <th>Term</th>
                                             <th>Assigned</th>
