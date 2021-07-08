@@ -33,7 +33,10 @@
                         <div class="jumbotron">
                             @if (count($coursePrograms) < 1)
                                 <div class="alert alert-warning text-center">
-                                    <i class="bi bi-exclamation-circle-fill pr-2 fs-5"></i>This course does not belong to any programs yet.                    
+                                    <i class="bi bi-exclamation-circle-fill pr-2 fs-3"></i>
+                                    <br>
+                                    <p>This course does not belong to any programs yet. Please move ahead to the next step.</p>
+                                    <p>If you would like to define program learning outcomes to map this course, please create a program first. <a class="alert-link" href="{{route('home')}}">Add a Program.</a></p>
                                 </div>
                                 
                             @else

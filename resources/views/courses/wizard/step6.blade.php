@@ -104,7 +104,7 @@
                                                                                                         <table class="table table-bordered table-sm">
                                                                                                             <thead class="thead-light">
                                                                                                                 <tr class="table-active">
-                                                                                                                    <th>Program Learning Outcomes or Competencies</th>
+                                                                                                                    <th>Standards</th>
                                                                                                                     <!-- Mapping Table Levels -->
                                                                                                                     @foreach($mappingScales as $mappingScaleLevel)
                                                                                                                         <th data-toggle="tooltip" title="{{$mappingScaleLevel->title}}: {{$mappingScaleLevel->description}}">
