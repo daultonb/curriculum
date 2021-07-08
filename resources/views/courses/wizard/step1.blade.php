@@ -7,11 +7,12 @@
             @include('courses.wizard.header')
 
             <div class="card">
-
-                <h3 class="card-header wizard" >
-                    Course Learning Outcomes
-                </h3>
-
+                <div class="card-header wizard" >
+                    <h3>
+                        Course Learning Outcomes (CLOs)
+                        
+                    </h3>
+                </div>
 
                 <div class="card-body">
 
@@ -216,18 +217,16 @@
                                                 </tr>
                                                 @endforeach
                                         </table>
-                                    @endif
-                                
+                                    @endif      
                             </div>
-
                         </div>
                     </div>
-
-                    <button type="button" class="btn btn-primary btn-sm col-2 mt-2 float-left"  data-toggle="modal" data-target="#addLearningOutcomeModal" style="background-color:#002145; color:white; margin-left: 10px">
-                        ＋ Add Course Learning Outcome
-                    </button>
-
-                    <!-- Bloom’s Taxonomy of Learning Modal -->
+                    <div class="card-body">
+                        <button type="button" class="btn btn-primary col-2 float-right bg-primary text-white"  data-toggle="modal" data-target="#addLearningOutcomeModal">
+                            <i class="bi bi-plus mr-2"></i>Add CLO
+                        </button>
+                    </div>
+                    <!-- Add CLO Modal: Bloom’s Taxonomy of Learning Modal -->
                     <div class="modal fade" id="addLearningOutcomeModal" tabindex="-1" role="dialog"
                         aria-labelledby="addLearningOutcomeModalLabel" aria-hidden="true">
                         <div class="modal-dialog modal-lg" role="document">
@@ -288,8 +287,9 @@
                                                     <p style="margin-top: 25px;margin-left:4px;margin-right:4px;">A well-written learning outcome states what students are expected to <span style="font-style: italic;">know, be able to do, or care about</span>, after successfully completing the course/program. Such statements begin with one measurable verb.</p>
                                                     <p>The below are examples of verbs associated with different levels of Bloom’s Taxonomy of Learning.</p>
                                                 </div>
-
-                                                <div class="flex-container">
+                                                <img class="img-fluid" src=" {{ asset('img/blooms-taxonomy-diagram.png') }}"/>
+                                                <!-- Bloom's Taxonomy Image -->
+                                                <!-- <div class="flex-container ">
                                                     <div class="box" style="background-color: #e8f4f8;">
                                                         <strong>REMEMBER</strong>
                                                         <p>Retrieve relevant knowledge from long-term memory</p>
@@ -333,12 +333,14 @@
                                                     <div class="box">
                                                         <p class="CLO_example">Example: compile，compose，construct，design，develop，formulate，generate，hypothesize，integrate，modify，plan，produce</p>
                                                     </div>
-                                                </div>
-
+                                                </div> -->
+                                                <!-- End of Bloom's Taxonomy Image -->
                                                 <small>
                                                     Source: Anderson, L. W., Krathwohl, D. R., & Bloom, B. S. (2001). A taxonomy for learning, teaching, and assessing: A revision of bloom's taxonomy of educational objectives (Abridged ed.). New York: Longman.
                                                 </small>
+
                                             </div>
+
 
                                         </div>
 
@@ -353,7 +355,7 @@
                             </div>
                         </div>
                     </div>
-
+                    <!-- End of Add CLO Modal -->
                 </div>
 
                 <!-- card footer -->
