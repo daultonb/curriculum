@@ -31,7 +31,6 @@ class OptionalPriorityCrudController extends CrudController
         CRUD::setModel(\App\Models\OptionalPriorities::class);
         CRUD::setRoute(config('backpack.base.route_prefix') . '/optional-priority');
         CRUD::setEntityNameStrings('optional priority', 'optional priorities');
-        $this->crud->enableDetailsRow();
     }
 
     /**
@@ -46,12 +45,26 @@ class OptionalPriorityCrudController extends CrudController
             'name' => 'op_id', // The db column name
             'label' => "OptionalPriority Id",// Table column heading
             'type' => 'Text',
-           ]);
+        ]);
+        /*$this->crud->addColumn([
+            'name' => 'subcat_desc', // The db column name
+            'label' => "Subcategory desc",// Table column heading
+            'type' => 'Text'
+        ]);*/
         $this->crud->addColumn([
             'name' => 'subcat_id', // The db column name
-            'label' => "subcat id",// Table column heading
+            'label' => "Subcat Id",// Table column heading
             'type' => 'Text'
-         ]);
+        ]);
+        $this->crud->addColumn([
+            'label' => "Subcategory Name",// Table column heading
+            'type' => 'select',
+            'name' => 'subcat_name', // The db column name
+            'entity' =>'OptionalPrioritySubcategories',
+            'attribute' =>'subcat_name',
+            'model' => "App\Models\OptionalPrioritySubcategories"
+        ]);
+       
 
         /*$this->crud->addColumn([
             'name' => 'cat_name', // The db column name
@@ -64,22 +77,6 @@ class OptionalPriorityCrudController extends CrudController
             'label' => "Category desc",// Table column heading
             'type' => 'Text'
         ]);*/
-
-        $this->crud->addColumn([
-            'label' => "Subcategory Name",// Table column heading
-            'type' => 'select',
-            'name' => 'subcat_name', // The db column name
-            'entity' =>'OptionalPrioritySubcategories',
-            'attribute' =>'subcat_name',
-            'model' => "App\Models\OptionalPrioritySubcategories"
-        ]);
-
-        $this->crud->addColumn([
-            'name' => 'subcat_desc', // The db column name
-            'label' => "Subcategory desc",// Table column heading
-            'type' => 'Text'
-         ]);
-
         $this->crud->addColumn([
             'name' => 'optional_priority', // The db column name
             'label' => "Optional Priority",// Table column heading
@@ -99,42 +96,49 @@ class OptionalPriorityCrudController extends CrudController
     protected function setupCreateOperation()
     {
         CRUD::setValidation(OptionalPriorityRequest::class);
-        $this->crud->addColumn([
+        $op_id_num = \DB::table('optional_priorities')->count();
+        $this->crud->addField([
             'name' => 'op_id', // The db column name
             'label' => "OptionalPriority Id",// Table column heading
-            'type' => 'number',
-            'default' => '1'
+            'type' => 'Text',
+            'default' => $op_id_num + 1,
            ]);
-        $this->crud->addColumn([
+        /*$this->crud->addField([
             'name' => 'cat_name', // The db column name
             'label' => "Category Name",// Table column heading
             'type' => 'Text'
-           ]);
+           ]);*/
 
         /* $this->crud->addColumn([
-        'name' => 'cat_desc', // The db column name
-        'label' => "Category desc",// Table column heading
-         'type' => 'Text'
-       ]);*/
+            'name' => 'cat_desc', // The db column name
+            'label' => "Category desc",// Table column heading
+            'type' => 'Text'
+        ]);*/
 
        
-
-        $this->crud->addColumn([
-            'name' => 'subcat_name', // The db column name
-            'label' => "Subcategory Name",// Table column heading
-            'type' => 'Text'
+        $this->crud->addField([
+            'name' => 'subcat_id', // The db column name
+            'label' => "Subcat Id",// Table column heading
+            'type' => 'Text',
+            'default' => '1',
         ]);
 
-        $this->crud->addColumn([
+        $this->crud->addField([
+            'name' => 'subcat_name', // The db column name
+            'label' => "Subcategory Name",// Table column heading
+            'type' => 'Text',
+        ]);
+
+        /*$this->crud->addField([
             'name' => 'subcat_desc', // The db column name
             'label' => "Subcategory desc",// Table column heading
             'type' => 'Text'
-        ]);
+        ]);*/
 
-        $this->crud->addColumn([
+        $this->crud->addField([
             'name' => 'optional_priority', // The db column name
             'label' => "Optional Priority",// Table column heading
-            'type' => 'Text'
+            'type' => 'Text',
         ]);
     }
 
@@ -146,7 +150,39 @@ class OptionalPriorityCrudController extends CrudController
      */
     protected function setupUpdateOperation()
     {
-        $this->setupCreateOperation();
+        //$this->setupCreateOperation();
+        $this->crud->addField([
+            'name' =>'op_id',
+            'label' => "OptionalPriority Id",
+            'type' => 'number',
+            //'attributes' => [ 'size' => '4',
+            //'maxwidth' => '4']
+        ]);
+
+        $this->crud->addField([
+            'name' => 'subcat_id', // The db column name
+            'label' => "Subcat Id",// Table column heading
+            'type' => 'number',
+        ]);
+
+        $this->crud->addField([
+            'name' =>'subcat_name',
+            'label' => "Subcategory Name",
+            'type' => 'Text',
+            //'attributes' => ''
+        ]);
+
+        /*$this->crud->addField([
+            'name' => 'subcat_desc', // The db column name
+            'label' => "Subcategory desc",// Table column heading
+            'type' => 'Text'
+        ]);*/
+
+        $this->crud->addField([
+            'name' => 'optional_priority', // The db column name
+            'label' => "Optional Priority",// Table column heading
+            'type' => 'Text',
+        ]);
     }
 
 }
