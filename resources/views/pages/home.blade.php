@@ -238,7 +238,7 @@
                                                             </p>
                                                         </div>
                                                     @else
-                                                        <button class="btn  text-center" disabled>None</button>
+                                                    <p style="text-align: center; display:inline-block; margin-left:-15px;"> <i class="bi bi-info-circle-fill" data-toggle="tooltip" data-bs-placement="right" title='To map a course to a program, you must first create a program from the "My Programs" section'></i>None</p>
                                                     @endif
                                                 </div>
                                             </div>                                           
@@ -267,7 +267,7 @@
                                                             </p>
                                                         </div>
                                                     @else
-                                                    <p style="text-align: center; display:inline-block; margin-left:-15px;">None</p>
+                                                    <p style="text-align: center; display:inline-block; margin-left:-15px;"> <i class="bi bi-info-circle-fill" data-toggle="tooltip" data-bs-placement="right" title='To map a course to a program, you must first create a program from the "My Programs" section'></i>None</p>
                                                     @endif
                                                 </div>
                                             </div>                                           
