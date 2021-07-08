@@ -14,8 +14,7 @@ class Optional_priorities extends Model
     protected $table = 'optional_priorities';
 
     protected $fillable = [
-        //'course_id',
+        'subcat_id',
         'optional_priority',
-        //'input_status',
     ];
 }

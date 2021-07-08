@@ -275,6 +275,10 @@ class CourseWizardController extends Controller
         // get mapping scales associated with course
         $mappingScales = StandardScale::where('scale_category_id', $course->scale_category_id)->get();
 
+        //get optional priorities
+        $ubc_mandate_letters_subcat_id_index = 1;
+        $ubc_mandate_letters_new = Optional_priorities::where('subcat_id', $ubc_mandate_letters_subcat_id_index)->pluck('optional_priority')->toArray();
+        dd($ubc_mandate_letters_new);
 
         $ubc_mandate_letters = array("Incorporation of the Declaration on the Rights of Indigenous Peoples Act and Calls to Action of the Truth and Reconciliation Commission",
         "Align with CleanBC's plan to a protect our communities towards a more sustainable future","Advancing and supporting open learning resources","Offer programming aligned with high opportunity and priority occupations (such as trades, technology, early childhood educators and health)",
