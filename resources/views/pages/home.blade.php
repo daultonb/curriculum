@@ -48,14 +48,100 @@
                                 <td>{{$program->faculty}} </td>
                                 <td>{{$program->level}}</td>
                                 <td>
-                                    <a class="pr-2" href="{{route('programWizard.step1', $program->program_id)}}">
-                                    <i class="bi bi-pencil-fill btn-icon dropdown-item"></i></a>
-                                    <a data-toggle="modal" data-target="#deleteProgram{{$index}}" href=#>
-                                    <i class="bi bi-trash-fill text-danger btn-icon dropdown-item"></i></a>
-                                    <!-- Collaborators Icon
-                                    <a class="dropdown-item btn-icon" data-toggle="modal">
-                                    <i class="bi bi-people-fill" data-toggle="tooltip" data-bs-placement="right"></i></a> -->
+                                    <a class="pr-2" href="{{route('programWizard.step1', $program->program_id)}}" style="float: left;">
+                                        <i class="bi bi-pencil-fill btn-icon dropdown-item"></i>
+                                    </a>
+                                    <a data-toggle="modal" data-target="#deleteProgram{{$index}}" href=# style="float: left;">
+                                        <i class="bi bi-trash-fill text-danger btn-icon dropdown-item"></i>
+                                    </a>
+                                    <div class="dropdown-item btn-icon" data-toggle="tooltip" data-html="true" data-bs-placement="right" title="@foreach($programUsers[$program->program_id] as $index => $programUser){{$index + 1}}. {{$programUser->name}}<br>@endforeach">
+                                        <div data-toggle="modal" data-target="#addCollaboratorModal{{$program->program_id}}" style="float: left;" href=#>
+                                            <i class="bi bi-people-fill"></i>
+                                            <sup>
+                                                <span class="badge badge-dark" style="font-size:small;">{{ count($programUsers[$program->program_id]) }}</span>
+                                            </sup>
+                                        </div>
+                                    </div>
 
+                                    <!-- Add Collaborator Modal -->
+                                    <div class="modal fade" id="addCollaboratorModal{{$program->program_id}}" tabindex="-1" role="dialog" aria-labelledby="addCollaboratorModalLabel{{$program->program_id}}" aria-hidden="true">
+                                        <div class="modal-dialog modal-lg" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="addCollaboratorModalLabel">Assign Collaborator to Program</h5>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="card-body">
+                                                    <p class="form-text text-muted">Collaborators can see and edit the course. Collaborators must first register with this web application to be added to a course.
+                                                        By adding a collaborator, a verification email will be sent to their email address.
+                                                        </p>
+
+                                                    <table class="table table-borderless">
+
+                                                            @if(count($programUsers)===1)
+                                                                <tr class="table-active">
+                                                                    <th colspan="2">You have not added any collaborators to this course
+                                                                    </th>
+                                                                </tr>
+
+                                                            @else
+
+                                                                <tr class="table-active">
+                                                                    <th colspan="2">Collaborators</th>
+                                                                </tr>
+                                                                @foreach($programUsers[$program->program_id] as $collaborator)
+                                                                    @if($collaborator->email != $user->email)
+                                                                        <tr>
+                                                                            <td>{{$collaborator->email}}</td>
+                                                                            <td>
+                                                                                <form action="{{ route('programUser.destroy') }}" method="POST" class="float-left">
+                                                                                    @csrf
+                                                                                    {{method_field('DELETE')}}
+
+                                                                                    <input type="hidden" class="form-check-input" name="program_id" value="{{$program->program_id}}">
+                                                                                    <input type="hidden" class="form-check-input" name="user_id" value="{{$collaborator->id}}">
+                                                                                    <button type="submit" class="btn btn-danger btn-sm ">Unassign</button>
+                                                                                </form>
+                                                                            </td>
+                                                                        </tr>
+                                                                    @endif
+                                                                @endforeach
+                                                            @endif
+                                                    </table>
+                                                </div>
+
+                                                <form method="POST" action="{{ action('ProgramUserController@store') }}">
+                                                    @csrf
+
+                                                    <div class="modal-body">
+                                                        <div class="form-group row">
+                                                            <label for="email" class="col-md-3 col-form-label text-md-right">Collaborator Email</label>
+
+                                                            <div class="col-md-7">
+                                                                <input id="email" type="email" class="form-control @error('program') is-invalid @enderror" name="email" required autofocus>
+
+
+                                                                @error('email')
+                                                                    <span class="invalid-feedback" role="alert">
+                                                                        <strong>{{ $message }}</strong>
+                                                                    </span>
+                                                                @enderror
+                                                            </div>
+                                                        </div>
+
+                                                        <input type="hidden" class="form-check-input" name="program_id" value={{$program->program_id}}>
+
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary col-2 btn-sm" data-dismiss="modal">Close</button>
+                                                        <button type="submit" class="btn btn-primary col-2 btn-sm">Add</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
 
                                     <!-- Delete Confirmation Modal -->
                                     <div class="modal fade" id="deleteProgram{{$index}}" tabindex="-1" role="dialog" aria-labelledby="deleteProgram{{$index}}" aria-hidden="true">
@@ -152,7 +238,7 @@
                                                             </p>
                                                         </div>
                                                     @else
-                                                        <button class="btn  text-center" disabled>None</button>
+                                                    <p style="text-align: center; display:inline-block; margin-left:-15px;"> <i class="bi bi-info-circle-fill" data-toggle="tooltip" data-bs-placement="right" title='To map a course to a program, you must first create a program from the "My Programs" section'></i>None</p>
                                                     @endif
                                                 </div>
                                             </div>                                           
@@ -181,7 +267,7 @@
                                                             </p>
                                                         </div>
                                                     @else
-                                                    <p style="text-align: center; display:inline-block; margin-left:-15px;">None</p>
+                                                    <p style="text-align: center; display:inline-block; margin-left:-15px;"> <i class="bi bi-info-circle-fill" data-toggle="tooltip" data-bs-placement="right" title='To map a course to a program, you must first create a program from the "My Programs" section'></i>None</p>
                                                     @endif
                                                 </div>
                                             </div>                                           
@@ -365,7 +451,7 @@
             <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="createCourseModalLabel">Add Course</h5>
+                        <h5 class="modal-title" id="createCourseModalLabel">Create Course</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -377,12 +463,14 @@
 
 
                             <div class="form-group row">
-                                <label for="course_code" class="col-md-3 col-form-label text-md-right">Course
+                                <label for="course_code" class="col-md-3 col-form-label text-md-right"><span class="requiredField">*</span>Course
                                     Code</label>
 
                                 <div class="col-md-8">
                                     <input id="course_code" type="text"
-                                        pattern="[A-Za-z]{4}"
+                                        pattern="[A-Za-z]+"
+                                        minlength="1"
+                                        maxlength="4"
                                         class="form-control @error('course_code') is-invalid @enderror"
                                         name="course_code" required autofocus>
 
@@ -392,13 +480,13 @@
                                     </span>
                                     @enderror
                                     <small id="helpBlock" class="form-text text-muted">
-                                        Four letter course code e.g. SUST, COSC etc.
+                                        Maximum of Four letter course code e.g. SUST, ASL, COSC etc.
                                     </small>
                                 </div>
                             </div>
 
                             <div class="form-group row">
-                                <label for="course_num" class="col-md-3 col-form-label text-md-right">Course
+                                <label for="course_num" class="col-md-3 col-form-label text-md-right"><span class="requiredField">*</span>Course
                                     Number</label>
 
                                 <div class="col-md-8">
@@ -415,8 +503,7 @@
                             </div>
 
                             <div class="form-group row">
-                                <label for="course_title" class="col-md-3 col-form-label text-md-right">
-                                    Course Title</label>
+                                <label for="course_title" class="col-md-3 col-form-label text-md-right"><span class="requiredField">*</span>Course Title</label>
 
                                 <div class="col-md-8">
                                     <input id="course_title" type="text"
@@ -432,7 +519,7 @@
                             </div>
 
                             <div class="form-group row">
-                                <label for="course_title" class="col-md-3 col-form-label text-md-right">Term and Year</label>
+                                <label for="course_title" class="col-md-3 col-form-label text-md-right"><span class="requiredField">*</span>Term and Year</label>
 
                                 <div class="col-md-3">
                                     <select id="course_semester" class="form-control @error('course_semester') is-invalid @enderror"
@@ -487,16 +574,14 @@
                             </div>
 
                             <div class="form-group row">
-                                <label for="delivery_modality" class="col-md-3 col-form-label text-md-right">
-                                    Delivery Modality
-                                </label>
+                                <label for="delivery_modality" class="col-md-3 col-form-label text-md-right"><span class="requiredField">*</span>Mode of Delivery</label>
 
                                 <div class="col-md-3 float-right">
                                     <select id="delivery_modality" class="form-control @error('delivery_modality') is-invalid @enderror"
                                     name="delivery_modality" required autofocus>
                                         <option value="O">online</option>
                                         <option value="I">in-person</option>
-                                        <option value="B">blended</option>
+                                        <option value="B">hybrid</option>
 
                                     @error('delivery_modality')
                                     <span class="invalid-feedback" role="alert">
@@ -508,7 +593,7 @@
                             </div>
 
                             <div class="form-group row">
-                                <label for="standard_category_id" class="col-md-3 col-form-label text-md-right"> Map this course against</label>
+                                <label for="standard_category_id" class="col-md-3 col-form-label text-md-right"><span class="requiredField">*</span>Map this course against</label>
                                 <div class="col-md-8">
                                     <select class="form-control" name="standard_category_id" id="standard_category_id" required>
                                         <option value="" disabled selected hidden>Please Choose...</option>
