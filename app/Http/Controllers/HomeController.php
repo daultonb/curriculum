@@ -31,7 +31,7 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index()
+    public function index(Request $request)
     {
 
         $user = User::where('id', Auth::id())->first();
@@ -50,19 +50,26 @@ class HomeController extends Controller
 
         $programs = User::join('program_users', 'users.id', '=', 'program_users.user_id')
         ->join('programs', 'program_users.program_id', "=", 'programs.program_id')
-        ->select('programs.program_id','programs.program', 'programs.faculty', 'programs.level', 'programs.department', 'programs.status')
+        ->select('programs.program_id','programs.program', 'programs.faculty', 'programs.level', 'programs.department', 'programs.status', 'users.email')
         ->where('program_users.user_id','=',Auth::id())
         ->get();
-        
+        // returns a collection of programs associated with courses (Programs Icon)
         $coursesPrograms = array();
         foreach ($activeCourses as $course) {
             $coursePrograms = $course->programs;
             $coursesPrograms[$course->course_id] = $coursePrograms;
         }
-
+        // returns a collection of programs associated with users (Collaborators Icon) 
+        $prog = $user->programs()->get();
+        $programUsers = array();
+        foreach ($prog as $program) {
+            $programsUsers = $program->users()->get();
+            $programUsers[$program->program_id] = $programsUsers;
+        }
+        // returns a collection of standard_categories, used in the create course modal
         $standard_categories = DB::table('standard_categories')->get();
         
-        return view('pages.home')->with("activeCourses",$activeCourses)->with("activeProgram",$programs)->with('user', $user)->with('coursePrograms', $coursePrograms)->with('coursesPrograms', $coursesPrograms)->with('standard_categories', $standard_categories);
+        return view('pages.home')->with("activeCourses",$activeCourses)->with("activeProgram",$programs)->with('user', $user)->with('coursePrograms', $coursePrograms)->with('coursesPrograms', $coursesPrograms)->with('standard_categories', $standard_categories)->with('programUsers', $programUsers);
     }
 
 
