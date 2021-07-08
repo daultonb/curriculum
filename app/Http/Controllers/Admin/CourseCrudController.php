@@ -511,7 +511,7 @@ class CourseCrudController extends CrudController
 
              'type' => "assess_table",
 
-             'name' => 'assessmentMethods', // the method on your model that defines the relationship
+             'name' => 'AssessmentMethod', // the method on your model that defines the relationship
                
              'default' => 'testing default string',
              
@@ -550,7 +550,7 @@ class CourseCrudController extends CrudController
 
              'type' => "match_table",
 
-             'name' => 'learningActivities', // the method on your model that defines the relationship
+             'name' => 'LearningActivity', // the method on your model that defines the relationship
                
              'default' => 'testing default string',
              
