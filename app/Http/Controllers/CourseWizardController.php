@@ -275,10 +275,29 @@ class CourseWizardController extends Controller
         // get mapping scales associated with course
         $mappingScales = StandardScale::where('scale_category_id', $course->scale_category_id)->get();
 
-        //get optional priorities
+        //get optional priorities for ubc mandate letters
         $ubc_mandate_letters_subcat_id_index = 1;
         $ubc_mandate_letters_new = Optional_priorities::where('subcat_id', $ubc_mandate_letters_subcat_id_index)->pluck('optional_priority')->toArray();
-        dd($ubc_mandate_letters_new);
+
+        //get optional priorities for bc labour market
+        $bc_labour_market_subcat_id_index = 2;
+        $bc_labour_market_new = Optional_priorities::where('subcat_id', $bc_labour_market_subcat_id_index)->pluck('optional_priority')->toArray();
+
+        //get optional priorities for shaping ubc
+        $shaping_ubc_subcat_id_index = 3;
+        $shaping_ubc_new = Optional_priorities::where('subcat_id', $shaping_ubc_subcat_id_index)->pluck('optional_priority')->toArray();
+
+        //get optional priorities for okanagan 2040 outlook
+        $okanagan_2040_outlook_subcat_id_index = 4;
+        $okanagan_2040_outlook_new = Optional_priorities::where('subcat_id', $okanagan_2040_outlook_subcat_id_index)->pluck('optional_priority')->toArray();
+
+        //get optional priorities for ubc indigenous plan
+        $ubc_indigenous_plan_subcat_id_index = 5;
+        $ubc_indigenous_plan_new = Optional_priorities::where('subcat_id', $ubc_indigenous_plan_subcat_id_index)->pluck('optional_priority')->toArray();
+
+        //get optional priorities for ubc climate priorities
+        $ubc_climate_priorities_subcat_id_index = 6;
+        $ubc_climate_priorities_new = Optional_priorities::where('subcat_id', $ubc_climate_priorities_subcat_id_index)->pluck('optional_priority')->toArray();
 
         $ubc_mandate_letters = array("Incorporation of the Declaration on the Rights of Indigenous Peoples Act and Calls to Action of the Truth and Reconciliation Commission",
         "Align with CleanBC's plan to a protect our communities towards a more sustainable future","Advancing and supporting open learning resources","Offer programming aligned with high opportunity and priority occupations (such as trades, technology, early childhood educators and health)",
