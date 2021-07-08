@@ -141,7 +141,6 @@ class CourseCrudController extends CrudController
             'default' => '1',
           ]);
        
-
          $this->crud->addField([
             // 1-n relationship
             'label'     => 'Program', // Table column heading
@@ -275,35 +274,44 @@ class CourseCrudController extends CrudController
     protected function setupUpdateOperation()
     {
        // $this->setupCreateOperation();
-        $codeStyle = "'size' => '3',"
-                   . "'maxwidth' => '3'";
+       
         
         $this->crud->addField([
             'name' => 'course_code', // The db column name
             'label' => "Course Code", // Table column heading
             'type' => 'Text',
-            'attributes' => [ 'size' => '4',
-                             'maxwidth' => '4']
+            'attributes' => [ 'req' => 'true',
+                            'size' => '4',
+                            'maxlength' => '4'],
+            'wrapper' => ['class' => 'form-group col-md-3'],
          ]);
 
         $this->crud->addField([
             'name' => 'course_num', // The db column name
             'label' => "Course Number", // Table column heading
             'type' => 'number',
-             'attributes' => [$codeStyle]
+            'attributes' => [ 'req' => 'true',
+                            'size' => '3',
+                            'maxlength' => '3'],
+            'wrapper' => ['class' => 'form-group col-md-3'],
           ]);
         
         $this->crud->addField([
             'name'        => 'section',
             'label'       => 'Section ID',
             'type'        => 'text', 
-             'attributes' => [$codeStyle]
+             'attributes' => [ 'size' => '3',
+                             'maxlength' => '3'],
+            'wrapper' => ['class' => 'form-group col-md-3'],
         ]); 
         
         $this->crud->addField([
             'name' => 'course_title', // The db column name
             'label' => "Course Title", // Table column heading
-            'type' => 'Text'
+            'type' => 'Text',
+             'attributes' => [ 'req' => 'true' ],
+            'wrapper' => ['class' => 'form-group col-md-12'],
+            
           ]);
         
             
@@ -392,18 +400,26 @@ class CourseCrudController extends CrudController
         
         $this->crud->addField([
             'name' => 'standard_category_id', // The db column name
-            'label' => "cat_id", // Table column heading
-            'type' => 'Text',
-            'default' => '1',
-             'attributes' => [$codeStyle]
+            'label' => "Ministry Standards Category", // Table column heading
+            'type' => 'select',
+            'entity' => 'ministryStandardCategory', // the method that defines the relationship in your Model
+        
+            'attribute' => "sc_name", // foreign key attribute that is shown to user (identifiable attribute)
+
+            'model' => "App\Models\StandardCategory", // foreign key Eloquent model         
+            'wrapper' => ['class' => 'form-group col-md-3'],
           ]);
         
         $this->crud->addField([
             'name' => 'scale_category_id', // The db column name
-            'label' => "scale_id", // Table column heading
-            'type' => 'Text',
-            'default' => '1',
-             'attributes' => [$codeStyle]
+            'label' => "Standards Scale Category", // Table column heading
+            'type' => 'select',
+            'entity' => 'scaleCategories', // the method that defines the relationship in your Model
+        
+            'attribute' => "name", // foreign key attribute that is shown to user (identifiable attribute)
+
+            'model' => "App\Models\StandardsScaleCategory", // foreign key Eloquent model         
+            'wrapper' => ['class' => 'form-group col-md-3'],
           ]);
         
           //added this block as fix for bug03 (MD)
