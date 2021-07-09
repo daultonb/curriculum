@@ -277,60 +277,27 @@ class CourseWizardController extends Controller
 
         //get optional priorities for ubc mandate letters
         $ubc_mandate_letters_subcat_id_index = 1;
-        $ubc_mandate_letters_new = Optional_priorities::where('subcat_id', $ubc_mandate_letters_subcat_id_index)->pluck('optional_priority')->toArray();
+        $ubc_mandate_letters = Optional_priorities::where('subcat_id', $ubc_mandate_letters_subcat_id_index)->pluck('optional_priority')->toArray();
 
         //get optional priorities for bc labour market
         $bc_labour_market_subcat_id_index = 2;
-        $bc_labour_market_new = Optional_priorities::where('subcat_id', $bc_labour_market_subcat_id_index)->pluck('optional_priority')->toArray();
+        $bc_labour_market = Optional_priorities::where('subcat_id', $bc_labour_market_subcat_id_index)->pluck('optional_priority')->toArray();
 
         //get optional priorities for shaping ubc
         $shaping_ubc_subcat_id_index = 3;
-        $shaping_ubc_new = Optional_priorities::where('subcat_id', $shaping_ubc_subcat_id_index)->pluck('optional_priority')->toArray();
+        $shaping_ubc = Optional_priorities::where('subcat_id', $shaping_ubc_subcat_id_index)->pluck('optional_priority')->toArray();
 
         //get optional priorities for okanagan 2040 outlook
         $okanagan_2040_outlook_subcat_id_index = 4;
-        $okanagan_2040_outlook_new = Optional_priorities::where('subcat_id', $okanagan_2040_outlook_subcat_id_index)->pluck('optional_priority')->toArray();
+        $okanagan_2040_outlook = Optional_priorities::where('subcat_id', $okanagan_2040_outlook_subcat_id_index)->pluck('optional_priority')->toArray();
 
         //get optional priorities for ubc indigenous plan
         $ubc_indigenous_plan_subcat_id_index = 5;
-        $ubc_indigenous_plan_new = Optional_priorities::where('subcat_id', $ubc_indigenous_plan_subcat_id_index)->pluck('optional_priority')->toArray();
+        $ubc_indigenous_plan = Optional_priorities::where('subcat_id', $ubc_indigenous_plan_subcat_id_index)->pluck('optional_priority')->toArray();
 
         //get optional priorities for ubc climate priorities
         $ubc_climate_priorities_subcat_id_index = 6;
-        $ubc_climate_priorities_new = Optional_priorities::where('subcat_id', $ubc_climate_priorities_subcat_id_index)->pluck('optional_priority')->toArray();
-
-        $ubc_mandate_letters = array("Incorporation of the Declaration on the Rights of Indigenous Peoples Act and Calls to Action of the Truth and Reconciliation Commission",
-        "Align with CleanBC's plan to a protect our communities towards a more sustainable future","Advancing and supporting open learning resources","Offer programming aligned with high opportunity and priority occupations (such as trades, technology, early childhood educators and health)",
-        "Embed more co-op and work-integrated learning opportunities","Respond to the reskilling needs of British Columbians to support employment and career transitions","Supporting students' awareness of career planning resources (such as the Labour Market Outlook)");
-
-        $bc_labour_market = array("Active Listening","Speaking","Reading Comprehension","Critical Thinking","Social Perceptiveness","Judgement and Decision Making","Writing","Monitoring"
-        ,"Complex Problem Solving","Coordination");
-
-        $shaping_ubc = array("Great People: Attract, engage and retain a diverse global community of outstanding students, faculty and staff.","Inspiring Spaces: Create welcoming physical and virtual spaces to advance collaboration, innovation and community development.",
-        "Thriving Communities: Support the ongoing development of sustainable, healthy and connected campuses and communities, consistent with the 20-Year Sustainability Strategy and the developing Wellbeing Strategy.","Inclusive Excellence: Cultivate a diverse community that creates and sustains equitable and inclusive campuses.",
-        "Systems Renewal: Transform university-level systems and processes to facilitate collaboration, innovation and agility.","Collaborative Clusters: Enable interdisciplinary clusters of research excellence in pursuit of societal impact.",
-        "Research Support: Strengthen shared infrastructure and resources to support research excellence.","Student Research: Broaden access to, and enhance, student research experiences.","Knowledge Exchange: Improve the ecosystem that supports the translation of research into action.",
-        "Research Culture: Foster a strong and diverse research culture that embraces the highest standards of integrity, collegiality and service.","Education Renewal: Facilitate sustained program renewal and improvements in teaching effectiveness.",
-        "Program Redesign: Reframe undergraduate academic program design in terms of learning outcomes and competencies.","Practical Learning: Expand experiential, work-integrated and extended learning opportunities for students, faculty, staff and alumni.",
-        "Interdisciplinary Education: Facilitate the development of integrative, problem-focused learning.","Student Experience: Strengthen undergraduate and graduate student communities and experience.","Public Relevance: Deepen the relevance and public impact of UBC research and education.",
-        "Indigenous Engagement: Support the objectives and actions of the renewed Indigenous Strategic Plan.","Alumni Engagement: Reach, inspire and engage alumni through lifelong enrichment, consistent with the alumniUBC strategic plan,","Global Networks: Build and sustain strategic global networks, notably around the Pacific Rim, that enhance impact.",
-        "Co-ordinated Engagement: Co-create with communities the principles and effective practices of engagement, and establish supporting infrastructure.");
-
-        $shaping_ubc_link = array("https://strategicplan.ubc.ca/strategy-1-great-people/","https://strategicplan.ubc.ca/strategy-2-inspiring-spaces/","https://strategicplan.ubc.ca/strategy-3-thriving-communities/",
-        "https://strategicplan.ubc.ca/strategy-4-inclusive-excellence/","https://strategicplan.ubc.ca/strategy-5-systems-renewal/","https://strategicplan.ubc.ca/strategy-6-collaborative-clusters/","https://strategicplan.ubc.ca/strategy-7-research-support/",
-        "https://strategicplan.ubc.ca/strategy-8-student-research/","https://strategicplan.ubc.ca/strategy-9-knowledge-exchange/","https://strategicplan.ubc.ca/strategy-10-research-culture/","https://strategicplan.ubc.ca/strategy-11-education-renewal/",
-        "https://strategicplan.ubc.ca/strategy-12-program-redesign/","https://strategicplan.ubc.ca/strategy-13-practical-learning/","https://strategicplan.ubc.ca/strategy-14-interdisciplinary-education/","https://strategicplan.ubc.ca/strategy-15-student-experience/",
-        "https://strategicplan.ubc.ca/strategy-16-public-relevance/","https://strategicplan.ubc.ca/strategy-17-indigenous-engagement/","https://strategicplan.ubc.ca/strategy-18-alumni-engagement/","https://strategicplan.ubc.ca/strategy-19-global-networks/","https://strategicplan.ubc.ca/strategy-20-co-ordinated-engagement/");
-
-        $okanagan_2040_outlook  = array("Continuing education programs","Offer hybrid pedagogies","Professional programs in health and technology",
-        "Increase graduate student training","Leverage new academic and/or research space", "Increased community engagement");
-
-        $ubc_indigenous_plan = array("Integration of Indigenous histories, experiences, worldviews and knowledge systems", "Inclusion of substantive content that explores histories and identifies how Indigenous issues intersect with the field of study",
-        "Inclusion of Indigenous people for the development and offering of the curriculum","Continue to partner with Indigenous communities locally and globally");
-
-        $ubc_climate_priorities = array("Climate justice education","Climate research","Content on Indigenous rights, content, history, and culture","Environmental and sustainability education",
-        "Content from Indigenous scholars and communities and/or equity-seeking and marginalized groups","Inclusion of de-colonial approaches to science through Indigenous and community traditional knowledge and 'authorship'","Knowledge, awareness and skills related to the relationship between climate change and food systems",
-        "Climate-related mental health content","Applied learning opportunities grounded in the personal, local and regional community (e.g. flood and wildfire impacted communities in BC)");
+        $ubc_climate_priorities = Optional_priorities::where('subcat_id', $ubc_climate_priorities_subcat_id_index)->pluck('optional_priority')->toArray();
 
         $optional_PLOs = Optional_priorities::where('course_id', $course_id)->get();
 
