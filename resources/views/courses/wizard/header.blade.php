@@ -179,7 +179,7 @@
                     <button type="button" class="btn btn-outline-primary btn-sm float-right" style="width:200px"
                         data-toggle="modal" data-target="#assignInstructorModal">Add Collaborators</button>
 
-                    <!-- Modal -->
+                    <!-- Collaborator Modal -->
                     <div class="modal fade" id="assignInstructorModal" tabindex="-1" role="dialog"
                         aria-labelledby="assignInstructorModalLabel" aria-hidden="true">
                         <div class="modal-dialog modal-lg" role="document">
