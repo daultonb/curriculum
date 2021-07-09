@@ -87,10 +87,10 @@
                                                                 @endfor
                                                             </tbody>
                                                         </table>
+                                                        <div class="mt-4">
+                                                            <button type="submit" class="btn btn-success btn-sm float-right col-2">Save</button>
+                                                        </div>
                                                     </form>
-                                                    <div class="mt-4">
-                                                        <button type="submit" class="btn btn-success btn-sm float-right col-2">Save</button>
-                                                    </div>
                                                 </div>
                                             @endif
                                         </div>
