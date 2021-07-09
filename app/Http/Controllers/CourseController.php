@@ -456,7 +456,9 @@ class CourseController extends Controller
 
         // $mappingScales = MappingScale::join('mapping_scale_programs', 'mapping_scales.map_scale_id', "=", 'mapping_scale_programs.map_scale_id')
         //                     ->where('mapping_scale_programs.program_id', $course->program_id)->get();
-        // $ploCategories = PLOCategory::where('program_id', $course->program_id)->get();
+        
+        $ploCategories = [];
+
 
         $outcomeActivities = LearningActivity::join('outcome_activities','learning_activities.l_activity_id','=','outcome_activities.l_activity_id')
                                 ->join('learning_outcomes', 'outcome_activities.l_outcome_id', '=', 'learning_outcomes.l_outcome_id' )
@@ -481,7 +483,7 @@ class CourseController extends Controller
             $assessmentMethodsTotal += $a_method->weight;
         }
         
-        $pdf = PDF::loadView('courses.downloadSummary', compact('course','courseStandardCategory','courseStandardCategory','l_outcomes','l_activities','a_methods','outcomeActivities', 'outcomeAssessments', 'standardOutcomeMaps','courseStandardScales', 'courseStandards', 'assessmentMethodsTotal', 'coursePrograms', 'programsLearningOutcomes', 'programsMappingScales', 'courseProgramsOutcomeMaps', 'optional_PLOs')) ;
+        $pdf = PDF::loadView('courses.downloadSummary', compact('course','courseStandardCategory','courseStandardCategory','l_outcomes','l_activities','a_methods','outcomeActivities', 'outcomeAssessments', 'standardOutcomeMaps','courseStandardScales', 'courseStandards', 'assessmentMethodsTotal', 'coursePrograms', 'programsLearningOutcomes', 'programsMappingScales', 'courseProgramsOutcomeMaps', 'optional_PLOs', 'ploCategories')) ;
         
         return $pdf->download('summary.pdf');
     }
