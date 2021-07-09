@@ -398,7 +398,7 @@
                                     <div class="modal-dialog modal-lg" role="document">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <h5 class="modal-title" id="exampleModalLabel">Add Program</h5>
+                                                <h5 class="modal-title" id="exampleModalLabel">Create a Program</h5>
                                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                     <span aria-hidden="true">&times;</span>
                                                 </button>
@@ -407,9 +407,9 @@
                                             @csrf
                                             <div class="modal-body">
                                                 <div class="form-group row">
-                                                    <label for="program" class="col-md-2 col-form-label text-md-right">Program Name</label>
+                                                    <label for="program" class="col-md-3 col-form-label text-md-right"><span class="requiredField">* </span>Program Name</label>
                                                     <div class="col-md-8">
-                                                        <input id="program" type="text" class="form-control @error('program') is-invalid @enderror" name="program" required autofocus>
+                                                        <input id="program" placeholder="E.g. Bachelor of Sustainability" type="text" class="form-control @error('program') is-invalid @enderror" name="program" required autofocus>
                                                         @error('program')
                                                         <span class="invalid-feedback" role="alert">
                                                         <strong>{{ $message }}</strong>
@@ -418,7 +418,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="form-group row">
-                                                    <label for="faculty" class="col-md-2 col-form-label text-md-right">Faculty/School</label>
+                                                    <label for="faculty" class="col-md-3 col-form-label text-md-right">Faculty/School</label>
                                                     <div class="col-md-8">
                                                         <select id='faculty' class="custom-select" name="faculty" required>
                                                             <option disabled selected hidden>Open this select menu</option>
@@ -443,7 +443,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="form-group row">
-                                                    <label for="department" class="col-md-2 col-form-label text-md-right">Department</label>
+                                                    <label for="department" class="col-md-3 col-form-label text-md-right">Department</label>
                                                     <div class="col-md-8">
                                                         <select id="department" class="custom-select" name="department">
                                                             <option disabled selected hidden>Open this select menu</option>
@@ -477,7 +477,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="form-group row">
-                                                    <label for="level" class="col-md-2 col-form-label text-md-right">Level</label>
+                                                    <label for="level" class="col-md-3 col-form-label text-md-right"><span class="requiredField">* </span>Level</label>
                                                     <div class="col-md-6">
                                                         <div class="form-check ">
                                                             <label class="form-check-label">
@@ -516,7 +516,7 @@
             <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="createCourseModalLabel">Create Course</h5>
+                        <h5 class="modal-title" id="createCourseModalLabel">Create a Course</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -528,7 +528,7 @@
 
 
                             <div class="form-group row">
-                                <label for="course_code" class="col-md-3 col-form-label text-md-right"><span class="requiredField">*</span>Course
+                                <label for="course_code" class="col-md-3 col-form-label text-md-right"><span class="requiredField">* </span>Course
                                     Code</label>
 
                                 <div class="col-md-8">
@@ -545,13 +545,13 @@
                                     </span>
                                     @enderror
                                     <small id="helpBlock" class="form-text text-muted">
-                                        Maximum of Four letter course code e.g. SUST, ASL, COSC etc.
+                                        Maximum of four letter course code e.g. SUST, ASL, COSC etc.
                                     </small>
                                 </div>
                             </div>
 
                             <div class="form-group row">
-                                <label for="course_num" class="col-md-3 col-form-label text-md-right"><span class="requiredField">*</span>Course
+                                <label for="course_num" class="col-md-3 col-form-label text-md-right"><span class="requiredField">* </span>Course
                                     Number</label>
 
                                 <div class="col-md-8">
@@ -568,7 +568,7 @@
                             </div>
 
                             <div class="form-group row">
-                                <label for="course_title" class="col-md-3 col-form-label text-md-right"><span class="requiredField">*</span>Course Title</label>
+                                <label for="course_title" class="col-md-3 col-form-label text-md-right"><span class="requiredField">* </span>Course Title</label>
 
                                 <div class="col-md-8">
                                     <input id="course_title" type="text"
@@ -584,7 +584,7 @@
                             </div>
 
                             <div class="form-group row">
-                                <label for="course_title" class="col-md-3 col-form-label text-md-right"><span class="requiredField">*</span>Term and Year</label>
+                                <label for="course_title" class="col-md-3 col-form-label text-md-right"><span class="requiredField">* </span>Term and Year</label>
 
                                 <div class="col-md-3">
                                     <select id="course_semester" class="form-control @error('course_semester') is-invalid @enderror"
@@ -639,14 +639,14 @@
                             </div>
 
                             <div class="form-group row">
-                                <label for="delivery_modality" class="col-md-3 col-form-label text-md-right"><span class="requiredField">*</span>Mode of Delivery</label>
+                                <label for="delivery_modality" class="col-md-3 col-form-label text-md-right"><span class="requiredField">* </span>Mode of Delivery</label>
 
                                 <div class="col-md-3 float-right">
                                     <select id="delivery_modality" class="form-control @error('delivery_modality') is-invalid @enderror"
                                     name="delivery_modality" required autofocus>
-                                        <option value="O">online</option>
-                                        <option value="I">in-person</option>
-                                        <option value="B">hybrid</option>
+                                        <option value="O">Online</option>
+                                        <option value="I">In-person</option>
+                                        <option value="B">Hybrid</option>
 
                                     @error('delivery_modality')
                                     <span class="invalid-feedback" role="alert">
@@ -658,7 +658,7 @@
                             </div>
 
                             <div class="form-group row">
-                                <label for="standard_category_id" class="col-md-3 col-form-label text-md-right"><span class="requiredField">*</span>Map this course against</label>
+                                <label for="standard_category_id" class="col-md-3 col-form-label text-md-right"><span class="requiredField">* </span>Map my course against</label>
                                 <div class="col-md-8">
                                     <select class="form-control" name="standard_category_id" id="standard_category_id" required>
                                         <option value="" disabled selected hidden>Please Choose...</option>
