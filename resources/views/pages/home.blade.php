@@ -55,12 +55,14 @@
                                         <i class="bi bi-trash-fill text-danger btn-icon dropdown-item"></i>
                                     </a>
 
-                                    <button type="button" data-toggle="modal" data-target="#addCollaboratorModal{{$program->program_id}}" class="btn bg-transparent position-relative pr-2 pl-2" data-toggle="tooltip" data-html="true" data-bs-placement="right" title="@foreach($programUsers[$program->program_id] as $counter => $programUser){{$counter + 1}}. {{$programUser->name}}<br>@endforeach">
-                                        <i class="bi bi-people-fill"></i>
-                                        <span class="position-absolute top-0 start-85 translate-middle badge rounded-pill badge badge-dark">
-                                            {{ count($programUsers[$program->program_id]) }}
-                                        </span>
-                                    </button>
+                                    <div class="btn bg-transparent position-relative pr-2 pl-2" data-toggle="tooltip" data-html="true" data-bs-placement="right" title="@foreach($programUsers[$program->program_id] as $counter => $programUser){{$counter + 1}}. {{$programUser->name}}<br>@endforeach">
+                                        <div data-toggle="modal" data-target="#addCollaboratorModal{{$program->program_id}}">
+                                            <i class="bi bi-people-fill"></i>
+                                            <span class="position-absolute top-0 start-85 translate-middle badge rounded-pill badge badge-dark">
+                                                {{ count($programUsers[$program->program_id]) }}
+                                            </span>
+                                        </div>
+                                    </div>
                                     
                                     <!-- Add Collaborator Modal -->
                                     <div class="modal fade" id="addCollaboratorModal{{$program->program_id}}" tabindex="-1" role="dialog" aria-labelledby="addCollaboratorModalLabel{{$program->program_id}}" aria-hidden="true">
