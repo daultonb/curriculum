@@ -270,7 +270,7 @@
                                         <a data-toggle="modal" data-target="#deleteConfirmation{{$index}}" href=#>
                                         <i class="bi bi-trash-fill text-danger btn-icon dropdown-item"></i></a>
                                         <!-- Collaborators Icon for Dashboard -->
-                                        <div class="btn bg-transparent position-relative pr-2 pl-2" data-toggle="tooltip" data-html="true" data-bs-placement="right" title="@foreach($courseUsers[$course->course_id] as $c => $courseUser){{$counter + 1}}. {{$courseUser->name}}<br>@endforeach">
+                                        <div class="btn bg-transparent position-relative pr-2 pl-2" data-toggle="tooltip" data-html="true" data-bs-placement="right" title="@foreach($courseUsers[$course->course_id] as $c => $courseUser){{$c + 1}}. {{$courseUser->name}}<br>@endforeach">
                                             <div data-toggle="modal" data-target="#addCourseCollaboratorModal{{$course->course_id}}">
                                                 <i class="bi bi-person-plus-fill"></i>
                                                 <span class="position-absolute top-0 start-85 translate-middle badge rounded-pill badge badge-dark">
