@@ -1,4 +1,4 @@
-<!-- Invivation emails !-->
+<!-- Invitation emails !-->
 @component('mail::message')
 
 # You have been invited to register for the UBC Curriculum MAP.

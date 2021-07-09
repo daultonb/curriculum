@@ -1,12 +1,13 @@
 @component('mail::message')
 
-# You have been assigned as a collaborator to a  course.
+# You have been invited to collaborate on the course: {{$course_code}} {{$course_num}}.
 
-Please log in to see and edit the course/prgram by clicking on th below button.
+{{$user_name}} has invited you to collaborate with them on their course: {{$course_code}} {{$course_num}} - {{$course_title}}.
+
+Please click the button below to login and collaborate.
 @component('mail::button', ['url' => 'https://curriculum.ok.ubc.ca/login'])
-Log In
+Log In and See Course
 @endcomponent
-
-Thanks,<br>
+<br>
 {{ config('app.name') }}
 @endcomponent

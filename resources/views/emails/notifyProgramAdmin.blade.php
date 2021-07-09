@@ -1,13 +1,14 @@
 @component('mail::message')
 
-# You have been made a program administrator
+# You have been invited to collaborate on a program
 
-A program administrator has made you a collaborator in their program project through the UBC Curriculum Alignment Tool. Please log in to see the program and make edits under the “My Programs” section.
+{{$user_name}} has invited you to collaborate on the program: {{$program_title}} from the Department of {{$program_dept}}
 
+Please click the button below to login and collaborate.
 @component('mail::button', ['url' => 'https://curriculum.ok.ubc.ca/login'])
-Log In
+Log In and See Program
 @endcomponent
 
-Thanks,<br>
+<br>
 {{ config('app.name') }}
 @endcomponent
