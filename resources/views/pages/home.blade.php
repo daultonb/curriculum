@@ -391,19 +391,22 @@
                 </div>
 
                 <!-- My Syllabi Section -->
-                <div class="card shadow rounded" style="margin:20px;border-style: solid;
+                <div class="card shadow rounded m-4" style="border-style: solid;
                 border-color: #1E90FF;">
-                    <div class="card-title" style="background-color:#1E90FF;margin-bottom: 0.00rem;">
-                        <h3 style="color: white;margin:22px">My Syllabi
-                            <div style="float:right; padding-right:10px;">
-                                <a href="{{route('syllabus')}}">
-                                    <button style="border: none; background: none; outline: none;" >
-                                        <img src="{{ asset('dashboard-icons/add_White.png') }}" style="width:20px;height:20px;"/>
-                                    </button>
-                                </a>
-                            </div>
+                    <div class="card-title bg-primary p-3">
+                        <h3 style="color: white;">
+                        My Syllabi         
+
+                        <div style="float:right;">
+                            <a href="{{route('syllabus')}}">
+                                <button style="border: none; background: none; outline: none;">
+                                    <i class="bi bi-plus-circle text-white"></i>
+                                </button>
+                            </a>
+                        </div>
                         </h3>
                     </div>
+
                     <div class="card-body" style="padding:0%;">
                         @if(count($syllabi)>0)
                             <table class="table table-hover dashBoard">
@@ -443,16 +446,11 @@
                                         {{$syllabus->updated_at}}
                                     </td>
                                     <!--<td></td>-->
-                                    <td style="display: inline-block">
-                                        <a class="dropdown-item btn-icon" href="{{route('syllabus', $syllabus->id)}}">
-                                            <img src="{{ asset('dashboard-icons/edit.png') }}" style="width:15px;height:15px"/>
-                                        </a>
-                                        <!-- <a>
-                                            <i class="bi bi-download"></i>
-                                        </a> -->
-                                        <a class="dropdown-item btn-icon" data-toggle="modal" data-target="#deleteSyllabusConfirmation{{$index}}" href=#>
-                                        <img src="{{ asset('dashboard-icons/delete.png') }}" style="width:15px;height:15px"/></a>
-
+                                    <td>
+                                        <a  class="pr-2" href="{{route('syllabus', $syllabus->id)}}">
+                                        <i class="bi bi-pencil-fill btn-icon dropdown-item"></i></a>
+                                        <a data-toggle="modal" data-target="#deleteSyllabusConfirmation{{$index}}" href=#>
+                                        <i class="bi bi-trash-fill text-danger btn-icon dropdown-item"></i></a>
 
                                         <!-- Delete Syllabus Confirmation Modal -->
                                         <div class="modal fade" id="deleteSyllabusConfirmation{{$index}}" tabindex="-1" role="dialog" aria-labelledby="deleteConfirmation{{$index}}" aria-hidden="true">
