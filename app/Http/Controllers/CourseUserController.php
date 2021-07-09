@@ -79,8 +79,12 @@ class CourseUserController extends Controller
 
         //$course->save();
 
-        // Removed for now, would break when assigning a collaborator to a course in the course wizard 
-    return redirect()->back();
+
+        //if($course->type == "assigned"){
+        //    return redirect()->route('programWizard.step3', $request->input('program_id'));
+        //}else{
+            return redirect()->back();
+        //}
 
 
     }
