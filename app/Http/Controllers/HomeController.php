@@ -66,10 +66,18 @@ class HomeController extends Controller
             $programsUsers = $program->users()->get();
             $programUsers[$program->program_id] = $programsUsers;
         }
+        //
+        $coursesUser = $user->courses()->get();
+        $courseUsers = array();
+        foreach ($coursesUser as $course) {
+            $coursesUsers = $course->users()->get();
+            $courseUsers[$course->course_id] = $coursesUsers;
+        }
+        //dd($courseUsers);
         // returns a collection of standard_categories, used in the create course modal
         $standard_categories = DB::table('standard_categories')->get();
         
-        return view('pages.home')->with("activeCourses",$activeCourses)->with("activeProgram",$programs)->with('user', $user)->with('coursePrograms', $coursePrograms)->with('coursesPrograms', $coursesPrograms)->with('standard_categories', $standard_categories)->with('programUsers', $programUsers);
+        return view('pages.home')->with("activeCourses",$activeCourses)->with("activeProgram",$programs)->with('user', $user)->with('coursePrograms', $coursePrograms)->with('coursesPrograms', $coursesPrograms)->with('standard_categories', $standard_categories)->with('programUsers', $programUsers)->with('courseUsers', $courseUsers);
     }
 
 
