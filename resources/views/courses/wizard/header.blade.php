@@ -41,10 +41,10 @@
 
                                     <div class="modal-body">
                                         <div class="form-group row">
-                                            <label for="course_code" class="col-md-3 col-form-label text-md-right">Course Code</label>
+                                            <label for="course_code" class="col-md-3 col-form-label text-md-right"><span class="requiredField">*</span>Course Code</label>
 
                                             <div class="col-md-8">
-                                                <input id="course_code" type="text" pattern="[A-Za-z]{4}" class="form-control @error('course_code') is-invalid @enderror" value="{{$course->course_code}}"
+                                                <input id="course_code" type="text" pattern="[A-Za-z]+" minlength="1" maxlength="4" class="form-control @error('course_code') is-invalid @enderror" value="{{$course->course_code}}"
                                                     name="course_code" required autofocus>
 
                                                 @error('course_code')
@@ -53,13 +53,13 @@
                                                     </span>
                                                 @enderror
                                                 <small id="helpBlock" class="form-text text-muted">
-                                                    Four letter course code e.g. SUST, COSC etc.
+                                                    Maximum of Four letter course code e.g. SUST, ASL, COSC etc.
                                                 </small>
                                             </div>
                                         </div>
 
                                         <div class="form-group row">
-                                            <label for="course_num" class="col-md-3 col-form-label text-md-right">Course Number</label>
+                                            <label for="course_num" class="col-md-3 col-form-label text-md-right"><span class="requiredField">*</span>Course Number</label>
 
                                             <div class="col-md-8">
                                                 <input id="course_num" type="text" class="form-control @error('course_num') is-invalid @enderror" name="course_num" value="{{$course->course_num}}" required autofocus>
@@ -73,7 +73,7 @@
                                         </div>
 
                                         <div class="form-group row">
-                                            <label for="course_title" class="col-md-3 col-form-label text-md-right">Course Title</label>
+                                            <label for="course_title" class="col-md-3 col-form-label text-md-right"><span class="requiredField">*</span>Course Title</label>
 
                                             <div class="col-md-8">
                                                 <input id="course_title" type="text" class="form-control @error('course_title') is-invalid @enderror" name="course_title" value="{{$course->course_title}}" required autofocus>
@@ -87,7 +87,7 @@
                                         </div>
 
                                         <div class="form-group row">
-                                            <label for="course_semester" class="col-md-3 col-form-label text-md-right">Year and Semester</label>
+                                            <label for="course_semester" class="col-md-3 col-form-label text-md-right"><span class="requiredField">*</span>Year and Semester</label>
 
                                             <div class="col-md-3">
                                                 <select id="course_semester" class="form-control @error('course_semester') is-invalid @enderror"
@@ -143,14 +143,14 @@
                                         </div>
 
                                         <div class="form-group row">
-                                            <label for="delivery_modality" class="col-md-3 col-form-label text-md-right">Mode of Delivery</label>
+                                            <label for="delivery_modality" class="col-md-3 col-form-label text-md-right"><span class="requiredField">*</span>Mode of Delivery</label>
 
                                             <div class="col-md-3 float-right">
                                                 <select id="delivery_modality" class="form-control @error('delivery_modality') is-invalid @enderror"
                                                 name="delivery_modality" required autofocus>
                                                     <option @if($course->delivery_modality === 'O') selected @endif value="O">online</option>
                                                     <option @if($course->delivery_modality === 'I') selected @endif value="I">in-person</option>
-                                                    <option @if($course->delivery_modality === 'B') selected @endif value="B">blended</option>
+                                                    <option @if($course->delivery_modality === 'B') selected @endif value="B">Hybrid</option>
 
                                                 @error('delivery_modality')
                                                 <span class="invalid-feedback" role="alert">
@@ -179,7 +179,7 @@
                     <button type="button" class="btn btn-outline-primary btn-sm float-right" style="width:200px"
                         data-toggle="modal" data-target="#assignInstructorModal">Add Collaborators</button>
 
-                    <!-- Modal -->
+                    <!-- Collaborator Modal -->
                     <div class="modal fade" id="assignInstructorModal" tabindex="-1" role="dialog"
                         aria-labelledby="assignInstructorModalLabel" aria-hidden="true">
                         <div class="modal-dialog modal-lg" role="document">

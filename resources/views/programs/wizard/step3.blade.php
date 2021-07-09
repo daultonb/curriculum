@@ -129,9 +129,12 @@
 
                                                                         <div class="col-md-8">
                                                                             <input id="course_code" type="text"
-                                                                                pattern="[A-Za-z]{4}"
-                                                                        class="form-control @error('course_code') is-invalid @enderror" value="{{$programCourse->course_code}}"
-                                                                                name="course_code" required autofocus>
+                                                                            pattern="[A-Za-z]+"
+                                                                            minlength="1"
+                                                                            maxlength="4"
+                                                                            class="form-control @error('course_code') is-invalid @enderror" 
+                                                                            value="{{$programCourse->course_code}}"
+                                                                            name="course_code" required autofocus>
 
                                                                             @error('course_code')
                                                                             <span class="invalid-feedback" role="alert">
@@ -440,7 +443,7 @@
                         <div class="modal-dialog modal-lg" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h5 class="modal-title" id="createCourseModalLabel">Add Course</h5>
+                                    <h5 class="modal-title" id="createCourseModalLabel">Create Course</h5>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                     </button>
@@ -451,13 +454,15 @@
 
                                         <div class="form-group row">
                                             <label for="course_code"
-                                                class="col-md-3 col-form-label text-md-right">Course Code</label>
+                                                class="col-md-3 col-form-label text-md-right"><span class="requiredField">*</span>Course Code</label>
 
                                                 <div class="col-md-8">
                                                     <input id="course_code" type="text"
-                                                        pattern="[A-Za-z]{4}"
-                                                class="form-control @error('course_code') is-invalid @enderror"
-                                                        name="course_code" required autofocus>
+                                                    pattern="[A-Za-z]+"
+                                                    minlength="1"
+                                                    maxlength="4"
+                                                    class="form-control @error('course_code') is-invalid @enderror"
+                                                    name="course_code" required autofocus>
 
                                                     @error('course_code')
                                                     <span class="invalid-feedback" role="alert">
@@ -465,13 +470,13 @@
                                                     </span>
                                                     @enderror
                                                     <small id="helpBlock" class="form-text text-muted">
-                                                        Four letter course code e.g. SUST, COSC etc.
+                                                        Maximum of Four letter course code e.g. SUST, ASL, COSC etc.
                                                     </small>
                                                 </div>
                                         </div>
 
                                         <div class="form-group row">
-                                            <label for="course_num" class="col-md-3 col-form-label text-md-right">Course
+                                            <label for="course_num" class="col-md-3 col-form-label text-md-right"><span class="requiredField">*</span>Course
                                                 Number</label>
 
                                             <div class="col-md-8">
@@ -489,7 +494,7 @@
 
                                         <div class="form-group row">
                                             <label for="course_title"
-                                                class="col-md-3 col-form-label text-md-right">Course Title</label>
+                                                class="col-md-3 col-form-label text-md-right"><span class="requiredField">*</span>Course Title</label>
 
                                             <div class="col-md-8">
                                                 <input id="course_title" type="text"
@@ -505,7 +510,7 @@
                                         </div>
 
                                         <div class="form-group row">
-                                            <label for="course_title" class="col-md-3 col-form-label text-md-right">Year and Semester</label>
+                                            <label for="course_title" class="col-md-3 col-form-label text-md-right"><span class="requiredField">*</span>Year and Semester</label>
 
                                             <div class="col-md-3">
                                                 <select id="course_semester" class="form-control @error('course_semester') is-invalid @enderror"
@@ -544,7 +549,7 @@
                                         </div>
 
                                         <div class="form-group row">
-                                            <label for="course_section" class="col-md-3 col-form-label text-md-right">Course
+                                            <label for="course_section" class="col-md-3 col-form-label text-md-right"><span class="requiredField">*</span>Course
                                                 Section</label>
 
                                             <div class="col-md-4">
@@ -561,16 +566,14 @@
                                         </div>
 
                                         <div class="form-group row">
-                                            <label for="delivery_modality" class="col-md-3 col-form-label text-md-right">
-                                                Delivery Modality
-                                            </label>
+                                            <label for="delivery_modality" class="col-md-3 col-form-label text-md-right"><span class="requiredField">*</span>Mode of Delivery</label>
 
                                             <div class="col-md-3 float-right">
                                                 <select id="delivery_modality" class="form-control @error('delivery_modality') is-invalid @enderror"
                                                 name="delivery_modality" required autofocus>
                                                     <option value="O">online</option>
                                                     <option value="I">in-person</option>
-                                                    <option value="B">blended</option>
+                                                    <option value="B">hybrid</option>
 
                                                 @error('delivery_modality')
                                                 <span class="invalid-feedback" role="alert">
@@ -583,7 +586,7 @@
 
                                         <!-- Passes Information for Ministry Standards -->
                                         <div class="form-group row">
-                                            <label for="standard_category_id" class="col-md-3 col-form-label text-md-right"> Map this course against</label>
+                                            <label for="standard_category_id" class="col-md-3 col-form-label text-md-right"><span class="requiredField">*</span>Map this course against</label>
                                             <div class="col-md-8">
                                                 <select class="form-control" name="standard_category_id" id="standard_category_id" required>
                                                     <option value="" disabled selected hidden>Please Choose...</option>

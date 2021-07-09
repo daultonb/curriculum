@@ -80,11 +80,11 @@ class CourseUserController extends Controller
         //$course->save();
 
 
-        if($course->type == "assigned"){
-            return redirect()->route('programWizard.step3', $request->input('program_id'));
-        }else{
+        //if($course->type == "assigned"){
+        //    return redirect()->route('programWizard.step3', $request->input('program_id'));
+        //}else{
             return redirect()->back();
-        }
+        //}
 
 
     }
