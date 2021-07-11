@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 use Illuminate\Database\Eloquent\Relations\Pivot;
 
-class Course_optional_priorities extends Pivot
+class CourseOptionalPriorities extends Pivot
 {
     use HasFactory;
 

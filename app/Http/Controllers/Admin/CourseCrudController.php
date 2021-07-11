@@ -473,8 +473,8 @@ class CourseCrudController extends CrudController
 
              'type' => "match_table",
 
-             'name' => 'learningOutcomes', // the method on your model that defines the relationship   
-               
+             //'name' => 'learningOutcomes', // the method on your model that defines the relationship   
+              'name' => 'CLOtable', //name of the getter/setter in course model 
              'columns' => [     
                  'l_outcome_id' => 'id-hidden',
                  'l_outcome'    => 'Learning Outcome-text',   
@@ -486,9 +486,9 @@ class CourseCrudController extends CrudController
              'min'     => 0,
              
            ]);
-           $setCLO = [];
-           $req =  $this->crud->getRequest()->request->all();
-           if($req && count($req)&& $req['learningOutcomes']){
+           //$setCLO = [];
+          // $req =  $this->crud->getRequest()->request->all();
+          /* if($req && count($req)&& $req['learningOutcomes']){
                //above condition means the page has loaded already and is being submitted
                //so delete all records for this course that arent still on the table, and then add the ones in the table
                $records = json_decode($req['learningOutcomes']);
@@ -502,7 +502,7 @@ class CourseCrudController extends CrudController
                }
                
            }
-           if($req)removeWithChildRecords("clo",$setOfCLO, $setCLO); //type(str), setInDB, setOnPage. recursively removes invalid child records to avoid DB clutter
+           if($req)removeWithChildRecords("clo",$setOfCLO, $setCLO);*/ //type(str), setInDB, setOnPage. recursively removes invalid child records to avoid DB clutter
           
 
           
@@ -511,8 +511,8 @@ class CourseCrudController extends CrudController
 
              'type' => "assess_table",
 
-             'name' => 'AssessmentMethod', // the method on your model that defines the relationship
-               
+             //'name' => 'assessmentMethods', // the method on your model that defines the relationship
+             'name' => 'AMtable', //name of the getter/setter in course model 
              'default' => 'testing default string',
              
              'ajax' => true,  
@@ -530,8 +530,8 @@ class CourseCrudController extends CrudController
            
            
            
-           $setAM = [];
-           if($req && count($req)&& $req['assessmentMethods']){              
+           //$setAM = [];
+           /*if($req && count($req)&& $req['assessmentMethods']){              
                //above condition means the page has loaded already and is being submitted              
                $records = json_decode($req['assessmentMethods']);               
                               
@@ -543,15 +543,15 @@ class CourseCrudController extends CrudController
                        \App\Models\AssessmentMethod::create(['course_id' => $req['course_id'],'a_method' => $entry->a_method, 'weight' => $entry->weight]);
                } 
            }
-           if($req)removeWithChildRecords("am", $setOfAM, $setAM);
+           if($req)removeWithChildRecords("am", $setOfAM, $setAM);*/
              
             $this->crud->addField([   // relationship
              'label' => "Learning Activities",
 
              'type' => "match_table",
 
-             'name' => 'LearningActivity', // the method on your model that defines the relationship
-               
+             //'name' => 'learningActivities', // the method on your model that defines the relationship
+             'name' => 'LAtable', //name of the getter/setter in course model  
              'default' => 'testing default string',
              
              'ajax' => true,  
@@ -565,8 +565,8 @@ class CourseCrudController extends CrudController
              'min'     => 0,
              
            ]);
-           $setLA = [];
-           if($req && count($req)&& $req['learningActivities']){
+           //$setLA = [];
+           /*if($req && count($req)&& $req['learningActivities']){
                //above condition means the page has loaded already and is being submitted
                //so delete all records for this course that arent still on the table, and then add the ones in the table
                $records = json_decode($req['learningActivities']);
@@ -579,7 +579,12 @@ class CourseCrudController extends CrudController
                        \App\Models\LearningActivity::create(['course_id' => $req['course_id'],'l_activity' => $entry->l_activity]);
                }               
            }
-           if($req)removeWithChildRecords("la", $setOfLA, $setLA);
+           if($req)removeWithChildRecords("la", $setOfLA, $setLA);*/
+           
+           
+           
+           
+           $req =  $this->crud->getRequest()->request->all();
            //course alignment
            //create a table, fill the fields using custom code. each checkbox has a name with (oas|oac)-cID-aID (where aID is the other ID type)
            ///start with a row for each CLO
@@ -895,8 +900,8 @@ class CourseCrudController extends CrudController
 }
 
 //delete the records removed and all of their children
-
-function removeWithChildRecords($typStr, $setDB, $setPage){
+//this will be removed once it is certain the new code works
+/*function removeWithChildRecords($typStr, $setDB, $setPage){
     $test = 0;
     $setDel = array_filter($setDB, function($element) use($setPage){
             return !(in_array($element, $setPage));
@@ -917,4 +922,4 @@ function removeWithChildRecords($typStr, $setDB, $setPage){
             DB::table('outcome_assessments')->whereIn('a_method_id', $setDel)->delete();
             break;
     }
-}
+}*/
