@@ -4,3 +4,5 @@
 <li class='nav-item'><a class='nav-link' href='{{ backpack_url('program') }}'><i class='nav-icon la la-question'></i> Programs</a></li>
 <li class='nav-item'><a class='nav-link' href='{{ backpack_url('user') }}'><i class='nav-icon la la-question'></i> Users</a></li>
 <li class='nav-item'><a class='nav-link' href='{{ backpack_url('optional-priority') }}'><i class='nav-icon la la-question'></i> Optional Priorities</a></li>
+<li class='nav-item'><a class='nav-link' href='{{ backpack_url('subcategories') }}'><i class='nav-icon la la-question'></i> Subcategories</a></li>
+<li class='nav-item'><a class='nav-link' href='{{ backpack_url('categories') }}'><i class='nav-icon la la-question'></i> Categories</a></li>

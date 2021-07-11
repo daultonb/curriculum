@@ -19,4 +19,6 @@ Route::group([
     Route::crud('user', 'UserCrudController');
     Route::crud('learningOutcome', 'LearningOutcomeCrudController');
     Route::crud('optional-priority', 'OptionalPriorityCrudController');
+    Route::crud('subcategories', 'SubcategoriesCrudController');
+    Route::crud('categories', 'CategoriesCrudController');
 }); // this should be the absolute last line of this file

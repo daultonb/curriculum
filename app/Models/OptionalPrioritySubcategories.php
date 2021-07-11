@@ -6,7 +6,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class OptionalPrioritySubcategories extends Model
-{
+{   
+    use \Backpack\CRUD\app\Models\Traits\HasIdentifiableAttribute;
+    use \Backpack\CRUD\app\Models\Traits\CrudTrait;
     use HasFactory;
 
     protected $primaryKey ='subcat_id';
@@ -14,9 +16,11 @@ class OptionalPrioritySubcategories extends Model
     protected $table = 'optional_priority_subcategories';
 
     protected $fillable = [
-        'cat_id',
+        'subcat_id',
         'subcat_name',
         'subcat_desc',
+        'cat_id',
+        'sub_postamble'
         //'input_status',
     ];
     public function OptionalPriority(){
