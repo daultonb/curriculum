@@ -174,28 +174,28 @@ class OptionalPriorityCrudController extends CrudController
         ]);
 
         // Subcategory
-        $this->crud->addField([
-            'name' => 'subcat_id', // The db column name
-            'label' => "Subcat Id",// Table column heading
-            'type' => 'number',
-        ]);
+        // $this->crud->addField([
+        //     'name' => 'subcat_id', // The db column name
+        //     'label' => "Subcat Id",// Table column heading
+        //     'type' => 'number',
+        // ]);
 
         $this->crud->addField([
-            'label' => 'Subcategory Name',// Table column heading
+            'label' => 'Subcategory',// Table column heading
             'type' => 'select',
-            'name' => 'subcat_name', // The db column name
+            'name' => 'OptionalPrioritySubcategories', // The db column name
             'entity' =>'OptionalPrioritySubcategories',
             'attribute' =>'subcat_name',
             'model' => "App\Models\OptionalPrioritySubcategories",
         ]);
-        $this->crud->addField([
-            'label' => 'Subcategory Desc',// Table column heading
-            'type' => 'select',
-            'name' => 'subcat_desc', // The db column name
-            'entity' =>'OptionalPrioritySubcategories',
-            'attribute' =>'subcat_desc',
-            'model' => "App\Models\OptionalPrioritySubcategories",
-        ]);
+        // $this->crud->addField([
+        //     'label' => 'Subcategory Desc',// Table column heading
+        //     'type' => 'select',
+        //     'name' => 'subcat_desc', // The db column name
+        //     'entity' =>'OptionalPrioritySubcategories',
+        //     'attribute' =>'subcat_desc',
+        //     'model' => "App\Models\OptionalPrioritySubcategories",
+        // ]);
 
         // Category
 
