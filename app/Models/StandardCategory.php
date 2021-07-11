@@ -37,21 +37,23 @@ class StandardCategory extends Model
         $catID = filter_input(INPUT_SERVER,'PATH_INFO'); 
         $catID = explode("/",$catID)[3];
         $jdata = json_decode($value);
+        if(!is_array($jdata))$jdata = [];
         $existingScales = Standard::where('standard_category_id', $catID)->get();
         $setScales = [];
         foreach($existingScales as $sc){array_push($setScales,$sc->standard_id);}
         $nSc = [];        
-        foreach($jdata as $row){
-            $id = $row->standard_id;
-            if($id)array_push($nSc,$row->standard_id);
-        }
+        foreach($jdata as $row)
+            if(property_exists($row, "standard_id"))
+                array_push($nSc,$row->standard_id);
+        
         $setDel = array_filter($setScales, function($element) use($nSc){
             return !(in_array($element, $nSc));
         });
         foreach($jdata as $row){
-            $id = $row->standard_id;
-            if(in_array($id, $setScales)){
-                Standard::where('standard_id', $id)->update(['s_shortphrase' => $row->s_shortphrase, 's_outcome' => $row->s_outcome]);
+            if(property_exists($row, "standard_id")){
+                $id = $row->standard_id;
+                if(in_array($id, $setScales))
+                    Standard::where('standard_id', $id)->update(['s_shortphrase' => $row->s_shortphrase, 's_outcome' => $row->s_outcome]);
             }
             else{
                 Standard::create(['standard_category_id' => $catID, 's_shortphrase' => $row->s_shortphrase, 's_outcome' => $row->s_outcome]);
