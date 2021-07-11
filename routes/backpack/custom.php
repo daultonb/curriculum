@@ -21,4 +21,6 @@ Route::group([
     Route::crud('optional-priority', 'OptionalPriorityCrudController');
     Route::crud('subcategories', 'SubcategoriesCrudController');
     Route::crud('categories', 'CategoriesCrudController');
+    Route::crud('standard-category', 'StandardCategoryCrudController');
+    Route::crud('standards-scale-category', 'StandardsScaleCategoryCrudController');
 }); // this should be the absolute last line of this file
