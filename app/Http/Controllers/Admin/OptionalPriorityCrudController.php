@@ -65,7 +65,7 @@ class OptionalPriorityCrudController extends CrudController
             'name' => 'OptionalPrioritySubcategories', // The db column name
             'entity' =>'OptionalPrioritySubcategories',
             'attribute' =>'subcat_name',
-            'model' => App\Models\OptionalPrioritySubcategories::class,
+            'model' => 'App\Models\OptionalPrioritySubcategories',
         ]);
        
         // Category
@@ -237,11 +237,11 @@ class OptionalPriorityCrudController extends CrudController
             'name' => 'subcat_desc', // The db column name
             'entity' =>'OptionalPrioritySubcategories',
             'attribute' =>'subcat_desc',
-            'model' => "App\Models\OptionalPrioritySubcategories",
+            'model' => App\Models\OptionalPrioritySubcategories::class,
         ]);
        
         // Category : Cannot show the data from database
-        $this->crud->addColumn([
+        /*$this->crud->addColumn([
             'name' => 'cat_id', // The db column name
             'label' => "Category ID",// Table column heading
             'type' => 'Text'
@@ -253,7 +253,7 @@ class OptionalPriorityCrudController extends CrudController
             'type' => 'Text'
          ]);
 
-        /* $this->crud->addColumn([
+        $this->crud->addColumn([
             'name' => 'cat_desc', // The db column name
             'label' => "Category desc",// Table column heading
             'type' => 'Text'
