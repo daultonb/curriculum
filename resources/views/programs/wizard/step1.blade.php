@@ -339,7 +339,7 @@
                                                         <th class="text-center w-25" width>Actions</th>
                                                     </tr>
 
-                                                    @foreach ($category->plos as $plo) 
+                                                    @foreach ($category->plos as $plo)
                                                     <tr>
                                                         <td>
                                                             <b>{{$plo->plo_shortphrase}}</b><br>
@@ -347,7 +347,7 @@
                                                         </td>
                                                         <td class="text-center align-middle">
                                                 
-                                                            <button type="button" style="width:60px;" class="btn btn-secondary btn-sm m-1" data-toggle="modal" data-target="#editCategoryModal{{$plo->pl_outcome_id}}">
+                                                            <button type="button" style="width:60px;" class="btn btn-secondary btn-sm m-1" data-toggle="modal" data-target="#editPLOModal{{$plo->pl_outcome_id}}">
                                                                 Edit
                                                             </button>
 
@@ -391,7 +391,7 @@
 
 
                                                     <!-- Edit PLO Modal -->
-                                                    <div class="modal fade" id="editPLOModal{{$plo->pl_outcome_id}}" tabindex="-1" role="dialog" aria-labelledby="editPLOModalLabel" aria-hidden="true">
+                                                    <div class="modal fade" id="editPLOModal{{$plo->pl_outcome_id}}" tabindex="-1" role="dialog" aria-labelledby="editPLOModal{{$plo->pl_outcome_id}}" aria-hidden="true">
                                                         <div class="modal-dialog modal-lg" role="document">
                                                             <div class="modal-content">
                                                                 <div class="modal-header">
@@ -478,7 +478,7 @@
                                                         </td>
                                                         <td class="text-center align-middle">
                                                 
-                                                            <button type="button" style="width:60px;" class="btn btn-secondary btn-sm m-1" data-toggle="modal" data-target="#editCategoryModal{{$plo->pl_outcome_id}}">
+                                                            <button type="button" style="width:60px;" class="btn btn-secondary btn-sm m-1" data-toggle="modal" data-target="#editPLOModal{{$plo->pl_outcome_id}}">
                                                                 Edit
                                                             </button>
 

@@ -69,7 +69,7 @@
                                         <div class="modal-dialog modal-lg" role="document">
                                             <div class="modal-content">
                                                 <div class="modal-header">
-                                                    <h5 class="modal-title" id="addProgramCollaboratorModalLabel">Assign Collaborator to Program</h5>
+                                                    <h5 class="modal-title" id="addProgramCollaboratorModalLabel">Assign Collaborator to Program: {{$program->program}}</h5>
                                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                         <span aria-hidden="true">&times;</span>
                                                     </button>
@@ -90,11 +90,12 @@
                                                             @else
 
                                                                 <tr class="table-active">
-                                                                    <th colspan="2">Collaborators</th>
+                                                                    <th colspan="3">Collaborators</th>
                                                                 </tr>
                                                                 @foreach($programUsers[$program->program_id] as $collaborator)
                                                                     @if($collaborator->email != $user->email)
                                                                         <tr>
+                                                                            <td>{{$collaborator->name}}</td>
                                                                             <td>{{$collaborator->email}}</td>
                                                                             <td>
                                                                                 <form action="{{ route('programUser.destroy') }}" method="POST" class="float-left">
@@ -286,7 +287,7 @@
                                                 <div class="modal-content">
                                                     <div class="modal-header">
                                                         <h5 class="modal-title" id="addCourseCollaboratorModal">Add Collaborators to
-                                                            Course</h5>
+                                                            Course: {{$course->course_title}}</h5>
                                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                             <span aria-hidden="true">&times;</span>
                                                         </button>
@@ -305,11 +306,12 @@
                                                                     </tr>
                                                                 @else
                                                                     <tr class="table-active">
-                                                                        <th colspan="2">Collaborators</th>
+                                                                        <th colspan="3">Collaborators</th>
                                                                     </tr>
                                                                     @foreach($courseUsers[$course->course_id] as $collaborator)
                                                                         @if($collaborator->email != $user->email)
                                                                             <tr>
+                                                                                <td>{{$collaborator->name}}</td>
                                                                                 <td>{{$collaborator->email}}</td>
                                                                                 <td>
                                                                                     <form action="{{route('courses.unassign', $course->course_id)}}" method="POST" class="float-right ml-2">
@@ -692,4 +694,11 @@
         $('[data-toggle="tooltip"]').tooltip({html:true});
     });
 </script>
+
+<style> 
+.tooltip-inner {
+    text-align: left;
+}
+</style>
+
 @endsection

@@ -167,16 +167,61 @@ class ProgramWizardController extends Controller
         $program = Program::where('program_id', $program_id)->first();
 
         //progress bar
-        $ploCount = ProgramLearningOutcome::where('program_id', $program_id)->count();;
+        $ploCount = ProgramLearningOutcome::where('program_id', $program_id)->count();
         $msCount = MappingScale::join('mapping_scale_programs', 'mapping_scales.map_scale_id', "=", 'mapping_scale_programs.map_scale_id')
                                     ->where('mapping_scale_programs.program_id', $program_id)->count();
         
         $courseCount = CourseProgram::where('program_id', $program_id)->count();
+
+
+        // get all the courses this program belongs to
+        $programCourses = $program->courses;
+        // get all categories for program
+        $ploCategories = PLOCategory::where('program_id', $program_id)->get();
+        // get plo categories for program
+        $ploProgramCategories = PLOCategory::where('p_l_o_categories.program_id', $program_id)->join('program_learning_outcomes', 'p_l_o_categories.plo_category_id', '=', 'program_learning_outcomes.plo_category_id')->get();
+        // get all plo's
+        $allPLO = ProgramLearningOutcome::where('program_id', $program_id)->get();
+        // get plo's for the program 
+        $plos = DB::table('program_learning_outcomes')->leftJoin('p_l_o_categories', 'program_learning_outcomes.plo_category_id', '=', 'p_l_o_categories.plo_category_id')->where('program_learning_outcomes.program_id', $program_id)->get();
+        
+        // plosPerCategory returns the number of plo's belonging to each category
+        $plosPerCategory = array();
+        foreach($ploProgramCategories as $ploCategory) {
+            $plosPerCategory[$ploCategory->plo_category_id] = 0;
+        }
+        foreach($ploProgramCategories as $ploCategory) {
+            $plosPerCategory[$ploCategory->plo_category_id] += 1;
+        }
+        //
+        $numUncategorizedPLOS = 0;
+        foreach ($allPLO as $plo) {
+            if ($plo->plo_category_id == null){
+                $numUncategorizedPLOS ++;
+            }
+        }
+
+        // returns true if there exists a plo without a category
+        $hasUncategorized = false;
+        foreach ($plos as $plo) {
+            if ($plo->plo_category == NULL) {
+                $hasUncategorized = true;
+            }
+        }
+
+        // get all CLO's for each course in the program
+        $coursesOutcomes = array();
+        foreach ($programCourses as $programCourse) {
+            $learningOutcomes = $programCourse->learningOutcomes;
+            $coursesOutcomes[$programCourse->course_id] = $learningOutcomes;
+        }
         
 
         return view('programs.wizard.step4')->with('program', $program)
                                             ->with("faculties", $faculties)->with("departments", $departments)->with("levels",$levels)->with('user', $user)->with('programUsers',$programUsers)
-                                            ->with('ploCount',$ploCount)->with('msCount', $msCount)->with('courseCount', $courseCount);
+                                            ->with('ploCount',$ploCount)->with('msCount', $msCount)->with('courseCount', $courseCount)->with('programCourses', $programCourses)->with('coursesOutcomes', $coursesOutcomes)
+                                            ->with('ploCategories', $ploCategories)->with('plos', $plos)->with('hasUncategorized', $hasUncategorized)->with('ploProgramCategories', $ploProgramCategories)->with('plosPerCategory', $plosPerCategory)
+                                            ->with('numUncategorizedPLOS', $numUncategorizedPLOS);
     }
 
 
