@@ -43,13 +43,13 @@ class CategoriesCrudController extends CrudController
     {
         $this->crud->addColumn([
             'name' =>'cat_id',
-            'label'=>"Cat id",
+            'label'=>"Category ID",
             'type' =>'number',
         ]);
 
         $this->crud->addColumn([
             'name'=>'cat_name',
-            'label'=>"Cat Name",
+            'label'=>"Category Name",
             'type'=>'Text',
         ]);
 
@@ -73,14 +73,14 @@ class CategoriesCrudController extends CrudController
         
         $this->crud->addField([
             'name'=>'cat_id',
-            'label'=>'Cat Id',
+            'label'=>'Category Id',
             'type' =>'number',
             'default'=>$catId+1,
         ]);
 
         $this->crud->addField([
             'name'=>'cat_name',
-            'label'=>'Cat Name',
+            'label'=>'Category Name',
             'type' =>'Text',
         ]);
 
@@ -99,19 +99,23 @@ class CategoriesCrudController extends CrudController
      */
     protected function setupUpdateOperation()
     {
-        $this->setupCreateOperation();
+        $this->crud->addField([
+            'name'=>'cat_name',
+            'label'=>'Category Name',
+            'type' =>'Text',
+        ]);
     }
     protected function setupShowOperation()
     {
         $this->crud->set('show.setFromDb', false);
         $this->crud->addColumn([
             'name' =>'cat_id',
-            'label' =>"Cat Id",
+            'label' =>"Category ID",
             'type' =>'number',
         ]);
         $this->crud->addColumn([
             'name' =>'cat_name',
-            'label' =>"Cat Name",
+            'label' =>"Category Name",
             'type' =>'Text',
         ]);
     }
