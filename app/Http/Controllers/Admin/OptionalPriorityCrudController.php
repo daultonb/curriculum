@@ -176,7 +176,7 @@ class OptionalPriorityCrudController extends CrudController
         // ]);
 
         $this->crud->addField([
-            'label' => 'Subcategory',// Table column heading
+            'label' => 'Subcategory Name',// Table column heading
             'type' => 'select',
             'name' => 'subcat_name', // The db column name
             'entity' =>'OptionalPrioritySubcategories',
