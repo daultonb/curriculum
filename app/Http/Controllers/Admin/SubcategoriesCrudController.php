@@ -132,10 +132,15 @@ class SubcategoriesCrudController extends CrudController
      */
     protected function setupUpdateOperation()
     {
+        CRUD::setValidation(SubcategoriesRequest::class);
+        $subid = \DB::table('optional_priority_subcategories')->count();
         $this->crud->addField([
             'name'=>'subcat_id',
             'label'=>'Subcat Id',
-            'type' =>'number',
+            'type' => 'number',
+            'default' =>$subid+1,
+            'attributes'=>['readonly'=>'readonly',
+                           ],
         ]);
 
         $this->crud->addField([
