@@ -76,6 +76,8 @@ class CategoriesCrudController extends CrudController
             'label'=>'Cat Id',
             'type' =>'number',
             'default'=>$catId+1,
+            'attributes'=>['readonly'=>'readonly',
+                           ],
         ]);
 
         $this->crud->addField([

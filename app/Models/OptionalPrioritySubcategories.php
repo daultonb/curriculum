@@ -23,6 +23,7 @@ class OptionalPrioritySubcategories extends Model
         'sub_postamble'
         //'input_status',
     ];
+    protected $guarded = ['subcat_id'];
     public function OptionalPriority(){
         return $this-> hasMany(OptionalPriority::class,'subcat_id','subcat_id');
     }

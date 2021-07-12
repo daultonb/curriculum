@@ -14,9 +14,9 @@ class OptionalPriorityCategories extends Model
     protected $primaryKey ='cat_id';
     
     protected $table = 'optional_priority_categories';
-
-    protected $fillable = [     
-        'cat_id',   
+    protected $guarded = ['cat_id'];
+    protected $fillable = [  
+        'cat_id',    
         'cat_name'   
     ];
     public function OptionalPrioritySubcategories(){
