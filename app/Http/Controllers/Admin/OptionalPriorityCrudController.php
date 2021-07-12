@@ -62,7 +62,7 @@ class OptionalPriorityCrudController extends CrudController
         $removeHTML = strip_tags('subcat_name');
         $this->crud->addColumn([
             'label' => 'Subcategory Name',// Table column heading
-            'type' => 'select',
+            'type' => 'strip_select',
             'name' => 'OptionalPrioritySubcategories', // The db column name
             'entity' =>'OptionalPrioritySubcategories',
             'attribute' => $removeHTML,
