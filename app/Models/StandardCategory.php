@@ -50,11 +50,12 @@ class StandardCategory extends Model
             return !(in_array($element, $nSc));
         });
         foreach($jdata as $row){
+            $id = -1;
             if(property_exists($row, "standard_id")){
                 $id = $row->standard_id;
-                if(in_array($id, $setScales))
-                    Standard::where('standard_id', $id)->update(['s_shortphrase' => $row->s_shortphrase, 's_outcome' => $row->s_outcome]);
             }
+            if(in_array($id, $setScales))
+                    Standard::where('standard_id', $id)->update(['s_shortphrase' => $row->s_shortphrase, 's_outcome' => $row->s_outcome]);            
             else{
                 Standard::create(['standard_category_id' => $catID, 's_shortphrase' => $row->s_shortphrase, 's_outcome' => $row->s_outcome]);
             }

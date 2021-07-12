@@ -46,23 +46,24 @@ class StandardsScaleCategory extends Model
         foreach($existingScales as $sc){array_push($setScales,$sc->standard_scale_id);}
         $nSc = [];        
         foreach($jdata as $row)
-            if(property_exists($row, "scale_category_id"))
-                array_push($nSc,$row->scale_category_id);
+            if(property_exists($row, "standard_scale_id"))
+                array_push($nSc,$row->standard_scale_id);
         
         $setDel = array_filter($setScales, function($element) use($nSc){
             return !(in_array($element, $nSc));
         });
         foreach($jdata as $row){
-            if(property_exists($row, "scale_category_id")){
+            $id=-1;
+            if(property_exists($row, "standard_scale_id")){
                 $id = $row->standard_scale_id;
-                if(in_array($id, $setScales))
-                    StandardScale::where('scale_category_id', $id)->update(['title' => $row->title, 'abbreviation' => $row->abbreviation, 'description' => $row->description, 'colour' => $row->colour]);
             }
+            if(in_array($id, $setScales))
+                    StandardScale::where('standard_scale_id', $id)->update(['title' => $row->title, 'abbreviation' => $row->abbreviation, 'description' => $row->description, 'colour' => $row->colour]);
             else{
                 StandardScale::create(['scale_category_id' => $catID, 'title' => $row->title, 'abbreviation' => $row->abbreviation, 'description' => $row->description, 'colour' => $row->colour]);
             }
         }
         
-        StandardScale::whereIn('scale_category_id', $setDel)->delete();
+        StandardScale::whereIn('standard_scale_id', $setDel)->delete();
     }
 }
