@@ -272,9 +272,7 @@ class CourseCrudController extends CrudController
      * @return void
      */
     protected function setupUpdateOperation()
-    {
-       // $this->setupCreateOperation();
-       
+    {      
         
         $this->crud->addField([
             'name' => 'course_code', // The db column name
@@ -313,22 +311,9 @@ class CourseCrudController extends CrudController
             'wrapper' => ['class' => 'form-group col-md-12'],
             
           ]);
-        
-            
-        /*$this->crud->addField([
-            // 1-n relationship
-            'label'     => 'Program', // Table column heading
-            'type'      => 'select',
-            'name'      => 'program_id', // the column that contains the ID of that connected entity;
-            'entity'    => 'programs', // the method that defines the relationship in your Model
-            'attribute' => 'program', // foreign key attribute that is shown to user
-            'model'     => "App\Models\Program", // foreign key model
-
-          ]);
-            */
-          //this is necesary to accommodate the new course_program relationship
+          
           $this->crud->addField([
-            // 1-n relationship
+            // n-n relationship //this is necesary to accommodate the new course_program relationship
             'label'     => 'Program', // Table column heading
             'type'      => 'select2_multiple',
             'name'      => 'programs', // the column that contains the ID of that connected entity;
@@ -336,11 +321,9 @@ class CourseCrudController extends CrudController
             'attribute' => 'program', // foreign key attribute that is shown to user
             'model'     => "App\Models\Program", // foreign key model
             'placeholder' => "Select a program", // placeholder for the select2 input
-
             'pivot'     => true,
-
-          ]);
-        
+          ]);    
+          
         $this->crud->addField([   // radio
             'name'        => 'status', // the name of the db column
             'label'       => 'Status', // the input label
@@ -353,7 +336,6 @@ class CourseCrudController extends CrudController
             // optional
             //'inline'      => false, // show the radios all on the same line?
         ]);
-
         
         $this->crud->addField([   // relationship
             'label' => "Assigned Instructors",
@@ -486,25 +468,6 @@ class CourseCrudController extends CrudController
              'min'     => 0,
              
            ]);
-           //$setCLO = [];
-          // $req =  $this->crud->getRequest()->request->all();
-          /* if($req && count($req)&& $req['learningOutcomes']){
-               //above condition means the page has loaded already and is being submitted
-               //so delete all records for this course that arent still on the table, and then add the ones in the table
-               $records = json_decode($req['learningOutcomes']);
-               
-               foreach($records as $entry){if(property_exists($entry, "l_outcome_id"))array_push($setCLO, $entry->l_outcome_id);}   
-               foreach($records as $entry){
-                   if(property_exists($entry, "l_outcome_id") && in_array($entry->l_outcome_id,$setOfCLO))//update instead of adding here
-                       \App\Models\LearningOutcome::where('l_outcome_id', $entry->l_outcome_id)->update(['l_outcome' => $entry->l_outcome, 'clo_shortphrase' => $entry->clo_shortphrase]);
-                   else
-                       \App\Models\LearningOutcome::create(['course_id' => $req['course_id'],'l_outcome' => $entry->l_outcome, 'clo_shortphrase' => $entry->clo_shortphrase]);
-               }
-               
-           }
-           if($req)removeWithChildRecords("clo",$setOfCLO, $setCLO);*/ //type(str), setInDB, setOnPage. recursively removes invalid child records to avoid DB clutter
-          
-
           
            $this->crud->addField([   // relationship
              'label' => "Assessment Methods",
@@ -527,23 +490,6 @@ class CourseCrudController extends CrudController
              'min'     => 0,
              
            ]);
-           
-           
-           
-           //$setAM = [];
-           /*if($req && count($req)&& $req['assessmentMethods']){              
-               //above condition means the page has loaded already and is being submitted              
-               $records = json_decode($req['assessmentMethods']);               
-                              
-               foreach($records as $entry){if(property_exists($entry, "a_method_id"))array_push($setAM, $entry->a_method_id);}                
-               foreach($records as $entry){
-                   if(property_exists($entry, "a_method_id") && in_array($entry->a_method_id,$setOfAM))//update instead of adding here
-                       \App\Models\AssessmentMethod::where('a_method_id', $entry->a_method_id)->update(['weight' => $entry->weight,'a_method' => $entry->a_method]);
-                   else
-                       \App\Models\AssessmentMethod::create(['course_id' => $req['course_id'],'a_method' => $entry->a_method, 'weight' => $entry->weight]);
-               } 
-           }
-           if($req)removeWithChildRecords("am", $setOfAM, $setAM);*/
              
             $this->crud->addField([   // relationship
              'label' => "Learning Activities",
@@ -565,25 +511,7 @@ class CourseCrudController extends CrudController
              'min'     => 0,
              
            ]);
-           //$setLA = [];
-           /*if($req && count($req)&& $req['learningActivities']){
-               //above condition means the page has loaded already and is being submitted
-               //so delete all records for this course that arent still on the table, and then add the ones in the table
-               $records = json_decode($req['learningActivities']);
-               
-               foreach($records as $entry){if(property_exists($entry, "l_activity_id"))array_push($setLA, $entry->l_activity_id);}              
-               foreach($records as $entry){
-                   if(property_exists($entry, "l_activity_id") && in_array($entry->l_activity_id,$setOfLA))//update instead of adding here
-                       \App\Models\LearningActivity::where('l_activity_id', $entry->l_activity_id)->update(['l_activity' => $entry->l_activity]);
-                   else
-                       \App\Models\LearningActivity::create(['course_id' => $req['course_id'],'l_activity' => $entry->l_activity]);
-               }               
-           }
-           if($req)removeWithChildRecords("la", $setOfLA, $setLA);*/
-           
-           
-           
-           
+                      
            $req =  $this->crud->getRequest()->request->all();
            //course alignment
            //create a table, fill the fields using custom code. each checkbox has a name with (oas|oac)-cID-aID (where aID is the other ID type)
@@ -629,8 +557,7 @@ class CourseCrudController extends CrudController
              'name' => 'align_table',
                
              'value' => $custHTML,
-            ]);
-           //using set of CLO IDs delete all existing records connecting with these parameters
+            ]);           
            
             if($req && count($req)){
                 $r = DB::table('outcome_assessments')->whereIn('l_outcome_id',  $setOfCLO)->delete();
@@ -651,8 +578,10 @@ class CourseCrudController extends CrudController
             }     
             
             //create custom html for mapping table: data collected as an array of radio buttons for each mapping with name code: map_CLOid_PLOid
-            $buttonClass1 = "margin:0;padding:.5em;border:2px outset rgb(30,50,220,.9);background-color:rgb(30,50,220,.6);";
-            $buttonClass2 = "margin:0;padding:.5em;border:2px outset rgb(30,220,50,.9);background-color:rgb(30,220,50,.6);";
+            $buttonClass1 = "margin:0;padding:.5em;border:2px outset rgba(255, 255, 255,1.0);background-color:rgba(12, 35, 68,1.0);"; //dark ubc blue
+            $buttonClass2 = "margin:5px 15px;padding:.5em;border:2px outset rgba(12, 35, 68,1.0);background-color:rgba(0, 85, 183,1.0);"; //deep blue
+            $textClass2 = "color:rgb(151, 212, 233,1.0)"; //light blue
+            $textClass1 = "color:rgb(255, 255, 255,1.0)"; //white
             
             $custHTML = "<div><label>Objective Mapping</label>";           
             //standards are roughly analogous to program outcomes, but there is one standard category per course. 
@@ -668,7 +597,7 @@ class CourseCrudController extends CrudController
                             . "let ch = document.getElementById(&quot;plomap_".$program->program_id."&quot;);\n"
                             . "ch.hidden = !(ch.hidden);\n"
                           . "})();\"";
-                $custHTML .= "<div $PFunc><div style=\"$buttonClass1\"><h3 >$program->program</h3></div></div>"
+                $custHTML .= "<div $PFunc><div style=\"$buttonClass1\"><h3 style=\"$textClass1\">$program->program</h3></div></div>"
                            . "<table id=\"plomap_$program->program_id\" class=\"table table-sm table-striped m-b-0\" hidden>";
                 $PLOs = DB::table('program_learning_outcomes')->where('program_id', $program->program_id)->get();
                 $OCmaps = DB::table('outcome_maps')->whereIn('l_outcome_id', $setOfCLO)->get();
@@ -738,7 +667,7 @@ class CourseCrudController extends CrudController
                             . "let ch = document.getElementById(&quot;category_".$cat->cat_id."&quot;);\n"
                             . "ch.hidden = !(ch.hidden);\n"
                           . "})();\"";
-                $custHTML .= "<div $catFunc><div style=\"$buttonClass1\"><h3>$cat->cat_name</h3></div></div><div id=\"category_".$cat->cat_id."\"  hidden>";
+                $custHTML .= "<div $catFunc><div style=\"$buttonClass1\"><h3 style=\"$textClass1\">$cat->cat_name</h3></div></div><div id=\"category_".$cat->cat_id."\"  hidden>";
                 //create header for cat
                 $setSubCat = DB::table('optional_priority_subcategories')->where('cat_id', $cat->cat_id)->get();
                 foreach($setSubCat as $subcat){
@@ -746,7 +675,7 @@ class CourseCrudController extends CrudController
                             . "let ch = document.getElementById(&quot;subcategory_".$subcat->subcat_id."&quot;);\n"
                             . "ch.hidden = !(ch.hidden);\n"
                           . "})();\"";
-                    $custHTML .= "<div $subcatFunc><div style=\"$buttonClass2\"><h4>$subcat->subcat_name</h4></div></div><table id=\"subcategory_".$subcat->subcat_id."\" class=\"table table-sm table-striped m-b-0\"  hidden>";
+                    $custHTML .= "<div $subcatFunc><div style=\"$buttonClass2\"><h4 style=\"$textClass2\">$subcat->subcat_name</h4></div></div><table id=\"subcategory_".$subcat->subcat_id."\" class=\"table table-sm table-striped m-b-0\"  hidden>";
                               
                     //create header for subcat
                     $scop = DB::table('optional_priorities')->where('subcat_id',$subcat->subcat_id)->get();
@@ -754,7 +683,7 @@ class CourseCrudController extends CrudController
                         //create row with checkbox for each OP
                         $opid = $op->op_id;
                         $chk = (count($setOpPr->where('op_id', $opid)) > 0) ? "checked" : "";
-                        $custHTML .= "<tr><td >". $op->optional_priority."</td><td><input type=\"checkbox\" name=\"opp_$opid\" $chk></td>";
+                        $custHTML .= "<tr><td><input type=\"checkbox\" name=\"opp_$opid\" $chk></td><td >". $op->optional_priority."</td></tr>";
                         
                     }
                     $custHTML .= "</table>";
@@ -827,9 +756,7 @@ class CourseCrudController extends CrudController
                 // the key will be stored in the db, the value will be shown as label; 
                 -1 => "In Progress",
                 1 => "Completed"
-            ],
-            // optional
-            //'inline'      => false, // show the radios all on the same line?
+            ],            
         ]);
 
         $this->crud->addColumn([   // radio
@@ -840,9 +767,7 @@ class CourseCrudController extends CrudController
                 // the key will be stored in the db, the value will be shown as label; 
                 -1 => "No",
                 1 => "Yes"
-            ],
-            // optional
-            //'inline'      => false, // show the radios all on the same line?
+            ],            
         ]);
         
         $this->crud->addColumn([  
@@ -854,72 +779,7 @@ class CourseCrudController extends CrudController
             'entity'       => 'users', // the method that defines the relationship in your Model
             'attribute'    => 'email', // foreign key attribute that is shown to user
             'model'        => App\Models\User::class, // foreign key model
-         ]);
-
-        // $this->crud->addColumn([  
-        //     // any type of relationship
-        //     'name'         => 'learningOutcomes', // name of relationship method in the model
-        //     'type'         => 'relationship',
-        //     'label'        => 'Learning Outcomes', // Table column heading
-        //     // OPTIONAL
-        //     'entity'       => 'learningOutcomes', // the method that defines the relationship in your Model
-        //     'attribute'    => 'l_outcome', // foreign key attribute that is shown to user
-        //     'model'        => App\Models\LearningOutcome::class, // foreign key model
-        //  ]);
-
-        // $this->crud->addColumn([  
-        //     // any type of relationship
-        //     'name'         => 'learningActivities', // name of relationship method in the model
-        //     'type'         => 'relationship',
-        //     'label'        => 'Learning Activities', // Table column heading
-        //     // OPTIONAL
-        //     'entity'       => 'learningActivities', // the method that defines the relationship in your Model
-        //     'attribute'    => 'l_activity', // foreign key attribute that is shown to user
-        //     'model'        => App\Models\LearningActivity::class, // foreign key model
-        //  ]);
-        
-        // $this->crud->addColumn([  
-        //     // any type of relationship
-        //     'name'         => 'assessmentMethods', // name of relationship method in the model
-        //     'type'         => 'relationship',
-        //     'label'        => 'Assessment Methods', // Table column heading
-        //     // OPTIONAL
-        //     'entity'       => 'assessmentMethods', // the method that defines the relationship in your Model
-        //     'attribute'    => 'a_method', // foreign key attribute that is shown to user
-        //     'model'        => App\Models\AssessmentMethod::class, // foreign key model
-        //  ]);
-
-        
-
-        /**
-         * Fields can be defined using the fluent syntax or array syntax:
-         * - CRUD::field('price')->type('number');
-         * - CRUD::addField(['name' => 'price', 'type' => 'number'])); 
-         */
+         ]);        
     }
+    
 }
-
-//delete the records removed and all of their children
-//this will be removed once it is certain the new code works
-/*function removeWithChildRecords($typStr, $setDB, $setPage){
-    $test = 0;
-    $setDel = array_filter($setDB, function($element) use($setPage){
-            return !(in_array($element, $setPage));
-        }); //this is the difference of the database and the page records (by ID)
-    switch($typStr){        
-        case "clo": //outcome activies, outcome assessments, outcome maps need to be removed
-            DB::table('learning_outcomes')->whereIn('l_outcome_id', $setDel)->delete();
-            DB::table('outcome_assessments')->whereIn('l_outcome_id', $setDel)->delete();
-            DB::table('outcome_activities')->whereIn('l_outcome_id', $setDel)->delete();
-            DB::table('outcome_maps')->whereIn('l_outcome_id', $setDel)->delete();
-            break;
-        case "la": //outcome activities
-            DB::table('learning_activities')->whereIn('l_activity_id', $setDel)->delete();
-            DB::table('outcome_activities')->whereIn('l_activity_id', $setDel)->delete();
-            break;
-        case "am": //outcome assessments
-            DB::table('assessment_methods')->whereIn('a_method_id', $setDel)->delete();
-            DB::table('outcome_assessments')->whereIn('a_method_id', $setDel)->delete();
-            break;
-    }
-}*/

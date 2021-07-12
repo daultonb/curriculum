@@ -62,7 +62,10 @@ class StandardCategoryCrudController extends CrudController
         $this->crud->addField([
             'name' => 'sc_name', // The db column name
             'label' => "Standard Category Name", // Table column heading
-            'type' => 'Text'
+            'type' => 'valid_text',
+            'attributes' => [
+                        'req' => 'true',
+                        ],
          ]);
         
       
@@ -80,7 +83,10 @@ class StandardCategoryCrudController extends CrudController
         $this->crud->addField([
             'name' => 'sc_name', // The db column name
             'label' => "Standard Category Name", // Table column heading
-            'type' => 'Text'
+            'attributes' => [
+                        'req' => 'true',
+                        ],
+            'type' => 'valid_text'
          ]);
         
         $this->crud->addField([   // repeatable
@@ -93,19 +99,27 @@ class StandardCategoryCrudController extends CrudController
                     'name'    => 'standard_id',
                     'type'    => 'Text',
                     'label'   => 'Id',
-                    'attribute' => ['hidden' => 'true'],
+                    'attributes' => [
+                        'disabled' => 'true',
+                        ],
                     'wrapper' => ['class' => 'form-group col-md-2'],
                 ],
                 [
                     'name'    => 's_shortphrase',
                     'type'    => 'text',
                     'label'   => 'Standard Shortphrase',
+                    'attributes' => [
+                        'req' => 'true',
+                        ],
                     'wrapper' => ['class' => 'form-group col-md-4'],
                 ],
                 [
                     'name'    => 's_outcome',
                     'type'    => 'easymde',
-                    'label'   => 'Standard Outcome',                    
+                    'label'   => 'Standard Outcome', 
+                    'attributes' => [
+                        'req' => 'true',
+                        ],
                 ],              
             ],
 

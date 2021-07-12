@@ -19,7 +19,7 @@
         <p class="help-block">{!! $field['hint'] !!}</p>
     @endif
 </div>
-@include('crud::fields.inc.wrapper_end')
+
 
 {{-- ########################################## --}}
 {{-- Extra CSS and JS for this particular field --}}
@@ -37,7 +37,7 @@
         $(document).ready(function(){           
             $(document).on('submit', 'form', function(e){
                 let stopSubmit = false;
-                let eleList = document.querySelectorAll('tr[class$=array-row] td input[req=true]');
+                let eleList = document.querySelectorAll('input[req=true]');
                 eleList.forEach((ele) => {
                     if((ele.type != "checkbox") && ele.value.length == 0){                        
                         stopSubmit = true;                        

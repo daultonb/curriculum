@@ -85,7 +85,7 @@
                 <tr>
                 @foreach( $field['columns'] as $column => $label)
                     <?php $coltype = explode('-', $label)[1];
-                    if($coltype == "number")$coltype = "<input type=\"number\" id=\"total_".$column."_\">";
+                    if($coltype == "number")$coltype = "<label>Total:</label><input disabled type=\"number\" id=\"total_".$column."_\">";
                     else $coltype = "";
                     ?>  
                 <td>{!! $coltype !!}</td>
@@ -254,7 +254,9 @@
             });
             $(document).on('submit', 'form', function(e){
                 let stopSubmit = false;
-                let eleList = document.querySelectorAll('tr[class$=array-row] td input[req=true]');
+                let eleList = Array.prototype.slice.call(document.querySelectorAll('tr[class$=array-row] td input[req=true]'));
+                let eL2 = Array.prototype.slice.call(document.querySelectorAll('div input[req=true]'));
+                eleList.push.apply(eleList,eL2);
                 eleList.forEach((ele) => {
                     if((ele.type != "checkbox") && ele.value.length == 0){                        
                         stopSubmit = true;                        

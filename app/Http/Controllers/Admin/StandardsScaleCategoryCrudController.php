@@ -62,13 +62,19 @@ class StandardsScaleCategoryCrudController extends CrudController
         $this->crud->addField([
             'name' => 'name', // The db column name
             'label' => "Standard Scale Category Name", // Table column heading
-            'type' => 'Text'
+            'type' => 'valid_text',
+            'attributes' => [
+                        'req' => 'true',
+                        ],
          ]);
 
          $this->crud->addField([
             'name' => 'description', // The db column name
             'label' => "Description", // Table column heading
-            'type' => 'Text'
+            'type' => 'textarea',
+             'attributes' => [
+                        'req' => 'true',
+                        ],
          ]);
         /**
          * Fields can be defined using the fluent syntax or array syntax:
@@ -88,7 +94,10 @@ class StandardsScaleCategoryCrudController extends CrudController
               $this->crud->addField([
             'name' => 'name', // The db column name
             'label' => "Standard Scale Category Name", // Table column heading
-            'type' => 'Text'
+            'type' => 'valid_text',
+            'attributes' => [
+                  'req' => 'true',
+                  ],
          ]);
               
          $this->crud->addField([
@@ -108,19 +117,25 @@ class StandardsScaleCategoryCrudController extends CrudController
                     'name'    => 'standard_scale_id',
                     'type'    => 'Text',
                     'label'   => 'Id',
-                    'attribute' => ['hidden' => 'true'],
+                    'attributes' => ['disabled' => 'true'],
                     'wrapper' => ['class' => 'form-group col-md-2'],
                 ],
                 [
                     'name'    => 'title',
                     'type'    => 'Text',
                     'label'   => 'Title',
+                    'attributes' => [
+                        'req' => 'true',
+                        ],
                     'wrapper' => ['class' => 'form-group col-md-5'],
                 ],
                 [
                     'name'    => 'abbreviation',
                     'type'    => 'text',
                     'label'   => 'Abbreviation',
+                    'attributes' => [
+                        'req' => 'true',
+                        ],
                     'wrapper' => ['class' => 'form-group col-md-3'],
                     
                 ],   
@@ -140,7 +155,7 @@ class StandardsScaleCategoryCrudController extends CrudController
                 ], 
                 [
                     'name'    => 'description',
-                    'type'    => 'text',
+                    'type'    => 'textarea',
                     'label'   => 'Description',  
                 ], 
             ],
