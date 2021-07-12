@@ -155,12 +155,17 @@ class OptionalPriorityCrudController extends CrudController
      // Edit 
     protected function setupUpdateOperation()
     {
-        //$this->setupCreateOperation();
+        CRUD::setValidation(OptionalPriorityRequest::class);
+        $op_id_num = \DB::table('optional_priorities')->count();
+        
         // Priority
         $this->crud->addField([
-            'name' =>'op_id',
-            'label' => "OptionalPriority Id",
+            'name' => 'op_id', // The db column name
+            'label' => "OptionalPriority Id",// Table column heading
             'type' => 'number',
+            'default' => $op_id_num + 1,
+            'attributes'=>['readonly'=>'readonly',
+                           ],
         ]);
         $this->crud->addField([
             'name' => 'optional_priority', // The db column name
@@ -178,7 +183,7 @@ class OptionalPriorityCrudController extends CrudController
         $this->crud->addField([
             'label' => 'Subcategory Name',// Table column heading
             'type' => 'select',
-            'name' => 'subcat_name', // The db column name
+            'name' => 'OptionalPrioritySubcategories', // The db column name
             'entity' =>'OptionalPrioritySubcategories',
             'attribute' =>'subcat_name',
             'model' => "App\Models\OptionalPrioritySubcategories",
@@ -218,25 +223,6 @@ class OptionalPriorityCrudController extends CrudController
             'attribute' =>'subcat_name',
             'model' => App\Models\OptionalPrioritySubcategories::class,
         ]);
-       
-        // Category : Cannot show the data from database
-        /*$this->crud->addColumn([
-            'name' => 'cat_id', // The db column name
-            'label' => "Category ID",// Table column heading
-            'type' => 'Text'
-         ]);
-
-        $this->crud->addColumn([
-            'name' => 'cat_name', // The db column name
-            'label' => "Category Name",// Table column heading
-            'type' => 'Text'
-         ]);
-
-        $this->crud->addColumn([
-            'name' => 'cat_desc', // The db column name
-            'label' => "Category desc",// Table column heading
-            'type' => 'Text'
-        ]);*/
 
     }
 
