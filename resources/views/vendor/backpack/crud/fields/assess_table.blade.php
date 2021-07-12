@@ -50,7 +50,8 @@
             <thead>
                 <tr>
                     @foreach( $field['columns'] as $column )
-                    <?php $colname = explode('-', $column)[0];
+                    <?php $details = explode('-', $column);
+                    $colname = $details[0];                    
                     if($colname == "id")$colname = "";?>
                     <th style="font-weight: 600!important;">
                         {{ $colname }}
@@ -65,9 +66,11 @@
 
                 <tr class="array-row clonable" style="display: none;">
                     @foreach( $field['columns'] as $column => $label)
-                    <?php $totalcol = ((explode('-', $label)[1]) == "number") ? " totaled_".$column."_" : "" ?>
+                    <?php $details = explode('-', $label);                    
+                    $isreq = (isset($details[2])) ? "req=true" : "";                    
+                    $totalcol = (isset($details[1]) && $details[1] == "number") ? " totaled_".$column."_" : "" ?>
                     <td>
-                        <input class="form-control form-control-sm{{ $totalcol }}"  <?php   $typ =  "type=" . explode('-',$label)[1]; ?> {{ $typ }} data-cell-name="item.{{ $column }}">
+                        <input class="form-control form-control-sm{{ $totalcol }}"  <?php   $typ =  "type=" . explode('-',$label)[1]; ?> {{ $typ }} {{ $isreq }} data-cell-name="item.{{ $column }}">
                     </td>
                     @endforeach
                     <td>
@@ -251,7 +254,7 @@
             });
             $(document).on('submit', 'form', function(e){
                 let stopSubmit = false;
-                let eleList = document.querySelectorAll('input[req=true]');
+                let eleList = document.querySelectorAll('tr[class$=array-row] td input[req=true]');
                 eleList.forEach((ele) => {
                     if((ele.type != "checkbox") && ele.value.length == 0){                        
                         stopSubmit = true;                        

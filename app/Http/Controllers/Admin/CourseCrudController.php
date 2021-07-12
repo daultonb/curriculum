@@ -477,8 +477,8 @@ class CourseCrudController extends CrudController
               'name' => 'CLOtable', //name of the getter/setter in course model 
              'columns' => [     
                  'l_outcome_id' => 'id-hidden',
-                 'l_outcome'    => 'Learning Outcome-text',   
-                 'clo_shortphrase'    => 'course learning outcome-text',
+                 'l_outcome'    => 'Learning Outcome-text-req',   
+                 'clo_shortphrase'    => 'course learning outcome-text-req',
              ],
              
              'max'     => 5,
@@ -518,8 +518,8 @@ class CourseCrudController extends CrudController
              'ajax' => true,  
              'columns' => [   
                  'a_method_id' => 'id-hidden',
-                 'a_method'        => 'Assessment Method-text',
-                 'weight'          => 'Weight (%)-number',
+                 'a_method'        => 'Assessment Method-text-req',
+                 'weight'          => 'Weight (%)-number-req',
              ],
              
              'max'     => 5,
@@ -557,7 +557,7 @@ class CourseCrudController extends CrudController
              'ajax' => true,  
              'columns' => [     
                  'l_activity_id' => 'id-hidden',
-                 'l_activity'        => 'Learning Activity-text',                
+                 'l_activity'        => 'Learning Activity-text-req',                
              ],
              
              'max'     => 5,
