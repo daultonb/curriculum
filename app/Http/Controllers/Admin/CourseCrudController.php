@@ -460,7 +460,7 @@ class CourseCrudController extends CrudController
              'columns' => [     
                  'l_outcome_id' => 'id-hidden',
                  'l_outcome'    => 'Learning Outcome-text-req',   
-                 'clo_shortphrase'    => 'course learning outcome-text-req',
+                 'clo_shortphrase'    => 'course learning outcome-text-treq',
              ],
              
              'max'     => 5,
@@ -616,7 +616,7 @@ class CourseCrudController extends CrudController
                         $custHTML .= "<tr><td title=\"" . $plo->pl_outcome. "\">". $plo->plo_shortphrase."</td>";
                         for($i = 1; $i <= $MScales->count()+1; $i++){
                             $map = $OCmaps->where('l_outcome_id', $clo->l_outcome_id)->where('pl_outcome_id', $plo->pl_outcome_id);                        
-                            $chk = (($map->count() != 0 && $map->first()->map_scale_value == $i) || 
+                            $chk = (($i <= $MScales->count() && $map->count() != 0 && $map->first()->map_scale_value == $MScales[$i-1]->map_scale_id) || 
                                     ($i == $MScales->count()+1 && $map->count() != 0 && $map->first()->map_scale_value == 0))?"checked" : "";
                             $val = "value=\"0\"";
                             if($i <= $MScales->count())$val = "value=\"".$MScales[$i-1]->map_scale_id."\"";
@@ -650,6 +650,79 @@ class CourseCrudController extends CrudController
                                                 ->update(['map_scale_value'=>$val[0]]);
                 }
             }
+            
+            //Ministry Standard Mapping
+            //***************
+             $custHTML = "<div><label>Objective Mapping</label>";           
+            //standards are roughly analogous to program outcomes, but there is one standard category per course. 
+            //the scales are categorized in the standards versus select any from list with PLOs
+           
+           
+                
+                $SOCmaps = DB::table('standards_outcome_maps')->whereIn('l_outcome_id', $setOfCLO)->get();   
+                $crs = Course::where('course_id',$crsID)->get();
+                $scaleId = $crs->first()->scale_category_id;
+                $standId = $crs->first()->standard_category_id;
+                $scaleCat = DB::table('standards_scale_categories')->where('scale_category_id', $scaleId)->get()->first();
+                $standardsCat = DB::table('standard_categories')->where('standard_category_id', $standId)->get()->first();               
+                $MScales = DB::table('standard_scales')->where('scale_category_id', $scaleId)->get();
+                $standards =  DB::table('standards')->where('standard_category_id',$standId)->get();
+                $PFunc = "onClick=\"(function(){\n"
+                            . "let ch = document.getElementById(&quot;minmap".""."&quot;);\n"
+                            . "ch.hidden = !(ch.hidden);\n"
+                          . "})();\"";
+                $custHTML .= "<div $PFunc><div style=\"$buttonClass1\"><h3 style=\"$textClass1\">$standardsCat->sc_name (using $scaleCat->name)</h3></div></div>"
+                           . "<table id=\"minmap\" class=\"table table-sm table-striped m-b-0\" hidden>";
+                $msStr = "";
+                foreach($MScales as $scale)$msStr .= "<th title=\"".$scale->description."\">". $scale->abbreviation."</th>";
+                $msStr .= "<th title=\"Not Applicable\">N/A</th>";
+                
+                foreach($CLOs as $clo){
+                    $custHTML .= "<tr><th colspan=\"5\">$clo->clo_shortphrase</th></tr><tr><th>" . 
+                            $standardsCat->sc_name .
+                            "</th>" . $msStr . "</tr>";
+                    foreach($standards as $std){
+                        $custHTML .= "<tr><td title=\"" . $std->s_outcome. "\">". $std->s_shortphrase."</td>";
+                        for($i = 1; $i <= $MScales->count()+1; $i++){
+                            $map = $SOCmaps->where('l_outcome_id', $clo->l_outcome_id)->where('standard_id', $std->standard_id);                        
+                            $chk = (($i <= $MScales->count() && $map->count() != 0 && $map->first()->map_scale_value == $MScales[$i-1]->standard_scale_id) || 
+                                    ($i == $MScales->count()+1 && $map->count() != 0 && $map->first()->map_scale_value == 0))?"checked" : "";
+                            $val = "value=\"0\"";
+                            if($i <= $MScales->count())$val = "value=\"".$MScales[$i-1]->standard_scale_id."\"";
+                            $custHTML.="<td><input type=\"radio\" name=\"min_".$clo->l_outcome_id."_".$std->standard_id."[]\" $chk $val></td>";
+                        }
+                    }
+                }
+                $custHTML .= "</table>";                       
+                $custHTML .= "</div>";
+            $this->crud->addField([
+               'label' => 'Ministry Standard Mappings',
+                'name' => 'std_outcome_mapping',
+                'type' => 'custom_html',   
+                'value' => $custHTML,
+            ]);
+            //Ministry Standards CRUD
+            //****************
+              if($req && count($req)){                
+                $chk = array_filter($_POST, function($element) {
+                    return  !(false===strpos($element, "min"));
+                },ARRAY_FILTER_USE_KEY);
+                foreach($chk as $key => $val){
+                    $exKey = explode('_',$key);
+                    $map = $SOCmaps->where('l_outcome_id', $exKey[1])->where('standard_id', $exKey[2]);
+                    //if not entry already exists in DB, enter it. otherwise update it, as the value may have changed
+                    if(!($map->count() > 0))
+                        DB::table('standards_outcome_maps')->insert(['l_outcome_id'=>$exKey[1],'standard_id'=>$exKey[2],'map_scale_value'=>$val[0]]);
+                    else
+                        \App\Models\StandardsOutcomeMap::where('l_outcome_id', $exKey[1])
+                                                ->where('standard_id', $exKey[2])
+                                                ->update(['map_scale_value'=>$val[0]]);
+                }
+            }
+            
+            
+            
+            
     
             //Code for Optional Priorities
             $setOpPr = DB::table('course_optional_priorities')->where('course_id', $crsID)->get();                         

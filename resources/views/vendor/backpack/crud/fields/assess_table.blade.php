@@ -67,7 +67,7 @@
                 <tr class="array-row clonable" style="display: none;">
                     @foreach( $field['columns'] as $column => $label)
                     <?php $details = explode('-', $label);                    
-                    $isreq = (isset($details[2])) ? "req=true" : "";                    
+                    $isreq = (isset($details[2])) ? "treq=true" : "";                    
                     $totalcol = (isset($details[1]) && $details[1] == "number") ? " totaled_".$column."_" : "" ?>
                     <td>
                         <input class="form-control form-control-sm{{ $totalcol }}"  <?php   $typ =  "type=" . explode('-',$label)[1]; ?> {{ $typ }} {{ $isreq }} data-cell-name="item.{{ $column }}">
@@ -254,8 +254,8 @@
             });
             $(document).on('submit', 'form', function(e){
                 let stopSubmit = false;
-                let eleList = Array.prototype.slice.call(document.querySelectorAll('tr[class$=array-row] td input[req=true]'));
-                let eL2 = Array.prototype.slice.call(document.querySelectorAll('div input[req=true]'));
+                let eleList = Array.prototype.slice.call(document.querySelectorAll('tr[class=array-row] td input[treq=true]'));
+                let eL2 = Array.prototype.slice.call(document.querySelectorAll('input[req=true]'));
                 eleList.push.apply(eleList,eL2);
                 eleList.forEach((ele) => {
                     if((ele.type != "checkbox") && ele.value.length == 0){                        

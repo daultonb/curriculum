@@ -66,7 +66,7 @@
                 <tr class="array-row clonable" style="display: none;">
                     @foreach( $field['columns'] as $column => $label)
                     <?php $details = explode('-', $label);                    
-                    $isreq = (isset($details[2])) ? "req=true" : "" ?>
+                    $isreq = (isset($details[2])) ? "treq=true" : "" ?>
                     <td>
                         <input class="form-control form-control-sm" <?php   $typ =  "type=" . explode('-',$label)[1]; ?> {{ $typ }} {{ $isreq }} data-cell-name="item.{{ $column }}">
                     </td>
