@@ -11,4 +11,8 @@ class Syllabus extends Model
 
     protected $guarded = ['id', 'course_id'];
 
+    public function users(){
+        return $this->belongsToMany(User::class, 'syllabi_users', 'id', 'user_id');
+    }
+
 }

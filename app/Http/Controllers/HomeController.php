@@ -61,12 +61,7 @@ class HomeController extends Controller
             $coursesPrograms[$course->course_id] = $coursePrograms;
         }
 
-        $syllabi = User::join('syllabi_users', 'users.id', '=', 'syllabi_users.user_id')
-                    ->join('syllabi', 'syllabi_users.syllabus_id', '=', 'syllabi.id')
-                    ->join('courses', 'courses.course_id', '=', 'syllabi.course_id')
-                    ->select('syllabi.id', 'courses.course_title', 'courses.course_code', 'courses.course_num', 'courses.semester', 'courses.year', 'syllabi.updated_at')
-                    ->where('syllabi_users.user_id', '=', Auth::id())
-                    ->get();
+        $syllabi = $user->syllabi;
         
         /*
         $courseUsers = array();

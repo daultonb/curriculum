@@ -17,10 +17,6 @@ class CreateSyllabiTable extends Migration
         Schema::create('syllabi', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->unsignedBigInteger('owner_id');
-            $table->unsignedBigInteger('course_id');
-            $table->foreign('course_id')->references('course_id')->on('courses')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreign('owner_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
             $table->char('campus', 1);
             $table->string('course_instructor');
             $table->string('course_location')->nullable();
@@ -30,7 +26,7 @@ class CreateSyllabiTable extends Migration
             $table->string('class_start_time', 20)->nullable();
             $table->string('class_end_time', 20)->nullable();
             $table->text('learning_outcomes')->nullable();
-            $table->text('assessments_of_learning')->nullable();
+            $table->text('learningAssessments')->nullable();
             $table->text('learning_activities')->nullable();
             $table->text('late_policy')->nullable();
             $table->text('missed_exam_policy')->nullable();
@@ -48,12 +44,7 @@ class CreateSyllabiTable extends Migration
             $table->primary(['syllabus_id','user_id']);
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('syllabus_id')->references('id')->on('syllabi')->onDelete('cascade')->onUpdate('cascade');
-        });
-
-        // update courses table
-        Schema::table('courses', function(Blueprint $table) {
-            // add course_create_method col
-            $table->string('create_method', 20)->nullable();
+            $table->unsignedBigInteger('permission')->after('user_id');
         });
     }
 

@@ -440,7 +440,7 @@
                                     </td>
                                     <!-- term -->
                                     <td>
-                                        {{$syllabus->year}} {{$syllabus->semester}}
+                                        {{$syllabus->course_year}} {{$syllabus->course_term}}
                                     </td>
                                     <td>
                                         {{$syllabus->updated_at}}
