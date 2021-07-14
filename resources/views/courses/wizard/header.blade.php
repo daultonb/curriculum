@@ -195,12 +195,12 @@
                                     <p class="form-text text-muted">Collaborators can see and edit the course. Collaborators must first register with this web application to be added to a course.
                                         By adding a collaborator, a verification email will be sent to their email address.
                                         If your collaborator is not registered with this website yet,
-                                        use the "Registration invite" feature to invite them. <a href="{{ url('/invite') }}">re-direct htere</a>
+                                        use the "Registration invite" feature to invite them. <a href="{{ url('/invite') }}">re-direct here</a>
                                         </p>
 
                                     <table class="table table-borderless">
 
-                                            @if(count($courseUsers)===1)
+                                            @if(count($courseUsers) == 0)
                                                 <tr class="table-active">
                                                     <th colspan="2">You have not added any collaborators to this course
                                                     </th>
@@ -308,7 +308,45 @@
 
         </div>
 
-
     </div>
 
+    <!-- progress bar -->
+    <div class="mt-5">
+                <table class="table table-borderless text-center table-sm" style="table-layout: fixed; width: 100%">
+                    <tbody>
+                        <tr>
+                            
+                            <td><a class="btn @if (Route::current()->getName() == 'courseWizard.step1') btn-primary @else @if ($lo_count < 1) btn-secondary @else btn-success @endif @endif" href="{{route('courseWizard.step1', $course->course_id)}}" style="width: 30px; height: 30px; padding: 6px 0px; border-radius: 15px; text-align: center; font-size: 12px; line-height: 1.42857;">
+                                    <b>1</b> </a></td>
+                            <td><a class="btn @if (Route::current()->getName() == 'courseWizard.step2') btn-primary @else @if ($am_count < 1) btn-secondary @else btn-success @endif @endif" href="{{route('courseWizard.step2', $course->course_id)}}" style="width: 30px; height: 30px; padding: 6px 0px; border-radius: 15px; text-align: center; font-size: 12px; line-height: 1.42857;">
+                                    <b>2</b> </a></td>
+                            <td><a class="btn @if (Route::current()->getName() == 'courseWizard.step3') btn-primary @else @if ($la_count < 1) btn-secondary @else btn-success @endif @endif" href="{{route('courseWizard.step3', $course->course_id)}}" style="width: 30px; height: 30px; padding: 6px 0px; border-radius: 15px; text-align: center; font-size: 12px; line-height: 1.42857;">
+                                    <b>3</b> </a></td>
+                            <td><a class="btn @if (Route::current()->getName() == 'courseWizard.step4') btn-primary @else @if ($oAct < 1 && $oAss < 1) btn-secondary @else btn-success @endif @endif" href="{{route('courseWizard.step4', $course->course_id)}}"
+                                    style="width: 30px; height: 30px; padding: 6px 0px; border-radius: 15px; text-align: center; font-size: 12px; line-height: 1.42857;">
+                                    <b>4</b> </a></td>
+                            <td><a class="btn @if (Route::current()->getName() == 'courseWizard.step5') btn-primary @else @if ($outcomeMapsCount < 1) btn-secondary @else btn-success @endif @endif" href="{{route('courseWizard.step5', $course->course_id)}}"
+                                    style="width: 30px; height: 30px; padding: 6px 0px; border-radius: 15px; text-align: center; font-size: 12px; line-height: 1.42857;">
+                                    <b>5</b> </a></td>
+                            <td><a class="btn @if (Route::current()->getName() == 'courseWizard.step6') btn-primary @else @if ($outcomeMapsCount < 1) btn-secondary @else btn-success @endif @endif" href="{{route('courseWizard.step6', $course->course_id)}}"
+                                    style="width: 30px; height: 30px; padding: 6px 0px; border-radius: 15px; text-align: center; font-size: 12px; line-height: 1.42857;">
+                                    <b>6</b> </a></td>
+                            <td><a class="btn @if (Route::current()->getName() == 'courseWizard.step7') btn-primary @else btn-secondary @endif" href="{{route('courseWizard.step7', $course->course_id)}}"
+                                    style="width: 30px; height: 30px; padding: 6px 0px; border-radius: 15px; text-align: center; font-size: 12px; line-height: 1.42857;">
+                                    <b>7</b> </a></td>
+
+                        </tr>
+
+                        <tr>
+                            <td>Course Learning Outcomes</td>
+                            <td>Student Assessment Methods</td>
+                            <td>Teaching and Learning Activities</td>
+                            <td>Course Alignment</td>
+                            <td>Program Outcome Mapping</td>
+                            <td>Standards and Strategic Priorities</td>
+                            <td>Course Summary</td>
+                        </tr>
+                    </tbody>
+                </table>
+    </div>
 </div>

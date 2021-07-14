@@ -128,7 +128,7 @@
 
             <div class="row my-2">
                 <div class="col">
-                    <!-- Assign instructor button  -->
+                    <!-- Assign Collaborator button  -->
                     <button type="button" class="btn btn-outline-primary btn-sm float-right" style="width:200px" data-toggle="modal" data-target="#addCollaboratorModal">Add Collaborators</button>
 
                     <!-- Add Collaborator Modal -->
@@ -164,15 +164,13 @@
                                                         <tr>
                                                             <td>{{$admin->email}}</td>
                                                             <td>
-                                                                <form action="{{route('programUser.destroy', [$admin->program_id, $admin->user_id])}}" method="POST" class="float-left">
+                                                                <form action="{{ route('programUser.destroy') }}" method="POST" class="float-left">
                                                                     @csrf
                                                                     {{method_field('DELETE')}}
 
+                                                                    <input type="hidden" class="form-check-input" name="program_id" value="{{$admin->program_id}}">
+                                                                    <input type="hidden" class="form-check-input" name="user_id" value="{{$admin->user_id}}">
                                                                     <button type="submit" class="btn btn-danger btn-sm ">Unassign</button>
-                                                                    <select>
-                                                                        <option>View Only</option>
-                                                                        <option>Can Edit</option>
-                                                                    </select>
                                                                 </form>
                                                             </td>
                                                         </tr>
@@ -201,10 +199,6 @@
                                                     </span>
                                                 @enderror
                                             </div>
-                                            <select>
-                                                <option>View Only</option>
-                                                <option>Can Edit</option>
-                                            </select>
                                         </div>
 
                                         <input type="hidden" class="form-check-input" name="program_id" value={{$program->program_id}}>

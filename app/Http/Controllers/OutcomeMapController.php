@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\ProgramLearningOutcome;
 use App\Models\LearningOutcome;
 use App\Models\Course;
+use App\Models\Program;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -43,26 +44,24 @@ class OutcomeMapController extends Controller
      */
     public function store(Request $request)
     {
-
         $course_id = $request->input('course_id');
-
-        $l_outcome = LearningOutcome::where('l_outcome_id', $request->input('l_outcome_id'))->first();
+        // get the course
         $course =  Course::where('course_id', $course_id)->first();
-        $pl_outcomes = ProgramLearningOutcome::where('program_id', $course->program_id)->get();
+        // get the learning outcome 
+        $l_outcome = LearningOutcome::where('l_outcome_id', $request->input('l_outcome_id'))->first();
+        // get the program learning outcomes for this program
+        $programLearningOutcomes = Program::find($request->input('program_id'))->programLearningOutcomes;
+        // courseToProgamOutcome is a 2-D array => map[CLO][PLO] = map_scale_value
+        $courseToProgramOutcome = $request->input('map');
 
-        $arr = $request->input('map');
-        foreach($pl_outcomes as $pl_outcome){
+        foreach($programLearningOutcomes as $programLearningOutcome){
             $outcomeMap = DB::table('outcome_maps')->updateOrInsert(
-                ['pl_outcome_id' =>$pl_outcome->pl_outcome_id , 'l_outcome_id' => $l_outcome->l_outcome_id ],
-                ['map_scale_value' => $arr[$l_outcome->l_outcome_id][$pl_outcome->pl_outcome_id]]
+                ['pl_outcome_id' =>$programLearningOutcome->pl_outcome_id , 'l_outcome_id' => $l_outcome->l_outcome_id ],
+                ['map_scale_value' => $courseToProgramOutcome[$l_outcome->l_outcome_id][$programLearningOutcome->pl_outcome_id]]
             );
         }
 
         return redirect()->back()->with('success', 'Your answers have been saved successfully.');
-
-        // return response()->json(["success" => true]);
-
-
     }
 
     /**

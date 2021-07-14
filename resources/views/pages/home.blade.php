@@ -4,6 +4,7 @@
 <div class="container" style="padding-bottom:246px;">
     <div class="row">
 
+
         <div style="width: 100%;border-bottom: 1px solid #DCDCDC">
         <h2 style="float: left;">My Dashboard</h2>
         </div>
@@ -14,14 +15,12 @@
                 border-color: #1E90FF;">
                     <div class="card-title" style="background-color:#1E90FF;margin-bottom: 0.00rem;">
                         <h3 style="color: white;margin:22px">
-                        <!-- <a style="color: white;text-decoration: none;" href="{{ route('programs.index') }}">My Programs</a> -->
                         <a style="color: white;text-decoration: none;">
-                        My Programs
+                        My Programs         
+
                         <div style="float:right; padding-right:10px;">
-                            <!-- Uncomment and remove <a> To link to Programs -->
-                            <!-- <button style="border: none; background: none; outline: none;" data-toggle="modal" data-target="#createProgramModal"> -->
-                            <button style="border: none; background: none; outline: none;">
-                                <a href="/construction"><img src="{{ asset('dashboard-icons/add_White.png') }}" style="width:20px;height:20px;"/></a>
+                            <button style="border: none; background: none; outline: none;" data-toggle="modal" data-target="#createProgramModal">
+                                <img src="{{ asset('dashboard-icons/add_White.png') }}" style="width:20px;height:20px;"/>
                             </button>
                         </div>
                         </a>
@@ -45,16 +44,17 @@
                             <tbody>
                             <tr>
                                 <th scope="row">{{$index + 1}}</th>
-                                <!-- Uncomment and remove other <td> To link to Programs -->
-                                <!-- <td><a href="{{route('programWizard.step1', $program->program_id)}}">{{$program->program}}</a></td> -->
-                                <td>{{$program->program}}</td>
-                                <td>{{$program->faculty}}</td>
+                                <td><a href="{{route('programWizard.step1', $program->program_id)}}">{{$program->program}}</a></td>
+                                <td>{{$program->faculty}} </td>
                                 <td>{{$program->level}}</td>
                                 <td style="display: inline-block">
                                     <a class="dropdown-item btn-icon" href="{{route('programWizard.step1', $program->program_id)}}">
                                     <img src=" {{ asset('dashboard-icons/edit.png') }}" style="width:15px;height:15px"/></a>
                                     <a class="dropdown-item btn-icon" data-toggle="modal" data-target="#deleteProgram{{$index}}" href=#>
                                     <img src="{{ asset('dashboard-icons/delete.png') }}" style="width:15px;height:15px"/></a>
+                                    <!-- Collaborators Icon
+                                    <a class="dropdown-item btn-icon" data-toggle="modal">
+                                    <i class="bi bi-people-fill" data-toggle="tooltip" data-bs-placement="right"></i></a> -->
 
 
                                     <!-- Delete Confirmation Modal -->
@@ -85,6 +85,139 @@
                                             </div>
                                         </div>
                                     </div>
+                                </td>
+                            </tr>
+                            </tbody>
+                            @endforeach
+                        </table>
+                        @endif
+
+                    </div>
+                </div>
+
+
+                <div class="card shadow rounded" style="margin:20px;border-style: solid;
+                border-color: #6495ED;">
+                    <div class="card-title" style="background-color: #6495ED;margin-bottom: 0.00rem;">
+                        <h3 style="color: white;margin:22px">
+                        <a style="color: white;text-decoration: none;">
+                        My Courses 
+                        <div style="float:right; padding-right:10px;">
+                            <button style="border: none; background: none; outline: none;" data-toggle="modal" data-target="#createCourseModal">
+                                <img src="{{ asset('dashboard-icons/add_White.png') }}" style="width:20px;height:20px;"/>
+                            </button>
+                        </div>
+                        </a>           
+                        </h3>
+                    </div>
+
+                    <div class="card-body" style="padding:0%;">
+                        @if(count($activeCourses)>0)
+                            <table class="table table-hover dashBoard">
+                                <thead>
+                                <tr>
+                                    <th scope="col"></th>
+                                    <th scope="col">Course Title</th>
+                                    <th scope="col">Course Code</th>
+                                    <th scope="col">Term</th>
+                                    <!--<th scope="col">Invite Collaborators</th>-->
+                                    <th scope="col">Status</th>
+                                    <th scope="col">Program </th>
+                                    <th scope="col">Actions</th>
+                                </tr>
+                                </thead>
+
+                                <!-- Displays 'My Courses' -->
+                                @foreach ($activeCourses as $index => $course)
+                                <tbody>
+                                <tr>
+                                    @if($course->status !== 1)
+                                        <th scope="row">{{$index + 1}}</th>
+                                        <td><a href="{{route('courseWizard.step1', $course->course_id)}}">{{$course->course_title}}</a></td>
+                                        <td>{{$course->course_code}} {{$course->course_num}}</td>
+                                        <td>{{$course->year}} {{$course->semester}}</td>
+                                        <td>❗In Progress</td>
+                                        <td>
+                                            @if(count($coursesPrograms[$course->course_id]) > 0)
+                                                <div data-toggle="tooltip" data-html="true" title="@foreach($coursesPrograms[$course->course_id] as $index => $courseProgram){{$index + 1}}. {{$courseProgram->program}}<br>@endforeach" data-bs-placement="right">
+                                                    <button type="button" style="border:1px solid black; background-color: #1E90FF; border-radius: 50%; font-weight:bold; color:White; opacity: 1; text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black; margin: 0 auto; display:block;" class="btn btn-secondary" disabled>{{ count($coursesPrograms[$course->course_id]) }}</button>
+                                                </div>
+                                            @else
+                                                <p style="text-align: center;">None</p>
+                                            @endif
+                                        </td>
+                                    @else
+                                        <th scope="row">{{$index + 1}}</th>
+                                        <td><a href="{{route('courseWizard.step1', $course->course_id)}}">{{$course->course_title}}</a></td>
+                                        <td>{{$course->course_code}} {{$course->course_num}}</td>
+                                        <td>{{$course->year}} {{$course->semester}}</td>
+                                        <td>✔️Completed</td>
+                                        <td>
+                                            @if(count($coursesPrograms[$course->course_id]) > 0)
+                                                <div data-toggle="tooltip" data-html="true" title="@foreach($coursesPrograms[$course->course_id] as $index => $courseProgram){{$index + 1}}. {{$courseProgram->program}}<br>@endforeach" data-bs-placement="right">
+                                                    <button type="button" style="border:1px solid black; background-color: #1E90FF; border-radius: 50%; font-weight:bold; color:White; opacity: 1; text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black; margin: 0 auto; display:block;" class="btn btn-secondary" disabled>{{ count($coursesPrograms[$course->course_id]) }}</button>
+                                                </div>
+                                            @else
+                                                <p style="text-align: center;">None</p>
+                                            @endif
+                                        </td>
+                                    @endif
+
+                                    <!--<td></td>-->
+                                    <td style="display: inline-block">
+                                        <a class="dropdown-item btn-icon" href="{{route('courseWizard.step1', $course->course_id)}}">
+                                        <img src="{{ asset('dashboard-icons/edit.png') }}" style="width:15px;height:15px"/></a>
+                                        <a class="dropdown-item btn-icon" data-toggle="modal" data-target="#deleteConfirmation{{$index}}" href=#>
+                                        <img src="{{ asset('dashboard-icons/delete.png') }}" style="width:15px;height:15px"/></a>
+                                        <!-- Collaborators Icon
+                                        <a class="dropdown-item btn-icon" data-toggle="modal">
+                                        <i class="bi bi-people-fill" data-toggle="tooltip" data-bs-placement="right"></i></a>-->
+
+                                        <!-- Delete Confirmation Modal -->
+                                        <div class="modal fade" id="deleteConfirmation{{$index}}" tabindex="-1" role="dialog" aria-labelledby="deleteConfirmation{{$index}}" aria-hidden="true">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="deleteConfirmation{{$index}}">Delete Confirmation</h5>
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+
+                                                    <div class="modal-body">
+                                                    Are you sure you want to delete {{$course->course_code}} {{$course->course_num}} ?
+                                                    </div>
+
+                                                    <form action="{{route('courses.destroy', $course->course_id)}}" method="POST">
+                                                        @csrf
+                                                        {{method_field('DELETE')}}
+                                                        <input type="hidden" class="form-check-input " name="program_id"
+                                                            value={{$course->program_id}}>
+
+                                                        <div class="modal-footer">
+                                                            <button style="width:60px" type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Cancel</button>
+                                                            <button style="width:60px" type="submit" class="btn btn-danger btn-sm">Delete</button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                </tbody>
+                                @endforeach
+                            </table>
+
+                        @else
+
+                        @endif
+                    </div>
+                </div>
+
+        </div>
+    </div>
+</div>
+
                                 <!-- Create Program Modal -->
                                 <div class="modal fade" id="createProgramModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                     <div class="modal-dialog modal-lg" role="document">
@@ -202,126 +335,8 @@
                                     </div>
                                 </div>
                                 <!-- End Create Program Modal -->
-                                </td>
-                            </tr>
-                            </tbody>
-                            @endforeach
-                        </table>
-                        @endif
 
-                    </div>
-                </div>
-
-                <div class="card shadow rounded" style="margin:20px;border-style: solid;
-                border-color: #6495ED;">
-                    <div class="card-title" style="background-color: #6495ED;margin-bottom: 0.00rem;">
-                        <h3 style="color: white;margin:22px">
-                        <a style="color: white;text-decoration: none;">
-                        My Courses
-                        <div style="float:right; padding-right:10px;">
-                            <button style="border: none; background: none; outline: none;" data-toggle="modal" data-target="#createCourseModal">
-                                <img src="{{ asset('dashboard-icons/add_White.png') }}" style="width:20px;height:20px;"/>
-                            </button>
-                        </div>
-                        </a>           
-                        </h3>
-                    </div>
-
-                    <div class="card-body" style="padding:0%;">
-                        @if(count($activeCourses)>0)
-                            <table class="table table-hover dashBoard">
-                                <thead>
-                                <tr>
-                                    <th scope="col"></th>
-                                    <th scope="col">Course Title</th>
-                                    <th scope="col">Course Code</th>
-                                    <th scope="col">Term</th>
-                                    <!--<th scope="col">Invite Collaborators</th>-->
-                                    <th scope="col">Status</th>
-                                    <th scope="col">Program</th>
-                                    <th scope="col">Actions</th>
-                                </tr>
-                                </thead>
-
-                                <!-- Displays 'My Courses' -->
-                                @foreach ($activeCourses as $index => $course)
-                                <tbody>
-                                <tr>
-                                    @if($course->status !== 1)
-                                        @if($course->program_id == 1 || $course->program_id == 2 || $course->program_id == 3)
-                                            <th scope="row">{{$index + 1}}</th>
-                                            <td><a href="{{route('courseWizard.step1', $course->course_id)}}">{{$course->course_title}}</a></td>
-                                            <td>{{$course->course_code}} {{$course->course_num}}</td>
-                                            <td>{{$course->year}} {{$course->semester}}</td>
-                                            <td>❗In Progress</td>
-                                            <td>None</td>
-                                        @else
-                                            <th scope="row">{{$index + 1}}</th>
-                                            <td><a href="{{route('courseWizard.step1', $course->course_id)}}">{{$course->course_title}}</a></td>
-                                            <td>{{$course->course_code}} {{$course->course_num}}</td>
-                                            <td>{{$course->year}} {{$course->semester}}</td>
-                                            <td>❗In Progress</td>
-                                            <!-- Uncomment and remove other <td> To link to Programs 
-                                            <td><a href="{{route('programWizard.step1', $course->program_id)}}">{{$course->program}}</a></td> -->
-                                            <td>{{$course->program}}</td>
-                                        @endif
-                                    @else
-                                        @if($course->program_id == 1 || $course->program_id == 2 || $course->program_id == 3 )
-                                        <th scope="row">{{$index + 1}}</th>
-                                            <td><a href="{{route('courseWizard.step1', $course->course_id)}}">{{$course->course_title}}</a></td>
-                                            <td>{{$course->course_code}} {{$course->course_num}}</td>
-                                            <td>{{$course->year}} {{$course->semester}}</td>
-                                            <td>✔️Completed</td>
-                                            <td>None</td>
-                                        @else
-                                            <th scope="row">{{$index + 1}}</th>
-                                            <td><a href="{{route('courseWizard.step1', $course->course_id)}}">{{$course->course_title}}</a></td>
-                                            <td>{{$course->course_code}} {{$course->course_num}}</td>
-                                            <td>{{$course->year}} {{$course->semester}}</td>
-                                            <td>✔️Completed</td>
-                                            <!-- Uncomment and remove other <td> To link to Programs 
-                                            <td><a href="{{route('programWizard.step1', $course->program_id)}}">{{$course->program}}</a></td> -->
-                                            <td>{{$course->program}}</td>
-                                        @endif
-                                    @endif
-
-                                    <!--<td></td>-->
-                                    <td style="display: inline-block">
-                                        <a class="dropdown-item btn-icon" href="{{route('courseWizard.step1', $course->course_id)}}">
-                                        <img src="{{ asset('dashboard-icons/edit.png') }}" style="width:15px;height:15px"/></a>
-                                        <a class="dropdown-item btn-icon" data-toggle="modal" data-target="#deleteConfirmation{{$index}}" href=#>
-                                        <img src="{{ asset('dashboard-icons/delete.png') }}" style="width:15px;height:15px"/></a>
-
-                                        <!-- Delete Confirmation Modal -->
-                                        <div class="modal fade" id="deleteConfirmation{{$index}}" tabindex="-1" role="dialog" aria-labelledby="deleteConfirmation{{$index}}" aria-hidden="true">
-                                            <div class="modal-dialog" role="document">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h5 class="modal-title" id="deleteConfirmation{{$index}}">Delete Confirmation</h5>
-                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                            <span aria-hidden="true">&times;</span>
-                                                        </button>
-                                                    </div>
-
-                                                    <div class="modal-body">
-                                                    Are you sure you want to delete {{$course->course_code}} {{$course->course_num}} ?
-                                                    </div>
-
-                                                    <form action="{{route('courses.destroy', $course->course_id)}}" method="POST">
-                                                        @csrf
-                                                        {{method_field('DELETE')}}
-                                                        <input type="hidden" class="form-check-input " name="program_id"
-                                                            value={{$course->program_id}}>
-
-                                                        <div class="modal-footer">
-                                                            <button style="width:60px" type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Cancel</button>
-                                                            <button style="width:60px" type="submit" class="btn btn-danger btn-sm">Delete</button>
-                                                        </div>
-                                                    </form>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- Create Course Modal -->
+                                <!-- Create Course Modal -->
         <div class="modal fade" id="createCourseModal" tabindex="-1" role="dialog" aria-labelledby="createCourseModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
@@ -485,30 +500,22 @@
                         </div>
                         <input type="hidden" class="form-check-input" name="user_id" value={{Auth::id()}}>
                         <input type="hidden" class="form-check-input" name="type" value="unassigned">
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary col-2 btn-sm"
-                                data-dismiss="modal">Close</button>
-                            <button id="submit" type="submit" class="btn btn-primary col-2 btn-sm" href="{{route('courseWizard.step1', $course->course_id)}}">Add</button>
-                        </div>
-                    </form>
-                </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary col-2 btn-sm" data-dismiss="modal">Close</button>
+                        <button id="submit" type="submit" class="btn btn-primary col-2 btn-sm">Add</button>
+                    </div>
+                </form>
             </div>
         </div>
-        <!-- End Create Course Modal -->
-                                    </td>
-                                </tr>
-                                </tbody>
-                                @endforeach
-                            </table>
-
-                        @else
-
-                        @endif
-                    </div>
-                </div>
-
-        </div>
     </div>
-</div>
+<!-- End Create Course Modal -->
 
+
+<script type="application/javascript">
+    $(document).ready(function () {
+
+        // Enables functionality of tool tips
+        $('[data-toggle="tooltip"]').tooltip({html:true});
+    });
+</script>
 @endsection

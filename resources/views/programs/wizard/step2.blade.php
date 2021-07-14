@@ -93,9 +93,15 @@
                             <form action="{{route('mappingScale.default')}}" method="POST" >
                                 @csrf
                                 <input type="hidden" class="form-check-input" name="program_id" value="{{$program->program_id}}">
-                               
                                 <button type="submit" style="width:250px" class="btn btn-secondary btn-sm "> + Use the Default Mapping Scale Levels</button>
                             </form>
+
+                            <form action="{{route('mappingScale.default2')}}" method="POST" >
+                                @csrf
+                                <input type="hidden" class="form-check-input" name="program_id" value="{{$program->program_id}}">   
+                                <button type="submit" style="width:250px" class="btn btn-secondary btn-sm "> + Use the Other Mapping Scale Levels</button>
+                            </form>
+
                         </div>
                         
                     </div>
@@ -129,7 +135,7 @@
                                                     {{$ms->description}}
                                                 </td>
                                                 <td style="width:5%" >
-                                                    @if($ms->map_scale_id !== 1 && $ms->map_scale_id !== 2 && $ms->map_scale_id !== 3 )
+                                                    @if($ms->map_scale_id !== 1 && $ms->map_scale_id !== 2 && $ms->map_scale_id !== 3 && $ms->map_scale_id !== 4 && $ms->map_scale_id !== 5 && $ms->map_scale_id !== 6 && $ms->map_scale_id !== 7)
                                                         <button type="button" class="btn btn-secondary btn-sm float-right" data-toggle="modal" style="width:60px;" data-target="#editMSModal{{$ms->map_scale_id}}">
                                                             Edit
                                                         </button>

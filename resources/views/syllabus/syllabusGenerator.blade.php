@@ -187,8 +187,12 @@
                                         <div id="officeLocation" class="col-6 mb-2">
                                         </div>
                                     </div>
+
+                                    <!-- Course Description -->
+                                    <div class="row" id="courseDescription"></div>                                    
                                     <!-- Course Contacts -->
                                     <div class="row" id="courseContacts"></div>
+
                                     <!-- Office Hours -->
                                     <div class="row">
                                         <div class="col mb-2">
@@ -365,6 +369,15 @@
                                         </div>
                                     </div>
 
+                                    <!-- Course Learning Resources -->
+                                    <div class="row">
+                                        <div class="col mb-2">
+                                                <label for="courseLearningResources">Learning Resources</label>
+                                                <i class="bi bi-info-circle-fill has-tooltip" data-bs-placement="right" title="{{$inputFieldDescriptions['courseLearningResources']}}"></i>
+                                                <textarea id = "courseLearningResources" name = "courseLearningResources" class ="form-control" form="sylabusGenerator" spellcheck="true">{{old('courseLearningResources')}}</textarea>
+                                        </div>
+                                    </div>
+
                                     <!-- Course Optional Resources -->
                                     <div class="row">
                                         <div class="col mb-3">
@@ -411,6 +424,12 @@
                                                 <input id="equity" type="checkbox" name="equity" value= "equity" checked>
                                                 <label for="equity">UBC Okanagan Equity and Inclusion Office</label>
                                                 </li>
+
+                                                <li>
+                                                <input id="copyright" type="checkbox" name="copyright" value= "copyright" checked>
+                                                <label for="equity">Copyright Statement</label>
+                                                </li>
+
                                             </ul>
                                         </div>
 
@@ -517,7 +536,14 @@
             <li>
             <input id="disabilities" type="checkbox" name="disabilities" value="disabilities" checked>
             <label for="disabilities">Accommodations for students with disabilities</label>
-            </li>`;
+            </li>
+
+            <li>
+            <input id="copyright" type="checkbox" name="copyright" value= "copyright" checked>
+            <label for="equity">Copyright Statement</label>
+            </li>
+
+            `;
         var okanaganOptionalList = `
             <li>
             <input id="academic" type="checkbox" name="academic" value="academic" checked>
@@ -557,7 +583,13 @@
             <li>
             <input id="equity" type="checkbox" name="equity" value= "equity" checked>
             <label for="equity">UBC Okanagan Equity and Inclusion Office</label>
-            </li>`;
+            </li>
+
+            <li>
+            <input id="copyright" type="checkbox" name="copyright" value= "copyright" checked>
+            <label for="equity">Copyright Statement</label>
+            </li>            
+            `;
 
         var courseCredit = `
             <label for="courseCredit">
@@ -570,6 +602,14 @@
         var officeLocation = `
             <label for="officeLocation">Office Location</label>
             <input name = "officeLocation" class ="form-control" type="text" placeholder="E.g. WEL 140" value="{{old('officeLocation')}}">
+            `;
+
+        var courseDescription = `
+            <div class="col mb-2">
+                <label for="courseDescription">Course Description</label>
+                <i class="bi bi-info-circle-fill has-tooltip"  data-bs-placement="right" title="{{$inputFieldDescriptions['courseDescription']}}"></i>
+                <textarea name = "courseDescription" class ="form-control" type="date" form="sylabusGenerator">{{old('courseDescription')}}</textarea>
+            </div>
             `;
 
         var courseContacts = `
@@ -610,6 +650,7 @@
                     <textarea id = "courseInstructorBio" name = "courseInstructorBio" class ="form-control" form="sylabusGenerator" spellcheck="true">{{old('courseInstructorBio')}}</textarea>
             </div>
             `;
+
         var courseSchedule = `
             <div class="col mb-3">
                 <label for="courseSchedule">Course Schedule</label>
@@ -623,6 +664,14 @@
                 <label for="courseStructure">Course Structure</label>
                 <i class="bi bi-info-circle-fill has-tooltip" data-bs-placement="right" title="{{$inputFieldDescriptions['courseStructure']}}"></i>
                 <textarea name = "courseStructure" class ="form-control" type="text" form="sylabusGenerator" spellcheck="true">{{old('courseStructure')}}</textarea>
+            </div>
+            `;
+
+        var courseLearningResources = `
+            <div class="col mb-2">
+                    <label for="courseLearningResources">Learning Resources</label>
+                    <i class="bi bi-info-circle-fill has-tooltip" data-bs-placement="right" title="{{$inputFieldDescriptions['courseLearningResources']}}"></i>
+                    <textarea id = "courseLearningResources" name = "courseLearningResources" class ="form-control" form="sylabusGenerator" spellcheck="true">{{old('courseLearningResources')}}</textarea>
             </div>
             `;
 
@@ -649,6 +698,8 @@
             $('#courseStructure').html(courseStructure);
             $('#courseSchedule').html(courseSchedule);
             $('#courseInstructorBio').html(courseInstructorBio);
+            $('#courseDescription').html(courseDescription);
+            $('#courseLearningResources').html(courseLearningResources);
 
             $('#courseFormat').empty();
             $('#courseOverview').empty();
@@ -667,6 +718,8 @@
             $('#courseStructure').empty();
             $('#courseSchedule').empty();
             $('#courseInstructorBio').empty();
+            $('#courseDescription').empty();
+            $('#courseLearningResources').empty();
         }
     }
 </script>
