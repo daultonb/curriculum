@@ -16,6 +16,7 @@ use App\Models\Custom_learning_activities;
 use App\Models\OutcomeAssessment;
 use App\Models\LearningActivity;
 use App\Models\OutcomeActivity;
+use App\Models\OptionalPriorities;
 use App\Models\MappingScale;
 use App\Models\PLOCategory;
 use Illuminate\Support\Facades\Auth;
@@ -277,29 +278,29 @@ class CourseWizardController extends Controller
 
         //get optional priorities for ubc mandate letters
         $ubc_mandate_letters_subcat_id_index = 1;
-        $ubc_mandate_letters = Optional_priorities::where('subcat_id', $ubc_mandate_letters_subcat_id_index)->pluck('optional_priority')->toArray();
+        $ubc_mandate_letters = OptionalPriorities::where('subcat_id', $ubc_mandate_letters_subcat_id_index)->pluck('optional_priority')->toArray();
 
         //get optional priorities for bc labour market
         $bc_labour_market_subcat_id_index = 2;
-        $bc_labour_market = Optional_priorities::where('subcat_id', $bc_labour_market_subcat_id_index)->pluck('optional_priority')->toArray();
+        $bc_labour_market = OptionalPriorities::where('subcat_id', $bc_labour_market_subcat_id_index)->pluck('optional_priority')->toArray();
 
         //get optional priorities for shaping ubc
         $shaping_ubc_subcat_id_index = 3;
-        $shaping_ubc = Optional_priorities::where('subcat_id', $shaping_ubc_subcat_id_index)->pluck('optional_priority')->toArray();
+        $shaping_ubc = OptionalPriorities::where('subcat_id', $shaping_ubc_subcat_id_index)->pluck('optional_priority')->toArray();
 
         //get optional priorities for okanagan 2040 outlook
         $okanagan_2040_outlook_subcat_id_index = 4;
-        $okanagan_2040_outlook = Optional_priorities::where('subcat_id', $okanagan_2040_outlook_subcat_id_index)->pluck('optional_priority')->toArray();
+        $okanagan_2040_outlook = OptionalPriorities::where('subcat_id', $okanagan_2040_outlook_subcat_id_index)->pluck('optional_priority')->toArray();
 
         //get optional priorities for ubc indigenous plan
         $ubc_indigenous_plan_subcat_id_index = 5;
-        $ubc_indigenous_plan = Optional_priorities::where('subcat_id', $ubc_indigenous_plan_subcat_id_index)->pluck('optional_priority')->toArray();
+        $ubc_indigenous_plan = OptionalPriorities::where('subcat_id', $ubc_indigenous_plan_subcat_id_index)->pluck('optional_priority')->toArray();
 
         //get optional priorities for ubc climate priorities
         $ubc_climate_priorities_subcat_id_index = 6;
-        $ubc_climate_priorities = Optional_priorities::where('subcat_id', $ubc_climate_priorities_subcat_id_index)->pluck('optional_priority')->toArray();
+        $ubc_climate_priorities = OptionalPriorities::where('subcat_id', $ubc_climate_priorities_subcat_id_index)->pluck('optional_priority')->toArray();
 
-        $optional_PLOs = Optional_priorities::where('course_id', $course_id)->get();
+        $optional_PLOs = OptionalPriorities::where('course_id', $course_id)->get();
 
         $temp = array();
         foreach($optional_PLOs as $plo) {
