@@ -50,7 +50,7 @@ class SubcategoriesCrudController extends CrudController
         $this->crud->addColumn([
             'name' => 'subcat_name',
             'label'=>"Subcat name",
-            'type' =>'Text'
+            'type' =>'strip_text'
         ]);
 
         $this->crud->addColumn([
