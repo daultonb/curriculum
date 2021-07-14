@@ -26,7 +26,7 @@ class CreateSyllabiTable extends Migration
             $table->string('class_start_time', 20)->nullable();
             $table->string('class_end_time', 20)->nullable();
             $table->text('learning_outcomes')->nullable();
-            $table->text('learningAssessments')->nullable();
+            $table->text('learning_assessments')->nullable();
             $table->text('learning_activities')->nullable();
             $table->text('late_policy')->nullable();
             $table->text('missed_exam_policy')->nullable();

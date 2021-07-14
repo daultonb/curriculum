@@ -26,6 +26,7 @@ class CreateSyllabusTables extends Migration
             $table->text('course_coreqs')->nullable();
             $table->text('course_structure')->nullable();
             $table->text('course_schedule')->nullable();
+            $table->timestamps();
         });
 
         Schema::create('okanagan_syllabi', function (Blueprint $table) {
@@ -34,18 +35,23 @@ class CreateSyllabusTables extends Migration
             $table->foreign('syllabus_id')->references('id')->on('syllabi')->onUpdate('cascade')->onDelete('cascade');
             $table->text('course_format')->nullable();
             $table->text('course_overview')->nullable();
+            $table->timestamps();
         });
 
         Schema::create('vancouver_syllabus_resources', function (Blueprint $table) {
             $table->id();
+            $table->string('id_name')->unique();
             $table->string('title');
             $table->text('description');
+            $table->timestamps();
         });
 
         Schema::create('okanagan_syllabus_resources', function (Blueprint $table) {
             $table->id();
+            $table->string('id_name')->unique();
             $table->string('title');
             $table->text('description');
+            $table->timestamps();
         });
 
 
@@ -53,18 +59,18 @@ class CreateSyllabusTables extends Migration
             $table->id();
             $table->unsignedBigInteger('syllabus_id');
             $table->unsignedBigInteger('v_syllabus_resource_id');
-            
             $table->foreign('syllabus_id')->references('id')->on('syllabi')->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('v_syllabus_resource_id')->references('id')->on('vancouver_syllabus_resources')->onDelete('cascade')->onUpdate('cascade');
+            $table->timestamps();
         });
 
         Schema::create('syllabi_resources_okanagan', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('syllabus_id');
             $table->unsignedBigInteger('o_syllabus_resource_id');
-            
             $table->foreign('syllabus_id')->references('id')->on('syllabi')->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('o_syllabus_resource_id')->references('id')->on('okanagan_syllabus_resources')->onDelete('cascade')->onUpdate('cascade');
+            $table->timestamps();
         });
 
 

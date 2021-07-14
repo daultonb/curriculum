@@ -9,7 +9,7 @@
             <div class="card-header wizard text-start">
                 <h2>
                     Syllabus Generator 
-                    <button type="button" class="btn btn-primary col-3 float-right" data-toggle="modal" data-target="#importExistingCourse">Import an existing course</button>
+                    <button type="button" class="btn bg-primary text-white fw-bold col-3 float-right" data-toggle="modal" data-target="#importExistingCourse">Import an existing course</button>
                 </h2>
                 <!-- Import existing course Modal -->
                 <div class="modal fade" id="importExistingCourse" tabindex="-1" role="dialog" aria-labelledby="importExistingCourse" aria-hidden="true">
@@ -77,7 +77,7 @@
                         @csrf
                         <div class="container">
                                     <div class="row justify-content-center">
-                                        <div class="col mb-2 text-end">
+                                        <div class="col mb-2 text-center fs-6">
                                             <!-- Campus dropdown -->
                                             <span class="requiredField">*
                                                 <select  class="form-group text-center" id="campus" name="campus" form="sylabusGenerator" required>
@@ -88,11 +88,6 @@
                                                     <option value="V">UBC Vancouver</option>
                                                 </select>
                                             </span>
-                                        </div>
-                                        <div class="col mb-2">
-                                            <!-- land acknowledgment -->
-                                            <input class="ml-1 mr-1" type="checkbox" name="landAcknowledgement" id="landAcknowledgement" form = "sylabusGenerator" checked>
-                                            <label for="landAcknowledgement" class="ml-1 mr-1">Land acknowledgement</label>
                                         </div>
                                     </div>
                                     
@@ -309,7 +304,7 @@
                                                 <i class="bi bi-exclamation-lg"></i><p>Place each entry on a newline for the best formatting results.</p>
                                             </div>
                                             <textarea id = "learningAssessments" placeholder="Presentation, 25%, Dec 1, ... &#10;Midterm Exam, 25%, Sept 31, ..." name = "learningAssessments" class ="form-control"
-                                            type="date" style="height:125px;" form="sylabusGenerator" spellcheck="true">{{ !empty($syllabus) ? $syllabus->learningAssessments : ''}}</textarea>
+                                            type="date" style="height:125px;" form="sylabusGenerator" spellcheck="true">{{ !empty($syllabus) ? $syllabus->learning_assessments : ''}}</textarea>
                                         </div>
                                     </div>
 
@@ -386,61 +381,14 @@
                                     <!-- Course Optional Resources -->
                                     <div class="row mb-3 mt-4" >
                                         <div class="col">
+                                            <label class="fs-5 mb-3" for="optionalSyllabus"><b>Optional: </b>The below are suggested syllabus sections to communicate various resources on campus.</label>
+                                            
                                             <div class="optionalSyllabus">
-                                                <label class="fs-5 mb-3" for="optionalSyllabus"><b>Optional: </b>The below are suggested syllabus sections to communicate various resources on campus.</label>
-
                                                 <ul id="optionalSyllabus" class="text-start" style="list-style-type:none;">
-                                                <li>
-                                                <input id="academic" type="checkbox" name="academic" value="academic"
-                                                checked
-                                                >
-                                                <label for="academic">Academic Integrity Statement</label>
-                                                </li>
-
-                                                <li>
-                                                <input id="final" type="checkbox" name="final" value="final" checked>
-                                                <label for="final">Final Examinations</label>
-                                                </li>
-
-                                                <li>
-                                                <input id="gradingPractices" type="checkbox" name="gradingPractices" value="gradingPractices" checked>
-                                                <label for="gradingPractices">Grading Practices</label>
-                                                </li>
-
-                                                <li>
-                                                <input id="health" type="checkbox" name="health" value="health" checked>
-                                                <label for="health">Health & Wellness</label>
-                                                </li>
-
-                                                <li>
-                                                <input id="safewalk" type="checkbox" name="safewalk" value="safewalk" checked>
-                                                <label for="safewalk">Safewalk</label>
-                                                </li>
-
-                                                <li>
-                                                <input id="hub" type="checkbox" name="hub" value="hub" checked>
-                                                <label for="hub">Student Learning Hub</label>
-                                                </li>
-
-                                                <li>
-                                                <input id="disabilityAssistance" type="checkbox" name="disabilityAssistance" value="disabilityAssistance" checked>
-                                                <label for="disabilityAssistance">UBC Okanagan Disability Resource Centre</label>
-                                                </li>
-
-                                                <li>
-                                                <input id="equity" type="checkbox" name="equity" value= "equity" checked>
-                                                <label for="equity">UBC Okanagan Equity and Inclusion Office</label>
-                                                </li>
-
-                                                <li>
-                                                <input id="copyright" type="checkbox" name="copyright" value= "copyright" checked>
-                                                <label for="equity">Copyright Statement</label>
-                                                </li>
-
-                                            </ul>
+                                                </ul>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
                         </div>
                     </form>
                 </div>
@@ -460,77 +408,47 @@
 <script type="application/javascript">
     // Function changes optional verison of syllabus
     function onChangeCampus() {
-        // the optionalList variables need to match the optional syllabus list above (default is to display Okanagan)
-
         $('.courseInfo').tooltip(
             {
                 selector: '.has-tooltip'
             }     
         );
-
-
+        // list of vancouver syllabus resources
         var vancouverOptionalList = `
-            <li>
-            <input id="academic" type="checkbox" name="academic" value="academic" checked>
-            <label for="academic">Academic Integrity Statement</label>
-            </li>
-
-            <li>
-            <input id="disabilities" type="checkbox" name="disabilities" value="disabilities" checked>
-            <label for="disabilities">Accommodations for students with disabilities</label>
-            </li>
-
-            <li>
-            <input id="copyright" type="checkbox" name="copyright" value= "copyright" checked>
-            <label for="equity">Copyright Statement</label>
-            </li>
+            @if (!isset($selectedVancouverSyllabusResourceIds)) 
+                @foreach($vancouverSyllabusResources as $vSyllabusResource)
+                    <li>
+                        <input id="{{$vSyllabusResource->id_name}}" type="checkbox" name="vancouverSyllabusResources[{{$vSyllabusResource->id}}]" value="{{$vSyllabusResource->id_name}}" checked>
+                        <label for="{{$vSyllabusResource->id_name}}">{{$vSyllabusResource->title}}</label>   
+                    </li>
+                @endforeach
+            @else
+                @foreach($vancouverSyllabusResources as $vSyllabusResource)
+                    <li>
+                        <input id="{{$vSyllabusResource->id_name}}" type="checkbox" name="vancouverSyllabusResources[{{$vSyllabusResource->id}}]" value="{{$vSyllabusResource->id_name}}" {{in_array($vSyllabusResource->id, $selectedVancouverSyllabusResourceIds) ? 'checked' : ''}}>
+                        <label for="{{$vSyllabusResource->id_name}}">{{$vSyllabusResource->title}}</label>   
+                    </li>
+                @endforeach
+            @endif
 
             `;
+        // list of okanagan syllabus resources
         var okanaganOptionalList = `
-            <li>
-            <input id="academic" type="checkbox" name="academic" value="academic" checked>
-            <label for="academic">Academic Integrity</label>
-            </li>
-
-            <li>
-            <input id="final" type="checkbox" name="final" value="final" checked>
-            <label for="final">Final Examinations</label>
-            </li>
-
-            <li>
-            <input id="gradingPractices" type="checkbox" name="gradingPractices" value="gradingPractices" checked>
-            <label for="gradingPractices">Grading Practices</label>
-            </li>
-
-            <li>
-            <input id="health" type="checkbox" name="health" value="health" checked>
-            <label for="health">Health & Wellness</label>
-            </li>
-
-            <li>
-            <input id="safewalk" type="checkbox" name="safewalk" value="safewalk" checked>
-            <label for="safewalk">Safewalk</label>
-            </li>
-
-            <li>
-            <input id="hub" type="checkbox" name="hub" value="hub" checked>
-            <label for="hub">Student Learning Hub</label>
-            </li>
-
-            <li>
-            <input id="disabilityAssistance" type="checkbox" name="disabilityAssistance" value="disabilityAssistance" checked>
-            <label for="disabilityAssistance">UBC Okanagan Disability Resource Centre</label>
-            </li>
-
-            <li>
-            <input id="equity" type="checkbox" name="equity" value= "equity" checked>
-            <label for="equity">UBC Okanagan Equity and Inclusion Office</label>
-            </li>
-
-            <li>
-            <input id="copyright" type="checkbox" name="copyright" value= "copyright" checked>
-            <label for="equity">Copyright Statement</label>
-            </li>            
+            @if (!isset($selectedOkanaganSyllabusResourceIds)) 
+                @foreach($okanaganSyllabusResources as $oSyllabusResource)
+                    <li>
+                        <input id="{{$oSyllabusResource->id_name}}" type="checkbox" name="okanaganSyllabusResources[{{$oSyllabusResource->id}}]" value="{{$oSyllabusResource->id_name}}" checked>
+                        <label for="{{$oSyllabusResource->id_name}}">{{$oSyllabusResource->title}}</label>   
+                    </li>
+                @endforeach
+            @else
+                @foreach($okanaganSyllabusResources as $oSyllabusResource)
+                    <li>
+                        <input id="{{$oSyllabusResource->id_name}}" type="checkbox" name="okanaganSyllabusResources[{{$oSyllabusResource->id}}]" value="{{$oSyllabusResource->id_name}}" {{in_array($oSyllabusResource->id, $selectedOkanaganSyllabusResourceIds) ? 'checked' : ''}}>
+                        <label for="{{$oSyllabusResource->id_name}}">{{$oSyllabusResource->title}}</label>   
+                    </li>
+                @endforeach
+            @endif
             `;
 
         var courseCredit = `
@@ -621,8 +539,12 @@
                 <textarea name = "courseOverview" class ="form-control" type="text" form="sylabusGenerator" spellcheck="true">{{ isset($okanaganSyllabus) ? $okanaganSyllabus->course_overview : ''}}</textarea>
             </div>        
             `;
-        var campusName = $('#campus').find(":selected").text();
-        if(campusName == 'UBC Vancouver'){
+        
+        // get campus select element
+        var campus = $('#campus');
+        // check if its value is 'V'
+        if(campus.val() == 'V'){
+            // add data specific to vancouver campus
             $('#optionalSyllabus').html(vancouverOptionalList);
             $('#courseCredit').html(courseCredit);
             $('#officeLocation').html(officeLocation);
@@ -633,16 +555,17 @@
             $('#courseSchedule').html(courseSchedule);
             $('#courseInstructorBio').html(courseInstructorBio);
             $('#courseDescription').html(courseDescription);
-
+            // remove data specific to okanangan campus
             $('#courseFormat').empty();
             $('#courseOverview').empty();
         }
         else
         {
+            // add data specific to okanagan campus
             $('#optionalSyllabus').html(okanaganOptionalList);
             $('#courseFormat').html(courseFormat);
             $('#courseOverview').html(courseOverview);
-            
+            // remove data specific to vancouver campus
             $('#courseCredit').empty();
             $('#officeLocation').empty();
             $('#courseContacts').empty();
@@ -659,13 +582,12 @@
     $(document).ready(function () {
 
         var syllabus = <?php echo json_encode($syllabus);?>;
-
-        console.log(courseSemester + courseYear);
     
         $('[data-toggle="tooltip"]').tooltip();
-
+        // update syllabus form with the campus specific info
+        onChangeCampus();
+        // add on change event listener 
         $('#campus').change(onChangeCampus);
-
 
         // Import Course information into the input field throught GET ajax call
         $('#importButton').click(function() {

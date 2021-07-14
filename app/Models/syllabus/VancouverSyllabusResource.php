@@ -1,15 +1,16 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\syllabus;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class OkanaganSyllabus extends Model
+class VancouverSyllabusResource extends Model
 {
     use HasFactory;
 
-    protected $table = 'okanagan_syllabi';
+    protected $table = 'vancouver_syllabus_resources';
 
     public $timestamps = false;
+
 }
