@@ -459,11 +459,11 @@ class CourseCrudController extends CrudController
               'name' => 'CLOtable', //name of the getter/setter in course model 
              'columns' => [     
                  'l_outcome_id' => 'id-hidden',
-                 'l_outcome'    => 'Learning Outcome-text-req',   
-                 'clo_shortphrase'    => 'course learning outcome-text-treq',
+                 'l_outcome'    => 'Learning Outcome (Shortphrase)-text-req',   
+                 'clo_shortphrase'    => 'Course Learning Outcome-text-req',
              ],
              
-             'max'     => 5,
+             'max'     => 20,
              
              'min'     => 0,
              
@@ -485,14 +485,14 @@ class CourseCrudController extends CrudController
                  'weight'          => 'Weight (%)-number-req',
              ],
              
-             'max'     => 5,
+             'max'     => 20,
              
              'min'     => 0,
              
            ]);
              
             $this->crud->addField([   // relationship
-             'label' => "Learning Activities",
+             'label' => "Teaching and Learning Activities",
 
              'type' => "match_table",
 
@@ -503,10 +503,10 @@ class CourseCrudController extends CrudController
              'ajax' => true,  
              'columns' => [     
                  'l_activity_id' => 'id-hidden',
-                 'l_activity'        => 'Learning Activity-text-req',                
+                 'l_activity'        => 'Teaching and Learning Activities-text-req',                
              ],
              
-             'max'     => 5,
+             'max'     => 20,
              
              'min'     => 0,
              
@@ -516,7 +516,10 @@ class CourseCrudController extends CrudController
            //course alignment
            //create a table, fill the fields using custom code. each checkbox has a name with (oas|oac)-cID-aID (where aID is the other ID type)
            ///start with a row for each CLO
-           $custHTML = "<fieldset name=\"alignfields\"><label>Course Alignment</label><table class=\"table table-sm table-striped m-b-0\" id=\"align-t\">";
+           $custHTML = "<fieldset name=\"alignfields\"><label>Course Alignment</label>"
+                   . "<br><label style=\"font-size:.8em;\">Changes made to the Course Learning Objectives, Learning Activities and Assessment Methods"
+                   . " will be be reflected in this table only after saving and reloading the form</label>"
+                   . "<table class=\"table table-sm table-striped m-b-0\" id=\"align-t\">";
                      
            //by getting the set of ids for la and am, i can query only those oas and oac that belong to this course (not referenced directly by courseID)
            
