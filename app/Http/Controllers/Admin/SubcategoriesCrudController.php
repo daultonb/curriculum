@@ -42,20 +42,20 @@ class SubcategoriesCrudController extends CrudController
     protected function setupListOperation()
     {
         $this->crud->addColumn([
-            'name' => 'subcat_id',
-            'label'=>"Subcat Id",
+            'name' =>'subcat_id',
+            'label'=>"Subcategory ID",
             'type' =>'number'
         ]);
 
         $this->crud->addColumn([
             'name' => 'subcat_name',
-            'label'=>"Subcat name",
+            'label'=>"Subcategory Name",
             'type' =>'strip_text'
         ]);
 
         $this->crud->addColumn([
             'name' => 'cat_id',
-            'label'=>"Cat Id",
+            'label'=>"Category ID",
             'type' =>'number'
         ]);
 
@@ -78,7 +78,7 @@ class SubcategoriesCrudController extends CrudController
         $subid = \DB::table('optional_priority_subcategories')->count();
         $this->crud->addField([
             'name'=>'subcat_id',
-            'label'=>'Subcat Id',
+            'label'=>'Subcategory ID',
             'type' => 'number',
             'default' =>$subid+1,
             'attributes'=>['readonly'=>'readonly',
@@ -87,18 +87,18 @@ class SubcategoriesCrudController extends CrudController
 
         $this->crud->addField([
             'name'=>'subcat_name',
-            'label'=>'Subcat Name',
-            'type'=>'Text',
+            'label'=>'Subcategory Name',
+            'type'=>'strip_text',
         ]);
 
         $this->crud->addField([
             'name'=>'subcat_desc',
-            'label'=>'Subcat Desc',
+            'label'=>'Subcategory Description',
             'type'=>'Text',
         ]);
         $this->crud->addField([
             'name' => 'cat_id', // The db column name
-            'label' => "Cat Id",// Table column heading
+            'label' => "Category ID",// Table column heading
             'type' => 'number',
             'default' => '1',
         ]);
@@ -113,7 +113,7 @@ class SubcategoriesCrudController extends CrudController
 
         $this->crud->addField([
             'name'=>'subcat_postamble',
-            'label'=>'Subcat Postamble',
+            'label'=>'Subcategory Postamble',
             'type'=>'Text',
         ]);
 
@@ -136,22 +136,23 @@ class SubcategoriesCrudController extends CrudController
         $subid = \DB::table('optional_priority_subcategories')->count();
         $this->crud->addField([
             'name'=>'subcat_id',
-            'label'=>'Subcat Id',
+            'label'=>'Subcategory ID',
             'type' => 'number',
             'default' =>$subid+1,
             'attributes'=>['readonly'=>'readonly',
                            ],
         ]);
-
+        
+        
         $this->crud->addField([
             'name'=>'subcat_name',
-            'label'=>'Subcat Name',
-            'type'=>'Text',
+            'label'=>'Subcategory Name',
+            'type'=>'text',
         ]);
 
         $this->crud->addField([
             'name'=>'subcat_desc',
-            'label'=>'Subcat Desc',
+            'label'=>'Subcategory Description',
             'type'=>'Text',
         ]);
 
@@ -166,7 +167,7 @@ class SubcategoriesCrudController extends CrudController
 
         $this->crud->addField([
             'name'=>'subcat_postamble',
-            'label'=>'Subcat Postamble',
+            'label'=>'Subcategory Postamble',
             'type'=>'Text',
         ]);
 
@@ -176,22 +177,22 @@ class SubcategoriesCrudController extends CrudController
         $this->crud->set('show.setFromDb', false);
         $this->crud->addColumn([
             'name' => 'subcat_id',
-            'label'=>"Subcat Id",
+            'label'=>"Subcategory ID",
             'type' =>'number'
         ]);
         $this->crud->addColumn([
             'name' => 'subcat_name',
-            'label'=>"Subcat Name",
-            'type' =>'Text'
+            'label'=>"Subcategory Name",
+            'type' =>'strip_text'
         ]);
         $this->crud->addColumn([
             'name' => 'subcat_desc',
-            'label'=>"Subcat Desc",
+            'label'=>"Subcategory Description",
             'type' =>'Text'
         ]);
         $this->crud->addColumn([
             'name' => 'cat_id',
-            'label'=>"Cat Id",
+            'label'=>"Category ID",
             'type' =>'number'
         ]);
         $this->crud->addColumn([
@@ -204,7 +205,7 @@ class SubcategoriesCrudController extends CrudController
         ]);
         $this->crud->addColumn([
             'name' => 'subcat_postamble',
-            'label'=>"Subcat Postamble",
+            'label'=>"Subcategory Postamble",
             'type' =>'Text'
         ]);
 

@@ -81,10 +81,11 @@ class OptionalPriorityCrudController extends CrudController
             'label' => "Category desc",// Table column heading
             'type' => 'Text'
         ]);*/
+        
         $this->crud->addColumn([
             'name' => 'optional_priority', // The db column name
             'label' => "Optional Priority",// Table column heading
-            'type' => 'Text'
+            'type' => 'stip_text',
         ]);
     }
 
