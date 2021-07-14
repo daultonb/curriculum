@@ -14,6 +14,8 @@ use App\Models\CourseProgram;
 use App\Models\MappingScale;
 use App\Models\LearningOutcome;
 use App\Models\MappingScaleCategory;
+use App\Models\OutcomeMap;
+use Doctrine\DBAL\Schema\Index;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\DB;
@@ -170,9 +172,11 @@ class ProgramWizardController extends Controller
         $ploCount = ProgramLearningOutcome::where('program_id', $program_id)->count();
         $msCount = MappingScale::join('mapping_scale_programs', 'mapping_scales.map_scale_id', "=", 'mapping_scale_programs.map_scale_id')
                                     ->where('mapping_scale_programs.program_id', $program_id)->count();
-        
+        //
         $courseCount = CourseProgram::where('program_id', $program_id)->count();
-
+        //
+        $mappingScales = MappingScale::join('mapping_scale_programs', 'mapping_scales.map_scale_id', "=", 'mapping_scale_programs.map_scale_id')
+                                    ->where('mapping_scale_programs.program_id', $program_id)->get();
 
         // get all the courses this program belongs to
         $programCourses = $program->courses;
@@ -215,13 +219,72 @@ class ProgramWizardController extends Controller
             $learningOutcomes = $programCourse->learningOutcomes;
             $coursesOutcomes[$programCourse->course_id] = $learningOutcomes;
         }
-        
+
+        // retrieves all the outcome mapping values for every clo and plo
+        $arr = array();
+        $count = 0;
+        foreach ($allPLO as $plo) {
+            // Only check Categorized PLOs first
+            //if ($plo->plo_category_id != null) {
+                // loop through CLOs to get map scale value
+                foreach ($coursesOutcomes as $clos) {
+                    foreach ($clos as $clo) {
+                        // Check if record exists
+                        if (!OutcomeMap::where(['l_outcome_id' => $clo->l_outcome_id, 'pl_outcome_id' => $plo->pl_outcome_id])->exists()) {
+                            //dd('Record not found for: clo : plo', $clo->l_outcome_id, $plo->pl_outcome_id);
+                        } else {
+                            $count++;
+                            //dd($clo->l_outcome_id);
+                            $mapScaleValue = OutcomeMap::where(['l_outcome_id' => $clo->l_outcome_id, 'pl_outcome_id' => $plo->pl_outcome_id])->value('map_scale_value');
+                            $arr[$count] = array(
+                                'pl_outcome_id' => $plo->pl_outcome_id,
+                                'course_id' => $clo->course_id,
+                                'map_scale_value' => $mapScaleValue,
+                                'plo_category_id' => $plo->plo_category_id,
+                                'l_outcome_id' => $clo->l_outcome_id,
+                            );
+                        }
+                    }
+                }
+            //}
+        }
+        //dd($arr);
+        // freq dist
+        $newArr = array();
+        $freq = array();
+        $count = 0;
+        foreach ($arr as $index => $map) {
+            $pl_outcome_id = $map['pl_outcome_id'];
+            $course_id = $map['course_id'];
+            $map_scale_value = $map['map_scale_value'];
+            $plo_category_id = $map['plo_category_id'];
+            $l_outcome_id = $map['l_outcome_id'];
+            //dd($pl_map, $course_id_map, $map_scale_value);
+            // check if unique combo of 'pl_outcome_id & course_id & map_scale_value are in the frequency array'
+            $newArr[$pl_outcome_id][$l_outcome_id] = [
+                'map_scale_value' => $map_scale_value,
+            ];
+            foreach($newArr[$pl_outcome_id][$l_outcome_id] as $dist) {
+                $msv = $dist;
+                if (!array_key_exists($msv,$freq)) {
+                    // msv is not in the table
+                    $freq[$msv] = 1;
+                } else {
+                    // msv is in the table, so increment
+                    $freq[$msv] += 1;
+                }
+                
+            }
+            
+        }
+        //dd($freq);
+        //dd($newArr);
 
         return view('programs.wizard.step4')->with('program', $program)
                                             ->with("faculties", $faculties)->with("departments", $departments)->with("levels",$levels)->with('user', $user)->with('programUsers',$programUsers)
                                             ->with('ploCount',$ploCount)->with('msCount', $msCount)->with('courseCount', $courseCount)->with('programCourses', $programCourses)->with('coursesOutcomes', $coursesOutcomes)
                                             ->with('ploCategories', $ploCategories)->with('plos', $plos)->with('hasUncategorized', $hasUncategorized)->with('ploProgramCategories', $ploProgramCategories)->with('plosPerCategory', $plosPerCategory)
-                                            ->with('numUncategorizedPLOS', $numUncategorizedPLOS);
+                                            ->with('numUncategorizedPLOS', $numUncategorizedPLOS)->with('mappingScales', $mappingScales);
     }
 
 

@@ -5,11 +5,46 @@
     <div class="row justify-content-center">
         <div class="col-md-12">
             @include('programs.wizard.header')
-
             <div class="card">
                 <h3 class="card-header wizard" >
                     Program Overview
                 </h3>
+                <div class='card-body'>
+                            
+                        @if ( count($mappingScales) < 1) 
+                            <div class="alert alert-warning wizard">
+                                <i class="bi bi-exclamation-circle-fill"></i>A mapping scale has not been set for this program.                  
+                            </div>
+                        @else 
+                        <div class="card m-1">
+                            <h5 class="card-header wizard text-start">
+                            Mapping Scale
+                            </h5>
+                            <p>The mapping scale indicates the degree to which a program learning outcome is addressed by a course learning outcome.</p>
+                            <table class="table table-bordered table-sm" style="width: 95%; margin: auto;">
+                                <tr class="table-primary">
+                                    <th colspan="2">Mapping Scale</th>
+                                </tr>
+                                <tbody>
+                                    @foreach($mappingScales as $ms)
+                                        <tr>
+                                            <td>
+                                                <div style="background-color:{{$ms->colour}}; height: 10px; width: 10px;"></div>
+                                                {{$ms->title}}<br>
+                                                ({{$ms->abbreviation}})
+                                            </td>
+                                            <td>
+                                                {{$ms->description}}
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        @endif
+                    </div>
+                </div>
+            
+
                 <div class="card-body">
                     @if( count($programCourses) < 1 )
                     <div class="alert alert-warning wizard">
@@ -21,7 +56,7 @@
                                 Courses to PLOs Frequency Distribution
                             </h5>
                             
-                            <table>
+                            <table class="table table-bordered table-sm" style="width: 95%; margin:auto;">
                                 <tr class="table-primary">
                                     <th colspan='1'>Courses</th>
                                     <th colspan='{{ count($plos) }}'>Program-level Learning Outcomes</th>
@@ -57,7 +92,7 @@
                                     @endforeach
                                 </tr>
                                 <!-- Show all courses associated to the program -->
-                                @foreach($programCourses as $index => $course)
+                                @foreach($programCourses as $course)
                                     <tr>
                                         <th colspan="1" style="background-color: rgba(0, 0, 0, 0.03);">
                                         {{$course->course_title}}
@@ -67,8 +102,24 @@
                                         {{$course->semester}} {{$course->year}}
                                     </th>
                                         <!-- Frequency distribution from each course -->
-                                        <td></td>
-                                        <td></td>
+                                        <!-- For Each Categorized PLO -->
+                                        @foreach($plos as $index => $plo)
+                                            @if ($plo->plo_category != NULL)
+                                                <td>Categorized<br>
+                                                    pl_outcome_id: {{$plo->pl_outcome_id}}<br>
+                                                    course_id: {{$course->course_id}}
+                                                </td>
+                                            @endif
+                                        @endforeach
+                                        <!-- For Each Uncategorized PLO-->
+                                        @foreach($plos as $plo)
+                                            @if ($plo->plo_category == NULL)
+                                                <td>Uncategorized<br>
+                                                    pl_outcome_id: {{$plo->pl_outcome_id}}<br>
+                                                    course_id: {{$course->course_id}}
+                                                </td>
+                                            @endif
+                                        @endforeach
                                     </tr>
                                 @endforeach
                             </table>
@@ -87,6 +138,7 @@
     </div>
 </div>
 
+
 <script type="text/javascript">
     $(document).ready(function () {
 
@@ -104,7 +156,6 @@
         margin: 2%;
         width: 95%;
         table-layout: fixed;
-        background-color: blueviolet;
     }
     table, th, td {
     border: 1px solid white;
