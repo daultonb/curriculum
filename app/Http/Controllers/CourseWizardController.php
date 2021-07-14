@@ -276,29 +276,12 @@ class CourseWizardController extends Controller
         // get mapping scales associated with course
         $mappingScales = StandardScale::where('scale_category_id', $course->scale_category_id)->get();
 
-        //get optional priorities for ubc mandate letters
-        $ubc_mandate_letters_subcat_id_index = 1;
-        $ubc_mandate_letters = OptionalPriorities::where('subcat_id', $ubc_mandate_letters_subcat_id_index)->pluck('optional_priority')->toArray();
-
-        //get optional priorities for bc labour market
-        $bc_labour_market_subcat_id_index = 2;
-        $bc_labour_market = OptionalPriorities::where('subcat_id', $bc_labour_market_subcat_id_index)->pluck('optional_priority')->toArray();
-
-        //get optional priorities for shaping ubc
-        $shaping_ubc_subcat_id_index = 3;
-        $shaping_ubc = OptionalPriorities::where('subcat_id', $shaping_ubc_subcat_id_index)->pluck('optional_priority')->toArray();
-
-        //get optional priorities for okanagan 2040 outlook
-        $okanagan_2040_outlook_subcat_id_index = 4;
-        $okanagan_2040_outlook = OptionalPriorities::where('subcat_id', $okanagan_2040_outlook_subcat_id_index)->pluck('optional_priority')->toArray();
-
-        //get optional priorities for ubc indigenous plan
-        $ubc_indigenous_plan_subcat_id_index = 5;
-        $ubc_indigenous_plan = OptionalPriorities::where('subcat_id', $ubc_indigenous_plan_subcat_id_index)->pluck('optional_priority')->toArray();
-
-        //get optional priorities for ubc climate priorities
-        $ubc_climate_priorities_subcat_id_index = 6;
-        $ubc_climate_priorities = OptionalPriorities::where('subcat_id', $ubc_climate_priorities_subcat_id_index)->pluck('optional_priority')->toArray();
+        //get optional priorities for each subcategory
+        $number_of_optional_priority_subcats = 6;
+        $optional_priorities = array();
+        for ($i = 1; $i <= $number_of_optional_priority_subcats; $i++) {
+            $optional_priorities[] = OptionalPriorities::where('subcat_id', $i)->pluck('optional_priority')->toArray();
+        }
 
         $optional_PLOs = OptionalPriorities::where('course_id', $course_id)->get();
 
@@ -310,8 +293,8 @@ class CourseWizardController extends Controller
 
         return view('courses.wizard.step6')->with('l_outcomes', $l_outcomes)->with('course', $course)->with('mappingScales', $mappingScales)->with('courseUsers', $courseUsers)->with('user', $user)
                                         ->with('lo_count',$lo_count)->with('am_count', $am_count)->with('la_count', $la_count)->with('oAct', $oAct)->with('oAss', $oAss)->with('outcomeMapsCount', $outcomeMapsCount)
-                                        ->with('bc_labour_market',$bc_labour_market)->with('shaping_ubc',$shaping_ubc)->with('ubc_mandate_letters',$ubc_mandate_letters)->with('okanagan_2040_outlook',$okanagan_2040_outlook)
-                                        ->with('ubc_indigenous_plan',$ubc_indigenous_plan)->with('ubc_climate_priorities',$ubc_climate_priorities)->with('shaping_ubc_link',$shaping_ubc_link)->with('optional_PLOs',$optional_PLOs)
+                                        ->with('bc_labour_market',$optional_priorities[1])->with('shaping_ubc',$optional_priorities[2])->with('ubc_mandate_letters',$optional_priorities[0])->with('okanagan_2040_outlook',$optional_priorities[3])
+                                        ->with('ubc_indigenous_plan',$optional_priorities[4])->with('ubc_climate_priorities',$optional_priorities[5])->with('shaping_ubc_link',$shaping_ubc_link)->with('optional_PLOs',$optional_PLOs)
                                         ->with('standard_outcomes', $standard_outcomes);
     }
     
