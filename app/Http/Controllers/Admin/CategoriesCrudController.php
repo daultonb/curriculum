@@ -69,21 +69,22 @@ class CategoriesCrudController extends CrudController
     protected function setupCreateOperation()
     {
         CRUD::setValidation(CategoriesRequest::class);
-        $catId = \DB::table('optional_priority_categories')->count();
+       // $catId = \DB::table('optional_priority_categories')->count();
         
-        $this->crud->addField([
+       /* $this->crud->addField([
             'name'=>'cat_id',
             'label'=>'Category ID',
             'type' =>'number',
             'default'=>$catId+1,
             'attributes'=>['readonly'=>'readonly',
                            ],
-        ]);
+        ]);*/
 
         $this->crud->addField([
             'name'=>'cat_name',
             'label'=>'Category Name',
-            'type' =>'Text',
+            'type' =>'valid_text',
+            'attributes' => [ 'req' => 'true']
         ]);
 
         /**
@@ -101,7 +102,20 @@ class CategoriesCrudController extends CrudController
      */
     protected function setupUpdateOperation()
     {
-        $this->setupCreateOperation();
+            $this->crud->addField([
+            'name'=>'cat_id',
+            'label'=>'Category ID',
+            'type' =>'number',            
+            'attributes'=>['readonly'=>'readonly',
+                           ],
+        ]);
+
+        $this->crud->addField([
+            'name'=>'cat_name',
+            'label'=>'Category Name',
+            'type' =>'valid_text',
+            'attributes' => [ 'req' => 'true']
+        ]);
     }
     protected function setupShowOperation()
     {

@@ -115,7 +115,7 @@ class StandardCategoryCrudController extends CrudController
                 ],
                 [
                     'name'    => 's_outcome',
-                    'type'    => 'easymde',
+                    'type'    => 'textarea',
                     'label'   => 'Standard Outcome', 
                     'attributes' => [
                         'req' => 'true',

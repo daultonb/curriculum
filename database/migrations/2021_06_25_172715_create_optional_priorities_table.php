@@ -14,8 +14,7 @@ class CreateOptionalPrioritiesTable extends Migration
     public function up()
     {
         Schema::create('optional_priorities', function (Blueprint $table) {
-            $table->unsignedBigInteger('op_id');
-            $table->primary('op_id');
+            $table->bigIncrements('op_id');            
             $table->unsignedBigInteger('subcat_id');
             $table->text('optional_priority');
             //$table->unsignedBigInteger('input_status');

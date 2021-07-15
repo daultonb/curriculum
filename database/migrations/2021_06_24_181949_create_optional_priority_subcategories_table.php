@@ -14,8 +14,7 @@ class CreateOptionalPrioritySubcategoriesTable extends Migration
     public function up()
     {
         Schema::create('optional_priority_subcategories', function (Blueprint $table) {
-            $table->unsignedBigInteger('subcat_id');
-            $table->primary('subcat_id');
+            $table->bigIncrements('subcat_id');            
             $table->text('subcat_name');
             $table->unsignedBigInteger('cat_id');
             $table->text('subcat_desc')->nullable();
