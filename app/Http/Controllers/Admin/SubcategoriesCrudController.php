@@ -86,23 +86,6 @@ class SubcategoriesCrudController extends CrudController
         ]);
 
         $this->crud->addField([
-            'name'=>'subcat_name',
-            'label'=>'Subcategory Name',
-            'type'=>'strip_text',
-        ]);
-
-        $this->crud->addField([
-            'name'=>'subcat_desc',
-            'label'=>'Subcategory Description',
-            'type'=>'Text',
-        ]);
-        $this->crud->addField([
-            'name' => 'cat_id', // The db column name
-            'label' => "Category ID",// Table column heading
-            'type' => 'number',
-            'default' => '1',
-        ]);
-        $this->crud->addField([
             'label' => 'Category Name',// Table column heading
             'type' => 'select',
             'name' => 'OptionalPriorityCategories', // The db column name
@@ -111,10 +94,29 @@ class SubcategoriesCrudController extends CrudController
             'model' => 'App\Models\OptionalPriorityCategories',
         ]);
 
+
+        $this->crud->addField([
+            'name'=>'subcat_name',
+            'label'=>'Subcategory Name',
+            'type'=>'textarea',
+        ]);
+
+        $this->crud->addField([
+            'name'=>'subcat_desc',
+            'label'=>'Subcategory Description',
+            'type'=>'textarea',
+        ]);
+        $this->crud->addField([
+            'name' => 'cat_id', // The db column name
+            'label' => "Category ID",// Table column heading
+            'type' => 'number',
+            'default' => '1',
+        ]);
+       
         $this->crud->addField([
             'name'=>'subcat_postamble',
             'label'=>'Subcategory Postamble',
-            'type'=>'Text',
+            'type'=>'textarea',
         ]);
 
         /**
@@ -143,19 +145,6 @@ class SubcategoriesCrudController extends CrudController
                            ],
         ]);
         
-        
-        $this->crud->addField([
-            'name'=>'subcat_name',
-            'label'=>'Subcategory Name',
-            'type'=>'text',
-        ]);
-
-        $this->crud->addField([
-            'name'=>'subcat_desc',
-            'label'=>'Subcategory Description',
-            'type'=>'Text',
-        ]);
-
         $this->crud->addField([
             'label' => 'Category Name',// Table column heading
             'type' => 'select',
@@ -164,11 +153,25 @@ class SubcategoriesCrudController extends CrudController
             'attribute' =>'cat_name',
             'model' => 'App\Models\OptionalPriorityCategories',
         ]);
+        
+        $this->crud->addField([
+            'name'=>'subcat_name',
+            'label'=>'Subcategory Name',
+            'type'=>'textarea',
+        ]);
+
+        $this->crud->addField([
+            'name'=>'subcat_desc',
+            'label'=>'Subcategory Description',
+            'type'=>'textarea',
+        ]);
+
+    
 
         $this->crud->addField([
             'name'=>'subcat_postamble',
             'label'=>'Subcategory Postamble',
-            'type'=>'Text',
+            'type'=>'textarea',
         ]);
 
     }
@@ -179,6 +182,14 @@ class SubcategoriesCrudController extends CrudController
             'name' => 'subcat_id',
             'label'=>"Subcategory ID",
             'type' =>'number'
+        ]);
+        $this->crud->addColumn([
+            'label' => 'Category Name',// Table column heading
+            'type' => 'select',
+            'name' => 'OptionalPriorityCategories', // The db column name
+            'entity' =>'OptionalPriorityCategories',
+            'attribute' =>'cat_name',
+            'model' => 'App\Models\OptionalPriorityCategories',
         ]);
         $this->crud->addColumn([
             'name' => 'subcat_name',
@@ -194,14 +205,6 @@ class SubcategoriesCrudController extends CrudController
             'name' => 'cat_id',
             'label'=>"Category ID",
             'type' =>'number'
-        ]);
-        $this->crud->addColumn([
-            'label' => 'Category Name',// Table column heading
-            'type' => 'select',
-            'name' => 'OptionalPriorityCategories', // The db column name
-            'entity' =>'OptionalPriorityCategories',
-            'attribute' =>'cat_name',
-            'model' => 'App\Models\OptionalPriorityCategories',
         ]);
         $this->crud->addColumn([
             'name' => 'subcat_postamble',
