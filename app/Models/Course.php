@@ -162,7 +162,7 @@ class Course extends Model
                     LearningActivity::where('l_activity_id', $id)->update(['l_activity' => $row->l_activity]);
             }
             else{
-                LearningActivity:create(['course_id' => $crsID, 'l_activity' => $row->l_activity]);
+                LearningActivity::create(['course_id' => $crsID, 'l_activity' => $row->l_activity]);
             }
         }
         DB::table('learning_activities')->whereIn('l_activity_id', $setDel)->delete();

@@ -114,6 +114,19 @@
     @php
         $crud->markFieldTypeAsLoaded($field);
     @endphp
+    
+     {{-- FIELD CSS - will be loaded in the after_styles section --}}
+    @push('crud_fields_styles')
+        <!-- accordion css-->
+         <style>
+            a:visited{
+                color:white !important;
+            }
+            a:link{
+                color:white !important;
+            }
+        </style>
+    @endpush
 
     {{-- FIELD JS - will be loaded in the after_scripts section --}}
     @push('crud_fields_scripts')
