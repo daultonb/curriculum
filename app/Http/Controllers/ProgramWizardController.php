@@ -14,6 +14,7 @@ use App\Models\CourseProgram;
 use App\Models\MappingScale;
 use App\Models\LearningOutcome;
 use App\Models\MappingScaleCategory;
+use App\Models\MappingScaleProgram;
 use App\Models\OutcomeMap;
 use Doctrine\DBAL\Schema\Index;
 use Illuminate\Support\Facades\Auth;
@@ -224,67 +225,143 @@ class ProgramWizardController extends Controller
         $arr = array();
         $count = 0;
         foreach ($allPLO as $plo) {
-            // Only check Categorized PLOs first
-            //if ($plo->plo_category_id != null) {
-                // loop through CLOs to get map scale value
-                foreach ($coursesOutcomes as $clos) {
-                    foreach ($clos as $clo) {
-                        // Check if record exists
-                        if (!OutcomeMap::where(['l_outcome_id' => $clo->l_outcome_id, 'pl_outcome_id' => $plo->pl_outcome_id])->exists()) {
-                            //dd('Record not found for: clo : plo', $clo->l_outcome_id, $plo->pl_outcome_id);
-                        } else {
-                            $count++;
-                            //dd($clo->l_outcome_id);
-                            $mapScaleValue = OutcomeMap::where(['l_outcome_id' => $clo->l_outcome_id, 'pl_outcome_id' => $plo->pl_outcome_id])->value('map_scale_value');
-                            $arr[$count] = array(
-                                'pl_outcome_id' => $plo->pl_outcome_id,
-                                'course_id' => $clo->course_id,
-                                'map_scale_value' => $mapScaleValue,
-                                'plo_category_id' => $plo->plo_category_id,
-                                'l_outcome_id' => $clo->l_outcome_id,
-                            );
-                        }
+            // loop through CLOs to get map scale value
+            foreach ($coursesOutcomes as $clos) {
+                foreach ($clos as $clo) {
+                    // Check if record exists in the db
+                    if (!OutcomeMap::where(['l_outcome_id' => $clo->l_outcome_id, 'pl_outcome_id' => $plo->pl_outcome_id])->exists()) {
+                        // if nothing is found then do nothing
+                        // else if record (mapping_scale_value) is found then store it in the array
+                    } else {
+                        $count++;
+                        $mapScaleValue = OutcomeMap::where(['l_outcome_id' => $clo->l_outcome_id, 'pl_outcome_id' => $plo->pl_outcome_id])->value('map_scale_value');
+                        $arr[$count] = array(
+                            'pl_outcome_id' => $plo->pl_outcome_id,
+                            'course_id' => $clo->course_id,
+                            'map_scale_value' => $mapScaleValue,
+                            'l_outcome_id' => $clo->l_outcome_id,
+                        );
                     }
                 }
-            //}
+            }
         }
-        //dd($arr);
-        // freq dist
-        $newArr = array();
+
+        // Initialize array for each pl_outcome_id with the value of null
+        $store = array();
+        foreach ($arr as $ar) {
+            $store[$ar['pl_outcome_id']] = null;
+        }
+        // Initialize Array for Storing 
+        foreach ($arr as $ar) {
+            if ($store[$ar['pl_outcome_id']] == null || $store[$ar['pl_outcome_id']] == $ar['pl_outcome_id']) {
+                $store[$ar['pl_outcome_id']] = array(
+                    $ar['course_id'] => array(
+                    ),
+                );
+            } else {
+                $store[$ar['pl_outcome_id']][$ar['course_id']] = array(
+                );
+            }
+        }
+
+        //Initialize Array for Frequency Distribution
         $freq = array();
-        $count = 0;
-        foreach ($arr as $index => $map) {
+        foreach ($arr as $map) {
             $pl_outcome_id = $map['pl_outcome_id'];
             $course_id = $map['course_id'];
             $map_scale_value = $map['map_scale_value'];
-            $plo_category_id = $map['plo_category_id'];
-            $l_outcome_id = $map['l_outcome_id'];
-            //dd($pl_map, $course_id_map, $map_scale_value);
-            // check if unique combo of 'pl_outcome_id & course_id & map_scale_value are in the frequency array'
-            $newArr[$pl_outcome_id][$l_outcome_id] = [
-                'map_scale_value' => $map_scale_value,
-            ];
-            foreach($newArr[$pl_outcome_id][$l_outcome_id] as $dist) {
-                $msv = $dist;
-                if (!array_key_exists($msv,$freq)) {
-                    // msv is not in the table
-                    $freq[$msv] = 1;
-                } else {
-                    // msv is in the table, so increment
-                    $freq[$msv] += 1;
-                }
-                
-            }
-            
+            //Initialize Array with the value of zero
+            $freq[$pl_outcome_id][$course_id][$map_scale_value] = 0;
         }
-        //dd($freq);
-        //dd($newArr);
+        // Store values in the frequency distribution array that was initialized to zero above
+        foreach ($arr as $map) {
+            $pl_outcome_id = $map['pl_outcome_id'];
+            $course_id = $map['course_id'];
+            $map_scale_value = $map['map_scale_value'];
+            // check if map_scale_value is in the frequency array and give it the value of 1
+            if ($freq[$pl_outcome_id][$course_id][$map_scale_value] == 0) {
+                $freq[$pl_outcome_id][$course_id][$map_scale_value] = 1;
+            // if the value is found again, and is not zero, increment
+            } else {
+                $freq[$pl_outcome_id][$course_id][$map_scale_value] += 1;
+            }
+        }
+        
+        // loop through the frequencies of the mapping values
+        foreach($freq as $plOutcomeId => $dist) {
+            foreach($dist as $courseId => $d) {
+                $weight = 0;
+                $tieResults = array();
+                //count the number of times a mapping scales appears for a program learning outcome 
+                foreach($d as $mapScaleWeight) {
+                    //check if the current ($mapScaleWeight) > than the previously stored value
+                    if ($weight < $mapScaleWeight) {
+                        $weight = $mapScaleWeight;
+                    } else if ($weight == $mapScaleWeight) {    // if a tie is found store the mapping scale values (I.e: I, A, D) in and array
+                        $tieResults = array_keys($d, $weight);
+                    }
+                }
+                // if A tie is found.. 
+                if ($tieResults != null) {
+                    $stringResults = '';
+                    $numItems = count($tieResults);
+                    $i = 0;
+                    // for each tie value append to a string
+                    foreach ($tieResults as $tieResult) {
+                        // appends '/' only if it's not at the last index in the array
+                        if (++$i !== $numItems) {
+                            $stringResults .= "" .$tieResult. " / "; 
+                        } else {
+                            $stringResults .= "" .$tieResult;
+                        }
+                    }
+                    // Store the results array as the map_scale_value key
+                    $store[$plOutcomeId][$courseId] += array(
+                        'map_scale_value' => $stringResults 
+                    );
+                    // Store a new array to be able to determine if the mapping scale value comes from the result of a tie
+                    $store[$plOutcomeId][$courseId] += array(
+                        'map_scale_value_tie' => True
+                    );
+                    // If no tie is present, store the strongest weighted map_scale_value 
+                } else {
+                    $store[$plOutcomeId][$courseId] = array(
+                        'map_scale_value' => array_search($weight, $d)
+                    );
+                }
+            }
+        }
+
+        // Assign a colour to store based
+        foreach ($store as $plOutcomeId => $s) {
+            foreach ($s as $courseId => $msv) {
+                // If a tie exists assign it the colour white
+                if (array_key_exists("map_scale_value_tie",$msv)) {
+                    $mapScaleColour = '#FFFFFF';
+                    $store[$plOutcomeId][$courseId] += array(
+                        'colour' => $mapScaleColour
+                    );
+                } else {
+                    // Search for the mapping scale colour in the db, then assign it to the array
+                    $mapScaleColour = MappingScale::join('mapping_scale_programs', 'mapping_scales.map_scale_id', "=", 'mapping_scale_programs.map_scale_id')
+                                    ->where('mapping_scale_programs.program_id', $program_id)
+                                    ->where('mapping_scales.abbreviation', $msv)->value('colour');
+                
+                if ($mapScaleColour == null) {
+                    $mapScaleColour = '#FFFFFF';
+                }
+                    $store[$plOutcomeId][$courseId] += array(
+                        'colour' => $mapScaleColour
+                    );
+                }
+            }
+        }
 
         return view('programs.wizard.step4')->with('program', $program)
                                             ->with("faculties", $faculties)->with("departments", $departments)->with("levels",$levels)->with('user', $user)->with('programUsers',$programUsers)
                                             ->with('ploCount',$ploCount)->with('msCount', $msCount)->with('courseCount', $courseCount)->with('programCourses', $programCourses)->with('coursesOutcomes', $coursesOutcomes)
                                             ->with('ploCategories', $ploCategories)->with('plos', $plos)->with('hasUncategorized', $hasUncategorized)->with('ploProgramCategories', $ploProgramCategories)->with('plosPerCategory', $plosPerCategory)
-                                            ->with('numUncategorizedPLOS', $numUncategorizedPLOS)->with('mappingScales', $mappingScales);
+                                            ->with('numUncategorizedPLOS', $numUncategorizedPLOS)->with('mappingScales', $mappingScales)->with('testArr', $store);
     }
 
 
