@@ -37,14 +37,13 @@ class CreateSyllabiTable extends Migration
         });
 
         Schema::create('syllabi_users', function (Blueprint $table) {
+            $table->id();
             $table->unsignedBigInteger('syllabus_id');
             $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('permission')->default(0);
             $table->timestamps();
-
-            $table->primary(['syllabus_id','user_id']);
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('syllabus_id')->references('id')->on('syllabi')->onDelete('cascade')->onUpdate('cascade');
-            $table->unsignedBigInteger('permission')->after('user_id');
         });
     }
 

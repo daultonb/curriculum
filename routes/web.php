@@ -34,12 +34,18 @@ Route::get('/about', 'AboutController@index')->name('about');
 Route::get('/faq', 'FAQController@index')->name('FAQ');
 Route::get('/terms', 'TermsController@index')->name('terms');
 
-
+// route to view a syllabus
 Route::get('/syllabusGenerator/{syllabusId?}', 'SyllabusController@index')->name('syllabus');
+// route to save a syllabus
 Route::post('/syllabusGenerator/{syllabusId?}', 'SyllabusController@save')->name('syllabus.save');
+// route to import course info into a syllabus
 Route::get('/syllabusGenerator/import/course','SyllabusController@getCourseInfo');
+// route to delete a syllabus
 Route::delete('/syllabusGenerator/{syllabusId}', 'SyllabusController@destroy')->name('syllabus.delete');
-
+// route to assign a syllabus collaborator
+Route::post('/syllabi/{syllabusId}/assign','SyllabusUserController@store')->name('syllabus.assign');
+// route to unassign a syllabus collaborator
+Route::delete('/syllabi/{syllabusId}/unassign', 'SyllabusUserController@destroy')->name('syllabus.unassign');
 
 Route::resource('/programs','ProgramController');
 Route::get('/programs/{program}/submit','ProgramController@submit')->name('programs.submit');

@@ -93,8 +93,6 @@ class SyllabusController extends Controller
         // get okanagan campus resources
         $okanaganSyllabusResources = OkanaganSyllabusResource::all();
 
-
-        
         // if syllabusId is not null, view for syllabus with syllabusId was requested
         if ($syllabusId != null) {
             // get the saved syllabus if the current user is a user of this syllabus

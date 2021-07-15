@@ -60,20 +60,7 @@ class HomeController extends Controller
             $coursePrograms = $course->programs;
             $coursesPrograms[$course->course_id] = $coursePrograms;
         }
-
-        $syllabi = $user->syllabi;
         
-        /*
-        $courseUsers = array();
-        foreach($activeCourses as $course){
-            $courseUsers[] =
-            Course::join('course_users','courses.course_id',"=","course_users.course_id")
-            ->join('users','course_users.user_id',"=","users.id")
-            ->select('users.email')
-            ->where('courses.course_id','=',$course->course_id)->get();
-        }
-        */
-
         // returns a collection of programs associated with users (Collaborators Icon) 
         $prog = $user->programs()->get();
         $programUsers = array();
@@ -88,10 +75,18 @@ class HomeController extends Controller
             $coursesUsers = $course->users()->get();
             $courseUsers[$course->course_id] = $coursesUsers;
         }
+        // get this users syllabi
+        $syllabi = $user->syllabi;
+        // get the associated users for every one of this users syllabi
+        $syllabiUsers = array();
+        foreach ($syllabi as $syllabus) {
+            $syllabusUsers = $syllabus->users;
+            $syllabiUsers[$syllabus->id] = $syllabusUsers;
+        }
         // returns a collection of standard_categories, used in the create course modal
         $standard_categories = DB::table('standard_categories')->get();
         
-        return view('pages.home')->with("activeCourses",$activeCourses)->with("activeProgram",$programs)->with('user', $user)->with('coursesPrograms', $coursesPrograms)->with('standard_categories', $standard_categories)->with('programUsers', $programUsers)->with('courseUsers', $courseUsers)->with('syllabi', $syllabi);
+        return view('pages.home')->with("activeCourses",$activeCourses)->with("activeProgram",$programs)->with('user', $user)->with('coursesPrograms', $coursesPrograms)->with('standard_categories', $standard_categories)->with('programUsers', $programUsers)->with('courseUsers', $courseUsers)->with('syllabi', $syllabi)->with('syllabiUsers', $syllabiUsers);
     }
 
 

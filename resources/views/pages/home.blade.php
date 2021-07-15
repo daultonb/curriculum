@@ -348,8 +348,8 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        <!-- End of course collaborator modal -->
                                         
-
                                         <!-- Delete Confirmation Modal -->
                                         <div class="modal fade" id="deleteCourseConfirmation{{$index}}" tabindex="-1" role="dialog" aria-labelledby="deleteCourseConfirmation{{$index}}" aria-hidden="true">
                                             <div class="modal-dialog" role="document">
@@ -451,6 +451,87 @@
                                         <i class="bi bi-pencil-fill btn-icon dropdown-item"></i></a>
                                         <a data-toggle="modal" data-target="#deleteSyllabusConfirmation{{$index}}" href=#>
                                         <i class="bi bi-trash-fill text-danger btn-icon dropdown-item"></i></a>
+                                        <!-- Syllabus collaborators icon -->
+                                        <div class="btn bg-transparent position-relative pr-2 pl-2" data-toggle="tooltip" data-html="true" data-bs-placement="right" title="@foreach($syllabiUsers[$syllabus->id] as $userIndex => $syllabusUser){{$userIndex + 1}}. {{$syllabusUser->name}}<br>@endforeach">
+                                            <div data-toggle="modal" data-target="#addSyllabusCollaboratorModal{{$syllabus->id}}">
+                                                <i class="bi bi-person-plus-fill"></i>
+                                                <span class="position-absolute top-0 start-85 translate-middle badge rounded-pill badge badge-dark">
+                                                    {{ count($syllabiUsers[$syllabus->id]) }}
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <!-- End of syllabus collaborators icon -->
+
+                                        <!-- Syllabus collaborator modal -->
+                                        <div class="modal fade" id="addSyllabusCollaboratorModal{{$syllabus->id}}" tabindex="-1" role="dialog"
+                                            aria-labelledby="addSyllabusCollaboratorModal{{$syllabus->id}}" aria-hidden="true">
+                                            <div class="modal-dialog modal-lg" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="addSyllabusCollaboratorModal">Add Collaborators to
+                                                            Syllabus</h5>
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <p class="form-text text-muted">Collaborators can see and edit the syllabus. Collaborators must first register with this web application to be added to a syllabus.
+                                                            By adding a collaborator, a verification email will be sent to their email address.
+                                                            If your collaborator is not registered with this website yet,
+                                                            use the <a href="{{ url('/invite') }}">'Registration Invite' feature to invite them.</a>
+                                                            </p>
+                                                        <table class="table table-borderless">
+                                                                @if ($syllabiUsers[$syllabus->id]->count() < 1)
+                                                                    <tr class="table-active">
+                                                                        <th colspan="2">You have not added any collaborators to this syllabus yet.
+                                                                        </th>
+                                                                    </tr>
+                                                                @else
+                                                                    <tr class="table-active">
+                                                                        <th colspan="2">Syllabus Collaborators</th>
+                                                                    </tr>
+                                                                    @foreach($syllabiUsers[$syllabus->id] as $syllabusCollaborator)
+                                                                        @if($syllabusCollaborator->email != $user->email)
+                                                                            <tr>
+                                                                                <td>{{$syllabusCollaborator->email}}</td>
+                                                                                <td>
+                                                                                    <form action="{{route('syllabus.unassign', $syllabus->id)}}" method="POST" class="float-right ml-2">
+                                                                                        @csrf
+                                                                                        {{method_field('DELETE')}}
+                                                                                        <input type="hidden" class="form-check-input" name="email" value="{{$syllabusCollaborator->email}}">
+                                                                                        <button type="submit" class="btn btn-danger btn-sm">Unassign</button>
+                                                                                    </form>
+                                                                                </td>
+                                                                            </tr>
+                                                                        @endif
+                                                                    @endforeach
+                                                                @endif
+                                                        </table>
+                                                    </div>
+                                                    <form method="POST" action="{{route('syllabus.assign', $syllabus->id)}}">
+                                                        @csrf
+                                                        <div class="modal-body">
+                                                            <div class="form-group row">
+                                                                <label for="email" class="col-md-3 col-form-label text-md-right">Collaborator Email</label>
+                                                                <div class="col-md-7">
+                                                                    <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" autofocus>
+                                                                    @error('program')
+                                                                        <span class="invalid-feedback" role="alert">
+                                                                            <strong>{{ $message }}</strong>
+                                                                        </span>
+                                                                    @enderror
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary col-2 btn-sm" data-dismiss="modal">Close</button>
+                                                            <button type="submit" class="btn btn-primary col-2 btn-sm">Assign</button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- End of syllabus collaborator modal -->
 
                                         <!-- Delete Syllabus Confirmation Modal -->
                                         <div class="modal fade" id="deleteSyllabusConfirmation{{$index}}" tabindex="-1" role="dialog" aria-labelledby="deleteConfirmation{{$index}}" aria-hidden="true">
