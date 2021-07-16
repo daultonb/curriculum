@@ -4,7 +4,6 @@
 
 {{$user_name}} has invited you to collaborate on the program: {{$program_title}} from the Department of {{$program_dept}}
 
-Please click the button below to login and collaborate.
 @component('mail::button', ['url' => 'https://curriculum.ok.ubc.ca/login'])
 Log In and See Program
 @endcomponent
