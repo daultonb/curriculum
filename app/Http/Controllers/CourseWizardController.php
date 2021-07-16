@@ -236,7 +236,6 @@ class CourseWizardController extends Controller
 
         $l_outcomes = LearningOutcome::where('course_id', $course_id)->get();
         $pl_outcomes = ProgramLearningOutcome::where('program_id', $course->program_id)->get();
-        // $mappingScales = MappingScale::where('program_id', $course->program_id)->get();
         $mappingScales = MappingScale::join('mapping_scale_programs', 'mapping_scales.map_scale_id', "=", 'mapping_scale_programs.map_scale_id')
                             ->where('mapping_scale_programs.program_id', $course->program_id)->get();
 

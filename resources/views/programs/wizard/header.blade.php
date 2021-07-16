@@ -136,7 +136,7 @@
                         <div class="modal-dialog modal-lg" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h5 class="modal-title" id="addCollaboratorModalLabel">Assign Collaborator to Program</h5>
+                                    <h5 class="modal-title" id="addCollaboratorModalLabel">Assign Collaborator to Program: {{$program->program}}</h5>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                     </button>
@@ -146,37 +146,32 @@
                                         By adding a collaborator, a verification email will be sent to their email address.
                                         </p>
 
-                                    <table class="table table-borderless">
+                                    <table class="table table-borderless;" style="margin: auto;">
 
                                             @if(count($programUsers)===1)
                                                 <tr class="table-active">
                                                     <th colspan="2">You have not added any collaborators to this course
                                                     </th>
                                                 </tr>
-
                                             @else
-
                                                 <tr class="table-active">
-                                                    <th colspan="2">Collaborators</th>
+                                                    <th class="text-left" colspan="2">Collaborators</th>
                                                 </tr>
                                                 @foreach($programUsers as $admin)
                                                     @if($admin->email != $user->email)
                                                         <tr>
                                                             <td>{{$admin->email}}</td>
-                                                            <td>
+                                                            <td style="float: right;">
                                                                 <form action="{{ route('programUser.destroy') }}" method="POST" class="float-left">
                                                                     @csrf
                                                                     {{method_field('DELETE')}}
-
                                                                     <input type="hidden" class="form-check-input" name="program_id" value="{{$admin->program_id}}">
                                                                     <input type="hidden" class="form-check-input" name="user_id" value="{{$admin->user_id}}">
-                                                                    <button type="submit" class="btn btn-danger btn-sm ">Unassign</button>
+                                                                    <button type="submit" class="btn btn-danger btn-sm">Unassign</button>
                                                                 </form>
                                                             </td>
                                                         </tr>
-
                                                     @endif
-
                                                 @endforeach
                                             @endif
                                     </table>
@@ -265,13 +260,13 @@
                 <td><a class="btn @if (Route::current()->getName() == 'programWizard.step1') btn-primary @else @if ($ploCount < 1) btn-secondary @else btn-success @endif @endif" href="{{route('programWizard.step1', $program->program_id)}}" style="width: 30px; height: 30px; padding: 6px 0px; border-radius: 15px; text-align: center; font-size: 12px; line-height: 1.42857;"> <b>1</b> </a></td>
                 <td><a class="btn @if (Route::current()->getName() == 'programWizard.step2') btn-primary @else @if ($msCount < 1) btn-secondary @else btn-success @endif @endif" href="{{route('programWizard.step2', $program->program_id)}}" style="width: 30px; height: 30px; padding: 6px 0px; border-radius: 15px; text-align: center; font-size: 12px; line-height: 1.42857;"> <b>2</b> </a></td>
                 <td><a class="btn @if (Route::current()->getName() == 'programWizard.step3') btn-primary @else @if ($courseCount < 1) btn-secondary @else btn-success @endif @endif" href="{{route('programWizard.step3', $program->program_id)}}" style="width: 30px; height: 30px; padding: 6px 0px; border-radius: 15px; text-align: center; font-size: 12px; line-height: 1.42857;"> <b>3</b> </a></td>
-                <!-- <td><a class="btn @if (Route::current()->getName() == 'programWizard.step4') btn-primary @else btn-secondary @endif" href="{{route('programWizard.step4', $program->program_id)}}" style="width: 30px; height: 30px; padding: 6px 0px; border-radius: 15px; text-align: center; font-size: 12px; line-height: 1.42857;"> <b>4</b> </a></td> -->
+                <td><a class="btn @if (Route::current()->getName() == 'programWizard.step4') btn-primary @else btn-secondary @endif" href="{{route('programWizard.step4', $program->program_id)}}" style="width: 30px; height: 30px; padding: 6px 0px; border-radius: 15px; text-align: center; font-size: 12px; line-height: 1.42857;"> <b>4</b> </a></td>
             </tr>
             <tr>
                 <td>Program Learning Outcomes</td>
                 <td>Mapping Scale</td>
                 <td>Courses</td>
-                <!-- <td>Begin Mapping Program</td> -->
+                <td>Program Overview</td>
             </tr>
         </table>
     </div>
