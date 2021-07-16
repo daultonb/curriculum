@@ -48,13 +48,22 @@ class CourseCrudController extends CrudController
         $this->crud->addColumn([
             'name' => 'course_code', // The db column name
             'label' => "Course Code", // Table column heading
-            'type' => 'Text'
+            'type' => 'Text',
+            'searchLogic' => function($query, $column, $searchTerm){
+                $query ->orWhere('Course Code', 'like', '%'.$searchTerm.'%');
+            }
           ]);
 
         $this->crud->addColumn([
             'name' => 'course_num', // The db column name
             'label' => "Course Number", // Table column heading
-            'type' => 'number'
+            'type' => 'number',
+            'searchLogic' => function($query, $column, $searchTerm){
+                $query->orWhereHas('Course Number', function($q) use ($column, $searchTerm){
+                    $q->Where('Course Code', 'like', '%'.$searchTerm.'%')
+                        ->orWhereDate('depart_at', '=', date($searchTerm));
+                });
+            }
           ]);
         
         $this->crud->addColumn([
