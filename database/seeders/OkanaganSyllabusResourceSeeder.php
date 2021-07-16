@@ -17,7 +17,7 @@ class OkanaganSyllabusResourceSeeder extends Seeder
         OkanaganSyllabusResource::create([
             'id_name' => 'land',
             'title' => 'Land Acknowledgement',
-            'description' => 'The UBC Okanagan campus is situated on the territory of the Syilx Okanagan Nation.'
+            'description' => 'We respectfully acknowledge the Syilx Okanagan Nation and their peoples, in whose traditional, ancestral, unceded territory UBC Okanagan is situated.'
         ]);
 
         OkanaganSyllabusResource::create([

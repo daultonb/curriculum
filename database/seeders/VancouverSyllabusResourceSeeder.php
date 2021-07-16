@@ -17,7 +17,7 @@ class VancouverSyllabusResourceSeeder extends Seeder
         VancouverSyllabusResource::create([
             'id_name' => 'land',
             'title' => 'Land Acknowledgement',
-            'description' => 'UBC’s Point Grey Campus is located on the traditional, ancestral, and unceded territory of the xwməθkwəy̓əm (Musqueam) people. The land it is situated on has always been a place of learning for the Musqueam people, who for millennia have passed on their culture, history, and traditions from one generation to the next on this site.'
+            'description' => 'We acknowledge that the UBC Vancouver campus is situated within the traditional, ancestral and unceded territory of the Musqueam.'
         ]);
 
         VancouverSyllabusResource::create([

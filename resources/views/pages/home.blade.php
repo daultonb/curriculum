@@ -28,7 +28,7 @@
                     </div>
 
                     
-                    @if(count($activeProgram)>0)
+                    @if(count($myPrograms)>0)
                         <table class="table table-hover dashBoard">
                             <thead>
                                 <tr>
@@ -36,17 +36,21 @@
                                     <th scope="col">Program</th>
                                     <th scope="col">Faculty and Department/School</th>
                                     <th scope="col">Level</th>
+                                    <th scope="col">Modified</th>
                                     <th scope="col">Actions</th>
                                 </tr>
                             </thead>
                             <!-- Displays 'My Programs' -->
-                            @foreach ($activeProgram as $index => $program)
+                            @foreach ($myPrograms as $index => $program)
                             <tbody>
                             <tr>
                                 <th scope="row">{{$index + 1}}</th>
                                 <td><a href="{{route('programWizard.step1', $program->program_id)}}">{{$program->program}}</a></td>
                                 <td>{{$program->faculty}} </td>
                                 <td>{{$program->level}}</td>
+                                <td>
+                                    {{$program->timeSince}}
+                                </td>
                                 <td>
                                     <a class="pr-2 pl-2" href="{{route('programWizard.step1', $program->program_id)}}" style="float: left;">
                                         <i class="bi bi-pencil-fill btn-icon dropdown-item"></i>
@@ -195,7 +199,7 @@
                     </div>
 
                     <div class="card-body" style="padding:0%;">
-                        @if(count($activeCourses)>0)
+                        @if(count($myCourses)>0)
                             <table class="table table-hover dashBoard">
                                 <thead>
                                 <tr>
@@ -205,12 +209,13 @@
                                     <th scope="col">Term</th>
                                     <th scope="col">Status</th>
                                     <th scope="col" class="text-center">Programs </th>
+                                    <th scope="col">Modified</th>
                                     <th scope="col">Actions</th>
                                 </tr>
                                 </thead>
 
                                 <!-- Displays 'My Courses' -->
-                                @foreach ($activeCourses as $index => $course)
+                                @foreach ($myCourses as $index => $course)
                                 <tbody>
                                 <tr>
                                     @if($course->status !== 1)
@@ -263,7 +268,9 @@
                                             </div>                                           
                                         </td>
                                     @endif
-
+                                    <td>
+                                        {{$course->timeSince}}
+                                    </td>
                                     <td>
                                         <a  class="pr-2" href="{{route('courseWizard.step1', $course->course_id)}}">
                                         <i class="bi bi-pencil-fill btn-icon dropdown-item"></i></a>
@@ -408,7 +415,7 @@
                     </div>
 
                     <div class="card-body" style="padding:0%;">
-                        @if(count($syllabi)>0)
+                        @if(count($mySyllabi)>0)
                             <table class="table table-hover dashBoard">
                                 <thead>
                                 <tr>
@@ -416,12 +423,12 @@
                                     <th scope="col">Course Title</th>
                                     <th scope="col">Course Code</th>
                                     <th scope="col">Term</th>
-                                    <th scope="col">Date Modified</th>
+                                    <th scope="col">Modified</th>
                                     <th scope="col">Actions</th>
                                 </tr>
                                 </thead>
 
-                                @foreach ($syllabi as $index => $syllabus)
+                                @foreach ($mySyllabi as $index => $syllabus)
 
                                 <!-- Displays 'My Courses' -->
                                 <tbody>
@@ -443,9 +450,8 @@
                                         {{$syllabus->course_year}} {{$syllabus->course_term}}
                                     </td>
                                     <td>
-                                        {{$syllabus->updated_at}}
+                                        {{$syllabus->timeSince}}
                                     </td>
-                                    <!--<td></td>-->
                                     <td>
                                         <a  class="pr-2" href="{{route('syllabus', $syllabus->id)}}">
                                         <i class="bi bi-pencil-fill btn-icon dropdown-item"></i></a>
@@ -468,66 +474,84 @@
                                             <div class="modal-dialog modal-lg" role="document">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
-                                                        <h5 class="modal-title" id="addSyllabusCollaboratorModal">Add Collaborators to
-                                                            Syllabus</h5>
+                                                        
+                                                        <h5 class="modal-title" id="addSyllabusCollaboratorModal"><i class="bi bi-person-plus-fill mr-2"></i> Share this syllabus with people</h5>
                                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                             <span aria-hidden="true">&times;</span>
                                                         </button>
                                                     </div>
                                                     <div class="card-body">
-                                                        <p class="form-text text-muted">Collaborators can see and edit the syllabus. Collaborators must first register with this web application to be added to a syllabus.
+                                                        <p class="form-text text-muted mb-4">Collaborators can see and edit the syllabus. Collaborators must first register with this web application to be added to a syllabus.
                                                             By adding a collaborator, a verification email will be sent to their email address.
                                                             If your collaborator is not registered with this website yet,
                                                             use the <a href="{{ url('/invite') }}">'Registration Invite' feature to invite them.</a>
                                                             </p>
-                                                        <table class="table table-borderless">
-                                                                @if ($syllabiUsers[$syllabus->id]->count() < 1)
-                                                                    <tr class="table-active">
-                                                                        <th colspan="2">You have not added any collaborators to this syllabus yet.
-                                                                        </th>
-                                                                    </tr>
-                                                                @else
-                                                                    <tr class="table-active">
-                                                                        <th colspan="2">Syllabus Collaborators</th>
+
+                                                            <form id="syllabusCollaboratorForm{{$syllabus->id}}" method="POST" action="{{route('syllabus.assign', $syllabus->id)}}">
+                                                                @csrf
+                                                                <div class="row mb-4">
+                                                                    <div class="col-6">
+                                                                        <input id="email" type="email" name="email" class="form-control" placeholder="Collaborator Email" aria-label="email" required>
+                                                                    </div>
+                                                                    <div class="col-3">
+                                                                        <select class="form-select" name="permission">
+                                                                            <option value="edit" selected>Editor</option>
+                                                                            <option value="view">Viewer</option>
+                                                                        </select>                                                                    
+                                                                    </div>
+                                                                    <div class="col-3">
+                                                                        <button type="submit" class="btn btn-primary col"><i class="bi bi-plus"></i> Collaborator</button>
+                                                                    </div>
+                                                                </div>
+                                                            </form>
+
+                                                            @if ($syllabiUsers[$syllabus->id]->count() < 1)
+                                                                <div class="alert alert-warning wizard">
+                                                                    <i class="bi bi-exclamation-circle-fill"></i>You have not added any collaborators to this syllabus yet.                    
+                                                                </div>
+                                                            @else
+                                                                <table class="table table-light borderless" >
+                                                                    <tr class="table-primary">
+                                                                        <th>Collaborators</th>
+                                                                        <th></th>
+                                                                        <th class="text-center w-25">Actions</th>
                                                                     </tr>
                                                                     @foreach($syllabiUsers[$syllabus->id] as $syllabusCollaborator)
-                                                                        @if($syllabusCollaborator->email != $user->email)
                                                                             <tr>
-                                                                                <td>{{$syllabusCollaborator->email}}</td>
-                                                                                <td>
-                                                                                    <form action="{{route('syllabus.unassign', $syllabus->id)}}" method="POST" class="float-right ml-2">
-                                                                                        @csrf
-                                                                                        {{method_field('DELETE')}}
-                                                                                        <input type="hidden" class="form-check-input" name="email" value="{{$syllabusCollaborator->email}}">
-                                                                                        <button type="submit" class="btn btn-danger btn-sm">Unassign</button>
-                                                                                    </form>
+
+                                                                                <td >
+                                                                                    <b>{{$syllabusCollaborator->name}} @if ($syllabusCollaborator->email == $user->email) (Me) @endif</b>
+                                                                                    <p>{{$syllabusCollaborator->email}}</p>
                                                                                 </td>
+                                                                                <td>@switch ($syllabusCollaborator->pivot->permission) 
+                                                                                        @case(1)
+                                                                                            <b><i>Owner</i></b>
+                                                                                            @break
+                                                                                        @case(2)
+                                                                                            Editor
+                                                                                            @break
+                                                                                        @case(3)
+                                                                                            Viewer
+                                                                                            @break
+                                                                                    @endswitch
+                                                                                </td>
+                                                                                @if ($syllabusCollaborator->pivot->permission == 1)
+                                                                                    <td></td>
+                                                                                @else
+                                                                                    <td class="text-center">
+                                                                                        <form action="{{route('syllabus.unassign', $syllabus->id)}}" method="POST">
+                                                                                            @csrf
+                                                                                            {{method_field('DELETE')}}
+                                                                                            <input type="hidden" class="form-check-input" name="email" value="{{$syllabusCollaborator->email}}">
+                                                                                            <button type="submit" class="btn btn-danger btn-sm">Unassign</button>
+                                                                                        </form>
+                                                                                    </td>
+                                                                                @endif
                                                                             </tr>
-                                                                        @endif
                                                                     @endforeach
-                                                                @endif
-                                                        </table>
+                                                                </table>
+                                                            @endif
                                                     </div>
-                                                    <form method="POST" action="{{route('syllabus.assign', $syllabus->id)}}">
-                                                        @csrf
-                                                        <div class="modal-body">
-                                                            <div class="form-group row">
-                                                                <label for="email" class="col-md-3 col-form-label text-md-right">Collaborator Email</label>
-                                                                <div class="col-md-7">
-                                                                    <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" autofocus>
-                                                                    @error('program')
-                                                                        <span class="invalid-feedback" role="alert">
-                                                                            <strong>{{ $message }}</strong>
-                                                                        </span>
-                                                                    @enderror
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="modal-footer">
-                                                            <button type="button" class="btn btn-secondary col-2 btn-sm" data-dismiss="modal">Close</button>
-                                                            <button type="submit" class="btn btn-primary col-2 btn-sm">Assign</button>
-                                                        </div>
-                                                    </form>
                                                 </div>
                                             </div>
                                         </div>

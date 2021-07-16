@@ -11,6 +11,8 @@ class SyllabusUser extends Model
 
     protected $table = 'syllabi_users';
 
+    protected $primary = 'id';
+
     protected $guarded = ['permission'];
 
     protected $fillable = ['syllabus_id', 'user_id',];

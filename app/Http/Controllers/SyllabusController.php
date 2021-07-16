@@ -172,6 +172,17 @@ class SyllabusController extends Controller
             // create a new syllabus
             $syllabusId = $this->create($request);
         }
+        // find newly created or updated syllabus
+        $syllabus = Syllabus::find($syllabusId);
+        // set updated_at time
+        $syllabus->updated_at = date('Y-m-d H:i:s');
+        // save syllabus
+        if ($syllabus->save()) {
+            $request->session()->flash('success', 'Your syllabus was successfully saved!');
+            
+        } else {
+            $request->session()->flash('error', 'There was an error saving your syllabus!');
+        }
 
         $courseCode = $request->input('courseCode');
         $courseNumber = $request->input('courseNumber');
@@ -254,13 +265,6 @@ class SyllabusController extends Controller
         $syllabus->passing_criteria = $request->input('passingCriteria');
         $syllabus->learning_materials = $request->input('learningMaterials');
         $syllabus->learning_resources = $request->input('learningResources');
-
-        if ($syllabus->save()) {
-            $request->session()->flash('success', 'Your syllabus was successfully saved!');
-            
-        } else {
-            $request->session()->flash('error', 'There was an error saving your syllabus!');
-        }
 
         switch($campus) {
             case 'O':
@@ -513,14 +517,6 @@ class SyllabusController extends Controller
                 }
 
             }
-
-        if ($syllabus->save()) {
-            $request->session()->flash('success', 'Your syllabus was successfully saved!');
-            
-        } else {
-            $request->session()->flash('error', 'There was an error saving your syllabus');
-        }
-
     }
 
     /**

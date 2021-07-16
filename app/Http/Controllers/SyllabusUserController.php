@@ -45,24 +45,36 @@ class SyllabusUserController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request, $syllabusId)
-    {
+    {   
         $validator = $this->validate($request, [
             'email'=> 'required',
             'email'=> 'exists:users,email',
+            'permission' => 'required',
             ]);
 
         $syllabus = Syllabus::find($syllabusId);
         $user = User::where('email', $request->input('email'))->first();
+        $permission = $request->input('permission');
 
-        $syllabusUser = SyllabusUser::updateOrCreate(
-            ['syllabus_id' => $syllabusId, 'user_id' => $user->id],
+        SyllabusUser::updateOrCreate(
+            ['syllabus_id' => $syllabus->id, 'user_id' => $user->id],
         );
-
-        $syllabusUser = SyllabusUser::find($syllabusUser->id);
-        $syllabusUser->permission = 2;
-        $syllabusUser->save();
-
-        if($syllabus->save()){
+        // find the newly created or updated syllabus user
+        $syllabusUser = SyllabusUser::where([
+            ['syllabus_id', $syllabus->id],
+            ['user_id', $user->id]
+        ])->first();
+        // set this syllabus users permission level
+        switch ($permission) {
+            case 'edit':
+                $syllabusUser->permission = 2;
+            break;
+            case 'view':
+                $syllabusUser->permission = 3;
+            break;
+        }
+        // save this syllabus user
+        if($syllabusUser->save()){
             Mail::to($user->email)->send(new NotifyInstructorMail());
             $request->session()->flash('success', $user->email . ' was successfully added to syllabus ' . $syllabus->course_code . ' ' . $syllabus->course_num);
         }else{
