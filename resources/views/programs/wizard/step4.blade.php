@@ -94,7 +94,7 @@
                             @else
                                 <p>The courses to PLOs frequency distribution table provides a simplified way to view the strongest correlation between CLOs to PLOs for each course in the program.</p>
 
-                                <table class="table table-bordered table-sm" style="width: 95%; margin:auto;">
+                                <table class="table table-bordered table-sm" style="width: 95%; margin:auto; table-layout: fixed; border: 1px solid white; color: black;">
                                     <tr class="table-primary">
                                         <th colspan='1'>Courses</th>
                                         <th class="text-left" colspan='{{ count($plos) }}'>Program-level Learning Outcomes</th>
@@ -231,12 +231,7 @@
 </script>
 
 <style>
-    table {
-        margin: 2%;
-        width: 95%;
-        table-layout: fixed;
-    }
-    table, th, td {
+    th, td {
     border: 1px solid white;
     color: black;
     
