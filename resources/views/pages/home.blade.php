@@ -97,14 +97,14 @@
                                                                         <tr>
                                                                             <td>{{$collaborator->name}}</td>
                                                                             <td>{{$collaborator->email}}</td>
-                                                                            <td>
+                                                                            <td style="float: right;">
                                                                                 <form action="{{ route('programUser.destroy') }}" method="POST" class="float-left">
                                                                                     @csrf
                                                                                     {{method_field('DELETE')}}
 
                                                                                     <input type="hidden" class="form-check-input" name="program_id" value="{{$program->program_id}}">
                                                                                     <input type="hidden" class="form-check-input" name="user_id" value="{{$collaborator->id}}">
-                                                                                    <button type="submit" class="btn btn-danger btn-sm ">Unassign</button>
+                                                                                    <button type="submit" class="btn btn-danger btn-sm">Unassign</button>
                                                                                 </form>
                                                                             </td>
                                                                         </tr>

@@ -186,7 +186,7 @@
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <h5 class="modal-title" id="assignInstructorModalLabel">Add Collaborators to
-                                        Course</h5>
+                                        Course: {{$course->course_title}}</h5>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                     </button>
