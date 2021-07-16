@@ -147,7 +147,7 @@
                                                     @if(isset($testArr[$plo->pl_outcome_id][$course->course_id]))
                                                         <!-- Check if a Tie is present -->
                                                         @if(isset($testArr[$plo->pl_outcome_id][$course->course_id]['map_scale_value_tie']))
-                                                            <td class="text-center align-middle" style="background-color: {{ $testArr[$plo->pl_outcome_id][$course->course_id]['colour'] }};">
+                                                            <td class="text-center align-middle" style="background:repeating-linear-gradient(45deg, transparent, transparent 8px, #ccc 8px, #ccc 16px), linear-gradient( to bottom, #fff, #999);">
                                                                 <span style="color: black;">
                                                                     <span style="font-weight: bold;">Tie:</span><br>
                                                                     {{$testArr[$plo->pl_outcome_id][$course->course_id]['map_scale_value']}}
@@ -163,9 +163,7 @@
 
                                                     @else
                                                         <td class="text-center align-middle" style="background-color: white;">
-                                                            <span style="color: black; font-weight:bold;">
-                                                                Course has not been mapped yet
-                                                            </span>
+                                                            
                                                         </td>
                                                     @endif
                                                 @endif
@@ -177,7 +175,7 @@
                                                     @if(isset($testArr[$plo->pl_outcome_id][$course->course_id]))
                                                         <!-- Check if a Tie is present -->
                                                         @if(isset($testArr[$plo->pl_outcome_id][$course->course_id]['map_scale_value_tie']))
-                                                            <td class="text-center align-middle" style="background-color: {{ $testArr[$plo->pl_outcome_id][$course->course_id]['colour'] }};">
+                                                            <td class="text-center align-middle" style="background:repeating-linear-gradient( 45deg, transparent, transparent 10px, #ccc 10px, #ccc 20px), linear-gradient( to bottom, #eee, #999);">
                                                                 <span style="color: black;">
                                                                     <span style="font-weight: bold;">Tie:</span><br>
                                                                     {{$testArr[$plo->pl_outcome_id][$course->course_id]['map_scale_value']}}
@@ -193,9 +191,7 @@
 
                                                     @else
                                                         <td class="text-center align-middle" style="background-color: white;">
-                                                            <span style="color: black; font-weight:bold;">
-                                                                Course has not been mapped yet
-                                                            </span>
+                                                            
                                                         </td>
                                                     @endif
                                                 @endif

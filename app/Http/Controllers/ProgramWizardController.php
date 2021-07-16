@@ -191,6 +191,7 @@ class ProgramWizardController extends Controller
         $plos = DB::table('program_learning_outcomes')->leftJoin('p_l_o_categories', 'program_learning_outcomes.plo_category_id', '=', 'p_l_o_categories.plo_category_id')->where('program_learning_outcomes.program_id', $program_id)->get();
         
         // plosPerCategory returns the number of plo's belonging to each category
+        // used for setting the colspan in the view
         $plosPerCategory = array();
         foreach($ploProgramCategories as $ploCategory) {
             $plosPerCategory[$ploCategory->plo_category_id] = 0;
@@ -198,7 +199,7 @@ class ProgramWizardController extends Controller
         foreach($ploProgramCategories as $ploCategory) {
             $plosPerCategory[$ploCategory->plo_category_id] += 1;
         }
-        //
+        // Used for setting colspan in view
         $numUncategorizedPLOS = 0;
         foreach ($allPLO as $plo) {
             if ($plo->plo_category_id == null){
