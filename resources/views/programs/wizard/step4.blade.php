@@ -147,14 +147,14 @@
                                                     @if(isset($testArr[$plo->pl_outcome_id][$course->course_id]))
                                                         <!-- Check if a Tie is present -->
                                                         @if(isset($testArr[$plo->pl_outcome_id][$course->course_id]['map_scale_value_tie']))
-                                                            <td class="text-center align-middle" style="background:repeating-linear-gradient(45deg, transparent, transparent 8px, #ccc 8px, #ccc 16px), linear-gradient( to bottom, #fff, #999);">
+                                                            <td class="text-center align-middle" style="background:repeating-linear-gradient(45deg, transparent, transparent 8px, #ccc 8px, #ccc 16px), linear-gradient( to bottom, #fff, #999);" data-toggle="tooltip" data-html="true" data-bs-placement="right" title="@foreach($testArr[$plo->pl_outcome_id][$course->course_id]['frequencies'] as $index => $freq) {{$index}}: {{$freq}}<br> @endforeach">
                                                                 <span style="color: black;">
                                                                     <span style="font-weight: bold;">Tie:</span><br>
                                                                     {{$testArr[$plo->pl_outcome_id][$course->course_id]['map_scale_value']}}
                                                                 </span>
                                                             </td>
                                                         @else
-                                                            <td class="text-center align-middle" style="background-color: {{ $testArr[$plo->pl_outcome_id][$course->course_id]['colour'] }};">
+                                                            <td class="text-center align-middle" style="background-color: {{ $testArr[$plo->pl_outcome_id][$course->course_id]['colour'] }};" data-toggle="tooltip" data-html="true" data-bs-placement="right" title="@foreach($testArr[$plo->pl_outcome_id][$course->course_id]['frequencies'] as $index => $freq) {{$index}}: {{$freq}}<br> @endforeach">
                                                                 <span style="color: black;">
                                                                     {{$testArr[$plo->pl_outcome_id][$course->course_id]['map_scale_value']}}
                                                                 </span>
@@ -163,7 +163,7 @@
 
                                                     @else
                                                         <td class="text-center align-middle" style="background-color: white;">
-                                                            
+                                                            Incomplete
                                                         </td>
                                                     @endif
                                                 @endif
@@ -175,14 +175,14 @@
                                                     @if(isset($testArr[$plo->pl_outcome_id][$course->course_id]))
                                                         <!-- Check if a Tie is present -->
                                                         @if(isset($testArr[$plo->pl_outcome_id][$course->course_id]['map_scale_value_tie']))
-                                                            <td class="text-center align-middle" style="background:repeating-linear-gradient( 45deg, transparent, transparent 10px, #ccc 10px, #ccc 20px), linear-gradient( to bottom, #eee, #999);">
+                                                            <td class="text-center align-middle" style="background:repeating-linear-gradient( 45deg, transparent, transparent 10px, #ccc 10px, #ccc 20px), linear-gradient( to bottom, #eee, #999);" data-toggle="tooltip" data-html="true" data-bs-placement="right" title="@foreach($testArr[$plo->pl_outcome_id][$course->course_id]['frequencies'] as $index => $freq) {{$index}}: {{$freq}}<br> @endforeach">
                                                                 <span style="color: black;">
                                                                     <span style="font-weight: bold;">Tie:</span><br>
                                                                     {{$testArr[$plo->pl_outcome_id][$course->course_id]['map_scale_value']}}
                                                                 </span>
                                                             </td>
                                                         @else
-                                                            <td class="text-center align-middle" style="background-color: {{ $testArr[$plo->pl_outcome_id][$course->course_id]['colour'] }};">
+                                                            <td class="text-center align-middle" style="background-color: {{ $testArr[$plo->pl_outcome_id][$course->course_id]['colour'] }};" data-toggle="tooltip" data-html="true" data-bs-placement="right" title="@foreach($testArr[$plo->pl_outcome_id][$course->course_id]['frequencies'] as $index => $freq) {{$index}}: {{$freq}}<br> @endforeach">
                                                                 <span style="color: black;">
                                                                     {{$testArr[$plo->pl_outcome_id][$course->course_id]['map_scale_value']}}
                                                                 </span>
@@ -191,7 +191,7 @@
 
                                                     @else
                                                         <td class="text-center align-middle" style="background-color: white;">
-                                                            
+                                                            Incomplete
                                                         </td>
                                                     @endif
                                                 @endif
@@ -221,6 +221,9 @@
 <script type="text/javascript">
     $(document).ready(function () {
 
+        // Enables functionality of tool tips
+        $('[data-toggle="tooltip"]').tooltip({html:true});
+
     $("form").submit(function () {
         // prevent duplicate form submissions
         $(this).find(":submit").attr('disabled', 'disabled');
@@ -231,17 +234,22 @@
 </script>
 
 <style>
-    th, td {
+
+.tooltip-inner {
+    text-align: left;
+}
+th, td {
     border: 1px solid white;
     color: black;
     
 }
-    th {
+th {
         text-align: center;
-    }
+}
 .table-primary th, .table-primary td, .table-primary thead th, .table-primary tbody + tbody {
     border-color: white;
 }
+
 </style>
 
 @endsection

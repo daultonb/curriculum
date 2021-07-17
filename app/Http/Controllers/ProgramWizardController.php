@@ -21,6 +21,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\DB;
 
+use function PHPUnit\Framework\isNull;
 
 class ProgramWizardController extends Controller
 {
@@ -181,6 +182,16 @@ class ProgramWizardController extends Controller
 
         // get all the courses this program belongs to
         $programCourses = $program->courses;
+        //dd($programCourses[0]->pivot->course_required);
+        // get ONLY required courses for the program
+        $allProgramCourses = Course::join('course_programs', 'courses.course_id', '=', 'course_programs.course_id')->where('course_programs.program_id', $program_id)->get();
+        $requiredProgramCourses = array();
+        foreach ($allProgramCourses as $course) {
+            if ($course->course_required != 0) {
+                $requiredProgramCourses += array($course);
+            }
+        }
+
         // get all categories for program
         $ploCategories = PLOCategory::where('program_id', $program_id)->get();
         // get plo categories for program
@@ -222,8 +233,23 @@ class ProgramWizardController extends Controller
             $coursesOutcomes[$programCourse->course_id] = $learningOutcomes;
         }
 
-        // retrieves all the outcome mapping values for every clo and plo
         $arr = array();
+        $arr = $this->getOutcomeMaps($allPLO, $coursesOutcomes, $arr);
+        $store = array();
+        $store = $this->createCDFArray($arr, $store);
+        $store = $this->frequencyDistribution($arr, $store);
+        //dd($store[19][45]['frequencies']);
+        $store = $this->assignColours($store, $program_id);
+
+        return view('programs.wizard.step4')->with('program', $program)
+                                            ->with("faculties", $faculties)->with("departments", $departments)->with("levels",$levels)->with('user', $user)->with('programUsers',$programUsers)
+                                            ->with('ploCount',$ploCount)->with('msCount', $msCount)->with('courseCount', $courseCount)->with('programCourses', $programCourses)->with('coursesOutcomes', $coursesOutcomes)
+                                            ->with('ploCategories', $ploCategories)->with('plos', $plos)->with('hasUncategorized', $hasUncategorized)->with('ploProgramCategories', $ploProgramCategories)->with('plosPerCategory', $plosPerCategory)
+                                            ->with('numUncategorizedPLOS', $numUncategorizedPLOS)->with('mappingScales', $mappingScales)->with('testArr', $store);
+    }
+
+    public function getOutcomeMaps ($allPLO, $coursesOutcomes, $arr) {
+        // retrieves all the outcome mapping values for every clo and plo
         $count = 0;
         foreach ($allPLO as $plo) {
             // loop through CLOs to get map scale value
@@ -246,9 +272,11 @@ class ProgramWizardController extends Controller
                 }
             }
         }
+        return $arr;
+    }
 
+    public function createCDFArray($arr, $store) {
         // Initialize array for each pl_outcome_id with the value of null
-        $store = array();
         foreach ($arr as $ar) {
             $store[$ar['pl_outcome_id']] = null;
         }
@@ -260,11 +288,14 @@ class ProgramWizardController extends Controller
                     ),
                 );
             } else {
-                $store[$ar['pl_outcome_id']][$ar['course_id']] = array(
-                );
+                $store[$ar['pl_outcome_id']][$ar['course_id']] = array();
+                $store[$ar['pl_outcome_id']][$ar['course_id']]['frequencies'] = array();
             }
         }
+        return $store;
+    }
 
+    public function frequencyDistribution($arr, $store) {
         //Initialize Array for Frequency Distribution
         $freq = array();
         foreach ($arr as $map) {
@@ -287,7 +318,6 @@ class ProgramWizardController extends Controller
                 $freq[$pl_outcome_id][$course_id][$map_scale_value] += 1;
             }
         }
-        
         // loop through the frequencies of the mapping values
         foreach($freq as $plOutcomeId => $dist) {
             foreach($dist as $courseId => $d) {
@@ -324,15 +354,23 @@ class ProgramWizardController extends Controller
                     $store[$plOutcomeId][$courseId] += array(
                         'map_scale_value_tie' => True
                     );
+                    // Store the frequencies
+                    $store[$plOutcomeId][$courseId]['frequencies'] = $freq[$plOutcomeId][$courseId];
                     // If no tie is present, store the strongest weighted map_scale_value 
                 } else {
                     $store[$plOutcomeId][$courseId] = array(
                         'map_scale_value' => array_search($weight, $d)
                     );
+                    // Store the frequencies
+                    $store[$plOutcomeId][$courseId]['frequencies'] = $freq[$plOutcomeId][$courseId];
                 }
             }
         }
+        //dd($store[19][45]['frequencies']);
+        return $store;
+    }
 
+    public function assignColours($store, $program_id){
         // Assign a colour to store based
         foreach ($store as $plOutcomeId => $s) {
             foreach ($s as $courseId => $msv) {
@@ -357,78 +395,7 @@ class ProgramWizardController extends Controller
                 }
             }
         }
-
-        return view('programs.wizard.step4')->with('program', $program)
-                                            ->with("faculties", $faculties)->with("departments", $departments)->with("levels",$levels)->with('user', $user)->with('programUsers',$programUsers)
-                                            ->with('ploCount',$ploCount)->with('msCount', $msCount)->with('courseCount', $courseCount)->with('programCourses', $programCourses)->with('coursesOutcomes', $coursesOutcomes)
-                                            ->with('ploCategories', $ploCategories)->with('plos', $plos)->with('hasUncategorized', $hasUncategorized)->with('ploProgramCategories', $ploProgramCategories)->with('plosPerCategory', $plosPerCategory)
-                                            ->with('numUncategorizedPLOS', $numUncategorizedPLOS)->with('mappingScales', $mappingScales)->with('testArr', $store);
+        return $store;
     }
-
-
-    // /**
-    //  * Show the form for creating a new resource.
-    //  *
-    //  * @return \Illuminate\Http\Response
-    //  */
-    // public function create()
-    // {
-    //     //
-    // }
-
-    // /**
-    //  * Store a newly created resource in storage.
-    //  *
-    //  * @param  \Illuminate\Http\Request  $request
-    //  * @return \Illuminate\Http\Response
-    //  */
-    // public function store(Request $request)
-    // {
-    //     //
-    // }
-
-    // /**
-    //  * Display the specified resource.
-    //  *
-    //  * @param  int  $id
-    //  * @return \Illuminate\Http\Response
-    //  */
-    // public function show($id)
-    // {
-    //     //
-    // }
-
-    // /**
-    //  * Show the form for editing the specified resource.
-    //  *
-    //  * @param  int  $id
-    //  * @return \Illuminate\Http\Response
-    //  */
-    // public function edit($id)
-    // {
-    //     //
-    // }
-
-    // /**
-    //  * Update the specified resource in storage.
-    //  *
-    //  * @param  \Illuminate\Http\Request  $request
-    //  * @param  int  $id
-    //  * @return \Illuminate\Http\Response
-    //  */
-    // public function update(Request $request, $id)
-    // {
-    //     //
-    // }
-
-    // /**
-    //  * Remove the specified resource from storage.
-    //  *
-    //  * @param  int  $id
-    //  * @return \Illuminate\Http\Response
-    //  */
-    // public function destroy($id)
-    // {
-    //     //
-    // }
+    
 }
