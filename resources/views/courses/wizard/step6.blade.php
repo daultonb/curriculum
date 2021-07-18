@@ -309,11 +309,9 @@
                                                             @endif
                                                         </td>
                                                         <td>
-                                                            <a href ="{{$shaping_ubc_link[$index]}}" target="_blank">Strategy {{$index + 1}}: </a>
-                                                            {{$strategy}}
-                                                            @if($index == 17)
-                                                                <a href="https://www.alumni.ubc.ca/about/strategic-plan/" target="_blank"><i class="bi bi-box-arrow-up-right"></i> Connecting Forward.</a>
-                                                            @endif
+                                                            @php
+                                                                echo $strategy;
+                                                            @endphp
                                                         </td>
                                                         </tr>
                                                         @endforeach
