@@ -50,7 +50,7 @@ class CourseCrudController extends CrudController
             'label' => "Course Code", // Table column heading
             'type' => 'Text',
             'searchLogic' => function($query, $column, $searchTerm){
-                $query ->orWhere('Course Code', 'like', '%'.$searchTerm.'%');
+                $query ->orWhere('course_code', 'like', '%'.$searchTerm.'%');
             }
           ]);
 
@@ -59,10 +59,7 @@ class CourseCrudController extends CrudController
             'label' => "Course Number", // Table column heading
             'type' => 'number',
             'searchLogic' => function($query, $column, $searchTerm){
-                $query->orWhereHas('Course Number', function($q) use ($column, $searchTerm){
-                    $q->Where('Course Code', 'like', '%'.$searchTerm.'%')
-                        ->orWhereDate('depart_at', '=', date($searchTerm));
-                });
+                $query ->orWhere('course_num', 'like', '%'.$searchTerm.'%');
             }
           ]);
         
