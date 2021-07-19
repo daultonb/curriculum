@@ -44,19 +44,28 @@ class SubcategoriesCrudController extends CrudController
         $this->crud->addColumn([
             'name' =>'subcat_id',
             'label'=>"Subcategory ID",
-            'type' =>'number'
+            'type' =>'number',
+            'searchLogic' => function($query, $column, $searchTerm){
+                $query ->orWhere('subcat_id', 'like', '%'.$searchTerm.'%');
+            }
         ]);
 
         $this->crud->addColumn([
             'name' => 'subcat_name',
             'label'=>"Subcategory Name",
-            'type' =>'strip_text'
+            'type' =>'strip_text',
+            'searchLogic' => function($query, $column, $searchTerm){
+                $query ->orWhere('subcat_name', 'like', '%'.$searchTerm.'%');
+            }
         ]);
 
         $this->crud->addColumn([
             'name' => 'cat_id',
             'label'=>"Category ID",
-            'type' =>'number'
+            'type' =>'number',
+            'searchLogic' => function($query, $column, $searchTerm){
+                $query ->orWhere('cat_id', 'like', '%'.$searchTerm.'%');
+            }
         ]);
 
         /**
