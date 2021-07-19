@@ -45,12 +45,18 @@ class CategoriesCrudController extends CrudController
             'name' =>'cat_id',
             'label'=>"Category ID",
             'type' =>'number',
+            'searchLogic' => function($query, $column, $searchTerm){
+                $query ->orWhere('cat_id', 'like', '%'.$searchTerm.'%');
+            }
         ]);
 
         $this->crud->addColumn([
             'name'=>'cat_name',
             'label'=>"Category Name",
             'type'=>'Text',
+            'searchLogic' => function($query, $column, $searchTerm){
+                $query ->orWhere('cat_name', 'like', '%'.$searchTerm.'%');
+            }
         ]);
 
         /**

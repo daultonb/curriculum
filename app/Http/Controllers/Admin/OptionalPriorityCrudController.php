@@ -46,6 +46,9 @@ class OptionalPriorityCrudController extends CrudController
             'name' => 'op_id', // The db column name
             'label' => 'Optional Priority ID',// Table column heading
             'type' => 'number',
+            'searchLogic' => function($query, $column, $searchTerm){
+                $query ->orWhere('op_id', 'like', '%'.$searchTerm.'%');
+            }
         ]);
 
         // Subcategory
@@ -57,7 +60,10 @@ class OptionalPriorityCrudController extends CrudController
         $this->crud->addColumn([
             'name' => 'subcat_id', // The db column name
             'label' => 'Subcat ID',// Table column heading
-            'type' => 'number'
+            'type' => 'number',
+            'searchLogic' => function($query, $column, $searchTerm){
+                $query ->orWhere('subcat_id', 'like', '%'.$searchTerm.'%');
+            }
         ]);
         $removeHTML = strip_tags('subcat_name');
         $this->crud->addColumn([
