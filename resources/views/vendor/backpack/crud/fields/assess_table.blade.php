@@ -119,10 +119,10 @@
     @push('crud_fields_styles')
         <!-- accordion css-->
          <style>
-            a:visited{
+            h4 a:visited{
                 color:white !important;
             }
-            a:link{
+            h4 a:link{
                 color:white !important;
             }
         </style>

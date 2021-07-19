@@ -66,7 +66,10 @@ class CourseCrudController extends CrudController
         $this->crud->addColumn([
             'name' => 'course_title', // The db column name
             'label' => "Course Title", // Table column heading
-            'type' => 'Text'
+            'type' => 'Text',
+            'searchLogic' => function($query, $column, $searchTerm){
+                $query ->orWhere('course_title', 'like', '%'.$searchTerm.'%');
+            }
           ]);
 
         /*$this->crud->addColumn([
@@ -229,6 +232,18 @@ class CourseCrudController extends CrudController
                 'O' => "Online",
                 'I' => "In Person",
                 'B' => "Blended"
+            ],
+            // optional
+            'inline'      => true, // show the radios all on the same line?
+        ]);
+        
+         $this->crud->addField([   // radio
+            'name'        => 'type', // the name of the db column
+            'label'       => 'Type?', // the input label
+            'type'        => 'radio',
+            'options'     => [
+                // the key will be stored in the db, the value will be shown as label; 
+                'unassigned' => "Unassigned",               
             ],
             // optional
             'inline'      => true, // show the radios all on the same line?
@@ -701,6 +716,8 @@ class CourseCrudController extends CrudController
                 1 => "Yes"
             ],            
         ]);
+        
+        
         
         $this->crud->addColumn([  
             // any type of relationship
