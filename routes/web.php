@@ -113,10 +113,5 @@ Route::get('/construction', function () {
 Route::get('/email','AdminEmailController@index')->name('email');
 Route::post('/email', 'AdminEmailController@send')->name('email.send');
 
-// Route to for mapping Courses to PLO's
-Route::get('/courseMap/{course}/{program}', 'CourseMapController@index')->name('map.index');
-
-Route::get('/ploMap/{course}/{program}', 'PLOCLOMapController@index')->name('ploclomap.index');
-
 Auth::routes();
 

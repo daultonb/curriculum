@@ -18,11 +18,16 @@
                         The mapping scale is the scale that will be used to indicate the degree to which a program-level learning outcome is addressed by a course outcome, or the degree of alignment between the course outcome and program-level learning outcome.
                     </h6>
 
+                    <div class="d-flex justify-content-end">
+                                <!-- Show default mapping scale button  -->
+                                <button type="button" class="btn btn-outline-secondary btn-sm m-1" data-toggle="modal" data-target=".bd-example-modal-lg">Show Default Mapping Scales</button>
+                                <button type="button" class="btn btn-primary btn-sm m-1" data-toggle="modal" data-target="#addMSModal" style="background-color:#002145; color:white;">
+                                    <i class="bi bi-plus pr-2"></i>My Own Mapping Scale Level
+                                </button>
+                            </div>
+
                     <div class="row mb-3 container">
                         <div class="float-left">
-                            <!-- Show default mapping scale button  -->
-                            <button type="button" class="btn btn-outline-secondary btn-sm mr-2" style="width: 250px" data-toggle="modal" data-target=".bd-example-modal-lg">Show Default Mapping Scale</button>
-                            
                             <!-- Modal -->
                             <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
                                 <div class="modal-dialog modal-lg">
@@ -221,8 +226,7 @@
                                                                             <label for="description" class="col-md-4 col-form-label text-md-right">Description</label>
                                 
                                                                             <div class="col-md-8">
-                                                                                <textarea id="description" class="form-control" @error('description') is-invalid @enderror rows="3" name="description" required autofocus>{{$ms->description}}
-                                                                                </textarea>
+                                                                                <textarea id="description" class="form-control" @error('description') is-invalid @enderror rows="3" name="description" required autofocus>{{$ms->description}}</textarea>
                                 
                                                                                 @error('description')
                                                                                 <span class="invalid-feedback" role="alert">
@@ -253,12 +257,6 @@
 
                     </div>
                 </div>
-
-                    <button type="button" class="btn btn-primary btn-sm col-3 mt-3 float-right" data-toggle="modal"
-                        data-target="#addMSModal" style="background-color:#002145;color:white;">
-                        ＋ Add My Own Mapping Scale Level
-                    </button>
-
                     <!-- Modal -->
                     <div class="modal fade" id="addMSModal" tabindex="-1" role="dialog"
                         aria-labelledby="addMSModalLabel" aria-hidden="true">
@@ -354,8 +352,7 @@
 
                                             <div class="col-md-8">
                                                 
-                                                <textarea id="description" class="form-control" @error('description') is-invalid @enderror rows="3" name="description" required autofocus>
-                                                </textarea>
+                                                <textarea id="description" class="form-control" @error('description') is-invalid @enderror rows="3" name="description" required autofocus></textarea>
 
                                                 @error('description')
                                                 <span class="invalid-feedback" role="alert">
