@@ -10958,27 +10958,6 @@ margin-left:-15px;
   margin-left: 8px;
   margin-right: 8px;
 }
-
-.form-note {
-  display:flex;
-  flex-flow: row nowrap;
-  background-color:rgb(151, 212, 233, 0.4); 
-  align-items:center;
-  padding:8px; 
-  margin-bottom: 8px; 
-  border-style:solid;
-  border-color:#0055B7;
-  border-width:thin;
-  border-radius: 8px;
-}
-
-.form-note > p {
-  flex-grow: 1; 
-  margin-left: 8px; 
-  margin-top:auto;
-  margin-bottom:auto;
-}
-
 .team-img{
   /*centers the image and crops it to be circular */
   width:150px; 
@@ -10996,5 +10975,6 @@ margin-left:-15px;
   padding-bottom:0.5rem;
   padding-left: 0.5rem;
 }
+
 
 

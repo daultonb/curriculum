@@ -209,10 +209,10 @@
                                         <div class="col">
                                             <label  for="otherCourseStaff">Other Instructional Staff</label>
                                             <i class="bi bi-info-circle-fill" data-toggle="tooltip" data-bs-placement="right" title="{{$inputFieldDescriptions['otherCourseStaff']}}"></i>
-                                            <div class="form-note">
-                                                <i class="bi bi bi-exclamation-lg"></i><p>Place each entry on a newline for the best formatting results.</p>
-                                            </div>
-                                            <textarea id = "otherCourseStaff" placeholder="Professor, Dr. Phil, PhD Clinical Psychology, ...&#10;Instructor, Bill Nye, BS Mechanical Engineering, ..." name = "otherCourseStaff" class ="form-control" form="sylabusGenerator" spellcheck="true">{{ !empty($syllabus) ? $syllabus->other_instructional_staff : ''}}</textarea>
+                                            <div id="formatStaff" class="collapsibleNotes btn-primary rounded-3" style="overflow:hidden;transition:height 0.3s ease-out;height:auto" data-collapsed="false">
+                                                <i class="bi bi-exclamation-triangle-fill fs-5 pl-2 pr-2 pb-1"></i> <span class="fs-6">Place each entry on a newline for the best formatting results.</span>                                        
+                                            </div>                                            
+                                            <textarea id = "otherCourseStaff" data-formatnoteid="formatStaff" placeholder="Professor, Dr. Phil, PhD Clinical Psychology, ...&#10;Instructor, Bill Nye, BS Mechanical Engineering, ..." name = "otherCourseStaff" class ="form-control" form="sylabusGenerator" spellcheck="true">{{ !empty($syllabus) ? $syllabus->other_instructional_staff : ''}}</textarea>
                                         </div>
                                     </div>
                                     <!-- Class Start Time, Class End Time -->
@@ -283,14 +283,14 @@
                                             <label for="learningOutcome">Learning Outcomes
                                             </label>
                                             <i class="bi bi-info-circle-fill" data-toggle="tooltip" data-bs-placement="right" title="{{$inputFieldDescriptions['learningOutcomes']}}"></i>
-                                            <div class="form-note">
-                                                <i class="bi bi-exclamation-lg"></i><p>Place each entry on a newline for the best formatting results.</p>
-                                            </div>
                                             <p style="color:gray">
                                                 <i>                     Upon successful completion of this course, students will be able to...
                                                 </i>
                                             </p>
-                                            <textarea id = "learningOutcome" placeholder="Define ... &#10;Classify ..." name = "learningOutcome" class ="form-control"
+                                            <div id="formatCLOs" class="collapsibleNotes btn-primary rounded-3" style="overflow:hidden;transition:height 0.3s ease-out;height:auto" data-collapsed="false">
+                                                <i class="bi bi-exclamation-triangle-fill fs-5 pl-2 pr-2 pb-1"></i> <span class="fs-6">Place each entry on a newline for the best formatting results.</span>                                        
+                                            </div>                                            
+                                            <textarea id = "learningOutcome" data-formatnoteid="formatCLOs" placeholder="Define ... &#10;Classify ..." name = "learningOutcome" class ="form-control"
                                             type="date" style="height:125px;" form="sylabusGenerator" spellcheck="true">{{ !empty($syllabus) ? $syllabus->learning_outcomes : ''}}</textarea>
                                         </div>
                                     </div>
@@ -300,10 +300,10 @@
                                         <div class="col">
                                             <label for="learningAssessments">Assessments of Learning</label>
                                             <i class="bi bi-info-circle-fill" data-toggle="tooltip" data-bs-placement="right" title="{{$inputFieldDescriptions['learningAssessments']}}"></i>
-                                            <div class="form-note">
-                                                <i class="bi bi-exclamation-lg"></i><p>Place each entry on a newline for the best formatting results.</p>
-                                            </div>
-                                            <textarea id = "learningAssessments" placeholder="Presentation, 25%, Dec 1, ... &#10;Midterm Exam, 25%, Sept 31, ..." name = "learningAssessments" class ="form-control"
+                                            <div id="formatAssessments" class="collapsibleNotes btn-primary rounded-3" style="overflow:hidden;transition:height 0.3s ease-out;height:auto" data-collapsed="false">
+                                                <i class="bi bi-exclamation-triangle-fill fs-5 pl-2 pr-2 pb-1"></i> <span class="fs-6">Place each entry on a newline for the best formatting results.</span>                                        
+                                            </div>                                            
+                                            <textarea id = "learningAssessments" data-formatnoteid="formatAssessments" placeholder="Presentation, 25%, Dec 1, ... &#10;Midterm Exam, 25%, Sept 31, ..." name = "learningAssessments" class ="form-control"
                                             type="date" style="height:125px;" form="sylabusGenerator" spellcheck="true">{{ !empty($syllabus) ? $syllabus->learning_assessments : ''}}</textarea>
                                         </div>
                                     </div>
@@ -313,10 +313,10 @@
                                         <div class="col">
                                             <label for="learningActivities">Learning Activities</label>
                                             <i class="bi bi-info-circle-fill" data-toggle="tooltip" data-bs-placement="right" title="{{$inputFieldDescriptions['learningActivities']}}"></i>
-                                            <div class="form-note">
-                                                <i class="bi bi-exclamation-lg"></i><p>Place each entry on a newline for the best formatting results.</p>
-                                            </div>
-                                            <textarea id = "learningActivities" placeholder="Class participation consists of clicker questions, group discussions ... &#10;Students are expected to complete class pre-readings ..."name = "learningActivities" class ="form-control"
+                                            <div id="formatActivities" class="collapsibleNotes btn-primary rounded-3" style="overflow:hidden;transition:height 0.3s ease-out;height:auto" data-collapsed="false">
+                                                <i class="bi bi-exclamation-triangle-fill fs-5 pl-2 pr-2 pb-1"></i> <span class="fs-6">Place each entry on a newline for the best formatting results.</span>                                        
+                                            </div>                                            
+                                            <textarea id = "learningActivities" data-formatnoteid="formatActivities" placeholder="Class participation consists of clicker questions, group discussions ... &#10;Students are expected to complete class pre-readings ..."name = "learningActivities" class ="form-control"
                                             type="date" style="height:125px;" form="sylabusGenerator" spellcheck="true">{{ !empty($syllabus) ? $syllabus->learning_activities : ''}}</textarea>
                                         </div>
                                     </div>
@@ -406,8 +406,173 @@
 </div>
 
 <script type="application/javascript">
+    $(document).ready(function () {
+
+        var syllabus = <?php echo json_encode($syllabus);?>;
+    
+        $('[data-toggle="tooltip"]').tooltip();
+        // add on change event listener to campus select 
+        $('#campus').change(function(){
+            onChangeCampus();
+            });
+        // add on click event listener to import course info button
+        $('#importButton').click(importCourseInfo);
+        // trigger campus dropdown change based on saved syllabus
+        if (syllabus['campus'] === 'O') {
+            $('#campus').val('O').trigger('change');
+        } else if (syllabus['campus'] === 'V') {
+            $('#campus').val('V').trigger('change');
+        }
+        // use saved class meeting days
+        if (syllabus['class_meeting_days']) {
+            // split class meeting days string into an array
+            const classMeetingDays = syllabus['class_meeting_days'].split("/");
+            // mark days included in classMeetingDays as checked
+
+            if (classMeetingDays.includes('Mon')) {
+                $('#monday').attr('checked', 'true');
+            }
+            if (classMeetingDays.includes('Tue')) {
+                $('#tuesday').attr('checked', 'true');
+            }
+            if (classMeetingDays.includes('Wed')) {
+                $('#wednesday').attr('checked', 'true');
+            }
+            if (classMeetingDays.includes('Thu')) {
+                $('#thursday').attr('checked', 'true');
+            }
+            if (classMeetingDays.includes('Fri')) {
+                $('#friday').attr('checked', 'true');
+            }
+        }
+        // use event delegation to show format note on focus in
+        document.getElementById("sylabusGenerator").addEventListener('focusin', function (event) {
+            var formatNoteId = event.target.dataset.formatnoteid;
+            if (formatNoteId) {
+                var note = document.querySelector('#' + formatNoteId);
+                var isCollapsed = note.dataset.collapsed === 'true';
+
+                if (isCollapsed) {
+                    expandSection(note);
+                    note.setAttribute('data-collapsed', 'false');
+                } 
+            }
+        });
+
+        // use event delegation to hide format note on focus out
+        document.getElementById("sylabusGenerator").addEventListener('focusout', function (event) {
+            var formatNoteId = event.target.dataset.formatnoteid;
+            if (formatNoteId) {
+                var note = document.querySelector('#' + formatNoteId);
+                var isCollapsed = note.dataset.collapsed === 'true';
+
+                if (!isCollapsed) {
+                    collapseSection(note);
+                    note.setAttribute('data-collapsed', 'true');
+                }
+
+            }
+        });
+        // update syllabus form with the campus specific info
+        onChangeCampus();
+    });
+
+    // Import course info into using GET AJAX call
+    function importCourseInfo() {
+        var course_id = $('input[name="importCourse"]:checked').val();
+        $.ajax({
+            type: "GET",
+            url: "/syllabusGenerator/import/course",
+            data: {course_id : course_id},
+            headers: {
+                'X-CSRF-Token': '{{ csrf_token() }}',
+            },
+        }).done(function(data) {
+            var decode_data = JSON.parse(data);
+            var c_title = decode_data['c_title'];
+            var c_code = decode_data['c_code'];
+            var c_num = decode_data['c_num'];
+            var c_year = decode_data['c_year'];
+            var c_term = decode_data['c_term'];
+            var a_methods = decode_data['a_methods'];
+            var l_outcomes = decode_data['l_outcomes'];
+            var a_methods_text = "";
+            var l_outcomes_text = "";
+
+            a_methods.forEach(element => {
+                a_methods_text += element.a_method + " " + element.weight + "%\n";
+            });
+
+            for(var i = 0; i < l_outcomes.length; i++) {
+                l_outcomes_text += (i+1) + ". " + l_outcomes[i].l_outcome + "\n";
+            }
+            var c_title_input = $('#courseTitle');
+            var c_code_input = $('#courseCode');
+            var c_num_input = $('#courseNumber');
+            var c_year_input = $('#courseYear');
+            var c_term_input = $('#courseSemester');
+            var a_method_input = $('#learningAssessments');
+            var l_outcome_input = $('#learningOutcome');
+
+            c_title_input.val(c_title);
+            c_code_input.val(c_code);
+            c_num_input.val(c_num);
+            c_year_input.val(c_year);
+            c_term_input.val(c_term);
+            a_method_input.val(a_methods_text);
+            l_outcome_input.val(l_outcomes_text);
+        });
+    }
+
+    function expandSection(element) {
+        // get the height of the element's inner content, regardless of its actual size
+        var sectionHeight = element.scrollHeight;
+        
+        // have the element transition to the height of its inner content
+        element.style.height = sectionHeight + 'px';
+
+        // when the next css transition finishes (which should be the one we just triggered)
+        element.addEventListener('transitioned', function(e) {
+            // remove this event listener so it only gets triggered once
+            element.removeEventListener('transitioned', arguments.callee);
+            
+            // remove "height" from the element's inline styles, so it can return to its initial value
+            element.style.height = null;
+        });
+        
+        // mark the section as "currently not collapsed"
+        element.setAttribute('data-collapsed', 'false');
+    }
+
+    function collapseSection(element) {
+        // get the height of the element's inner content, regardless of its actual size
+        var sectionHeight = element.scrollHeight;
+
+        // temporarily disable all css transitions
+        var elementTransition = element.style.transition;
+        element.style.transition = '';
+        
+        // on the next frame (as soon as the previous style change has taken effect),
+        // explicitly set the element's height to its current pixel height, so we 
+        // aren't transitioning out of 'auto'
+        requestAnimationFrame(function() {
+            element.style.height = sectionHeight + 'px';
+            element.style.transition = elementTransition;
+            
+            // on the next frame (as soon as the previous style change has taken effect),
+            // have the element transition to height: 0
+            requestAnimationFrame(function() {
+            element.style.height = 0 + 'px';
+            });
+        });
+        
+        // mark the section as "currently collapsed"
+        element.setAttribute('data-collapsed', 'true');
+    }
+
     // Function changes optional verison of syllabus
     function onChangeCampus() {
+
         $('.courseInfo').tooltip(
             {
                 selector: '.has-tooltip'
@@ -476,10 +641,10 @@
             <div class="col">
                 <label for="courseContacts">Contacts</label>
                 <i class="bi bi-info-circle-fill has-tooltip"  data-bs-placement="right" title="{{$inputFieldDescriptions['courseContacts']}}"></i>
-                <div class="form-note">
-                    <i class="bi bi-exclamation-lg"></i><p>Place each entry on a newline for the best formatting results.</p>
-                </div>
-                <textarea name = "courseContacts" placeholder="Professor, Jane Doe, jane.doe@ubc.ca, +1 234 567 8900, ... &#10;Teaching Assistant, John Doe, john.doe@ubc.ca, ..."class ="form-control" type="date" form="sylabusGenerator">{{isset($vancouverSyllabus) ? $vancouverSyllabus->course_contacts : ''}}</textarea>
+                <div id="formatContacts" class="collapsibleNotes btn-primary rounded-3" style="overflow:hidden;transition:height 0.3s ease-out;height:auto" data-collapsed="false">
+                    <i class="bi bi-exclamation-triangle-fill fs-5 pl-2 pr-2 pb-1"></i> <span class="fs-6">Place each entry on a newline for the best formatting results.</span>                                        
+                </div>                                            
+                <textarea id="courseContacts" data-formatnoteid="formatContacts" name = "courseContacts" placeholder="Professor, Jane Doe, jane.doe@ubc.ca, +1 234 567 8900, ... &#10;Teaching Assistant, John Doe, john.doe@ubc.ca, ..."class ="form-control" type="date" form="sylabusGenerator">{{isset($vancouverSyllabus) ? $vancouverSyllabus->course_contacts : ''}}</textarea>
             </div>
             `;
 
@@ -487,20 +652,20 @@
             <div class="col">
                 <label for="coursePrereqs">Course Prerequisites</label>
                 <i class="bi bi-info-circle-fill has-tooltip" data-bs-placement="right" title="{{$inputFieldDescriptions['coursePrereqs']}}"></i>
-                <div class="form-note">
-                    <i class="bi bi-exclamation-lg"></i><p>Place each entry on a newline for the best formatting results.</p>
-                </div>
-                <textarea name = "coursePrereqs" placeholder="CPSC 210 or EECE 210 or CPEN 221 &#10;CPSC 121 or MATH 220"class ="form-control" type="text" form="sylabusGenerator" >{{isset($vancouverSyllabus) ? $vancouverSyllabus->course_prereqs : ''}}</textarea>
+                <div id="formatPrereqs" class="collapsibleNotes btn-primary rounded-3" style="overflow:hidden;transition:height 0.3s ease-out;height:auto" data-collapsed="false">
+                    <i class="bi bi-exclamation-triangle-fill fs-5 pl-2 pr-2 pb-1"></i> <span class="fs-6">Place each entry on a newline for the best formatting results.</span>                                        
+                </div>                                            
+                <textarea id="coursePrereqs" data-formatnoteid="formatPrereqs"name = "coursePrereqs" placeholder="CPSC 210 or EECE 210 or CPEN 221 &#10;CPSC 121 or MATH 220"class ="form-control" type="text" form="sylabusGenerator" >{{isset($vancouverSyllabus) ? $vancouverSyllabus->course_prereqs : ''}}</textarea>
             </div>
             `;
         var courseCoreqs = `
             <div class="col">
                 <label for="courseCoreqs">Course Corequisites</label>
                 <i class="bi bi-info-circle-fill has-tooltip" data-bs-placement="right" title="{{$inputFieldDescriptions['courseCoreqs']}}"></i>
-                <div class="form-note">
-                    <i class="bi bi-exclamation-lg"></i><p>Place each entry on a newline for the best formatting results.</p>
-                </div>
-                <textarea id = "courseCoreqs" placeholder="CPSC 107 or CPSC 110 &#10;CPSC 210" name = "courseCoreqs" class ="form-control" type="text" form="sylabusGenerator">{{isset($vancouverSyllabus) ? $vancouverSyllabus->course_coreqs : ''}}</textarea>
+                <div id="formatCoreqs"class="collapsibleNotes btn-primary rounded-3" style="overflow:hidden;transition:height 0.3s ease-out;height:auto" data-collapsed="false" >
+                    <i class="bi bi-exclamation-triangle-fill fs-5 pl-2 pr-2 pb-1"></i> <span class="fs-6">Place each entry on a newline for the best formatting results.</span>                                        
+                </div>                                            
+                <textarea id = "courseCoreqs" data-formatnoteid="formatCoreqs"placeholder="CPSC 107 or CPSC 110 &#10;CPSC 210" name = "courseCoreqs" class ="form-control" type="text" form="sylabusGenerator">{{isset($vancouverSyllabus) ? $vancouverSyllabus->course_coreqs : ''}}</textarea>
             </div>
             `;
         var courseInstructorBio = `
@@ -577,110 +742,17 @@
             $('#courseDescription').empty();
         }
 
-    }
-
-    $(document).ready(function () {
-
-        var syllabus = <?php echo json_encode($syllabus);?>;
-    
-        $('[data-toggle="tooltip"]').tooltip();
-        // update syllabus form with the campus specific info
-        onChangeCampus();
-        // add on change event listener 
-        $('#campus').change(onChangeCampus);
-
-        // Import Course information into the input field throught GET ajax call
-        $('#importButton').click(function() {
-            var course_id = $('input[name="importCourse"]:checked').val();
-            $.ajax({
-                type: "GET",
-                url: "/syllabusGenerator/import/course",
-                data: {course_id : course_id},
-                headers: {
-                    'X-CSRF-Token': '{{ csrf_token() }}',
-                },
-            }).done(function(data) {
-                var decode_data = JSON.parse(data);
-                var c_title = decode_data['c_title'];
-                var c_code = decode_data['c_code'];
-                var c_num = decode_data['c_num'];
-                var c_year = decode_data['c_year'];
-                var c_term = decode_data['c_term'];
-                var a_methods = decode_data['a_methods'];
-                var l_outcomes = decode_data['l_outcomes'];
-
-                var a_methods_text = "";
-                var l_outcomes_text = "";
-
-                a_methods.forEach(element => {
-                    a_methods_text += element.a_method + " " + element.weight + "%\n";
-                });
-
-                for(var i = 0; i < l_outcomes.length; i++) {
-                    l_outcomes_text += (i+1) + ". " + l_outcomes[i].l_outcome + "\n";
-                }
-                var c_title_input = $('#courseTitle');
-                var c_code_input = $('#courseCode');
-                var c_num_input = $('#courseNumber');
-                var c_year_input = $('#courseYear');
-                var c_term_input = $('#courseSemester');
-                var a_method_input = $('#learningAssessments');
-                var l_outcome_input = $('#learningOutcome');
-
-                c_title_input.val(c_title);
-                c_code_input.val(c_code);
-                c_num_input.val(c_num);
-                c_year_input.val(c_year);
-                c_term_input.val(c_term);
-                a_method_input.val(a_methods_text);
-                l_outcome_input.val(l_outcomes_text);
-            });
+        var formatNotes = document.querySelectorAll('.collapsibleNotes').forEach(function(note) {
+            // collapse sections when document is ready
+            var isCollapsed = note.dataset.collapsed === 'true';
+            console.log(isCollapsed);
+            if (!isCollapsed) {
+                collapseSection(note);
+            }
         });
 
-        // Dynamic update required attribute for dates
-        // var requiredCheckboxes = $('.classDate :checkbox[required]');
-        // requiredCheckboxes.change(function() {
-        //     if(requiredCheckboxes.is(':checked')) {
-        //     requiredCheckboxes.removeAttr('required');
-        //     } else {
-        //     requiredCheckboxes.attr('required', 'required');
-        //     }
-        // });
+    }
 
-        // trigger campus dropdown change based on saved syllabus
-        if (syllabus['campus'] === 'O') {
-            $('#campus').val('O').trigger('change');
-        } else if (syllabus['campus'] === 'V') {
-            $('#campus').val('V').trigger('change');
-        }
-        
-        // use saved class meeting days
-        if (syllabus['class_meeting_days']) {
-            // split class meeting days string into an array
-            const classMeetingDays = syllabus['class_meeting_days'].split("/");
-            // mark days included in classMeetingDays as checked
-
-            if (classMeetingDays.includes('Mon')) {
-                $('#monday').attr('checked', 'true');
-            }
-            if (classMeetingDays.includes('Tue')) {
-                $('#tuesday').attr('checked', 'true');
-            }
-            if (classMeetingDays.includes('Wed')) {
-                $('#wednesday').attr('checked', 'true');
-            }
-            if (classMeetingDays.includes('Thu')) {
-                $('#thursday').attr('checked', 'true');
-            }
-            if (classMeetingDays.includes('Fri')) {
-                $('#friday').attr('checked', 'true');
-            }
-        }
-
-    });
-
-
-    
 </script>
 
 @endsection

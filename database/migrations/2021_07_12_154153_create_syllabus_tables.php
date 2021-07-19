@@ -42,7 +42,7 @@ class CreateSyllabusTables extends Migration
             $table->id();
             $table->string('id_name')->unique();
             $table->string('title');
-            $table->text('description');
+            // $table->text('description');
             $table->timestamps();
         });
 
@@ -50,7 +50,7 @@ class CreateSyllabusTables extends Migration
             $table->id();
             $table->string('id_name')->unique();
             $table->string('title');
-            $table->text('description');
+            // $table->text('description');
             $table->timestamps();
         });
 

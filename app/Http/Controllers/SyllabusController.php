@@ -134,15 +134,14 @@ class SyllabusController extends Controller
 
             // else redirect to the empty syllabus generator view where syllabus id is null
             } else {
-                return redirect()->route('syllabus')->with('user', $user)->with('myCourses', $myCourses)->with('inputFieldDescriptions', $inputFieldDescriptions)->with('okanaganSyllabusResources', $okanaganSyllabusResources)->with('vancouverSyllabusResources', $vancouverSyllabusResources)->with('syllabus', null);
+                return redirect()->route('syllabus')->with('user', $user)->with('myCourses', $myCourses)->with('inputFieldDescriptions', $inputFieldDescriptions)->with('okanaganSyllabusResources', $okanaganSyllabusResources)->with('vancouverSyllabusResources', $vancouverSyllabusResources)->with('syllabus', []);
             }
 
         // else return the empty syllabus generator view where syllabus id is null
         } else {
-            return view("syllabus.syllabusGenerator")->with('user', $user)->with('myCourses', $myCourses)->with('inputFieldDescriptions', $inputFieldDescriptions)->with('okanaganSyllabusResources', $okanaganSyllabusResources)->with('vancouverSyllabusResources', $vancouverSyllabusResources)->with('syllabus', null);
+            return view("syllabus.syllabusGenerator")->with('user', $user)->with('myCourses', $myCourses)->with('inputFieldDescriptions', $inputFieldDescriptions)->with('okanaganSyllabusResources', $okanaganSyllabusResources)->with('vancouverSyllabusResources', $vancouverSyllabusResources)->with('syllabus', []);
         }
     }
-
 
     /**
      * Save syllabus.
@@ -166,14 +165,12 @@ class SyllabusController extends Controller
         // if syllabus already exists, update it
         if ($syllabusId) {
             // update syllabus
-            $this->update($request, $syllabusId);
+            $syllabus = $this->update($request, $syllabusId);
         // else create a new syllabus
         } else {
             // create a new syllabus
-            $syllabusId = $this->create($request);
+            $syllabus = $this->create($request);
         }
-        // find newly created or updated syllabus
-        $syllabus = Syllabus::find($syllabusId);
         // set updated_at time
         $syllabus->updated_at = date('Y-m-d H:i:s');
         // save syllabus
@@ -199,7 +196,7 @@ class SyllabusController extends Controller
         }
 
         return redirect()->route('syllabus', [
-            'syllabusId' => $syllabusId,
+            'syllabusId' => $syllabus->id,
         ]);
     }
 
@@ -265,6 +262,7 @@ class SyllabusController extends Controller
         $syllabus->passing_criteria = $request->input('passingCriteria');
         $syllabus->learning_materials = $request->input('learningMaterials');
         $syllabus->learning_resources = $request->input('learningResources');
+        $syllabus->save();
 
         switch($campus) {
             case 'O':
@@ -326,7 +324,7 @@ class SyllabusController extends Controller
         $syllabusUser->permission = 1;
         $syllabusUser->save();
 
-        return $syllabus->id;
+        return $syllabus;
     }
 
 
@@ -515,8 +513,8 @@ class SyllabusController extends Controller
                         }
                     }
                 }
-
             }
+            return $syllabus;
     }
 
     /**
@@ -614,7 +612,7 @@ class SyllabusController extends Controller
                     if (array_key_exists($resource->id, $request->input('okanaganSyllabusResources'))) {
                         $templateProcessor->cloneBlock($resource->id_name);
                         $templateProcessor->setValue($resource->id_name . '-title', $resource->title);
-                        $templateProcessor->setValue($resource->id_name . '-description', $resource->description);
+                        // $templateProcessor->setValue($resource->id_name . '-description', $resource->description);
                     } else {
                         $templateProcessor->cloneBlock($resource->id_name, 0);
                     }
@@ -728,7 +726,7 @@ class SyllabusController extends Controller
                     if (array_key_exists($resource->id, $request->input('vancouverSyllabusResources'))) {
                         $templateProcessor->cloneBlock($resource->id_name);
                         $templateProcessor->setValue($resource->id_name . '-title', $resource->title);
-                        $templateProcessor->setValue($resource->id_name . '-description', $resource->description);
+                        // $templateProcessor->setValue($resource->id_name . '-description', $resource->description);
                     } else {
                         $templateProcessor->cloneBlock($resource->id_name, 0);
                     }
