@@ -6,7 +6,7 @@ use App\Models\syllabus\SyllabusUser;
 use App\Models\syllabus\Syllabus;
 use App\Models\User;
 use Illuminate\Http\Request;
-use App\Mail\NotifyInstructorMail;
+use App\Mail\NotifySyllabusUserMail;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\DB;
 
@@ -75,7 +75,7 @@ class SyllabusUserController extends Controller
         }
         // save this syllabus user
         if($syllabusUser->save()){
-            Mail::to($user->email)->send(new NotifyInstructorMail());
+            Mail::to($user->email)->send(new NotifySyllabusUserMail($syllabus->course_code, $syllabus->course_num, $syllabus->course_title, $user->name));
             $request->session()->flash('success', $user->email . ' was successfully added to syllabus ' . $syllabus->course_code . ' ' . $syllabus->course_num);
         }else{
             $request->session()->flash('error', 'There was an error adding ' . $user->email . ' to syllabus ' . $syllabus->course_code . ' ' . $syllabus->course_num);
