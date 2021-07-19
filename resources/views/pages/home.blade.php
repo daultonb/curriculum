@@ -275,7 +275,7 @@
                                     <td>
                                         <a  class="pr-2" href="{{route('courseWizard.step1', $course->course_id)}}">
                                         <i class="bi bi-pencil-fill btn-icon dropdown-item"></i></a>
-                                        <a data-toggle="modal" data-target="#deleteConfirmation{{$index}}" href=#>
+                                        <a data-toggle="modal" data-target="#deleteCourseConfirmation{{$index}}" href=#>
                                         <i class="bi bi-trash-fill text-danger btn-icon dropdown-item"></i></a>
                                         <!-- Collaborators Icon for Dashboard -->
                                         <div class="btn bg-transparent position-relative pr-2 pl-2" data-toggle="tooltip" data-html="true" data-bs-placement="right" title="@foreach($courseUsers[$course->course_id] as $c => $courseUser){{$c + 1}}. {{$courseUser->name}}<br>@endforeach">
@@ -727,7 +727,7 @@
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
-                </div>
+                    </div>
 
                 <form id="createCourse" method="POST" action="{{ action('HomeController@store') }}">
                         @csrf
@@ -821,7 +821,7 @@
                                     @error('course_year')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
-                                `</span>
+                                    </span>
                                 @enderror
                                 </select>
                             </div>
@@ -877,8 +877,8 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </div>
+                    
+                
                 <input type="hidden" class="form-check-input" name="user_id" value={{Auth::id()}}>
                 <input type="hidden" class="form-check-input" name="type" value="unassigned">
                 <div class="modal-footer">
