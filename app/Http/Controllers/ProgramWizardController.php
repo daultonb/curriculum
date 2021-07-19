@@ -14,10 +14,14 @@ use App\Models\CourseProgram;
 use App\Models\MappingScale;
 use App\Models\LearningOutcome;
 use App\Models\MappingScaleCategory;
+use App\Models\MappingScaleProgram;
+use App\Models\OutcomeMap;
+use Doctrine\DBAL\Schema\Index;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\DB;
 
+use function PHPUnit\Framework\isNull;
 
 class ProgramWizardController extends Controller
 {
@@ -167,82 +171,231 @@ class ProgramWizardController extends Controller
         $program = Program::where('program_id', $program_id)->first();
 
         //progress bar
-        $ploCount = ProgramLearningOutcome::where('program_id', $program_id)->count();;
+        $ploCount = ProgramLearningOutcome::where('program_id', $program_id)->count();
         $msCount = MappingScale::join('mapping_scale_programs', 'mapping_scales.map_scale_id', "=", 'mapping_scale_programs.map_scale_id')
                                     ->where('mapping_scale_programs.program_id', $program_id)->count();
-        
+        //
         $courseCount = CourseProgram::where('program_id', $program_id)->count();
+        //
+        $mappingScales = MappingScale::join('mapping_scale_programs', 'mapping_scales.map_scale_id', "=", 'mapping_scale_programs.map_scale_id')
+                                    ->where('mapping_scale_programs.program_id', $program_id)->get();
+
+        // get all the courses this program belongs to
+        $programCourses = $program->courses;
+        //dd($programCourses[0]->pivot->course_required);
+        // get ONLY required courses for the program
+        $allProgramCourses = Course::join('course_programs', 'courses.course_id', '=', 'course_programs.course_id')->where('course_programs.program_id', $program_id)->get();
+        $requiredProgramCourses = array();
+        foreach ($allProgramCourses as $course) {
+            if ($course->course_required != 0) {
+                $requiredProgramCourses += array($course);
+            }
+        }
+
+        // get all categories for program
+        $ploCategories = PLOCategory::where('program_id', $program_id)->get();
+        // get plo categories for program
+        $ploProgramCategories = PLOCategory::where('p_l_o_categories.program_id', $program_id)->join('program_learning_outcomes', 'p_l_o_categories.plo_category_id', '=', 'program_learning_outcomes.plo_category_id')->get();
+        // get all plo's
+        $allPLO = ProgramLearningOutcome::where('program_id', $program_id)->get();
+        // get plo's for the program 
+        $plos = DB::table('program_learning_outcomes')->leftJoin('p_l_o_categories', 'program_learning_outcomes.plo_category_id', '=', 'p_l_o_categories.plo_category_id')->where('program_learning_outcomes.program_id', $program_id)->get();
         
+        // plosPerCategory returns the number of plo's belonging to each category
+        // used for setting the colspan in the view
+        $plosPerCategory = array();
+        foreach($ploProgramCategories as $ploCategory) {
+            $plosPerCategory[$ploCategory->plo_category_id] = 0;
+        }
+        foreach($ploProgramCategories as $ploCategory) {
+            $plosPerCategory[$ploCategory->plo_category_id] += 1;
+        }
+        // Used for setting colspan in view
+        $numUncategorizedPLOS = 0;
+        foreach ($allPLO as $plo) {
+            if ($plo->plo_category_id == null){
+                $numUncategorizedPLOS ++;
+            }
+        }
+
+        // returns true if there exists a plo without a category
+        $hasUncategorized = false;
+        foreach ($plos as $plo) {
+            if ($plo->plo_category == NULL) {
+                $hasUncategorized = true;
+            }
+        }
+
+        // get all CLO's for each course in the program
+        $coursesOutcomes = array();
+        foreach ($programCourses as $programCourse) {
+            $learningOutcomes = $programCourse->learningOutcomes;
+            $coursesOutcomes[$programCourse->course_id] = $learningOutcomes;
+        }
+
+        $arr = array();
+        $arr = $this->getOutcomeMaps($allPLO, $coursesOutcomes, $arr);
+        $store = array();
+        $store = $this->createCDFArray($arr, $store);
+        $store = $this->frequencyDistribution($arr, $store);
+        //dd($store[19][45]['frequencies']);
+        $store = $this->assignColours($store, $program_id);
 
         return view('programs.wizard.step4')->with('program', $program)
                                             ->with("faculties", $faculties)->with("departments", $departments)->with("levels",$levels)->with('user', $user)->with('programUsers',$programUsers)
-                                            ->with('ploCount',$ploCount)->with('msCount', $msCount)->with('courseCount', $courseCount);
+                                            ->with('ploCount',$ploCount)->with('msCount', $msCount)->with('courseCount', $courseCount)->with('programCourses', $programCourses)->with('coursesOutcomes', $coursesOutcomes)
+                                            ->with('ploCategories', $ploCategories)->with('plos', $plos)->with('hasUncategorized', $hasUncategorized)->with('ploProgramCategories', $ploProgramCategories)->with('plosPerCategory', $plosPerCategory)
+                                            ->with('numUncategorizedPLOS', $numUncategorizedPLOS)->with('mappingScales', $mappingScales)->with('testArr', $store);
     }
 
+    public function getOutcomeMaps ($allPLO, $coursesOutcomes, $arr) {
+        // retrieves all the outcome mapping values for every clo and plo
+        $count = 0;
+        foreach ($allPLO as $plo) {
+            // loop through CLOs to get map scale value
+            foreach ($coursesOutcomes as $clos) {
+                foreach ($clos as $clo) {
+                    // Check if record exists in the db
+                    if (!OutcomeMap::where(['l_outcome_id' => $clo->l_outcome_id, 'pl_outcome_id' => $plo->pl_outcome_id])->exists()) {
+                        // if nothing is found then do nothing
+                        // else if record (mapping_scale_value) is found then store it in the array
+                    } else {
+                        $count++;
+                        $mapScaleValue = OutcomeMap::where(['l_outcome_id' => $clo->l_outcome_id, 'pl_outcome_id' => $plo->pl_outcome_id])->value('map_scale_value');
+                        $arr[$count] = array(
+                            'pl_outcome_id' => $plo->pl_outcome_id,
+                            'course_id' => $clo->course_id,
+                            'map_scale_value' => $mapScaleValue,
+                            'l_outcome_id' => $clo->l_outcome_id,
+                        );
+                    }
+                }
+            }
+        }
+        return $arr;
+    }
 
-    // /**
-    //  * Show the form for creating a new resource.
-    //  *
-    //  * @return \Illuminate\Http\Response
-    //  */
-    // public function create()
-    // {
-    //     //
-    // }
+    public function createCDFArray($arr, $store) {
+        // Initialize array for each pl_outcome_id with the value of null
+        foreach ($arr as $ar) {
+            $store[$ar['pl_outcome_id']] = null;
+        }
+        // Initialize Array for Storing 
+        foreach ($arr as $ar) {
+            if ($store[$ar['pl_outcome_id']] == null || $store[$ar['pl_outcome_id']] == $ar['pl_outcome_id']) {
+                $store[$ar['pl_outcome_id']] = array(
+                    $ar['course_id'] => array(
+                    ),
+                );
+            } else {
+                $store[$ar['pl_outcome_id']][$ar['course_id']] = array();
+                $store[$ar['pl_outcome_id']][$ar['course_id']]['frequencies'] = array();
+            }
+        }
+        return $store;
+    }
 
-    // /**
-    //  * Store a newly created resource in storage.
-    //  *
-    //  * @param  \Illuminate\Http\Request  $request
-    //  * @return \Illuminate\Http\Response
-    //  */
-    // public function store(Request $request)
-    // {
-    //     //
-    // }
+    public function frequencyDistribution($arr, $store) {
+        //Initialize Array for Frequency Distribution
+        $freq = array();
+        foreach ($arr as $map) {
+            $pl_outcome_id = $map['pl_outcome_id'];
+            $course_id = $map['course_id'];
+            $map_scale_value = $map['map_scale_value'];
+            //Initialize Array with the value of zero
+            $freq[$pl_outcome_id][$course_id][$map_scale_value] = 0;
+        }
+        // Store values in the frequency distribution array that was initialized to zero above
+        foreach ($arr as $map) {
+            $pl_outcome_id = $map['pl_outcome_id'];
+            $course_id = $map['course_id'];
+            $map_scale_value = $map['map_scale_value'];
+            // check if map_scale_value is in the frequency array and give it the value of 1
+            if ($freq[$pl_outcome_id][$course_id][$map_scale_value] == 0) {
+                $freq[$pl_outcome_id][$course_id][$map_scale_value] = 1;
+            // if the value is found again, and is not zero, increment
+            } else {
+                $freq[$pl_outcome_id][$course_id][$map_scale_value] += 1;
+            }
+        }
+        // loop through the frequencies of the mapping values
+        foreach($freq as $plOutcomeId => $dist) {
+            foreach($dist as $courseId => $d) {
+                $weight = 0;
+                $tieResults = array();
+                //count the number of times a mapping scales appears for a program learning outcome 
+                foreach($d as $mapScaleWeight) {
+                    //check if the current ($mapScaleWeight) > than the previously stored value
+                    if ($weight < $mapScaleWeight) {
+                        $weight = $mapScaleWeight;
+                    } else if ($weight == $mapScaleWeight) {    // if a tie is found store the mapping scale values (I.e: I, A, D) in and array
+                        $tieResults = array_keys($d, $weight);
+                    }
+                }
+                // if A tie is found.. 
+                if ($tieResults != null) {
+                    $stringResults = '';
+                    $numItems = count($tieResults);
+                    $i = 0;
+                    // for each tie value append to a string
+                    foreach ($tieResults as $tieResult) {
+                        // appends '/' only if it's not at the last index in the array
+                        if (++$i !== $numItems) {
+                            $stringResults .= "" .$tieResult. " / "; 
+                        } else {
+                            $stringResults .= "" .$tieResult;
+                        }
+                    }
+                    // Store the results array as the map_scale_value key
+                    $store[$plOutcomeId][$courseId] += array(
+                        'map_scale_value' => $stringResults 
+                    );
+                    // Store a new array to be able to determine if the mapping scale value comes from the result of a tie
+                    $store[$plOutcomeId][$courseId] += array(
+                        'map_scale_value_tie' => True
+                    );
+                    // Store the frequencies
+                    $store[$plOutcomeId][$courseId]['frequencies'] = $freq[$plOutcomeId][$courseId];
+                    // If no tie is present, store the strongest weighted map_scale_value 
+                } else {
+                    $store[$plOutcomeId][$courseId] = array(
+                        'map_scale_value' => array_search($weight, $d)
+                    );
+                    // Store the frequencies
+                    $store[$plOutcomeId][$courseId]['frequencies'] = $freq[$plOutcomeId][$courseId];
+                }
+            }
+        }
+        //dd($store[19][45]['frequencies']);
+        return $store;
+    }
 
-    // /**
-    //  * Display the specified resource.
-    //  *
-    //  * @param  int  $id
-    //  * @return \Illuminate\Http\Response
-    //  */
-    // public function show($id)
-    // {
-    //     //
-    // }
+    public function assignColours($store, $program_id){
+        // Assign a colour to store based
+        foreach ($store as $plOutcomeId => $s) {
+            foreach ($s as $courseId => $msv) {
+                // If a tie exists assign it the colour white
+                if (array_key_exists("map_scale_value_tie",$msv)) {
+                    $mapScaleColour = '#FFFFFF';
+                    $store[$plOutcomeId][$courseId] += array(
+                        'colour' => $mapScaleColour
+                    );
+                } else {
+                    // Search for the mapping scale colour in the db, then assign it to the array
+                    $mapScaleColour = MappingScale::join('mapping_scale_programs', 'mapping_scales.map_scale_id', "=", 'mapping_scale_programs.map_scale_id')
+                                    ->where('mapping_scale_programs.program_id', $program_id)
+                                    ->where('mapping_scales.abbreviation', $msv)->value('colour');
+                
+                if ($mapScaleColour == null) {
+                    $mapScaleColour = '#FFFFFF';
+                }
+                    $store[$plOutcomeId][$courseId] += array(
+                        'colour' => $mapScaleColour
+                    );
+                }
+            }
+        }
+        return $store;
+    }
 
-    // /**
-    //  * Show the form for editing the specified resource.
-    //  *
-    //  * @param  int  $id
-    //  * @return \Illuminate\Http\Response
-    //  */
-    // public function edit($id)
-    // {
-    //     //
-    // }
-
-    // /**
-    //  * Update the specified resource in storage.
-    //  *
-    //  * @param  \Illuminate\Http\Request  $request
-    //  * @param  int  $id
-    //  * @return \Illuminate\Http\Response
-    //  */
-    // public function update(Request $request, $id)
-    // {
-    //     //
-    // }
-
-    // /**
-    //  * Remove the specified resource from storage.
-    //  *
-    //  * @param  int  $id
-    //  * @return \Illuminate\Http\Response
-    //  */
-    // public function destroy($id)
-    // {
-    //     //
-    // }
 }

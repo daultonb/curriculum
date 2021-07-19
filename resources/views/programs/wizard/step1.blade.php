@@ -24,6 +24,9 @@
                     <div class="card m-3">
                         <h5 class="card-header wizard text-start">
                             Categories
+                            <button type="button" class="btn bg-primary text-white btn-sm col-2 float-right" data-toggle="modal" data-target="#addCategoryModal">
+                                <i class="bi bi-plus pr-2"></i>PLO Category
+                            </button>
                         </h5>
 
                         <div class="card-body">
@@ -139,9 +142,6 @@
                         </div>
 
                         <div class="card-footer p-3">
-                            <button type="button" class="btn bg-primary text-white btn-sm col-2 float-right" data-toggle="modal" data-target="#addCategoryModal">
-                                <i class="bi bi-plus pr-2"></i>Add PLO Category
-                            </button>
 
                             <!-- Add PLO category Modal -->
                             <div class="modal fade" id="addCategoryModal" tabindex="-1" role="dialog" aria-labelledby="addCategoryModalLabel" aria-hidden="true">
@@ -191,6 +191,9 @@
                     <div class="card m-3">
                         <h5 class="card-header wizard text-start">
                             Program Learning Outcomes
+                            <button type="button" class="btn bg-primary text-white btn-sm col-2 float-right" data-toggle="modal" data-target="#addPLOModal">
+                                <i class="bi bi-plus pr-2"></i>Add PLO
+                            </button>
                         </h5>
 
                         <div class="card-body">
@@ -339,7 +342,7 @@
                                                         <th class="text-center w-25" width>Actions</th>
                                                     </tr>
 
-                                                    @foreach ($category->plos as $plo) 
+                                                    @foreach ($category->plos as $plo)
                                                     <tr>
                                                         <td>
                                                             <b>{{$plo->plo_shortphrase}}</b><br>
@@ -347,7 +350,7 @@
                                                         </td>
                                                         <td class="text-center align-middle">
                                                 
-                                                            <button type="button" style="width:60px;" class="btn btn-secondary btn-sm m-1" data-toggle="modal" data-target="#editCategoryModal{{$plo->pl_outcome_id}}">
+                                                            <button type="button" style="width:60px;" class="btn btn-secondary btn-sm m-1" data-toggle="modal" data-target="#editPLOModal{{$plo->pl_outcome_id}}">
                                                                 Edit
                                                             </button>
 
@@ -391,7 +394,7 @@
 
 
                                                     <!-- Edit PLO Modal -->
-                                                    <div class="modal fade" id="editPLOModal{{$plo->pl_outcome_id}}" tabindex="-1" role="dialog" aria-labelledby="editPLOModalLabel" aria-hidden="true">
+                                                    <div class="modal fade" id="editPLOModal{{$plo->pl_outcome_id}}" tabindex="-1" role="dialog" aria-labelledby="editPLOModal{{$plo->pl_outcome_id}}" aria-hidden="true">
                                                         <div class="modal-dialog modal-lg" role="document">
                                                             <div class="modal-content">
                                                                 <div class="modal-header">
@@ -411,8 +414,7 @@
                                                                                         <label for="plo" class="col-md-4 col-form-label text-md-right">Program Learning Outcome</label>
 
                                                                                         <div class="col-md-8">
-                                                                                            <textarea id="plo" class="form-control" @error('plo') is-invalid @enderror rows="3" name="plo" required autofocus>{{$plo->pl_outcome}}
-                                                                                            </textarea>
+                                                                                            <textarea id="plo" class="form-control" @error('plo') is-invalid @enderror rows="3" name="plo" required autofocus>{{$plo->pl_outcome}}</textarea>
 
                                                                                             @error('plo')
                                                                                                 <span class="invalid-feedback" role="alert">
@@ -478,7 +480,7 @@
                                                         </td>
                                                         <td class="text-center align-middle">
                                                 
-                                                            <button type="button" style="width:60px;" class="btn btn-secondary btn-sm m-1" data-toggle="modal" data-target="#editCategoryModal{{$plo->pl_outcome_id}}">
+                                                            <button type="button" style="width:60px;" class="btn btn-secondary btn-sm m-1" data-toggle="modal" data-target="#editPLOModal{{$plo->pl_outcome_id}}">
                                                                 Edit
                                                             </button>
 
@@ -542,8 +544,7 @@
                                                                                         <label for="plo" class="col-md-4 col-form-label text-md-right">Program Learning Outcome</label>
 
                                                                                         <div class="col-md-8">
-                                                                                            <textarea id="plo" class="form-control" @error('plo') is-invalid @enderror rows="3" name="plo" required autofocus>{{$plo->pl_outcome}}
-                                                                                            </textarea>
+                                                                                            <textarea id="plo" class="form-control" @error('plo') is-invalid @enderror rows="3" name="plo" required autofocus>{{$plo->pl_outcome}}</textarea>
 
                                                                                             @error('plo')
                                                                                                 <span class="invalid-feedback" role="alert">
@@ -592,9 +593,6 @@
                         </div>
 
                         <div class="card-footer p-3">
-                            <button type="button" class="btn bg-primary text-white btn-sm col-2 float-right" data-toggle="modal" data-target="#addPLOModal">
-                                <i class="bi bi-plus pr-2"></i>Add PLO
-                            </button>
 
                             <!-- Add PLO Modal -->
                             <div class="modal fade" id="addPLOModal" tabindex="-1" role="dialog"
@@ -617,9 +615,7 @@
                                                     <label for="plo" class="col-md-4 col-form-label text-md-right">Program Learning Outcome</label>
 
                                                     <div class="col-md-8">
-                                                        <textarea id="plo" class="form-control" @error('plo') is-invalid @enderror rows="3" name="plo" required autofocus
-                                                        placeholder="Illustrate...">
-                                                        </textarea>
+                                                        <textarea id="plo" class="form-control" @error('plo') is-invalid @enderror rows="3" name="plo" required autofocus placeholder="Illustrate..."></textarea>
 
                                                         @error('plo')
                                                         <span class="invalid-feedback" role="alert">
@@ -634,7 +630,7 @@
 
                                                     <div class="col-md-8">
                                                         <input id="title" type="text" class="form-control @error('title') is-invalid @enderror" name="title" autofocus
-                                                        placeholder="Integrate...">
+                                                        placeholder="Eg. Citing Sources or Scientific Method...">
 
                                                         @error('title')
                                                         <span class="invalid-feedback" role="alert">
@@ -655,7 +651,7 @@
                                                         <div class="col-md-8">
 
                                                             <select class="custom-select" name="category" id="category" required autofocus>
-                                                                <option selected hidden disabled>Choose...</option>
+                                                                <option value="" disabled selected>Choose...</option>
                                                                 @foreach($ploCategories as $c)
                                                                     <option value="{{$c->plo_category_id}}">{{$c->plo_category}}</option>
                                                                 @endforeach
