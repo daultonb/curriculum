@@ -22,6 +22,8 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Optional_priorities;
 use App\Models\Standard;
 use App\Models\StandardScale;
+use App\Models\StandardsOutcomeMap;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
 class CourseWizardController extends Controller
@@ -234,7 +236,6 @@ class CourseWizardController extends Controller
 
         $l_outcomes = LearningOutcome::where('course_id', $course_id)->get();
         $pl_outcomes = ProgramLearningOutcome::where('program_id', $course->program_id)->get();
-        // $mappingScales = MappingScale::where('program_id', $course->program_id)->get();
         $mappingScales = MappingScale::join('mapping_scale_programs', 'mapping_scales.map_scale_id', "=", 'mapping_scale_programs.map_scale_id')
                             ->where('mapping_scale_programs.program_id', $course->program_id)->get();
 
@@ -392,7 +393,11 @@ class CourseWizardController extends Controller
                                 ->select('standards_outcome_maps.map_scale_value','standards_outcome_maps.standard_id','standards.s_outcome','standards_outcome_maps.l_outcome_id', 'learning_outcomes.l_outcome')
                                 ->where('learning_outcomes.course_id','=',$course_id)->get();
         // get standards outcome map
-        //$standardsOutcomeMap='';
+        $standardsOutcomeMap = DB::table('standards')
+                                ->leftJoin('standards_outcome_maps', 'standards.standard_id', '=', 'standards_outcome_maps.standard_id')
+                                ->leftJoin('learning_outcomes', 'standards_outcome_maps.l_outcome_id', '=', 'learning_outcomes.l_outcome_id')
+                                ->select('standards_outcome_maps.map_scale_value','standards_outcome_maps.standard_id','standards.s_outcome','standards_outcome_maps.l_outcome_id', 'learning_outcomes.l_outcome')
+                                ->where('learning_outcomes.course_id','=',$course_id)->get();
 
         $pl_outcomes = ProgramLearningOutcome::where('program_id', $course->program_id)->get();
 

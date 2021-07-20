@@ -18,38 +18,37 @@ class CourseProgramController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function addCoursesToProgram(Request $request){
-
         $this->validate($request, [
             'program_id' => 'required',
             ]);
         
+        
         $programId = $request->input('program_id');
         // if courseIds is null, use an empty array 
-        if (!$courseIds = $request->input('course_id'))
+        if (!$courseIds = $request->input('selectedCourses'))
             $courseIds = array();
 
         $numCoursesAddedSuccessfully = 0; 
-        // get all courses that currently belong to this program
-        $currentProgramCourseIds = Program::find($programId)->courses()->pluck('course_programs.course_id');
 
-        foreach ($currentProgramCourseIds as $currentProgramCourseId) {
-            if (!in_array(strval($currentProgramCourseId), $courseIds)) {
-                // delete course program record for the courses that were removed from this program
-                CourseProgram::where([
-                    ['course_id', $currentProgramCourseId],
-                    ['program_id', $programId],
-                ])->delete();
-            }            
-        }
+        // // get all courses that currently belong to this program
+        // $currentProgramCourseIds = Program::find($programId)->courses()->pluck('course_programs.course_id');
+        // foreach ($currentProgramCourseIds as $currentProgramCourseId) {
+        //     if (!in_array(strval($currentProgramCourseId), $courseIds)) {
+        //         // delete course program record for the courses that were removed from this program
+        //         CourseProgram::where([
+        //             ['course_id', $currentProgramCourseId],
+        //             ['program_id', $programId],
+        //         ])->delete();
+        //     }            
+        // }
 
         // update or create a programCourse for each course
         foreach ($courseIds as $index => $courseId) {
-
             $isCourseRequired = $request->input('require'.$courseId);
             // if a courseProgram with course_id and program_id exists then update course_required field else create a new courseProgram record
             CourseProgram::updateOrCreate(
                 ['course_id' => $courseId, 'program_id' => $programId], 
-                ['course_required' => $isCourseRequired]
+                ['course_required' => ($isCourseRequired) ? 1 : 0]
             );
             $numCoursesAddedSuccessfully++;
 
