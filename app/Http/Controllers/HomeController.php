@@ -109,10 +109,7 @@ class HomeController extends Controller
             ]);
 
         $course = new Course;
-<<<<<<< HEAD
-        //$course->program_id = $request->input('program_id');
-=======
->>>>>>> from-parent
+
         $course->course_title = $request->input('course_title');
         $course->course_num = $request->input('course_num');
         $course->course_code =  strtoupper($request->input('course_code'));

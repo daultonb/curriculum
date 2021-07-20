@@ -265,7 +265,7 @@ class CourseCrudController extends CrudController
             'name' => 'scale_category_id', // The db column name
             'label' => "Standards Scale<br>Category", // Table column heading
             'type' => 'select',
-            'entity' => 'scaleCategories', // the method that defines the relationship in your Model
+            'entity' => 'scalesCategory', // the method that defines the relationship in your Model
         
             'attribute' => "name", // foreign key attribute that is shown to user (identifiable attribute)
 
