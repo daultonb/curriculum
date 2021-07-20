@@ -119,10 +119,13 @@
     @push('crud_fields_styles')
         <!-- accordion css-->
          <style>
-            h4 a:visited{
+             .crudribbon{
+                 color:rgb(255, 255, 255,1.0);
+             }
+            h4.crudribbon a:visited{
                 color:white !important;
             }
-            h4 a:link{
+            h4.crudribbon a:link{
                 color:white !important;
             }
         </style>

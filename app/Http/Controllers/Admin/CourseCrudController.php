@@ -464,7 +464,7 @@ class CourseCrudController extends CrudController
             $buttonClass1 = "margin:0;padding:.5em;border:2px outset rgba(255, 255, 255,1.0);background-color:rgba(12, 35, 68,1.0);"; //dark ubc blue
             $buttonClass2 = "margin:5px 15px;padding:.5em;border:2px outset rgba(12, 35, 68,1.0);background-color:rgba(0, 85, 183,1.0);"; //deep blue
             $textClass2 = "color:rgb(151, 212, 233,1.0)"; //light blue
-            $textClass1 = "color:rgb(255, 255, 255,1.0)"; //white
+           // $textClass1 = "color:rgb(255, 255, 255,1.0)"; //white
             
             $custHTML = "<div><label>Program Objective Mapping</label>";           
             //standards are roughly analogous to program outcomes, but there is one standard category per course. 
@@ -483,7 +483,7 @@ class CourseCrudController extends CrudController
             
             foreach ($Progs as $program){ 
                 $PFunc = $accFoo1."plomap_".$program->program_id.$accFoo2;
-                $custHTML .= "<div $PFunc><div style=\"$buttonClass1\"><h3 style=\"$textClass1\">$program->program</h3></div></div>"
+                $custHTML .= "<div $PFunc><div style=\"$buttonClass1\"><h3 class=\"crudribbon\">$program->program</h3></div></div>"
                            . "<table id=\"plomap_$program->program_id\" class=\"table table-sm table-striped m-b-0\" hidden>";
                 $PLOs = DB::table('program_learning_outcomes')->where('program_id', $program->program_id)->get();
                 $OCmaps = DB::table('outcome_maps')->whereIn('l_outcome_id', $setOfCLO)->get();
@@ -551,10 +551,10 @@ class CourseCrudController extends CrudController
                 $standId = $crs->first()->standard_category_id;
                 $scaleCat = DB::table('standards_scale_categories')->where('scale_category_id', $scaleId)->get()->first();
                 $standardsCat = DB::table('standard_categories')->where('standard_category_id', $standId)->get()->first();               
-                $MScales = DB::table('standard_scales')->where('scale_category_id', $scaleId)->get();
+                $MScales = DB::table('standard_scales')->where('scale_category_id', $scaleId)->orderBy('standard_scale_id', 'asc')->get();
                 $standards =  DB::table('standards')->where('standard_category_id',$standId)->get();
                 $PFunc = $accFoo1."minmap"."".$accFoo2;
-                $custHTML .= "<div $PFunc><div class=\"accBar\" style=\"$buttonClass1\"><h3 style=\"$textClass1\">$standardsCat->sc_name (using $scaleCat->name)</h3></div></div>"
+                $custHTML .= "<div $PFunc><div class=\"accBar\" style=\"$buttonClass1\"><h3 class=\"crudribbon\">$standardsCat->sc_name (using $scaleCat->name)</h3></div></div>"
                            . "<table id=\"minmap\" class=\"table table-sm table-striped m-b-0\" hidden>";
                 $msStr = "";
                 foreach($MScales as $scale)$msStr .= "<th title=\"".$scale->description."\">". $scale->abbreviation."</th>";
@@ -617,12 +617,12 @@ class CourseCrudController extends CrudController
             $custHTML = "<div><label>Optional Priorities</label>";  
             foreach($setCat as $cat){
                 $catFunc = $accFoo1."category_".$cat->cat_id.$accFoo2;
-                $custHTML .= "<div $catFunc><div style=\"$buttonClass1\"><h3 style=\"$textClass1\">$cat->cat_name</h3></div></div><div id=\"category_".$cat->cat_id."\"  hidden>";
+                $custHTML .= "<div $catFunc><div style=\"$buttonClass1\"><h3 class=\"crudribbon\">$cat->cat_name</h3></div></div><div id=\"category_".$cat->cat_id."\"  hidden>";
                 //create header for cat
                 $setSubCat = DB::table('optional_priority_subcategories')->where('cat_id', $cat->cat_id)->get();
                 foreach($setSubCat as $subcat){
                     $subcatFunc = $accFoo1."subcategory_".$subcat->subcat_id.$accFoo2;                            
-                    $custHTML .= "<div $subcatFunc><div style=\"$buttonClass2\"><h4 style=\"$textClass1\">$subcat->subcat_name</h4></div></div>"
+                    $custHTML .= "<div $subcatFunc><div style=\"$buttonClass2\"><h4 class=\"crudribbon\" >$subcat->subcat_name</h4></div></div>"
                             . "<table id=\"subcategory_".$subcat->subcat_id."\" class=\"table table-sm table-striped m-b-0\"  hidden>";                              
                     //create header for subcat
                     $scop = DB::table('optional_priorities')->where('subcat_id',$subcat->subcat_id)->get();
