@@ -25,7 +25,7 @@
 
                     @else
 
-                        <h6 class="card-subtitle mb-4 text-muted lh-lg">
+                        <h6 class="card-subtitle mb-4 lh-lg">
                             Now that you have inputted your course information, you are ready to map it to program learning outcomes (PLOs). Using the mapping scale provided by each program, identify the alignment between each of your course learning outcomes (CLOs) and PLOs.                        
                         </h6>
                         
@@ -33,7 +33,10 @@
                         <div class="jumbotron">
                             @if (count($coursePrograms) < 1)
                                 <div class="alert alert-warning text-center">
-                                    <i class="bi bi-exclamation-circle-fill pr-2 fs-5"></i>This course does not belong to any programs yet.                    
+                                    <i class="bi bi-exclamation-circle-fill pr-2 fs-3"></i>
+                                    <br>
+                                    <p>This course does not belong to any programs yet. Please move ahead to the next step.</p>
+                                    <p>If you would like to define program learning outcomes to map this course, please create a program first. <a class="alert-link" href="{{route('home')}}">Create a Program.</a></p>
                                 </div>
                                 
                             @else
@@ -193,10 +196,10 @@
                 <div class="card-footer">
                     <div class="card-body mb-4">
                         <a href="{{route('courseWizard.step4', $course->course_id)}}">
-                            <button class="btn btn-sm btn-primary col-3 float-left"><i class="bi bi-arrow-left mr-2"></i> Course Outcome Mapping</button>
+                            <button class="btn btn-sm btn-primary col-3 float-left"><i class="bi bi-arrow-left mr-2"></i> Course Alignment</button>
                         </a>
                         <a href="{{route('courseWizard.step6', $course->course_id)}}">
-                            <button class="btn btn-sm btn-primary col-3 float-right">Ministry Standards Mapping <i class="bi bi-arrow-right ml-2"></i></button>
+                            <button class="btn btn-sm btn-primary col-3 float-right">Standards and Strategic Priorities<i class="bi bi-arrow-right ml-2"></i></button>
                         </a>
                     </div>
                 </div>            

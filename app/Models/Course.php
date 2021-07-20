@@ -41,7 +41,7 @@ class Course extends Model
         return $this->belongsToMany(Program::class, 'course_programs', 'course_id', 'program_id');
     }
 
-    public function scaleCategories() {
+    public function scalesCategory() {
         return $this->belongsTo(StandardsScaleCategory::class, 'scale_category_id', 'scale_category_id');
     }
 

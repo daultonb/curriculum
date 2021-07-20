@@ -13,6 +13,6 @@ class PLOCategory extends Model
 
     public function plos()
     {
-        return $this->hasMany('App\Models\ProgramLearningOutcome');
+        return $this->hasMany(ProgramLearningOutcome::class, 'plo_category_id', 'plo_category_id');
     }
 }

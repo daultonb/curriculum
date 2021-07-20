@@ -7,15 +7,16 @@
             @include('courses.wizard.header')
 
             <div class="card">
-
-                <h3 class="card-header wizard" >
-                    Course Learning Outcomes
-                </h3>
-
+                <div class="card-header wizard" >
+                    <h3>
+                        Course Learning Outcomes (CLOs)
+                        
+                    </h3>
+                </div>
 
                 <div class="card-body">
 
-                    <h6 class="card-subtitle mb-4 text-muted lh-lg">
+                    <h6 class="card-subtitle mb-4 lh-lg">
                         Input the <a href="https://ctl.ok.ubc.ca/teaching-development/classroom-practices/learning-outcomes/" target="_blank"><i class="bi bi-box-arrow-up-right"></i> course learning outcomes (CLOs)</a> or <a href="https://sph.uth.edu/content/uploads/2012/01/Competencies-and-Learning-Objectives.pdf" target="_blank"><i class="bi bi-box-arrow-up-right"></i> competencies</a> of the course individually.
                         <strong>It is recommended that a course has 5-7 CLOs maximum</strong>.                    
                     </h6>
@@ -29,9 +30,10 @@
                                             <i class="bi bi-exclamation-circle-fill"></i>There are no course learning outcomes set for this course.                    
                                         </div>
                                     @else
-                                        <table class="table table-light table-bordered align-middle" >
+                                        <table class="table table-light table-bordered" >
                                             <tr class="table-primary">
-                                                <th colspan="2">Course Learning Outcomes or Competencies</th>
+                                                <th>Course Learning Outcomes or Competencies</th>
+                                                <th class="text-center w-25">Actions</th>
                                             </tr>
 
                                                 @foreach($l_outcomes as $l_outcome)
@@ -41,43 +43,15 @@
                                                         <b>{{$l_outcome->clo_shortphrase}}</b><br>
                                                         {{$l_outcome->l_outcome}}
                                                     </td>
-                                                    <td width="250px" >
-                                                        <button style="width:60px;margin-left:10px;" type="button" class="btn btn-danger btn-sm btn btn-danger btn-sm float-right "
-                                                        data-toggle="modal" data-target="#CLOdeleteConfirmation{{$l_outcome->l_outcome_id}}">
-                                                        Delete</button>
+                                                    <td class="text-center align-middle">
 
-                                                        <!-- Delete Confirmation Modal -->
-                                                        <div class="modal fade" id="CLOdeleteConfirmation{{$l_outcome->l_outcome_id}}" tabindex="-1" role="dialog" aria-labelledby="CLOdeleteConfirmation" aria-hidden="true">
-                                                            <div class="modal-dialog" role="document">
-                                                                <div class="modal-content">
-                                                                    <div class="modal-header">
-                                                                        <h5 class="modal-title" id="CLOdeleteConfirmation">Delete Confirmation</h5>
-                                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                            <span aria-hidden="true">&times;</span>
-                                                                        </button>
-                                                                    </div>
-
-                                                                    <div class="modal-body">
-                                                                    Are you sure you want to delete {{$l_outcome->l_outcome}}
-                                                                    </div>
-
-                                                                    <form class="float-right ml-2" action="{{route('lo.destroy', $l_outcome->l_outcome_id)}}" method="POST">
-                                                                        @csrf
-                                                                        {{method_field('DELETE')}}
-                                                                        <input type="hidden" name="course_id" value="{{$course->course_id}}">
-
-                                                                        <div class="modal-footer">
-                                                                            <button style="width:60px" type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Cancel</button>
-                                                                            <button style="width:60px;" type="submit" class="btn btn-danger btn-sm ">Delete</button>
-                                                                        </div>
-
-                                                                    </form>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-
-                                                        <button type="button" style="width:60px;" class="btn btn-secondary btn-sm float-right" data-toggle="modal" data-target="#editLearningOutcomeModal{{$l_outcome->l_outcome_id}}">
+                                                        <button type="button" style="width:60px;" class="btn btn-secondary btn-sm m-1" data-toggle="modal" data-target="#editLearningOutcomeModal{{$l_outcome->l_outcome_id}}">
                                                             Edit
+                                                        </button>
+
+                                                        <button style="width:60px;" type="button" class="btn btn-danger btn-sm btn btn-danger btn-sm m-1"
+                                                        data-toggle="modal" data-target="#CLOdeleteConfirmation{{$l_outcome->l_outcome_id}}">
+                                                            Delete
                                                         </button>
 
                                                         <!-- Bloom’s Taxonomy of Learning Modal -->
@@ -123,7 +97,7 @@
 
                                                                                 <div class="col-md-8">
                                                                                     <input id="title" type="text" class="form-control @error('title') is-invalid @enderror"
-                                                                                    name="title" autofocus placeholder="Experiment..." value={{$l_outcome->clo_shortphrase}}>
+                                                                                    name="title" autofocus placeholder="Experiment..." value="{{$l_outcome->clo_shortphrase}}">
 
                                                                                     @error('title')
                                                                                     <span class="invalid-feedback" role="alert">
@@ -209,23 +183,50 @@
                                                             </div>
                                                         </div>
 
+                                                        <!-- Delete Confirmation Modal -->
+                                                        <div class="modal fade" id="CLOdeleteConfirmation{{$l_outcome->l_outcome_id}}" tabindex="-1" role="dialog" aria-labelledby="CLOdeleteConfirmation" aria-hidden="true">
+                                                            <div class="modal-dialog" role="document">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <h5 class="modal-title" id="CLOdeleteConfirmation">Delete Confirmation</h5>
+                                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                            <span aria-hidden="true">&times;</span>
+                                                                        </button>
+                                                                    </div>
+
+                                                                    <div class="modal-body">
+                                                                    Are you sure you want to delete {{$l_outcome->l_outcome}}
+                                                                    </div>
+
+                                                                    <form class="float-right ml-2" action="{{route('lo.destroy', $l_outcome->l_outcome_id)}}" method="POST">
+                                                                        @csrf
+                                                                        {{method_field('DELETE')}}
+                                                                        <input type="hidden" name="course_id" value="{{$course->course_id}}">
+
+                                                                        <div class="modal-footer">
+                                                                            <button style="width:60px" type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Cancel</button>
+                                                                            <button style="width:60px;" type="submit" class="btn btn-danger btn-sm ">Delete</button>
+                                                                        </div>
+
+                                                                    </form>
+                                                                </div>
+                                                            </div>
+                                                        </div>
 
                                                     </td>
                                                 </tr>
                                                 @endforeach
                                         </table>
-                                    @endif
-                                
+                                    @endif      
                             </div>
-
                         </div>
                     </div>
-
-                    <button type="button" class="btn btn-primary btn-sm col-2 mt-2 float-left" data-toggle="modal" data-target="#addLearningOutcomeModal" style="margin-left: 10px">
-                        ＋ Add Course Learning Outcome
-                    </button>
-
-                    <!-- Bloom’s Taxonomy of Learning Modal -->
+                    <div class="card-body">
+                        <button type="button" class="btn btn-primary col-2 float-right bg-primary text-white"  data-toggle="modal" data-target="#addLearningOutcomeModal">
+                            <i class="bi bi-plus mr-2"></i>Add CLO
+                        </button>
+                    </div>
+                    <!-- Add CLO Modal: Bloom’s Taxonomy of Learning Modal -->
                     <div class="modal fade" id="addLearningOutcomeModal" tabindex="-1" role="dialog"
                         aria-labelledby="addLearningOutcomeModalLabel" aria-hidden="true">
                         <div class="modal-dialog modal-lg" role="document">
@@ -286,8 +287,9 @@
                                                     <p style="margin-top: 25px;margin-left:4px;margin-right:4px;">A well-written learning outcome states what students are expected to <span style="font-style: italic;">know, be able to do, or care about</span>, after successfully completing the course/program. Such statements begin with one measurable verb.</p>
                                                     <p>The below are examples of verbs associated with different levels of Bloom’s Taxonomy of Learning.</p>
                                                 </div>
-
-                                                <div class="flex-container">
+                                                <img class="img-fluid" src=" {{ asset('img/blooms-taxonomy-diagram.png') }}"/>
+                                                <!-- Bloom's Taxonomy Image -->
+                                                <!-- <div class="flex-container ">
                                                     <div class="box" style="background-color: #e8f4f8;">
                                                         <strong>REMEMBER</strong>
                                                         <p>Retrieve relevant knowledge from long-term memory</p>
@@ -331,12 +333,14 @@
                                                     <div class="box">
                                                         <p class="CLO_example">Example: compile，compose，construct，design，develop，formulate，generate，hypothesize，integrate，modify，plan，produce</p>
                                                     </div>
-                                                </div>
-
+                                                </div> -->
+                                                <!-- End of Bloom's Taxonomy Image -->
                                                 <small>
                                                     Source: Anderson, L. W., Krathwohl, D. R., & Bloom, B. S. (2001). A taxonomy for learning, teaching, and assessing: A revision of bloom's taxonomy of educational objectives (Abridged ed.). New York: Longman.
                                                 </small>
+
                                             </div>
+
 
                                         </div>
 
@@ -351,7 +355,7 @@
                             </div>
                         </div>
                     </div>
-
+                    <!-- End of Add CLO Modal -->
                 </div>
 
                 <!-- card footer -->

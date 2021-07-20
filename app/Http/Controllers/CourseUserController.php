@@ -68,9 +68,10 @@ class CourseUserController extends Controller
             ['course_id' => $course_id , 'user_id' => $user->id ]
         );
 
+        //dd($user);
 
         if($course->save()){
-            Mail::to($user->email)->send(new NotifyInstructorMail());
+            Mail::to($user->email)->send(new NotifyInstructorMail($course->course_code, $course->course_num, $course->course_title, $user->name));
 
             $request->session()->flash('success', 'Course '.$course->course_code.''.$course->course_num.' successfully assigned to '.$user->email);
         }else{
@@ -80,11 +81,11 @@ class CourseUserController extends Controller
         //$course->save();
 
 
-        if($course->type == "assigned"){
-            return redirect()->route('programWizard.step3', $request->input('program_id'));
-        }else{
+        //if($course->type == "assigned"){
+        //    return redirect()->route('programWizard.step3', $request->input('program_id'));
+        //}else{
             return redirect()->back();
-        }
+        //}
 
 
     }

@@ -15,5 +15,6 @@ class OutcomeMap extends Pivot
     
     protected $table = 'outcome_maps';
 
+    public $table = 'outcome_maps';
     public $incrementing = false;
 }

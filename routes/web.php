@@ -34,10 +34,18 @@ Route::get('/about', 'AboutController@index')->name('about');
 Route::get('/faq', 'FAQController@index')->name('FAQ');
 Route::get('/terms', 'TermsController@index')->name('terms');
 
-
-Route::get('/syllabusGenerator', 'SyllabusController@index')->name('syllabus');
-Route::post('/syllabusGenerator/word','SyllabusController@WordExport')->name('syllabus.word');
-Route::get('/syllabusGenerator/course','SyllabusController@getCourseInfo');
+// route to view a syllabus
+Route::get('/syllabusGenerator/{syllabusId?}', 'SyllabusController@index')->name('syllabus');
+// route to save a syllabus
+Route::post('/syllabusGenerator/{syllabusId?}', 'SyllabusController@save')->name('syllabus.save');
+// route to import course info into a syllabus
+Route::get('/syllabusGenerator/import/course','SyllabusController@getCourseInfo');
+// route to delete a syllabus
+Route::delete('/syllabusGenerator/{syllabusId}', 'SyllabusController@destroy')->name('syllabus.delete');
+// route to assign a syllabus collaborator
+Route::post('/syllabi/{syllabusId}/assign','SyllabusUserController@store')->name('syllabus.assign');
+// route to unassign a syllabus collaborator
+Route::delete('/syllabi/{syllabusId}/unassign', 'SyllabusUserController@destroy')->name('syllabus.unassign');
 
 Route::resource('/programs','ProgramController');
 Route::get('/programs/{program}/submit','ProgramController@submit')->name('programs.submit');
@@ -52,7 +60,6 @@ Route::get('/courses/{course}/summary','CourseController@show')->name('courses.s
 Route::post('/courses/{course}/outcomeDetails','CourseController@outcomeDetails')->name('courses.outcomeDetails');
 Route::get('/courses/{course}/pdf','CourseController@pdf')->name('courses.pdf');
 Route::get('/courses/{course}/remove','CourseController@removeFromProgram')->name('courses.remove');
-
 
 Route::resource('/lo','LearningOutcomeController')->only(['store','update','edit', 'destroy']);
 
@@ -70,8 +77,7 @@ Route::resource('/outcomeMap','OutcomeMapController');
 Route::resource('/standardsOutcomeMap', 'StandardsOutcomeMapController');
 
 Route::resource('/mappingScale','MappingScaleController');
-Route::post('/mappingScale/default','MappingScaleController@default')->name('mappingScale.default');
-Route::post('/mappingScale/default2','MappingScaleController@default2')->name('mappingScale.default2');
+Route::post('/mappingScale/addDefaultMappingScale','MappingScaleController@addDefaultMappingScale')->name('mappingScale.addDefaultMappingScale');
 
 Route::resource('/ploCategory','PLOCategoryController');
 
@@ -115,9 +121,5 @@ Route::get('/construction', function () {
 Route::get('/email','AdminEmailController@index')->name('email');
 Route::post('/email', 'AdminEmailController@send')->name('email.send');
 
-// Route to for mapping Courses to PLO's
-Route::get('/courseMap/{course}/{program}', 'CourseMapController@index')->name('map.index');
-
-Route::get('/ploMap/{course}/{program}', 'PLOCLOMapController@index')->name('ploclomap.index');
-
 Auth::routes();
+

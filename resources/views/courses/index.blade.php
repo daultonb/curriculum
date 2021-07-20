@@ -155,7 +155,7 @@
                                     name="delivery_modality" required autofocus>
                                         <option value="O">online</option>
                                         <option value="I">in-person</option>
-                                        <option value="B">blended</option>
+                                        <option value="B">Hybrid</option>
 
                                     @error('delivery_modality')
                                     <span class="invalid-feedback" role="alert">
