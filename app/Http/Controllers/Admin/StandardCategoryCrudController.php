@@ -131,4 +131,17 @@ class StandardCategoryCrudController extends CrudController
 
         ]);
     }
+    
+     use \Backpack\CRUD\app\Http\Controllers\Operations\DeleteOperation { destroy as traitDestroy; }
+
+    public function destroy($id)
+    {
+        $this->crud->hasAccessOrFail('delete');
+        //delete all children starting with the leafmost objects. they have to be accessed using the id's of their parent records however (either the cloID or the courseID in this case)
+        $scID = filter_input(INPUT_SERVER,'PATH_INFO');        
+        $scID = explode("/",$scID)[3];
+        $r = DB::table('standards')->where('standard_category_id', '=', $scID)->delete();
+        //this deletes the course record itself.
+        return $this->crud->delete($id);
+    }
 }

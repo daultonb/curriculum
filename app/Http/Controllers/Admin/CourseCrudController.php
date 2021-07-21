@@ -731,4 +731,29 @@ class CourseCrudController extends CrudController
          ]);        
     }
     
+    use \Backpack\CRUD\app\Http\Controllers\Operations\DeleteOperation { destroy as traitDestroy; }
+
+    public function destroy($id)
+    {
+        $this->crud->hasAccessOrFail('delete');
+        //delete all children starting with the leafmost objects. they have to be accessed using the id's of their parent records however (either the cloID or the courseID in this case)
+        $crsID = filter_input(INPUT_SERVER,'PATH_INFO');        
+        $crsID = explode("/",$crsID)[3];
+        //first get the relevant ids
+        $CLOs =  \App\Models\LearningOutcome::where('course_id', '=', $crsID)->get();        
+        $setOfCLO = [];
+        foreach($CLOs as $clo)array_push($setOfCLO,$clo->l_outcome_id);        
+        //deleting records
+        $r = DB::table('outcome_maps')->whereIn('l_outcome_id', $setOfCLO)->delete();
+        $r = DB::table('outcome_assessments')->whereIn('l_outcome_id',  $setOfCLO)->delete();
+        $r = DB::table('outcome_activities')->whereIn('l_outcome_id',  $setOfCLO)->delete();
+        $r = DB::table('standards_outcome_maps')->whereIn('l_outcome_id', $setOfCLO)->delete();  
+        $r = DB::table('course_optional_priorities')->where('course_id', $crsID)->delete();  
+        $r = DB::table('assessment_methods')->where('course_id', '=', $crsID)->delete();
+        $r = DB::table('learning_activities')->where('course_id', '=', $crsID)->delete();
+        $r = DB::table('course_programs')->where('course_id', '=', $crsID)->delete();
+        $r = DB::table('course_users')->where('course_id', '=', $crsID)->delete();
+        //this deletes the course record itself.
+        return $this->crud->delete($id);
+    }
 }

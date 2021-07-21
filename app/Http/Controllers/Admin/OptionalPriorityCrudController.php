@@ -234,5 +234,13 @@ class OptionalPriorityCrudController extends CrudController
         ]);
 
     }
+    
+     use \Backpack\CRUD\app\Http\Controllers\Operations\DeleteOperation { destroy as traitDestroy; }
+
+    public function destroy($id)
+    {
+        $this->crud->hasAccessOrFail('delete');        
+        return $this->crud->delete($id);
+    }
 
 }
