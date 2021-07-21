@@ -351,7 +351,7 @@
                                                     </tbody>
                                                 </table>
 
-                                                <h6 class="fw-bold mt-4 mb-4"><a href="https://aboriginal-2018.sites.olt.ubc.ca/files/2020/09/UBC.ISP_C2V13.1_Spreads_Sept1.pdf" target="_blank"><i class="bi bi-box-arrow-up-right"></i>
+                                                <h6 class="fw-bold mt-4 mb-4"><a href="https://indigenous.ubc.ca/indigenous-engagement/indigenous-strategic-plan/" target="_blank"><i class="bi bi-box-arrow-up-right"></i>
                                                 UBC's Indigenous Strategic Plan (2020)
                                                 </h6></a>
 
