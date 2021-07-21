@@ -239,11 +239,12 @@ class CourseCrudController extends CrudController
         
          $this->crud->addField([   // radio
             'name'        => 'type', // the name of the db column
-            'label'       => 'Type?', // the input label
+            'label'       => 'Assigned to instructor?', // the input label
             'type'        => 'radio',
             'options'     => [
                 // the key will be stored in the db, the value will be shown as label; 
-                'unassigned' => "Unassigned",               
+                'unassigned' => "Unassigned", 
+                'assigned' => "Assigned",
             ],
             // optional
             'inline'      => true, // show the radios all on the same line?
