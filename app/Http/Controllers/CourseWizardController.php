@@ -10,6 +10,7 @@ use App\Models\User;
 use App\Models\ProgramLearningOutcome;
 use App\Models\Course;
 use App\Models\LearningOutcome;
+use App\Models\OutcomeMap;
 use App\Models\AssessmentMethod;
 use App\Models\Custom_assessment_methods;
 use App\Models\Custom_learning_activities;
@@ -23,6 +24,8 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Optional_priorities;
 use App\Models\Standard;
 use App\Models\StandardScale;
+use App\Models\StandardsOutcomeMap;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
 class CourseWizardController extends Controller
@@ -235,7 +238,6 @@ class CourseWizardController extends Controller
 
         $l_outcomes = LearningOutcome::where('course_id', $course_id)->get();
         $pl_outcomes = ProgramLearningOutcome::where('program_id', $course->program_id)->get();
-        // $mappingScales = MappingScale::where('program_id', $course->program_id)->get();
         $mappingScales = MappingScale::join('mapping_scale_programs', 'mapping_scales.map_scale_id', "=", 'mapping_scale_programs.map_scale_id')
                             ->where('mapping_scale_programs.program_id', $course->program_id)->get();
 
@@ -283,18 +285,14 @@ class CourseWizardController extends Controller
             $optional_priorities[] = OptionalPriorities::where('subcat_id', $i)->pluck('optional_priority')->toArray();
         }
 
-        $optional_PLOs = OptionalPriorities::where('course_id', $course_id)->get();
-
-        $temp = array();
-        foreach($optional_PLOs as $plo) {
-            $temp[] = $plo->custom_PLO;
-        }
-        $optional_PLOs = $temp;
+        $learning_outcomes_l_outcome_ids = LearningOutcome::where('course_id', 1)->pluck('l_outcome_id')->toArray();
+        $outcome_maps_pl_outcome_ids = OutcomeMap::whereIn('l_outcome_id', $learning_outcomes_l_outcome_ids)->pluck('pl_outcome_id')->toArray();
+        $optional_PLOs = ProgramLearningOutcome::whereIn('pl_outcome_id', $outcome_maps_pl_outcome_ids)->pluck('plo_shortphrase')->toArray();
 
         return view('courses.wizard.step6')->with('l_outcomes', $l_outcomes)->with('course', $course)->with('mappingScales', $mappingScales)->with('courseUsers', $courseUsers)->with('user', $user)
                                         ->with('lo_count',$lo_count)->with('am_count', $am_count)->with('la_count', $la_count)->with('oAct', $oAct)->with('oAss', $oAss)->with('outcomeMapsCount', $outcomeMapsCount)
                                         ->with('bc_labour_market',$optional_priorities[1])->with('shaping_ubc',$optional_priorities[2])->with('ubc_mandate_letters',$optional_priorities[0])->with('okanagan_2040_outlook',$optional_priorities[3])
-                                        ->with('ubc_indigenous_plan',$optional_priorities[4])->with('ubc_climate_priorities',$optional_priorities[5])->with('shaping_ubc_link',$shaping_ubc_link)->with('optional_PLOs',$optional_PLOs)
+                                        ->with('ubc_indigenous_plan',$optional_priorities[4])->with('ubc_climate_priorities',$optional_priorities[5])->with('optional_PLOs',$optional_PLOs)
                                         ->with('standard_outcomes', $standard_outcomes);
     }
     
@@ -366,7 +364,11 @@ class CourseWizardController extends Controller
                                 ->select('standards_outcome_maps.map_scale_value','standards_outcome_maps.standard_id','standards.s_outcome','standards_outcome_maps.l_outcome_id', 'learning_outcomes.l_outcome')
                                 ->where('learning_outcomes.course_id','=',$course_id)->get();
         // get standards outcome map
-        //$standardsOutcomeMap='';
+        $standardsOutcomeMap = DB::table('standards')
+                                ->leftJoin('standards_outcome_maps', 'standards.standard_id', '=', 'standards_outcome_maps.standard_id')
+                                ->leftJoin('learning_outcomes', 'standards_outcome_maps.l_outcome_id', '=', 'learning_outcomes.l_outcome_id')
+                                ->select('standards_outcome_maps.map_scale_value','standards_outcome_maps.standard_id','standards.s_outcome','standards_outcome_maps.l_outcome_id', 'learning_outcomes.l_outcome')
+                                ->where('learning_outcomes.course_id','=',$course_id)->get();
 
         $pl_outcomes = ProgramLearningOutcome::where('program_id', $course->program_id)->get();
 

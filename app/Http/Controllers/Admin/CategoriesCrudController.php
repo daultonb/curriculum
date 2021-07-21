@@ -45,12 +45,18 @@ class CategoriesCrudController extends CrudController
             'name' =>'cat_id',
             'label'=>"Category ID",
             'type' =>'number',
+            'searchLogic' => function($query, $column, $searchTerm){
+                $query ->orWhere('cat_id', 'like', '%'.$searchTerm.'%');
+            }
         ]);
 
         $this->crud->addColumn([
             'name'=>'cat_name',
             'label'=>"Category Name",
             'type'=>'Text',
+            'searchLogic' => function($query, $column, $searchTerm){
+                $query ->orWhere('cat_name', 'like', '%'.$searchTerm.'%');
+            }
         ]);
 
         /**
@@ -69,21 +75,22 @@ class CategoriesCrudController extends CrudController
     protected function setupCreateOperation()
     {
         CRUD::setValidation(CategoriesRequest::class);
-        $catId = \DB::table('optional_priority_categories')->count();
+       // $catId = \DB::table('optional_priority_categories')->count();
         
-        $this->crud->addField([
+       /* $this->crud->addField([
             'name'=>'cat_id',
             'label'=>'Category ID',
             'type' =>'number',
             'default'=>$catId+1,
             'attributes'=>['readonly'=>'readonly',
                            ],
-        ]);
+        ]);*/
 
         $this->crud->addField([
             'name'=>'cat_name',
             'label'=>'Category Name',
-            'type' =>'Text',
+            'type' =>'valid_text',
+            'attributes' => [ 'req' => 'true']
         ]);
 
         /**
@@ -101,7 +108,20 @@ class CategoriesCrudController extends CrudController
      */
     protected function setupUpdateOperation()
     {
-        $this->setupCreateOperation();
+            $this->crud->addField([
+            'name'=>'cat_id',
+            'label'=>'Category ID',
+            'type' =>'number',            
+            'attributes'=>['readonly'=>'readonly',
+                           ],
+        ]);
+
+        $this->crud->addField([
+            'name'=>'cat_name',
+            'label'=>'Category Name',
+            'type' =>'valid_text',
+            'attributes' => [ 'req' => 'true']
+        ]);
     }
     protected function setupShowOperation()
     {
@@ -116,5 +136,18 @@ class CategoriesCrudController extends CrudController
             'label' =>"Category Name",
             'type' =>'Text',
         ]);
+    }
+    
+    use \Backpack\CRUD\app\Http\Controllers\Operations\DeleteOperation { destroy as traitDestroy; }
+
+    public function destroy($id)
+    {
+        $this->crud->hasAccessOrFail('delete');
+        //delete all children starting with the leafmost objects. they have to be accessed using the id's of their parent records however (either the cloID or the courseID in this case)
+        $opcID = filter_input(INPUT_SERVER,'PATH_INFO');        
+        $opcID = explode("/",$crsID)[3];        
+        $r = DB::table('optional_priority_subcategories')->where('cat_id', '=', $opcID)->delete();
+        //this deletes the course record itself.
+        return $this->crud->delete($id);
     }
 }

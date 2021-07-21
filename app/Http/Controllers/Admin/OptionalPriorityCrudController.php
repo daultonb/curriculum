@@ -46,6 +46,9 @@ class OptionalPriorityCrudController extends CrudController
             'name' => 'op_id', // The db column name
             'label' => 'Optional Priority ID',// Table column heading
             'type' => 'number',
+            'searchLogic' => function($query, $column, $searchTerm){
+                $query ->orWhere('op_id', 'like', '%'.$searchTerm.'%');
+            }
         ]);
 
         // Subcategory
@@ -57,7 +60,10 @@ class OptionalPriorityCrudController extends CrudController
         $this->crud->addColumn([
             'name' => 'subcat_id', // The db column name
             'label' => 'Subcat ID',// Table column heading
-            'type' => 'number'
+            'type' => 'number',
+            'searchLogic' => function($query, $column, $searchTerm){
+                $query ->orWhere('subcat_id', 'like', '%'.$searchTerm.'%');
+            }
         ]);
         $removeHTML = strip_tags('subcat_name');
         $this->crud->addColumn([
@@ -85,7 +91,7 @@ class OptionalPriorityCrudController extends CrudController
         $this->crud->addColumn([
             'name' => 'optional_priority', // The db column name
             'label' => "Optional Priority",// Table column heading
-            'type' => 'stip_text',
+            'type' => 'strip_text',
         ]);
     }
 
@@ -101,18 +107,19 @@ class OptionalPriorityCrudController extends CrudController
         $op_id_num = \DB::table('optional_priorities')->count();
         
         // Priority
-        $this->crud->addField([
+        /*$this->crud->addField([
             'name' => 'op_id', // The db column name
             'label' => "OptionalPriority Id",// Table column heading
             'type' => 'number',
             'default' => $op_id_num + 1,
             'attributes'=>['readonly'=>'readonly',
                            ],
-        ]);
+        ]);*/
         $this->crud->addField([
             'name' => 'optional_priority', // The db column name
             'label' => "Optional Priority",// Table column heading
-            'type' => 'Text',
+            'type' => 'valid_textarea',
+            'attributes' => [ 'req' => 'true']
         ]);
         
         // Category
@@ -129,17 +136,17 @@ class OptionalPriorityCrudController extends CrudController
         ]);*/
 
        // SubCategory
-       $this->crud->addField([
+       /*$this->crud->addField([
             'name' => 'subcat_id', // The db column name
             'label' => "Subcat Id",// Table column heading
             'type' => 'number',
             'default' => '1',
-        ]);
+        ]);*/
 
         $this->crud->addField([
             'label' => "Subcategory Name",// Table column heading
             'type' => 'select',
-            'name' => 'subcat_name', // The db column name
+            'name' => 'subcat_id', // The db column name
             'entity' =>'OptionalPrioritySubcategories',
             'attribute' =>'subcat_name',
             'model' => "App\Models\OptionalPrioritySubcategories",
@@ -171,7 +178,8 @@ class OptionalPriorityCrudController extends CrudController
         $this->crud->addField([
             'name' => 'optional_priority', // The db column name
             'label' => "Optional Priority",// Table column heading
-            'type' => 'Text',
+            'type' => 'valid_textarea',
+            'attributes' => [ 'req' => 'true']
         ]);
 
         // Subcategory
@@ -225,6 +233,14 @@ class OptionalPriorityCrudController extends CrudController
             'model' => App\Models\OptionalPrioritySubcategories::class,
         ]);
 
+    }
+    
+     use \Backpack\CRUD\app\Http\Controllers\Operations\DeleteOperation { destroy as traitDestroy; }
+
+    public function destroy($id)
+    {
+        $this->crud->hasAccessOrFail('delete');        
+        return $this->crud->delete($id);
     }
 
 }

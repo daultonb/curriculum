@@ -41,7 +41,7 @@ class Course extends Model
         return $this->belongsToMany(Program::class, 'course_programs', 'course_id', 'program_id');
     }
 
-    public function scaleCategories() {
+    public function scalesCategory() {
         return $this->belongsTo(StandardsScaleCategory::class, 'scale_category_id', 'scale_category_id');
     }
 
@@ -162,7 +162,7 @@ class Course extends Model
                     LearningActivity::where('l_activity_id', $id)->update(['l_activity' => $row->l_activity]);
             }
             else{
-                LearningActivity:create(['course_id' => $crsID, 'l_activity' => $row->l_activity]);
+                LearningActivity::create(['course_id' => $crsID, 'l_activity' => $row->l_activity]);
             }
         }
         DB::table('learning_activities')->whereIn('l_activity_id', $setDel)->delete();

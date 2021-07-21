@@ -26,7 +26,7 @@
 
                     @else
                     
-                        <h6 class="card-subtitle wizard mb-4 text-muted lh-lg ">
+                        <h6 class="card-subtitle wizard mb-4 lh-lg ">
                             In lieu of specific PLOs, the below are the <a href="https://www2.gov.bc.ca/assets/gov/education/post-secondary-education/institution-resources-administration/degree-authorization/degree-program-criteria.pdf#page=19" target="_blank"><i class="bi bi-box-arrow-up-right"></i> standards provided by the Ministry of Advanced Education in BC</a>. Using the mapping scale provided, identify the alignment between each of the CLOs against the standards.                        
                         </h6>
                         
@@ -104,7 +104,7 @@
                                                                                                         <table class="table table-bordered table-sm">
                                                                                                             <thead class="thead-light">
                                                                                                                 <tr class="table-active">
-                                                                                                                    <th>Program Learning Outcomes or Competencies</th>
+                                                                                                                    <th>Standards</th>
                                                                                                                     <!-- Mapping Table Levels -->
                                                                                                                     @foreach($mappingScales as $mappingScaleLevel)
                                                                                                                         <th data-toggle="tooltip" title="{{$mappingScaleLevel->title}}: {{$mappingScaleLevel->description}}">
@@ -174,7 +174,7 @@
 
                 <div class="card-body">
 
-                    <h6 class="card-subtitle wizard mb-3 text-muted lh-lg ">
+                    <h6 class="card-subtitle wizard mb-3 lh-lg ">
                         Select, from the below UBC and/or Ministry priorities and strategies, those that align strongly with your course. This is optional.                        
                     </h6>
 
@@ -309,11 +309,9 @@
                                                             @endif
                                                         </td>
                                                         <td>
-                                                            <a href ="{{$shaping_ubc_link[$index]}}" target="_blank">Strategy {{$index + 1}}: </a>
-                                                            {{$strategy}}
-                                                            @if($index == 17)
-                                                                <a href="https://www.alumni.ubc.ca/about/strategic-plan/" target="_blank"><i class="bi bi-box-arrow-up-right"></i> Connecting Forward.</a>
-                                                            @endif
+                                                            @php
+                                                                echo $strategy;
+                                                            @endphp
                                                         </td>
                                                         </tr>
                                                         @endforeach

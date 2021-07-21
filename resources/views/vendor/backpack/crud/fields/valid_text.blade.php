@@ -37,7 +37,7 @@
         $(document).ready(function(){           
             $(document).on('submit', 'form', function(e){
                 let stopSubmit = false;
-                let eleList = document.querySelectorAll('input[req=true]');
+                let eleList = document.querySelectorAll('textarea[req=true], input[req=true]');
                 eleList.forEach((ele) => {
                     if((ele.type != "checkbox") && ele.value.length == 0){                        
                         stopSubmit = true;                        

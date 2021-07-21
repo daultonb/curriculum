@@ -114,6 +114,22 @@
     @php
         $crud->markFieldTypeAsLoaded($field);
     @endphp
+    
+     {{-- FIELD CSS - will be loaded in the after_styles section --}}
+    @push('crud_fields_styles')
+        <!-- accordion css-->
+         <style>
+             .crudribbon{
+                 color:rgb(255, 255, 255,1.0);
+             }
+            h4.crudribbon a:visited{
+                color:white !important;
+            }
+            h4.crudribbon a:link{
+                color:white !important;
+            }
+        </style>
+    @endpush
 
     {{-- FIELD JS - will be loaded in the after_scripts section --}}
     @push('crud_fields_scripts')
@@ -255,7 +271,7 @@
             $(document).on('submit', 'form', function(e){
                 let stopSubmit = false;
                 let eleList = Array.prototype.slice.call(document.querySelectorAll('tr[class=array-row] td input[treq=true]'));
-                let eL2 = Array.prototype.slice.call(document.querySelectorAll('input[req=true]'));
+                let eL2 = Array.prototype.slice.call(document.querySelectorAll('textarea[req=true], input[req=true]'));
                 eleList.push.apply(eleList,eL2);
                 eleList.forEach((ele) => {
                     if((ele.type != "checkbox") && ele.value.length == 0){                        

@@ -14,8 +14,7 @@ class CreateOptionalPriorityCategoriesTable extends Migration
     public function up()
     {
         Schema::create('optional_priority_categories', function (Blueprint $table) {
-            $table->unsignedBigInteger('cat_id');
-            $table->primary('cat_id');
+            $table->bigIncrements('cat_id');            
             $table->string('cat_name');
             $table->timestamps();
         });
