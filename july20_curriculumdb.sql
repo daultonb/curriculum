@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Jul 15, 2021 at 01:49 PM
+-- Generation Time: Jul 20, 2021 at 06:35 PM
 -- Server version: 5.7.24
 -- PHP Version: 7.3.28
 
@@ -38,7 +38,7 @@ CREATE TABLE IF NOT EXISTS `assessment_methods` (
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`a_method_id`),
   KEY `assessment_methods_course_id_foreign` (`course_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `assessment_methods`
@@ -48,7 +48,10 @@ INSERT INTO `assessment_methods` (`a_method_id`, `a_method`, `weight`, `course_i
 (1, 'Tests', 40, 1, '2021-06-30 03:39:40', '2021-06-30 08:42:15'),
 (2, 'Quizzes', 10, 1, '2021-06-30 03:39:40', '2021-06-30 08:42:15'),
 (3, 'Assignments', 25, 1, '2021-06-30 08:39:56', '2021-06-30 08:42:15'),
-(11, 'errrr', 33, 2, '2021-07-12 09:04:07', '2021-07-15 06:20:20');
+(12, 'coding assignments', 20, 3, '2021-07-20 02:44:23', '2021-07-20 02:52:38'),
+(11, 'errrr', 33, 2, '2021-07-12 09:04:07', '2021-07-20 08:39:23'),
+(13, 'tests', 75, 3, '2021-07-20 02:44:23', '2021-07-20 02:52:38'),
+(14, 'participation (quizzes)', 5, 3, '2021-07-20 02:44:23', '2021-07-20 02:52:38');
 
 -- --------------------------------------------------------
 
@@ -77,14 +80,19 @@ CREATE TABLE IF NOT EXISTS `courses` (
   PRIMARY KEY (`course_id`),
   KEY `courses_standard_category_id_foreign` (`standard_category_id`),
   KEY `courses_scale_category_id_foreign` (`scale_category_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `courses`
 --
 
 INSERT INTO `courses` (`course_id`, `course_code`, `course_num`, `delivery_modality`, `year`, `semester`, `section`, `course_title`, `status`, `assigned`, `required`, `type`, `created_at`, `updated_at`, `standard_category_id`, `scale_category_id`) VALUES
-(2, 'COSC', '499', 'O', 3, 'W2', '001', 'Projects', -1, 1, NULL, 'unassigned', '2021-06-30 08:32:05', '2021-07-14 04:53:19', 1, 2);
+(2, 'COSC', '499', 'O', 3, 'W2', '001', 'Projects', -1, 1, NULL, 'unassigned', '2021-06-30 08:32:05', '2021-07-20 08:39:23', 1, 1),
+(3, 'COSC', '211', 'I', 2, 'W1', '001', 'Machine Architecture', -1, 1, NULL, 'unassigned', '2021-07-20 02:39:40', '2021-07-20 02:47:07', 1, 2),
+(4, 'MATH', '200', 'O', 2, 'W1', '001', 'Calculus 3', -1, 1, NULL, 'unassigned', '2021-07-20 02:55:12', '2021-07-20 02:55:26', 1, 1),
+(5, 'MATH', '221', 'I', 2, 'W1', '001', 'Linear Algebra', -1, 1, NULL, 'unassigned', '2021-07-20 02:55:59', '2021-07-20 02:55:59', 1, 1),
+(6, 'CHEM', '121', 'O', 1, 'W1', '001', 'Intermediate Chemistry', -1, 1, NULL, 'unassigned', '2021-07-20 02:56:54', '2021-07-20 02:56:54', 1, 1),
+(7, 'PHYS', '100', 'O', 1, 'S1', '001', 'Introduction to Physics', -1, 1, NULL, 'unassigned', '2021-07-20 02:57:34', '2021-07-20 02:57:34', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -121,7 +129,18 @@ INSERT INTO `course_optional_priorities` (`op_id`, `course_id`, `created_at`, `u
 (21, 2, NULL, NULL),
 (37, 2, NULL, NULL),
 (38, 2, NULL, NULL),
-(39, 2, NULL, NULL);
+(39, 2, NULL, NULL),
+(18, 3, NULL, NULL),
+(23, 3, NULL, NULL),
+(27, 3, NULL, NULL),
+(29, 3, NULL, NULL),
+(39, 3, NULL, NULL),
+(43, 3, NULL, NULL),
+(44, 3, NULL, NULL),
+(45, 3, NULL, NULL),
+(46, 3, NULL, NULL),
+(49, 3, NULL, NULL),
+(53, 3, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -142,7 +161,7 @@ CREATE TABLE IF NOT EXISTS `course_programs` (
   PRIMARY KEY (`id`),
   KEY `course_programs_course_id_foreign` (`course_id`),
   KEY `course_programs_program_id_foreign` (`program_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `course_programs`
@@ -150,7 +169,12 @@ CREATE TABLE IF NOT EXISTS `course_programs` (
 
 INSERT INTO `course_programs` (`id`, `course_id`, `program_id`, `created_at`, `updated_at`, `course_required`, `instructor_assigned`, `map_status`) VALUES
 (1, 2, 1, NULL, NULL, NULL, NULL, 0),
-(2, 2, 2, NULL, NULL, NULL, NULL, 0);
+(2, 2, 2, NULL, NULL, NULL, NULL, 0),
+(3, 3, 1, NULL, NULL, NULL, NULL, 0),
+(4, 4, 1, NULL, NULL, NULL, NULL, 0),
+(5, 5, 1, NULL, NULL, NULL, NULL, 0),
+(6, 6, 1, NULL, NULL, NULL, NULL, 0),
+(7, 7, 1, NULL, NULL, NULL, NULL, 0);
 
 -- --------------------------------------------------------
 
@@ -174,7 +198,12 @@ CREATE TABLE IF NOT EXISTS `course_users` (
 
 INSERT INTO `course_users` (`course_id`, `user_id`, `created_at`, `updated_at`) VALUES
 (1, 1, NULL, NULL),
-(2, 1, '2021-06-30 08:32:05', '2021-06-30 08:32:05');
+(2, 1, '2021-06-30 08:32:05', '2021-06-30 08:32:05'),
+(3, 1, NULL, NULL),
+(4, 1, NULL, NULL),
+(5, 1, NULL, NULL),
+(6, 1, NULL, NULL),
+(7, 1, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -278,7 +307,7 @@ CREATE TABLE IF NOT EXISTS `learning_activities` (
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`l_activity_id`),
   KEY `learning_activities_course_id_foreign` (`course_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `learning_activities`
@@ -286,7 +315,10 @@ CREATE TABLE IF NOT EXISTS `learning_activities` (
 
 INSERT INTO `learning_activities` (`l_activity_id`, `l_activity`, `course_id`, `created_at`, `updated_at`) VALUES
 (1, 'Field Trip', 1, '2021-06-30 03:39:40', '2021-06-30 08:42:15'),
-(7, 'test', 2, '2021-07-15 06:20:20', '2021-07-15 06:20:20');
+(8, 'test2', 2, '2021-07-19 23:04:02', '2021-07-20 08:39:23'),
+(7, 'test', 2, '2021-07-15 06:20:20', '2021-07-20 08:39:23'),
+(9, 'Tour of unix server room', 3, '2021-07-20 02:44:23', '2021-07-20 02:52:38'),
+(10, 'youtube video about assembly code', 3, '2021-07-20 02:44:23', '2021-07-20 02:52:38');
 
 -- --------------------------------------------------------
 
@@ -304,7 +336,7 @@ CREATE TABLE IF NOT EXISTS `learning_outcomes` (
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`l_outcome_id`),
   KEY `learning_outcomes_course_id_foreign` (`course_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `learning_outcomes`
@@ -312,7 +344,9 @@ CREATE TABLE IF NOT EXISTS `learning_outcomes` (
 
 INSERT INTO `learning_outcomes` (`l_outcome_id`, `clo_shortphrase`, `l_outcome`, `course_id`, `created_at`, `updated_at`) VALUES
 (2, 'with books', 'Learning', 1, '2021-06-30 03:40:55', '2021-06-30 08:42:15'),
-(5, 'tete', 'tests', 2, '2021-07-12 07:47:08', '2021-07-15 06:20:20');
+(5, 'tete', 'tests', 2, '2021-07-12 07:47:08', '2021-07-20 08:39:23'),
+(6, 'Understanding compilation process', 'compilation of code', 3, '2021-07-20 02:44:23', '2021-07-20 02:52:38'),
+(7, 'Understanding how machines communicate in binary', 'machine language concepts', 3, '2021-07-20 02:44:23', '2021-07-20 02:52:38');
 
 -- --------------------------------------------------------
 
@@ -329,21 +363,52 @@ CREATE TABLE IF NOT EXISTS `mapping_scales` (
   `colour` char(7) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`map_scale_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `mapping_scale_categories_id` bigint(20) UNSIGNED DEFAULT NULL,
+  PRIMARY KEY (`map_scale_id`),
+  KEY `mapping_scales_mapping_scale_categories_id_foreign` (`mapping_scale_categories_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `mapping_scales`
 --
 
-INSERT INTO `mapping_scales` (`map_scale_id`, `title`, `abbreviation`, `description`, `colour`, `created_at`, `updated_at`) VALUES
-(1, 'Introduced', 'I', 'Key ideas, concepts or skills related to the learning outcome are demonstrated at an introductory level. Learning activities focus on basic knowledge, skills, and/or competencies and entry-level complexity.', '#80bdff', '2021-06-30 03:33:06', '2021-06-30 03:33:06'),
-(2, 'Developing', 'D', 'Learning outcome is reinforced with feedback; students demonstrate the outcome at an increasing level of proficiency. Learning activities concentrate on enhancing and strengthening existing knowledge and skills as well as expanding complexity.', '#1aa7ff', '2021-06-30 03:33:06', '2021-06-30 03:33:06'),
-(3, 'Advanced', 'A', 'Students demonstrate the learning outcomes with a high level of independence, expertise and sophistication expected upon graduation. Learning activities focus on and integrate the use of content or skills in multiple.', '#0065bd', '2021-06-30 03:33:06', '2021-06-30 03:33:06'),
-(4, 'Principle', 'P', 'Makes a significant contribution to the degree', '#80bdff', '2021-06-30 03:33:06', '2021-06-30 03:33:06'),
-(5, 'Secondary', 'S', 'Contributes less significantly towards the degree requirements', '#1aa7ff', '2021-06-30 03:33:06', '2021-06-30 03:33:06'),
-(6, 'Major Contributor', 'Ma', 'Major contribution towards the degree requirement', '#0065bd', '2021-06-30 03:33:06', '2021-06-30 03:33:06'),
-(7, 'Minor Contributor', 'Mi', 'Minor contribution towards the degree requirement', '#843976', '2021-06-30 03:33:06', '2021-06-30 03:33:06');
+INSERT INTO `mapping_scales` (`map_scale_id`, `title`, `abbreviation`, `description`, `colour`, `created_at`, `updated_at`, `mapping_scale_categories_id`) VALUES
+(8, 'Principle', 'P', 'Makes a significant contribution to the degree', '#80bdff', '2021-07-21 01:14:39', '2021-07-21 01:14:39', 2),
+(9, 'Secondary', 'S', 'Contributes less significantly towards the degree requirements', '#1aa7ff', '2021-07-21 01:14:39', '2021-07-21 01:14:39', 2),
+(3, 'Advanced', 'A', 'Students demonstrate the learning outcomes with a high level of independence, expertise and sophistication expected upon graduation. Learning activities focus on and integrate the use of content or skills in multiple.', '#0065bd', '2021-07-21 01:14:39', '2021-07-21 01:14:39', 1),
+(2, 'Developing', 'D', 'Learning outcome is reinforced with feedback; students demonstrate the outcome at an increasing level of proficiency. Learning activities concentrate on enhancing and strengthening existing knowledge and skills as well as expanding complexity.', '#1aa7ff', '2021-07-21 01:14:39', '2021-07-21 01:14:39', 1),
+(1, 'Introduced', 'I', 'Key ideas, concepts or skills related to the learning outcome are demonstrated at an introductory level. Learning activities focus on basic knowledge, skills, and/or competencies and entry-level complexity.', '#80bdff', '2021-07-21 01:14:39', '2021-07-21 01:14:39', 1),
+(10, 'Major Contributor', 'Ma', 'Major contribution towards the degree requirement', '#0065bd', '2021-07-21 01:14:39', '2021-07-21 01:14:39', 2),
+(11, 'Minor Contributor', 'Mi', 'Minor contribution towards the degree requirement', '#843976', '2021-07-21 01:14:39', '2021-07-21 01:14:39', 2),
+(12, 'Yes', 'Y', 'The course outcome is aligned with the program-level learning outcome.', '#80bdff', '2021-07-21 01:14:39', '2021-07-21 01:14:39', 3),
+(13, 'Foundations', 'F', 'Foundational knowledge is emphasized, including information, discrete facts, concepts, or basic skills. There may or may not be evidence of learning from participants.', '#80bdff', '2021-07-21 01:14:39', '2021-07-21 01:14:39', 4),
+(14, 'Extensions', 'E', 'Learning goes beyond the foundational level to make connections between facts or ideas, relating knowledge to personal experience, understanding multiple perspectives, and/or analyzing information. Participants evidence their learning in one or more ways.', '#1aa7ff', '2021-07-21 01:14:39', '2021-07-21 01:14:39', 4);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `mapping_scale_categories`
+--
+
+DROP TABLE IF EXISTS `mapping_scale_categories`;
+CREATE TABLE IF NOT EXISTS `mapping_scale_categories` (
+  `mapping_scale_categories_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `msc_title` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `description` text COLLATE utf8mb4_unicode_ci,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`mapping_scale_categories_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `mapping_scale_categories`
+--
+
+INSERT INTO `mapping_scale_categories` (`mapping_scale_categories_id`, `msc_title`, `description`, `created_at`, `updated_at`) VALUES
+(1, 'Example 1', 'This is a standard scale that has been useful for a variety of different programs.', '2021-07-21 01:14:28', '2021-07-21 01:14:28'),
+(2, 'Example 2', 'This scale might be useful for programs that focus on skills demonstration.', '2021-07-21 01:14:28', '2021-07-21 01:14:28'),
+(3, 'Example 3', 'Use a one-point scale to indicate where an alignment exists but the level is not specified, such as in curriculum development.', '2021-07-21 01:14:28', '2021-07-21 01:14:28'),
+(4, 'Example 4', 'Consider using a 2-point scale such as this one for non-credit learning opportunities.', '2021-07-21 01:14:28', '2021-07-21 01:14:28');
 
 -- --------------------------------------------------------
 
@@ -374,7 +439,10 @@ INSERT INTO `mapping_scale_programs` (`map_scale_id`, `program_id`, `created_at`
 (3, 2, '2021-06-30 03:33:06', '2021-06-30 03:33:06'),
 (1, 3, '2021-06-30 03:33:06', '2021-06-30 03:33:06'),
 (2, 3, '2021-06-30 03:33:06', '2021-06-30 03:33:06'),
-(3, 3, '2021-06-30 03:33:06', '2021-06-30 03:33:06');
+(3, 3, '2021-06-30 03:33:06', '2021-06-30 03:33:06'),
+(3, 4, '2021-07-21 01:32:52', '2021-07-21 01:32:52'),
+(2, 4, '2021-07-21 01:32:52', '2021-07-21 01:32:52'),
+(1, 4, '2021-07-21 01:32:52', '2021-07-21 01:32:52');
 
 -- --------------------------------------------------------
 
@@ -388,7 +456,7 @@ CREATE TABLE IF NOT EXISTS `migrations` (
   `migration` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `batch` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=37 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=42 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `migrations`
@@ -430,7 +498,63 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (33, '2021_06_28_205601_create_standard_categories_table', 6),
 (34, '2021_06_28_205904_create_standards_table', 7),
 (35, '2021_06_28_210155_create_standards_outcome_maps_table', 8),
-(36, '2021_06_22_203247_update_m_s_courses', 9);
+(36, '2021_06_22_203247_update_m_s_courses', 9),
+(37, '2021_06_04_174755_create_syllabi_table', 10),
+(38, '2021_07_12_151933_update_syllabi_and_syllabi_users_tables', 11),
+(39, '2021_07_12_154153_create_syllabus_tables', 12),
+(40, '2021_07_02_220532_create_mapping_scale_categories_table', 13),
+(41, '2021_07_02_221302_update_mapping_scale', 14);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `okanagan_syllabi`
+--
+
+DROP TABLE IF EXISTS `okanagan_syllabi`;
+CREATE TABLE IF NOT EXISTS `okanagan_syllabi` (
+  `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `syllabus_id` bigint(20) UNSIGNED NOT NULL,
+  `course_format` text COLLATE utf8mb4_unicode_ci,
+  `course_overview` text COLLATE utf8mb4_unicode_ci,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `okanagan_syllabi_syllabus_id_foreign` (`syllabus_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `okanagan_syllabus_resources`
+--
+
+DROP TABLE IF EXISTS `okanagan_syllabus_resources`;
+CREATE TABLE IF NOT EXISTS `okanagan_syllabus_resources` (
+  `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `id_name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `title` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `okanagan_syllabus_resources_id_name_unique` (`id_name`)
+) ENGINE=MyISAM AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `okanagan_syllabus_resources`
+--
+
+INSERT INTO `okanagan_syllabus_resources` (`id`, `id_name`, `title`, `created_at`, `updated_at`) VALUES
+(1, 'land', 'Land Acknowledgement', '2021-07-20 09:49:10', '2021-07-20 09:49:10'),
+(2, 'academic', 'Academic Integrity', '2021-07-20 09:49:10', '2021-07-20 09:49:10'),
+(3, 'finals', 'Final Examinations', '2021-07-20 09:49:10', '2021-07-20 09:49:10'),
+(4, 'grading', 'Grading Practices', '2021-07-20 09:49:10', '2021-07-20 09:49:10'),
+(5, 'health', 'Health and Wellness', '2021-07-20 09:49:10', '2021-07-20 09:49:10'),
+(6, 'safewalk', 'Safewalk', '2021-07-20 09:49:10', '2021-07-20 09:49:10'),
+(7, 'student', 'Student Learning Hub', '2021-07-20 09:49:10', '2021-07-20 09:49:10'),
+(8, 'disability', 'UBC Okanagan Disability Resource Centre', '2021-07-20 09:49:10', '2021-07-20 09:49:10'),
+(9, 'equity', 'UBC Okanagan Equity and Inclusion Office', '2021-07-20 09:49:10', '2021-07-20 09:49:10'),
+(10, 'copyright', '© Copyright Statement', '2021-07-20 09:49:10', '2021-07-20 09:49:10');
 
 -- --------------------------------------------------------
 
@@ -447,7 +571,7 @@ CREATE TABLE IF NOT EXISTS `optional_priorities` (
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`op_id`),
   KEY `optional_priorities_subcat_id_foreign` (`subcat_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=58 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=59 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `optional_priorities`
@@ -509,7 +633,8 @@ INSERT INTO `optional_priorities` (`op_id`, `subcat_id`, `optional_priority`, `c
 (53, 6, 'Inclusion of de-colonial approaches to science through Indigenous and community traditional knowledge and \"authorship\"', '2021-06-30 03:33:06', '2021-06-30 03:33:06'),
 (54, 6, 'Knowledge, awareness and skills related to the relationship between climate change and food systems', '2021-06-30 03:33:06', '2021-06-30 03:33:06'),
 (55, 6, 'Climate-related mental health content', '2021-06-30 03:33:06', '2021-06-30 03:33:06'),
-(56, 6, 'Applied learning opportunities grounded in the personal, local and regional community (e.g. flood and wildfire impacted communities in BC)', '2021-06-30 03:33:06', '2021-06-30 03:33:06');
+(56, 6, 'Applied learning opportunities grounded in the personal, local and regional community (e.g. flood and wildfire impacted communities in BC)', '2021-06-30 03:33:06', '2021-06-30 03:33:06'),
+(58, 1, 'test', '2021-07-19 23:05:25', '2021-07-19 23:05:25');
 
 -- --------------------------------------------------------
 
@@ -551,7 +676,7 @@ CREATE TABLE IF NOT EXISTS `optional_priority_subcategories` (
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`subcat_id`),
   KEY `optional_priority_subcategories_cat_id_foreign` (`cat_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `optional_priority_subcategories`
@@ -564,7 +689,8 @@ INSERT INTO `optional_priority_subcategories` (`subcat_id`, `subcat_name`, `cat_
 (4, '<a href=\"https://okmain.cms.ok.ubc.ca/wp-content/uploads/sites/26/2019/02/UBCO-Outlook-2040.pdf\" target=\"_blank\"><i class=\"bi bi-box-arrow-up-right\"></i>\r\n                                            UBC Okanagan 2040 Outlook</a>', 2, '', '', '2021-06-30 03:33:06', '2021-06-30 03:33:06'),
 (5, '<a href=\"https://aboriginal-2018.sites.olt.ubc.ca/files/2020/09/UBC.ISP_C2V13.1_Spreads_Sept1.pdf\" target=\"_blank\"><i class=\"bi bi-box-arrow-up-right\"></i>\r\n                                        UBC\'s Indigenous Strategic Plan (2020)</a>', 2, '', '', '2021-06-30 03:33:06', '2021-06-30 03:33:06'),
 (6, '<a href=\"https://bog3.sites.olt.ubc.ca/files/2021/01/4_2021.02_Climate-Emergency-Engagement.pdf\" target=\"_blank\"><i class=\"bi bi-box-arrow-up-right\"></i> UBC\'s Climate Priorities</a>', 2, 'The <a href=\"https://bog3.sites.olt.ubc.ca/files/2021/01/4_2021.02_Climate-Emergency-Engagement.pdf\" target=\"_blank\"><i class=\"bi bi-box-arrow-up-right\"></i> UBC\'s Climate Emergency Engagement Report and Recommendations (2021)</a> set out the below curricular examples.\r\n                                            Programs are encouraged to take these and/or other initiatives that align with the report:', '', '2021-06-30 03:33:06', '2021-06-30 03:33:06'),
-(7, 'test', 1, 'test', NULL, '2021-07-15 20:44:08', '2021-07-15 20:44:29');
+(7, 'test', 1, 'test', NULL, '2021-07-15 20:44:08', '2021-07-15 20:44:29'),
+(8, 'test2', 1, 'tttttttt', NULL, '2021-07-19 23:05:45', '2021-07-19 23:05:45');
 
 -- --------------------------------------------------------
 
@@ -588,7 +714,9 @@ CREATE TABLE IF NOT EXISTS `outcome_activities` (
 
 INSERT INTO `outcome_activities` (`l_outcome_id`, `l_activity_id`, `created_at`, `updated_at`) VALUES
 (3, 4, NULL, NULL),
-(3, 3, NULL, NULL);
+(3, 3, NULL, NULL),
+(6, 10, NULL, NULL),
+(7, 9, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -614,7 +742,11 @@ INSERT INTO `outcome_assessments` (`l_outcome_id`, `a_method_id`, `created_at`, 
 (1, 1, NULL, NULL),
 (2, 1, '2021-06-30 08:46:02', '2021-06-30 08:46:02'),
 (2, 2, '2021-06-30 08:46:02', '2021-06-30 08:46:02'),
-(2, 3, '2021-06-30 08:46:02', '2021-06-30 08:46:02');
+(2, 3, '2021-06-30 08:46:02', '2021-06-30 08:46:02'),
+(6, 12, NULL, NULL),
+(6, 14, NULL, NULL),
+(7, 13, NULL, NULL),
+(7, 14, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -662,18 +794,30 @@ INSERT INTO `outcome_maps` (`l_outcome_id`, `pl_outcome_id`, `map_scale_value`, 
 (3, 3, '1', NULL, NULL),
 (3, 2, '0', NULL, NULL),
 (3, 1, '3', NULL, NULL),
-(5, 6, '1', NULL, '2021-07-15 06:20:20'),
-(5, 5, '1', NULL, '2021-07-15 06:20:20'),
-(5, 4, '1', NULL, '2021-07-15 06:20:20'),
-(5, 3, '3', NULL, '2021-07-15 06:20:20'),
-(5, 2, '2', NULL, '2021-07-15 06:20:20'),
-(5, 1, '1', NULL, '2021-07-15 06:20:20'),
-(5, 7, '1', NULL, '2021-07-15 06:20:20'),
-(5, 8, '2', NULL, '2021-07-15 06:20:20'),
-(5, 9, '3', NULL, '2021-07-15 06:20:20'),
-(5, 10, '0', NULL, '2021-07-15 06:20:20'),
-(5, 11, '0', NULL, '2021-07-15 06:20:20'),
-(5, 12, '0', NULL, '2021-07-15 06:20:20');
+(5, 6, '1', NULL, '2021-07-20 08:39:23'),
+(5, 5, '1', NULL, '2021-07-20 08:39:23'),
+(5, 4, '1', NULL, '2021-07-20 08:39:23'),
+(5, 3, '3', NULL, '2021-07-20 08:39:23'),
+(5, 2, '2', NULL, '2021-07-20 08:39:23'),
+(5, 1, '1', NULL, '2021-07-20 08:39:23'),
+(5, 7, '1', NULL, '2021-07-20 08:39:23'),
+(5, 8, '2', NULL, '2021-07-20 08:39:23'),
+(5, 9, '3', NULL, '2021-07-20 08:39:23'),
+(5, 10, '0', NULL, '2021-07-20 08:39:23'),
+(5, 11, '0', NULL, '2021-07-20 08:39:23'),
+(5, 12, '0', NULL, '2021-07-20 08:39:23'),
+(6, 1, '1', NULL, NULL),
+(6, 2, '3', NULL, NULL),
+(6, 3, '2', NULL, NULL),
+(6, 4, '3', NULL, NULL),
+(6, 5, '3', NULL, NULL),
+(6, 6, '3', NULL, NULL),
+(7, 1, '0', NULL, NULL),
+(7, 2, '3', NULL, NULL),
+(7, 3, '3', NULL, NULL),
+(7, 4, '1', NULL, NULL),
+(7, 5, '2', NULL, NULL),
+(7, 6, '2', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -706,7 +850,7 @@ CREATE TABLE IF NOT EXISTS `programs` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`program_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `programs`
@@ -715,7 +859,8 @@ CREATE TABLE IF NOT EXISTS `programs` (
 INSERT INTO `programs` (`program_id`, `program`, `faculty`, `department`, `level`, `status`, `created_at`, `updated_at`) VALUES
 (1, 'Ministry of Advanced Education Standards - Undergraduate degrees', 'Other', 'Other', 'Undergraduate', 1, '2021-06-30 03:33:05', '2021-06-30 03:33:05'),
 (2, 'Ministry of Advanced Education Standards - Masters\'s degrees', 'Other', 'Other', 'Graduate', 1, '2021-06-30 03:33:05', '2021-06-30 03:33:05'),
-(3, 'Ministry of Advanced Education Standards - Doctoral degrees', 'Other', 'Other', 'Graduate', 1, '2021-06-30 03:33:05', '2021-06-30 03:33:05');
+(3, 'Ministry of Advanced Education Standards - Doctoral degrees', 'Other', 'Other', 'Graduate', 1, '2021-06-30 03:33:05', '2021-06-30 03:33:05'),
+(4, 'Test', 'School of Engineering', 'Computer Science, Mathematics, Physics and Statistics', 'Undergraduate', -1, '2021-07-20 09:50:06', '2021-07-20 09:50:06');
 
 -- --------------------------------------------------------
 
@@ -776,6 +921,13 @@ CREATE TABLE IF NOT EXISTS `program_users` (
   PRIMARY KEY (`user_id`,`program_id`),
   KEY `program_users_program_id_foreign` (`program_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `program_users`
+--
+
+INSERT INTO `program_users` (`user_id`, `program_id`, `created_at`, `updated_at`) VALUES
+(1, 4, '2021-07-20 09:50:06', '2021-07-20 09:50:06');
 
 -- --------------------------------------------------------
 
@@ -910,15 +1062,27 @@ INSERT INTO `standards_outcome_maps` (`standard_id`, `l_outcome_id`, `map_scale_
 (9, 5, '3', NULL, NULL),
 (8, 5, '2', NULL, NULL),
 (7, 5, '1', NULL, NULL),
-(6, 5, '41', NULL, '2021-07-15 06:20:20'),
-(5, 5, '0', NULL, '2021-07-15 06:20:20'),
-(4, 5, '41', NULL, '2021-07-15 06:20:20'),
-(3, 5, '42', NULL, '2021-07-15 06:20:20'),
-(2, 5, '43', NULL, '2021-07-15 06:20:20'),
-(1, 5, '44', NULL, '2021-07-15 06:20:20'),
+(6, 5, '41', NULL, '2021-07-20 08:39:23'),
+(5, 5, '0', NULL, '2021-07-20 08:39:23'),
+(4, 5, '41', NULL, '2021-07-20 08:39:23'),
+(3, 5, '42', NULL, '2021-07-20 08:39:23'),
+(2, 5, '43', NULL, '2021-07-20 08:39:23'),
+(1, 5, '44', NULL, '2021-07-20 08:39:23'),
 (10, 5, '0', NULL, NULL),
 (11, 5, '0', NULL, NULL),
-(12, 5, '0', NULL, NULL);
+(12, 5, '0', NULL, NULL),
+(1, 6, '44', NULL, NULL),
+(2, 6, '43', NULL, NULL),
+(3, 6, '43', NULL, NULL),
+(4, 6, '43', NULL, NULL),
+(5, 6, '42', NULL, NULL),
+(6, 6, '42', NULL, NULL),
+(1, 7, '43', NULL, NULL),
+(2, 7, '41', NULL, NULL),
+(3, 7, '44', NULL, NULL),
+(4, 7, '41', NULL, NULL),
+(5, 7, '42', NULL, NULL),
+(6, 7, '42', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -1004,6 +1168,97 @@ INSERT INTO `standard_scales` (`standard_scale_id`, `scale_category_id`, `title`
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `syllabi`
+--
+
+DROP TABLE IF EXISTS `syllabi`;
+CREATE TABLE IF NOT EXISTS `syllabi` (
+  `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `course_title` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `course_code` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `course_num` bigint(20) UNSIGNED DEFAULT NULL,
+  `course_term` char(2) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `course_year` int(11) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `campus` char(1) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `course_instructor` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `course_location` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `office_hours` text COLLATE utf8mb4_unicode_ci,
+  `class_meeting_days` char(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `other_instructional_staff` text COLLATE utf8mb4_unicode_ci,
+  `class_start_time` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `class_end_time` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `learning_outcomes` text COLLATE utf8mb4_unicode_ci,
+  `learning_assessments` text COLLATE utf8mb4_unicode_ci,
+  `learning_activities` text COLLATE utf8mb4_unicode_ci,
+  `late_policy` text COLLATE utf8mb4_unicode_ci,
+  `missed_exam_policy` text COLLATE utf8mb4_unicode_ci,
+  `missed_activity_policy` text COLLATE utf8mb4_unicode_ci,
+  `passing_criteria` text COLLATE utf8mb4_unicode_ci,
+  `learning_materials` text COLLATE utf8mb4_unicode_ci,
+  `learning_resources` text COLLATE utf8mb4_unicode_ci,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `syllabi_resources_okanagan`
+--
+
+DROP TABLE IF EXISTS `syllabi_resources_okanagan`;
+CREATE TABLE IF NOT EXISTS `syllabi_resources_okanagan` (
+  `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `syllabus_id` bigint(20) UNSIGNED NOT NULL,
+  `o_syllabus_resource_id` bigint(20) UNSIGNED NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `syllabi_resources_okanagan_syllabus_id_foreign` (`syllabus_id`),
+  KEY `syllabi_resources_okanagan_o_syllabus_resource_id_foreign` (`o_syllabus_resource_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `syllabi_resources_vancouver`
+--
+
+DROP TABLE IF EXISTS `syllabi_resources_vancouver`;
+CREATE TABLE IF NOT EXISTS `syllabi_resources_vancouver` (
+  `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `syllabus_id` bigint(20) UNSIGNED NOT NULL,
+  `v_syllabus_resource_id` bigint(20) UNSIGNED NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `syllabi_resources_vancouver_syllabus_id_foreign` (`syllabus_id`),
+  KEY `syllabi_resources_vancouver_v_syllabus_resource_id_foreign` (`v_syllabus_resource_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `syllabi_users`
+--
+
+DROP TABLE IF EXISTS `syllabi_users`;
+CREATE TABLE IF NOT EXISTS `syllabi_users` (
+  `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `syllabus_id` bigint(20) UNSIGNED NOT NULL,
+  `user_id` bigint(20) UNSIGNED NOT NULL,
+  `permission` bigint(20) UNSIGNED NOT NULL DEFAULT '0',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `syllabi_users_user_id_foreign` (`user_id`),
+  KEY `syllabi_users_syllabus_id_foreign` (`syllabus_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `users`
 --
 
@@ -1028,6 +1283,58 @@ CREATE TABLE IF NOT EXISTS `users` (
 INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
 (1, 'Matt Admin', 'duromatt@telus.net', '2021-06-30 03:33:05', '$2y$10$I1LzC9IvWSjFXFufABHUi..PxtkVsoluYWORDVTegowRMbKjnjooe', NULL, '2021-06-30 03:33:05', '2021-06-30 03:33:05'),
 (2, 'Matt User', 'le.deliverator@gmail.com', '2021-06-30 03:33:05', '$2y$10$1Y2tcFmLvhLR302DZXL1/.p766UqvtU8etKCDzyJPdw95lX7TN9/O', NULL, '2021-06-30 03:33:05', '2021-06-30 03:33:05');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `vancouver_syllabi`
+--
+
+DROP TABLE IF EXISTS `vancouver_syllabi`;
+CREATE TABLE IF NOT EXISTS `vancouver_syllabi` (
+  `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `syllabus_id` bigint(20) UNSIGNED NOT NULL,
+  `course_credit` bigint(20) UNSIGNED NOT NULL,
+  `office_location` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `course_description` text COLLATE utf8mb4_unicode_ci,
+  `course_contacts` text COLLATE utf8mb4_unicode_ci,
+  `instructor_bio` text COLLATE utf8mb4_unicode_ci,
+  `course_prereqs` text COLLATE utf8mb4_unicode_ci,
+  `course_coreqs` text COLLATE utf8mb4_unicode_ci,
+  `course_structure` text COLLATE utf8mb4_unicode_ci,
+  `course_schedule` text COLLATE utf8mb4_unicode_ci,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `vancouver_syllabi_syllabus_id_foreign` (`syllabus_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `vancouver_syllabus_resources`
+--
+
+DROP TABLE IF EXISTS `vancouver_syllabus_resources`;
+CREATE TABLE IF NOT EXISTS `vancouver_syllabus_resources` (
+  `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `id_name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `title` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `vancouver_syllabus_resources_id_name_unique` (`id_name`)
+) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `vancouver_syllabus_resources`
+--
+
+INSERT INTO `vancouver_syllabus_resources` (`id`, `id_name`, `title`, `created_at`, `updated_at`) VALUES
+(1, 'land', 'Land Acknowledgement', NULL, NULL),
+(2, 'academic', 'Academic Integrity Statement', NULL, NULL),
+(3, 'disability', 'Accomodations for students with disabilities', NULL, NULL),
+(4, 'copyright', '© Copyright Statement', NULL, NULL);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
