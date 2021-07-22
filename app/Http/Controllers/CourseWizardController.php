@@ -10,6 +10,7 @@ use App\Models\User;
 use App\Models\ProgramLearningOutcome;
 use App\Models\Course;
 use App\Models\LearningOutcome;
+use App\Models\CourseOptionalPriorities;
 use App\Models\OutcomeMap;
 use App\Models\AssessmentMethod;
 use App\Models\Custom_assessment_methods;
@@ -285,9 +286,8 @@ class CourseWizardController extends Controller
             $optional_priorities[] = OptionalPriorities::where('subcat_id', $i)->pluck('optional_priority')->toArray();
         }
 
-        $learning_outcomes_l_outcome_ids = LearningOutcome::where('course_id', 1)->pluck('l_outcome_id')->toArray();
-        $outcome_maps_pl_outcome_ids = OutcomeMap::whereIn('l_outcome_id', $learning_outcomes_l_outcome_ids)->pluck('pl_outcome_id')->toArray();
-        $optional_PLOs = ProgramLearningOutcome::whereIn('pl_outcome_id', $outcome_maps_pl_outcome_ids)->pluck('plo_shortphrase')->toArray();
+        $course_optional_priorities_op_ids = CourseOptionalPriorities::where('course_id', $course_id)->pluck('op_id');
+        $optional_PLOs = OptionalPriorities::whereIn('op_id', $course_optional_priorities_op_ids)->pluck('optional_priority')->toArray();
 
         return view('courses.wizard.step6')->with('l_outcomes', $l_outcomes)->with('course', $course)->with('mappingScales', $mappingScales)->with('courseUsers', $courseUsers)->with('user', $user)
                                         ->with('lo_count',$lo_count)->with('am_count', $am_count)->with('la_count', $la_count)->with('oAct', $oAct)->with('oAss', $oAss)->with('outcomeMapsCount', $outcomeMapsCount)
