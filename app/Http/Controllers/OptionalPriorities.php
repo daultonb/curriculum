@@ -23,12 +23,12 @@ class OptionalPriorities extends Controller
 
         $course_id = $request->input('course_id');
         $optionalPLOs = $request->input('optionalItem');
-
-        // Get op_id's from optionalPLOs
-        $optionalPLOs_op_ids = DB::table('optional_priorities')->whereIn('optional_priority',$optionalPLOs)->pluck('op_id');
         
         // Check If Any PLO's have been selected 
-        if ($optionalPLOs_op_ids == !NULL) {
+        if ($optionalPLOs == !NULL) {
+            // Get op_id's from optionalPLOs
+            $optionalPLOs_op_ids = DB::table('optional_priorities')->whereIn('optional_priority',$optionalPLOs)->pluck('op_id');
+
             // Delete all OptionalPLO's not checked (Selected).
             DB::table('course_optional_priorities')->whereNotIn('op_id',$optionalPLOs_op_ids)->where('course_id',$course_id)->delete();
 
