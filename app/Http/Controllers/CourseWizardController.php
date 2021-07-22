@@ -284,7 +284,7 @@ class CourseWizardController extends Controller
             $optional_priorities[] = OptionalPriorities::where('subcat_id', $i)->pluck('optional_priority')->toArray();
         }
 
-        //retrieve all optional
+        //retrieve descriptions for the optional priorities which belong to the course being edited
         $course_optional_priorities_op_ids = CourseOptionalPriorities::where('course_id', $course_id)->pluck('op_id');
         $course_optional_priorities_descriptions = OptionalPriorities::whereIn('op_id', $course_optional_priorities_op_ids)->pluck('optional_priority')->toArray();
 
