@@ -34,6 +34,7 @@ class HomeController extends Controller
      */
     public function index(Request $request)
     {
+
         // get the current authenticated user
         $user = User::find(Auth::id());
         // get my programs
@@ -108,6 +109,7 @@ class HomeController extends Controller
             ]);
 
         $course = new Course;
+
         $course->course_title = $request->input('course_title');
         $course->course_num = $request->input('course_num');
         $course->course_code =  strtoupper($request->input('course_code'));

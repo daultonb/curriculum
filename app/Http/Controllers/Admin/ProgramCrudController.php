@@ -42,7 +42,10 @@ class ProgramCrudController extends CrudController
         $this->crud->addColumn([
             'name' => 'program', // The db column name
             'label' => "Program", // Table column heading
-            'type' => 'Text'
+            'type' => 'Text',
+            'searchLogic' => function($query, $column, $searchTerm){
+                $query ->orWhere('program_id', 'like', '%'.$searchTerm.'%');
+            }
           ]);
 
         $this->crud->addColumn([
@@ -60,7 +63,10 @@ class ProgramCrudController extends CrudController
         $this->crud->addColumn([
             'name' => 'level', // The db column name
             'label' => "Level", // Table column heading
-            'type' => 'Text'
+            'type' => 'Text',
+            'searchLogic' => function($query, $column, $searchTerm){
+                $query ->orWhere('level', 'like', '%'.$searchTerm.'%');
+            }
           ]);
         
         $this->crud->addColumn([   // radio
