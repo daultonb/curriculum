@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Program;
-use App\Models\ProgramUser;
 use App\Models\CourseUser;
 use App\Models\User;
 use App\Models\ProgramLearningOutcome;
@@ -17,7 +16,6 @@ use App\Models\Custom_assessment_methods;
 use App\Models\Custom_learning_activities;
 use App\Models\OutcomeAssessment;
 use App\Models\LearningActivity;
-use App\Models\OutcomeActivity;
 use App\Models\OptionalPriorities;
 use App\Models\MappingScale;
 use App\Models\PLOCategory;
