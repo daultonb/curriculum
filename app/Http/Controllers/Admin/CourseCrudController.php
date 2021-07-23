@@ -150,7 +150,7 @@ class CourseCrudController extends CrudController
         $this->crud->addField([
             'name' => 'course_title', // The db column name
             'label' => "Course Title", // Table column heading
-            'type' => 'Text',
+            'type' => 'valid_text',
              'attributes' => [ 'req' => 'true' ],
             'wrapper' => ['class' => 'form-group col-md-12'],
             
@@ -348,6 +348,7 @@ class CourseCrudController extends CrudController
              'min'     => 0,
              
            ]);
+           
           
            $this->crud->addField([   // relationship
              'label' => "Assessment Methods",
