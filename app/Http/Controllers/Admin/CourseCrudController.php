@@ -124,7 +124,7 @@ class CourseCrudController extends CrudController
             'type' => 'Text',
             'attributes' => [ 'req' => 'true',
                             'size' => '4',
-                            'maxlength' => '4'],
+                            'maxlength' => '4'],            
             'wrapper' => ['class' => 'form-group col-md-3'],
          ]);
 
@@ -150,7 +150,7 @@ class CourseCrudController extends CrudController
         $this->crud->addField([
             'name' => 'course_title', // The db column name
             'label' => "Course Title", // Table column heading
-            'type' => 'Text',
+            'type' => 'valid_text',
              'attributes' => [ 'req' => 'true' ],
             'wrapper' => ['class' => 'form-group col-md-12'],
             
@@ -177,6 +177,7 @@ class CourseCrudController extends CrudController
                 -1 => "In Progress",
                 1 => "Completed"
             ],
+            'default'     => '1',
             // optional
             'inline'      => true, // show the radios all on the same line?
         ]);
@@ -214,6 +215,7 @@ class CourseCrudController extends CrudController
                 -1 => "No",
                 1 => "Yes"
             ],
+             'default'     => '-1',
             // optional
             'inline'      => true, // show the radios all on the same line?
         ]);
@@ -233,21 +235,15 @@ class CourseCrudController extends CrudController
                 'I' => "In Person",
                 'B' => "Blended"
             ],
+            'default'     => 'I',
             // optional
             'inline'      => true, // show the radios all on the same line?
         ]);
         
-         $this->crud->addField([   // radio
-            'name'        => 'type', // the name of the db column
-            'label'       => 'Assigned to instructor?', // the input label
-            'type'        => 'radio',
-            'options'     => [
-                // the key will be stored in the db, the value will be shown as label; 
-                'unassigned' => "Unassigned", 
-                'assigned' => "Assigned",
-            ],
-            // optional
-            'inline'      => true, // show the radios all on the same line?
+         $this->crud->addField([   // Hidden
+            'name'  => 'type',
+            'type'  => 'hidden',
+            'value' => 'assigned',
         ]);
         
         $this->crud->addField([
@@ -286,6 +282,7 @@ class CourseCrudController extends CrudController
                 3 => "3",
                 4 => "4"
             ],
+            'default'     => 1,
             // optional
             'inline'      => true, // show the radios all on the same line?
         ]);
@@ -300,6 +297,7 @@ class CourseCrudController extends CrudController
                 'S1' => "Summer I",
                 "S2" => "Summer II"
             ],
+            'default'     => 'W1',
             'inline'       => true,
         ]);
     }
@@ -348,6 +346,7 @@ class CourseCrudController extends CrudController
              'min'     => 0,
              
            ]);
+           
           
            $this->crud->addField([   // relationship
              'label' => "Assessment Methods",
