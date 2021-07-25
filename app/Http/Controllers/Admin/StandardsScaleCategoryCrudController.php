@@ -110,7 +110,7 @@ class StandardsScaleCategoryCrudController extends CrudController
             'name'  => 'Scaletable',
             'label' => 'Scales',
             'type'  => 'repeatable',
-            'entity' => 'ministryStandardScales',
+            //'entity' => 'ministryStandardScales',
             
             'fields' => [
                 [
