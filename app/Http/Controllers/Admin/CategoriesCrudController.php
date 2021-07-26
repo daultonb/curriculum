@@ -31,6 +31,8 @@ class CategoriesCrudController extends CrudController
         CRUD::setModel(\App\Models\OptionalPriorityCategories::class);
         CRUD::setRoute(config('backpack.base.route_prefix') . '/categories');
         CRUD::setEntityNameStrings('categories', 'categories');
+        // Hide the preview button 
+        $this->crud->denyAccess('show');
     }
 
     /**

@@ -29,6 +29,8 @@ class LearningOutcomeCrudController extends CrudController{
         CRUD::setEntityNameStrings('learningOutcome', 'learningOutcomes');
 
         //$this->crud->denyAccess('create');
+        // Hide the preview button 
+        $this->crud->denyAccess('show');
     }
     
      protected function setupCreateOperation()

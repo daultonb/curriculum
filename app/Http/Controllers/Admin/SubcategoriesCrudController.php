@@ -31,6 +31,7 @@ class SubcategoriesCrudController extends CrudController
         CRUD::setModel(\App\Models\OptionalPrioritySubcategories::class);
         CRUD::setRoute(config('backpack.base.route_prefix') . '/subcategories');
         CRUD::setEntityNameStrings('subcategories', 'subcategories');
+        $this->crud->denyAccess('show');
     }
 
     /**

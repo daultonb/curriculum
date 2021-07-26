@@ -29,6 +29,9 @@ class StandardsScaleCategoryCrudController extends CrudController
         CRUD::setModel(\App\Models\StandardsScaleCategory::class);
         CRUD::setRoute(config('backpack.base.route_prefix') . '/standards-scale-category');
         CRUD::setEntityNameStrings('standards scale category', 'standards scale categories');
+
+        // Hide the preview button 
+        $this->crud->denyAccess('show');
     }
 
     /**
