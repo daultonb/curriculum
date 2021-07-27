@@ -65,13 +65,13 @@ class OptionalPriorityCrudController extends CrudController
                 $query ->orWhere('subcat_id', 'like', '%'.$searchTerm.'%');
             }
         ]);
-        $removeHTML = strip_tags('subcat_name');
+        
         $this->crud->addColumn([
             'label' => 'Subcategory Name',// Table column heading
             'type' => 'strip_select',
-            'name' => 'OptionalPrioritySubcategories', // The db column name
+            'name' => 'subcat_id', // The db column name
             'entity' =>'OptionalPrioritySubcategories',
-            'attribute' => $removeHTML,
+            'attribute' => 'subcat_name',
             'model' => 'App\Models\OptionalPrioritySubcategories',
         ]);
        
@@ -191,8 +191,8 @@ class OptionalPriorityCrudController extends CrudController
 
         $this->crud->addField([
             'label' => 'Subcategory Name',// Table column heading
-            'type' => 'select',
-            'name' => 'OptionalPrioritySubcategories', // The db column name
+            'type' => 'strip_select',
+            'name' => 'subcat_id', // The db column name
             'entity' =>'OptionalPrioritySubcategories',
             'attribute' =>'subcat_name',
             'model' => "App\Models\OptionalPrioritySubcategories",

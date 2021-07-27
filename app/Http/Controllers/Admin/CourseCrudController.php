@@ -377,8 +377,7 @@ class CourseCrudController extends CrudController
 
              //'name' => 'learningActivities', // the method on your model that defines the relationship
              'name' => 'LAtable', //name of the getter/setter in course model  
-             'default' => 'testing default string',
-             
+                         
              'ajax' => true,  
              'columns' => [     
                  'l_activity_id' => 'id-hidden',

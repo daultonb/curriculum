@@ -96,7 +96,7 @@ class SubcategoriesCrudController extends CrudController
 
         $this->crud->addField([
             'label' => 'Category Name',// Table column heading
-            'type' => 'select',
+            'type' => 'strip_select',
             'name' => 'cat_id', // The db column name
             'entity' =>'OptionalPriorityCategories',
             'attribute' =>'cat_name',

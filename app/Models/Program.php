@@ -58,5 +58,21 @@ class Program extends Model
         return $this->hasMany(ProgramLearningOutcome::class, 'program_id', 'program_id');
     }
     
-     
+    public function getProgramOCAttribute(){
+        $prgID = filter_input(INPUT_SERVER,'PATH_INFO');
+        $prgID = explode("/",$prgID)[3];
+        $ploCats =  \App\Models\PLOCategory::where('program_id', '=', $prgID)->get()->toArray();
+        for($i = 0; $i < count($ploCats); $i++){
+            $ploCats[$i]['programOutcome'] = json_encode(\App\Models\ProgramLearningOutcome::
+                    where('plo_category_id', '=',$ploCats[$i]['plo_category_id'])
+                    ->get()->toArray());
+        }
+        //this gets the uncategorized records
+        $ploCats[count($ploCats)]['programOutcome'] = json_encode(\App\Models\ProgramLearningOutcome::
+                    where('plo_category_id', '=',NULL)->where('program_id', '=', $prgID)
+                    ->get()->toArray());
+        $ploCats[count($ploCats)-1]['plo_category'] = "Uncategorized";
+        return json_encode($ploCats);
+    }
+  
 }
