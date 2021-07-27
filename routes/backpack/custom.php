@@ -23,4 +23,5 @@ Route::group([
     Route::crud('categories', 'CategoriesCrudController');
     Route::crud('standard-category', 'StandardCategoryCrudController');
     Route::crud('standards-scale-category', 'StandardsScaleCategoryCrudController');
+    Route::crud('mapping-scales', 'MappingScalesCrudController');
 }); // this should be the absolute last line of this file
