@@ -44,18 +44,13 @@ class MappingScalesCrudController extends CrudController
     {
         CRUD::column('title');
         CRUD::column('abbreviation');
-        //CRUD::column('colour');
+        CRUD::column('colour');
 
-        $this->crud->addColumn([
-            'name' =>'colour',
-            'label'=>"Colour",
-            'type' =>'color',
-            'default' =>'#000000'
+
             //'wrapper'=> ['class' => 'form-group col-md-2'],
             /*'searchLogic' => function($query, $column, $searchTerm){
                 $query ->orWhere('cat_id', 'like', '%'.$searchTerm.'%');
             }*/
-        ]);
 
         /**
          * Columns can be defined using the fluent syntax or array syntax:
@@ -72,9 +67,26 @@ class MappingScalesCrudController extends CrudController
      */
     protected function setupCreateOperation()
     {
-        CRUD::setValidation(MappingScalesRequest::class);
-
-        CRUD::setFromDb(); // fields
+        $this->crud->addField([
+            'name' => 'title',
+            'label' => 'Title',
+            'type' => 'text'
+        ]);
+        $this->crud->addField([
+            'name' => 'abbreviation',
+            'label' => 'Abbreviation',
+            'type' => 'text'
+        ]);
+        $this->crud->addField([
+            'name' => 'description',
+            'label' => 'Description',
+            'type' => 'text'
+        ]);
+        $this->crud->addField([
+            'name' => 'colour',
+            'label' => 'Colour',
+            'type' => 'color_picker'
+        ]);
 
         /**
          * Fields can be defined using the fluent syntax or array syntax:
@@ -91,6 +103,27 @@ class MappingScalesCrudController extends CrudController
      */
     protected function setupUpdateOperation()
     {
-        $this->setupCreateOperation();
+        //$this->setupCreateOperation();
+        $this->crud->addField([
+            'name' => 'title',
+            'label' => 'Title',
+            'type' => 'text'
+        ]);
+        $this->crud->addField([
+            'name' => 'abbreviation',
+            'label' => 'Abbreviation',
+            'type' => 'text'
+        ]);
+        $this->crud->addField([
+            'name' => 'description',
+            'label' => 'Description',
+            'type' => 'text'
+        ]);
+        $this->crud->addField([
+            'name' => 'colour',
+            'label' => 'Colour',
+            'type' => 'color_picker'
+        ]);
     }
+
 }
