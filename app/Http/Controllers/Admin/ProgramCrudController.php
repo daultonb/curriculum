@@ -33,6 +33,9 @@ class ProgramCrudController extends CrudController
         CRUD::setModel(\App\Models\Program::class);
         CRUD::setRoute(config('backpack.base.route_prefix') . '/program');
         CRUD::setEntityNameStrings('program', 'programs');
+
+        // Hide the preview button 
+        $this->crud->denyAccess('show');
     }
 
     /**

@@ -33,7 +33,8 @@ class CourseCrudController extends CrudController
         CRUD::setRoute(config('backpack.base.route_prefix') . '/course');
         CRUD::setEntityNameStrings('course', 'courses');
 
-        //$this->crud->denyAccess('create');
+        // Hide the preview button 
+        $this->crud->denyAccess('show');
     }
 
     /**

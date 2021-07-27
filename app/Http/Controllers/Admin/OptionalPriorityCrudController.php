@@ -31,6 +31,9 @@ class OptionalPriorityCrudController extends CrudController
         CRUD::setModel(\App\Models\OptionalPriorities::class);
         CRUD::setRoute(config('backpack.base.route_prefix') . '/optional-priority');
         CRUD::setEntityNameStrings('optional priority', 'optional priorities');
+
+        // Hide the preview button 
+        $this->crud->denyAccess('show');
     }
 
     /**

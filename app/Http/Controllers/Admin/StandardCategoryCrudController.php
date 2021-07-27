@@ -30,6 +30,9 @@ class StandardCategoryCrudController extends CrudController
         CRUD::setModel(\App\Models\StandardCategory::class);
         CRUD::setRoute(config('backpack.base.route_prefix') . '/standard-category');
         CRUD::setEntityNameStrings('standard category', 'standard categories');
+
+        // Hide the preview button 
+        $this->crud->denyAccess('show');
     }
 
     /**
