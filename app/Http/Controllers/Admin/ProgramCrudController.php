@@ -256,7 +256,7 @@ class ProgramCrudController extends CrudController
                         ],
                         [
                             'name'    => 'programOutcome',
-                            'type'    => 'match_table',
+                            'type'    => 'drag_table',
                             'label'   => 'PLO',
                             'columns' => [
                                 'pl_outcome_id'     => 'id-hidden',
@@ -288,7 +288,7 @@ class ProgramCrudController extends CrudController
                 if(property_exists($row, "plo_category_id"))
                     array_push($nSc,$row->plo_category_id);
             }
-            $setDel = array_filter($setCats, function($element) use($nSc){  //filters from the db records those still present on the page. others are deleted
+            $setDel = array_filter($setCats, function($element) use($nSc){  //filters from the db records those not present on the page. these are deleted
                 return !(in_array($element, $nSc));
             });
             $aData = [];
@@ -314,40 +314,58 @@ class ProgramCrudController extends CrudController
             DB::table('program_learning_outcomes')->whereIn('pl_outcome_id', $setPendingDel)->delete();
             DB::table('outcome_maps')->whereIn('pl_outcome_id', $setPendingDel)->delete();
             //*************
-            //for each category:: crud for PLOs  //if its a newly created category, I need to grab the id from the db somehow
+            //for each category:: crud for PLOs  //
             //**********
+            $ploObjs = [];
+            $existingPLOs =  \App\Models\ProgramLearningOutcome::where('program_id', $prgID)->get(); 
+            $setPLOs = [];  //this is the set of ids for easy db access
+            foreach($existingPLOs as $plo){array_push($setPLOs,$plo->pl_outcome_id);}
+            $nSc = []; 
+            
             foreach($aData as $cat){//
-                if($cat['plo_category'] == "Uncategorized")$cat['plo_category'] = NULL;
-                if(isset($cat['plo_category']))
-                    $existingPLOs =  \App\Models\ProgramLearningOutcome::where('plo_category_id', '=', $cat['plo_category_id'])->where('program_id', $prgID)->get();      //all PLOs in the db for this category  
-                else $existingPLOs =  \App\Models\ProgramLearningOutcome::where('plo_category_id', '=', NULL)->where('program_id', $prgID)->get();
-                $setPLOs = [];  //this is the set of ids for easy db access
-                foreach($existingPLOs as $plo){array_push($setPLOs,$plo->pl_outcome_id);}
-                $nSc = [];      //rows already in the DB (they have an ID)   
+                if($cat['plo_category'] == "Uncategorized")$cat['plo_category'] = NULL;  
                 $value = json_decode($cat['programOutcome']);
                 if(is_array($value) && count($value) > 0){
-                    foreach($value as $row)
+                    foreach($value as $row){
                         if(property_exists($row, "pl_outcome_id"))
                             array_push($nSc,$row->pl_outcome_id);
-                }    
-                $setDel = array_filter($setPLOs, function($element) use($nSc){  //filters from the db records those still present on the page. others are deleted
-                    return !(in_array($element, $nSc));
-                });
-                if(is_array($value) && count($value) > 0){
-                    foreach($value as $row){
-                        if(property_exists($row, "pl_outcome_id")){
-                            $id = $row->pl_outcome_id;
-                            if(in_array($id, $setPLOs))
-                                ProgramLearningOutcome::where('pl_outcome_id', $id)->update(['plo_shortphrase' => $row->plo_shortphrase, 'pl_outcome' => $row->pl_outcome]);
+                        $arRow = json_decode(json_encode($row),true);//turns the obj to an array
+                        $arRow['plo_category_id'] = $cat['plo_category_id']; //this will be used later
+                        array_push($ploObjs,$arRow);
                     }
-                        else{
-                            ProgramLearningOutcome::create(['program_id' => $prgID, 'plo_shortphrase' => $row->plo_shortphrase, 'pl_outcome' => $row->pl_outcome, 'plo_category_id' => $cat['plo_category_id']]);
-                        }
+                }  
+            }
+            
+            $setDel = array_filter($setPLOs, function($element) use($nSc){  //filters from the db records those still present on the page. others are deleted
+                return !(in_array($element, $nSc));
+            });
+                           //rather than updating it, so it should be fixed. doesnt work because the list contains the ids of moved records despite their having been deleted.
+            foreach($ploObjs as $row){
+                if(isset($row['pl_outcome_id'])){
+                    $id = $row['pl_outcome_id'];
+                    if(in_array($id, $setPLOs)){
+                        if(isset($row['plo_category_id']) && $row['plo_category_id'])
+                            ProgramLearningOutcome::where('pl_outcome_id', $id)
+                                ->update(['plo_shortphrase' => $row['plo_shortphrase'], 'pl_outcome' => $row['pl_outcome'], 'plo_category_id' => $row['plo_category_id']]);
+                        else
+                            ProgramLearningOutcome::where('pl_outcome_id', $id)
+                                ->update(['plo_shortphrase' => $row['plo_shortphrase'], 'pl_outcome' => $row['pl_outcome'], 'plo_category_id' => NULL]);
                     }
                 }
-                DB::table('program_learning_outcomes')->whereIn('pl_outcome_id', $setDel)->delete();
-                DB::table('outcome_maps')->whereIn('pl_outcome_id', $setDel)->delete();
-            } 
+                else{
+                    if(isset($row['plo_category_id']) && $row['plo_category_id'])
+                        ProgramLearningOutcome::create(['program_id' => $prgID, 'plo_shortphrase' => $row['plo_shortphrase'],
+                            'pl_outcome' => $row['pl_outcome'], 'plo_category_id' => $row['plo_category_id']]);
+                    else
+                        ProgramLearningOutcome::create(['program_id' => $prgID, 'plo_shortphrase' => $row['plo_shortphrase'],
+                            'pl_outcome' => $row['pl_outcome'], 'plo_category_id' => NULL]);
+                }
+            
+            }
+            DB::table('program_learning_outcomes')->whereIn('pl_outcome_id', $setDel)->delete(); //by deleting here, I am avoiding the refactoring for now. Tis will delete and recreate a record
+            DB::table('outcome_maps')->whereIn('pl_outcome_id', $setDel)->delete();  
+                
+            
         }
         //end of PLO crud
         //***********
@@ -373,7 +391,7 @@ class ProgramCrudController extends CrudController
                     'label'   => 'Courses',
                     'entity'    => 'courses', // the method that defines the relationship in your Model
                     'model'     => "App\Models\Course", // foreign key model
-                     'attribute' => 'course_title',
+                    'attribute' => 'course_title',
                    /* 'attribute' => [
                         'course_code', // foreign key attribute that is shown to user
                         'course_num',
