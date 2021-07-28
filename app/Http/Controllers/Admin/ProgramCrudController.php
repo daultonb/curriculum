@@ -6,7 +6,7 @@ use App\Http\Requests\ProgramRequest;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 use Illuminate\Support\Facades\DB;
-use App\Models\MappingScale;
+use App\Models\MappingScales;
 use App\Models\PLOCategory;
 use App\Models\ProgramLearningOutcome;
 
