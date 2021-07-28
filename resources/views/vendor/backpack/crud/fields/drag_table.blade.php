@@ -237,7 +237,10 @@
 
             function drop(ev) {
               var data = ev.dataTransfer.getData("Text");
-              ev.target.children[0].children[1].appendChild(document.getElementById(data));
+              let trg = 0;
+              if(ev.target.classList.contains('form_group'))trg = ev.target;
+              else trg = $(ev.target).closest('div.form-group')[0];
+              trg.children[0].children[1].appendChild(document.getElementById(data));
               ev.preventDefault();
               let field_name = "ProgramOC";
              // var container_holder = $('[data-repeatable-holder='+field_name+']');

@@ -6,7 +6,7 @@ use App\Http\Requests\ProgramRequest;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 use Illuminate\Support\Facades\DB;
-use App\Models\MappingScales;
+use App\Models\MappingScale;
 use App\Models\PLOCategory;
 use App\Models\ProgramLearningOutcome;
 
@@ -231,7 +231,7 @@ class ProgramCrudController extends CrudController
         
         $this->crud->addField([
                     'name'    => 'ProgramOC',
-                    'type'    => 'repeatable',
+                    'type'    => 'drag_repeatable',
                     'label'   => 'Program Outcome<br>Mapping',
                     'ajax'    => true,
                     'fields' => [
@@ -242,7 +242,7 @@ class ProgramCrudController extends CrudController
                             'attributes' => [
                                             'hidden' => 'true',
                                             ],
-                             'wrapper' => ['class' => 'form-group col-md-2'],
+                             'wrapper' => ['class' => 'form-group col-sm-2'],
                         ],
                         [
                             'name'  => 'plo_category',
@@ -252,7 +252,7 @@ class ProgramCrudController extends CrudController
                             'attributes' => [ 'req' => 'true',  //need to add this to a custom repeatable view
                                               
                                             ],
-                            'wrapper' => ['class' => 'form-group col-md-10'],
+                            'wrapper' => ['class' => 'hidden-label form-group col-sm-8'],
                         ],
                         [
                             'name'    => 'programOutcome',
@@ -263,6 +263,7 @@ class ProgramCrudController extends CrudController
                                 'plo_shortphrase'   => 'PLO Shortphrase-text-req',
                                 'pl_outcome'        => 'Program learning Outcome-text-req'
                             ],
+                            'wrapper' => ['class' => 'hidden-label form-group col-sm-12'],
                             'max' => 20,
                             'min' => 0,
                         ],
@@ -375,7 +376,7 @@ class ProgramCrudController extends CrudController
                     'type'    => 'check_details',
                     'label'   => 'Map Scales',
                     'entity'    => 'mappingScaleLevels', // the method that defines the relationship in your Model
-                    'model'     => "App\Models\MappingScales", // foreign key model
+                    'model'     => "App\Models\MappingScale", // foreign key model
                     'attribute' => [
                         'title', // foreign key attribute that is shown to user
                         'colour',
