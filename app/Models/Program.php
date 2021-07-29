@@ -34,7 +34,7 @@ class Program extends Model
 
     public function mappingScaleLevels()
     {
-        return $this->belongsToMany(MappingScales::class, 'mapping_scale_programs', 'program_id', 'map_scale_id')->withTimestamps();
+        return $this->belongsToMany(MappingScale::class, 'mapping_scale_programs', 'program_id', 'map_scale_id')->withTimestamps();
     }
     
      public function mappingScalePrograms()

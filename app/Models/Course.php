@@ -119,7 +119,7 @@ class Course extends Model
             return !(in_array($element, $nSc));
         });
         foreach($jdata as $row){
-            if(property_exists($row, "a_method_id")){
+            if(property_exists($row, "a_method_id") && $row->a_method_id != ""){
                 $id = $row->a_method_id;
                 if(in_array($id, $setAMs))
                     AssessmentMethod::where('a_method_id', $id)->update(['weight' => $row->weight, 'a_method' => $row->a_method]);

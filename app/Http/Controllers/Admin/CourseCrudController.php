@@ -349,7 +349,7 @@ class CourseCrudController extends CrudController
            ]);
            
           
-           $this->crud->addField([   // relationship
+           /*$this->crud->addField([   // relationship
              'label' => "Assessment Methods",
 
              'type' => "assess_table",
@@ -369,7 +369,60 @@ class CourseCrudController extends CrudController
              
              'min'     => 0,
              
+           ]);*/
+            
+            $this->crud->addField([   // relationship
+             'label' => "Assessment Methods",
+
+             'type' => "assess_repeatable",
+
+             //'name' => 'assessmentMethods', // the method on your model that defines the relationship
+             'name' => 'AMtable', //name of the getter/setter in course model 
+             'default' => 'testing default string',
+             
+             'ajax' => true,  
+             'fields' => [  
+                 [
+                   'name' => 'a_method_id',
+                   'label' => 'ID',
+                   'type' => 'hidden',
+                   
+                 ],
+                 [
+                   'name' => 'a_method',
+                   'label' => 'Assessment Method',
+                   'type' => 'list_select',
+                   'model' => 'App\Models\Custom_assessment_methods',
+                   'attribute' => 'custom_methods',
+                   'foreign-ref' => 'custom_methods',
+                   'wrapper' => ['class' => 'hidden-label form-group col-sm-9']
+                 ],
+                 [
+                   'name' => 'weight',
+                   'label' => 'Weight (%)',
+                   'type' => 'number',
+                   'wrapper' => ['class' => 'totaled_weight_ hidden-label form-group col-sm-3']
+                 ],                 
+             ],
+             
+             'max'     => 5,
+             
+             'min'     => 0,
+             
            ]);
+           
+           
+            $this->crud->addField([   // the total for the assessment methods field. required for the script in the assess_repeatable
+             'label' => "Total Weight",
+
+             'type' => "number",
+             
+             'name' => 'totalweight', //name of the getter/setter in course model 
+                
+             'wrapper' => ['class' => 'total_weight_ form-group col-sm-3']
+            ]);
+            
+            
              
             $this->crud->addField([   // relationship
              'label' => "Teaching and Learning Activities",
