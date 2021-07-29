@@ -54,12 +54,24 @@ class OptionalPriorityCrudController extends CrudController
             }
         ]);
 
-        // Subcategory
-        /*$this->crud->addColumn([
-            'name' => 'subcat_desc', // The db column name
-            'label' => "Subcategory desc",// Table column heading
-            'type' => 'Text'
-        ]);*/
+         $this->crud->addColumn([
+            'name' => 'optional_priority', // The db column name
+            'label' => "Optional Priority",// Table column heading
+            'type' => 'text',
+             'searchLogic' => function($query, $column, $searchTerm){
+                $query ->orWhere('optional_priority', 'like', '%'.$searchTerm.'%');
+            }
+        ]);
+        
+        $this->crud->addColumn([
+            'label' => 'Subcategory Name',// Table column heading
+            'type' => 'select',
+            'name' => 'subcat_id', // The db column name
+            'entity' =>'OptionalPrioritySubcategories',
+            'attribute' => 'subcat_name',
+            'model' => 'App\Models\OptionalPrioritySubcategories',
+        ]);
+        
         $this->crud->addColumn([
             'name' => 'subcat_id', // The db column name
             'label' => 'Subcat ID',// Table column heading
@@ -69,33 +81,10 @@ class OptionalPriorityCrudController extends CrudController
             }
         ]);
         
-        $this->crud->addColumn([
-            'label' => 'Subcategory Name',// Table column heading
-            'type' => 'strip_select',
-            'name' => 'subcat_id', // The db column name
-            'entity' =>'OptionalPrioritySubcategories',
-            'attribute' => 'subcat_name',
-            'model' => 'App\Models\OptionalPrioritySubcategories',
-        ]);
-       
-        // Category
-        /*$this->crud->addColumn([
-            'name' => 'cat_name', // The db column name
-            'label' => "Category Name",// Table column heading
-            'type' => 'Text'
-         ]);*/
-
-        /* $this->crud->addColumn([
-            'name' => 'cat_desc', // The db column name
-            'label' => "Category desc",// Table column heading
-            'type' => 'Text'
-        ]);*/
         
-        $this->crud->addColumn([
-            'name' => 'optional_priority', // The db column name
-            'label' => "Optional Priority",// Table column heading
-            'type' => 'strip_text',
-        ]);
+       
+       
+       
     }
 
     /**
