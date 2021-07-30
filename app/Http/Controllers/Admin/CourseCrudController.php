@@ -228,13 +228,13 @@ class CourseCrudController extends CrudController
         ]);
         $this->crud->addField([   // radio
             'name'        => 'delivery_modality', // the name of the db column
-            'label'       => 'Delivery Modality', // the input label
+            'label'       => 'Mode of Delivery', // the input label
             'type'        => 'radio',
             'options'     => [
                 // the key will be stored in the db, the value will be shown as label; 
                 'O' => "Online",
-                'I' => "In Person",
-                'B' => "Blended"
+                'I' => "In-Person",
+                'B' => "Hybrid"
             ],
             'default'     => 'I',
             // optional
@@ -391,16 +391,18 @@ class CourseCrudController extends CrudController
                  [
                    'name' => 'a_method',
                    'label' => 'Assessment Method',
-                   'type' => 'list_select',
+                   'type' => 'list_select', 
                    'model' => 'App\Models\Custom_assessment_methods',
                    'attribute' => 'custom_methods',
                    'foreign-ref' => 'custom_methods',
+                   'attributes' => [ 'req' => 'true' ],  //this is actually an input, not a select. 
                    'wrapper' => ['class' => 'hidden-label form-group col-sm-9']
                  ],
                  [
                    'name' => 'weight',
                    'label' => 'Weight (%)',
                    'type' => 'number',
+                   'attributes' => [ 'req' => 'true' ],
                    'wrapper' => ['class' => 'totaled_weight_ hidden-label form-group col-sm-3']
                  ],                 
              ],

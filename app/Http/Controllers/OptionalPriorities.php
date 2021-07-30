@@ -33,10 +33,10 @@ class OptionalPriorities extends Controller
             // Loop to insert them to the table
             foreach($optionalPLOs as $optionalPLO) {
                 if(! (DB::table('course_optional_priorities')->where('op_id',$optionalPLO)->where('course_id',$course_id)->first())) {
-                    $ops = new optional_priorities();
+                    $ops = new \App\Models\CourseOptionalPriorities();
                     $ops->course_id = $course_id;
-                    $ops->custom_PLO = $optionalPLO;
-                    $ops->input_status = 0;
+                    $ops->op_id = $optionalPLO;
+                    //$ops->input_status = 0;
                     if($ops->save()){
                         $request->session()->flash('success', 'Alignment to UBC/Ministry priorities updated.');
                     }else{

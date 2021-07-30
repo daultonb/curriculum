@@ -123,7 +123,7 @@ class ProgramCrudController extends CrudController
         $this->crud->addField([
             'name' => 'faculty', // The db column name
             'label' => "Faculty/School", // Table column heading
-            'type' => 'radio',
+            'type' => 'select_from_array',
             'options'     => [
                         // the key will be stored in the db, the value will be shown as label; 
                         "School of Engineering" => "School of Engineering",
@@ -140,13 +140,13 @@ class ProgramCrudController extends CrudController
                         "Faculty of Medicine" => "Faculty of Medicine",
                         "Other" => "Other"
                     ],
-            
+            'wrapper' => ['class' => 'form-group col-md-6'],
           ]);
         
         $this->crud->addField([
             'name' => 'department', // The db column name
             'label' => "Department", // Table column heading
-            'type' => 'radio',
+            'type' => 'select_from_array',
             'options'     => [
                 // the key will be stored in the db, the value will be shown as label; 
                 "Community, Culture and Global Studies" => "Community, Culture and Global Studies",
@@ -162,7 +162,7 @@ class ProgramCrudController extends CrudController
                 "Earth, Environmental and Geographic Sciences" => "Earth, Environmental and Geographic Sciences",
                 "Other" => "Other"
             ],
-    
+            'wrapper' => ['class' => 'form-group col-md-6'],
           ]);
 
         $this->crud->addField([   // CustomHTML
@@ -174,7 +174,7 @@ class ProgramCrudController extends CrudController
         $this->crud->addField([
             'name' => 'level', // The db column name
             'label' => "Level", // Table column heading
-            'type' => 'radio',
+            'type' => 'select_from_array',
             'options'     => [
                 // the key will be stored in the db, the value will be shown as label; 
                 "Undergraduate" => "Undergraduate",
@@ -182,12 +182,13 @@ class ProgramCrudController extends CrudController
                 "Other" => "Other"
                 
             ],
+            'wrapper' => ['class' => 'form-group col-md-4'],
           ]);
         
         $this->crud->addField([   // radio
             'name'        => 'status', // the name of the db column
             'label'       => 'Status', // the input label
-            'type'        => 'radio',
+            'type'        => 'select_from_array',
             'options'     => [
                 // the key will be stored in the db, the value will be shown as label; 
                 -1 => "Not Configured",
@@ -195,6 +196,7 @@ class ProgramCrudController extends CrudController
             ],
             // optional
             //'inline'      => false, // show the radios all on the same line?
+            'wrapper' => ['class' => 'form-group col-md-4'],
         ]);
 
         $this->crud->addField([  
@@ -206,6 +208,7 @@ class ProgramCrudController extends CrudController
             'entity'       => 'users', // the method that defines the relationship in your Model
             'attribute'    => 'email', // foreign key attribute that is shown to user
             'model'        => "App\Models\User", // foreign key model
+            'wrapper' => ['class' => 'form-group col-md-4'],
          ]);
         
 
@@ -260,8 +263,8 @@ class ProgramCrudController extends CrudController
                             'label'   => 'PLO',
                             'columns' => [
                                 'pl_outcome_id'     => 'id-hidden',
-                                'plo_shortphrase'   => 'PLO Shortphrase-text-req',
-                                'pl_outcome'        => 'Program learning Outcome-text-req'
+                                'plo_shortphrase'   => 'PLO Shortphrase-text-treq',
+                                'pl_outcome'        => 'Program learning Outcome-text-treq'
                             ],
                             'wrapper' => ['class' => 'hidden-label form-group col-sm-12'],
                             'max' => 20,
@@ -270,106 +273,6 @@ class ProgramCrudController extends CrudController
                     ]
                     
         ]);
-        //start of PLO crud
-        //***********
-        $req =  $this->crud->getRequest()->request->all();
-        if($req && count($req)){
-            $value = $req['ProgramOC'];            
-            $jdata = json_decode($value);    
-            if(!is_array($jdata))$jdata = [];  
-            //**********
-            //crud for categories
-            //**********
-            $existingCats =  \App\Models\PLOCategory::where('program_id', '=', $prgID)->get();      //all cats in the db for this program
-            $setCats = [];  //this is the set of ids for easy db access
-            $setDel = [];
-            foreach($existingCats as $cat){array_push($setCats,$cat->plo_category_id);}
-            $nSc = [];      //rows already in the DB (they have an ID)   
-            foreach($jdata as $row){
-                if(property_exists($row, "plo_category_id"))
-                    array_push($nSc,$row->plo_category_id);
-            }
-            $setDel = array_filter($setCats, function($element) use($nSc){  //filters from the db records those not present on the page. these are deleted
-                return !(in_array($element, $nSc));
-            });
-            $aData = [];
-            foreach($jdata as $key => $row){
-                $item = json_decode(json_encode($row),true);
-                if($item['plo_category'] == "Uncategorized"){$aData[$key] = $item;continue;} //do not insert uncategorized as a category
-                if(property_exists($row, "plo_category_id") && $row->plo_category_id != ""){
-                    $id = $row->plo_category_id;
-                    if(in_array($id, $setCats))
-                        PLOCategory::where('plo_category_id', $id)->update(['plo_category' => $row->plo_category]);
-                }
-                else{
-                    $res = DB::table('p_l_o_categories')->insertGetId(['program_id' => $prgID, 'plo_category' => $row->plo_category]); 
-                    $item['plo_category_id'] = $res;
-                }
-                $aData[$key] = $item;
-            }
-            DB::table('p_l_o_categories')->whereIn('plo_category_id', $setDel)->delete();
-            $sPD = DB::table('program_learning_outcomes')->whereIn('plo_category_id', $setDel)->get(); 
-            $setPendingDel = [];
-            foreach($sPD as $obj){array_push($setPendingDel,$obj->pl_outcome_id);}
-            //these no longer exist due to their category being destroyed
-            DB::table('program_learning_outcomes')->whereIn('pl_outcome_id', $setPendingDel)->delete();
-            DB::table('outcome_maps')->whereIn('pl_outcome_id', $setPendingDel)->delete();
-            //*************
-            //for each category:: crud for PLOs  //
-            //**********
-            $ploObjs = [];
-            $existingPLOs =  \App\Models\ProgramLearningOutcome::where('program_id', $prgID)->get(); 
-            $setPLOs = [];  //this is the set of ids for easy db access
-            foreach($existingPLOs as $plo){array_push($setPLOs,$plo->pl_outcome_id);}
-            $nSc = []; 
-            
-            foreach($aData as $cat){//
-                if($cat['plo_category'] == "Uncategorized")$cat['plo_category'] = NULL;  
-                $value = json_decode($cat['programOutcome']);
-                if(is_array($value) && count($value) > 0){
-                    foreach($value as $row){
-                        if(property_exists($row, "pl_outcome_id"))
-                            array_push($nSc,$row->pl_outcome_id);
-                        $arRow = json_decode(json_encode($row),true);//turns the obj to an array
-                        $arRow['plo_category_id'] = $cat['plo_category_id']; //this will be used later
-                        array_push($ploObjs,$arRow);
-                    }
-                }  
-            }
-            
-            $setDel = array_filter($setPLOs, function($element) use($nSc){  //filters from the db records those still present on the page. others are deleted
-                return !(in_array($element, $nSc));
-            });
-                           //rather than updating it, so it should be fixed. doesnt work because the list contains the ids of moved records despite their having been deleted.
-            foreach($ploObjs as $row){
-                if(isset($row['pl_outcome_id'])){
-                    $id = $row['pl_outcome_id'];
-                    if(in_array($id, $setPLOs)){
-                        if(isset($row['plo_category_id']) && $row['plo_category_id'])
-                            ProgramLearningOutcome::where('pl_outcome_id', $id)
-                                ->update(['plo_shortphrase' => $row['plo_shortphrase'], 'pl_outcome' => $row['pl_outcome'], 'plo_category_id' => $row['plo_category_id']]);
-                        else
-                            ProgramLearningOutcome::where('pl_outcome_id', $id)
-                                ->update(['plo_shortphrase' => $row['plo_shortphrase'], 'pl_outcome' => $row['pl_outcome'], 'plo_category_id' => NULL]);
-                    }
-                }
-                else{
-                    if(isset($row['plo_category_id']) && $row['plo_category_id'])
-                        ProgramLearningOutcome::create(['program_id' => $prgID, 'plo_shortphrase' => $row['plo_shortphrase'],
-                            'pl_outcome' => $row['pl_outcome'], 'plo_category_id' => $row['plo_category_id']]);
-                    else
-                        ProgramLearningOutcome::create(['program_id' => $prgID, 'plo_shortphrase' => $row['plo_shortphrase'],
-                            'pl_outcome' => $row['pl_outcome'], 'plo_category_id' => NULL]);
-                }
-            
-            }
-            DB::table('program_learning_outcomes')->whereIn('pl_outcome_id', $setDel)->delete(); //by deleting here, I am avoiding the refactoring for now. Tis will delete and recreate a record
-            DB::table('outcome_maps')->whereIn('pl_outcome_id', $setDel)->delete();  
-                
-            
-        }
-        //end of PLO crud
-        //***********
         
         $this->crud->addField([
                     'name'    => 'MappingScaleLevels',
@@ -388,21 +291,19 @@ class ProgramCrudController extends CrudController
         
         $this->crud->addField([
                     'name'    => 'Courses',
-                    'type'    => 'select2_multiple',
+                    'type'    => 'select_categorical',
                     'label'   => 'Courses',
                     'entity'    => 'courses', // the method that defines the relationship in your Model
-                    'model'     => "App\Models\Course", // foreign key model
-                    'attribute' => 'course_title',
-                   /* 'attribute' => [
+                    'model'     => "App\Models\Course", // foreign key model                    
+                    'attribute' => [
                         'course_code', // foreign key attribute that is shown to user
-                        'course_num',
-                        'course_title',
+                        'course_num',                        
                     ],
-                    'category_attribute' => 'course_code', //the attribute to group by */
+                    'tooltip'  => 'course_title', //this will show up when mousing over items
+                    'group_by_cat' => 'course_code', //the attribute to group by 
                     'pivot'     => true, // on create&update, do you need to add/delete pivot table entries?
         ]);
-     
-        
+       
     }
 
     protected function setupShowOperation()

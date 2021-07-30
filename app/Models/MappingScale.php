@@ -14,7 +14,7 @@ class MappingScale extends Model
     protected $table = 'mapping_scales';
     protected $primaryKey = 'map_scale_id';
     
-    protected $fillable = ['map_scale_id', 'title','abbreviation','description','colour'];
+    protected $fillable = ['map_scale_id', 'title','abbreviation','description','colour','mapping_scale_categories_id'];
 
     public function programs()
     {
