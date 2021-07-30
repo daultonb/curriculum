@@ -96,7 +96,7 @@ class StandardCategoryCrudController extends CrudController
             'name'  => 'Standardtable',
             'label' => 'Standards',
             'type'  => 'repeatable',
-            'entity' => 'standards',
+            //'entity' => 'standards',
             'fields' => [
                 [
                     'name'    => 'standard_id',

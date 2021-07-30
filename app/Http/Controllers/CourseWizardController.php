@@ -4,19 +4,18 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Program;
-use App\Models\ProgramUser;
 use App\Models\CourseUser;
 use App\Models\User;
 use App\Models\ProgramLearningOutcome;
 use App\Models\Course;
 use App\Models\LearningOutcome;
+use App\Models\CourseOptionalPriorities;
 use App\Models\OutcomeMap;
 use App\Models\AssessmentMethod;
 use App\Models\Custom_assessment_methods;
 use App\Models\Custom_learning_activities;
 use App\Models\OutcomeAssessment;
 use App\Models\LearningActivity;
-use App\Models\OutcomeActivity;
 use App\Models\OptionalPriorities;
 use App\Models\MappingScale;
 use App\Models\PLOCategory;
@@ -295,20 +294,14 @@ class CourseWizardController extends Controller
         }
        
 
-        $learning_outcomes_l_outcome_ids = LearningOutcome::where('course_id', 1)->pluck('l_outcome_id')->toArray();
-        $outcome_maps_pl_outcome_ids = OutcomeMap::whereIn('l_outcome_id', $learning_outcomes_l_outcome_ids)->pluck('pl_outcome_id')->toArray();
-        $optional_PLOs = ProgramLearningOutcome::whereIn('pl_outcome_id', $outcome_maps_pl_outcome_ids)->pluck('plo_shortphrase')->toArray();
+        //retrieve descriptions for the optional priorities which belong to the course being edited
+        $course_optional_priorities_op_ids = CourseOptionalPriorities::where('course_id', $course_id)->pluck('op_id');
+        $course_optional_priorities_descriptions = OptionalPriorities::whereIn('op_id', $course_optional_priorities_op_ids)->pluck('optional_priority')->toArray();
 
         return view('courses.wizard.step6')->with('l_outcomes', $l_outcomes)->with('course', $course)->with('mappingScales', $mappingScales)->with('courseUsers', $courseUsers)->with('user', $user)
                                         ->with('lo_count',$lo_count)->with('am_count', $am_count)->with('la_count', $la_count)->with('oAct', $oAct)->with('oAss', $oAss)->with('outcomeMapsCount', $outcomeMapsCount)
                                         ->with('optional_priorities',$op)->with('optional_PLOs',$optional_PLOs)
                                         ->with('standard_outcomes', $standard_outcomes);
-        
-        /*return view('courses.wizard.step6')->with('l_outcomes', $l_outcomes)->with('course', $course)->with('mappingScales', $mappingScales)->with('courseUsers', $courseUsers)->with('user', $user)
-                                        ->with('lo_count',$lo_count)->with('am_count', $am_count)->with('la_count', $la_count)->with('oAct', $oAct)->with('oAss', $oAss)->with('outcomeMapsCount', $outcomeMapsCount)
-                                        ->with('optional_priorities',$optional_priorities[1])->with('shaping_ubc',$optional_priorities[2])->with('ubc_mandate_letters',$optional_priorities[0])->with('okanagan_2040_outlook',$optional_priorities[3])
-                                        ->with('ubc_indigenous_plan',$optional_priorities[4])->with('ubc_climate_priorities',$optional_priorities[5])->with('optional_PLOs',$optional_PLOs)
-                                        ->with('standard_outcomes', $standard_outcomes);*/
     }
     
     public function step7($course_id)
