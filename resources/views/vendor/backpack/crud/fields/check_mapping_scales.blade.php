@@ -52,12 +52,13 @@
     @endphp
     <div class="row">
         @foreach ($field['options']['categories'] as $catname => $category)
-        <div class="category"><h4>{{ $field['model_categories']::where('mapping_scale_categories_id', $catname+1)->first()->msc_title }}</h4>
-            <div class="col-12 bg-light">
+        <div class="col-sm-12 category"><h5 style="margin:5px 0 0 0;">{{ $field['model_categories']::where('mapping_scale_categories_id', $catname+1)->first()->msc_title }}</h5>
+            <div class="bg-light">
                 <label class="font-weight-normal">
                     <input type="checkbox" name="select_all"> Select all
                 </label>
             </div>
+            <div class="card-body row" style="padding:0;">
             @foreach ($category as $attr => $option)
                 <?php $pKey = "";
                 $disp = "";
@@ -67,19 +68,19 @@
                         continue;
                     }
                     if(strlen($item) == 7 && $item[0] == "#"){
-                        $disp .= "<span style=\"background-color:$item;min-width:25px;\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>";
+                        $disp .= "<br><span style=\"background-color:$item;min-width:25px;\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>";
                     }
-                    else{ $disp .= "<span>$item</span>&nbsp;&nbsp;"; }
+                    else{ $disp = "<span>$item</span>&nbsp;&nbsp;" . $disp; }
                 }
                 ?>
-                <div class="col-sm-4">
-                    <div class="checkbox">
-                      <label class="font-weight-normal">
-                        <input type="checkbox" value="{{ $pKey }}"> {!! $disp !!}
-                      </label>
+                <div class="col-sm-3">
+                    <div class="checkbox" style="padding:0 5px;">
+                        <input type="checkbox" value="{{ $pKey }}"><br>
+                        <label class="font-weight-normal">{!! $disp !!}</label>      
                     </div>
                 </div>
             @endforeach
+            </div>
         </div>
         @endforeach
     </div>
