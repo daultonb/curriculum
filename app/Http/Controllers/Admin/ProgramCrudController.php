@@ -290,7 +290,6 @@ class ProgramCrudController extends CrudController
                     'pivot'     => true, // on create&update, do you need to add/delete pivot table entries?
         ]);
         
-
         $this->crud->addField([
                     'name'    => 'Courses',
                     'type'    => 'select_categorical',
