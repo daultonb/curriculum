@@ -53,7 +53,11 @@
     <div class="row">
         @foreach ($field['options']['categories'] as $catname => $category)
         <div class="category"><h4>{{ $field['model_categories']::where('mapping_scale_categories_id', $catname+1)->first()->msc_title }}</h4>
-            <input type="checkbox" name="select_all"> Select all
+            <div class="col-12 bg-light">
+                <label class="font-weight-normal">
+                    <input type="checkbox" name="select_all"> Select all
+                </label>
+            </div>
             @foreach ($category as $attr => $option)
                 <?php $pKey = "";
                 $disp = "";
@@ -136,7 +140,7 @@
 
                 // when the select all button is clicked, modfy all siblings, then corrent hidden input
                 $('input[name="select_all"]').click(function() {
-                    $(this).siblings().find('input[type=checkbox]').prop('checked', $(this).prop('checked'));
+                    $(this).closest("div").siblings().find('input[type=checkbox]').prop('checked', $(this).prop('checked'));
                     updateHiddenInput();
                 });
             }
