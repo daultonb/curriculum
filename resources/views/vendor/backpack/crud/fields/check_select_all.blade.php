@@ -53,6 +53,7 @@
     <div class="row">
         @foreach ($field['options']['categories'] as $catname => $category)
         <div class="category"><h4>{{ $field['model_categories']::where('mapping_scale_categories_id', $catname+1)->first()->msc_title }}</h4>
+            <input type="checkbox" name="select_all"> Select all
             @foreach ($category as $attr => $option)
                 <?php $pKey = "";
                 $disp = "";
@@ -113,12 +114,12 @@
                   }
                 });
 
-                // when a checkbox is clicked
                 // set the correct value on the hidden input
-                checkboxes.click(function() {
+                // this is run once a checkbox is clicked
+                function updateHiddenInput() {
                   var newValue = [];
 
-                  checkboxes.each(function() {
+                  checkboxes.not('input[name="select_all"]').each(function() {
                     if ($(this).is(':checked')) {
                       var id = $(this).val();
                       newValue.push(id);
@@ -126,7 +127,17 @@
                   });
 
                   hidden_input.val(JSON.stringify(newValue));
+                }
 
+                // when a checkbox is clicked
+                checkboxes.click(function() {
+                    updateHiddenInput();
+                });
+
+                // when the select all button is clicked, modfy all siblings, then corrent hidden input
+                $('input[name="select_all"]').click(function() {
+                    $(this).siblings().find('input[type=checkbox]').prop('checked', $(this).prop('checked'));
+                    updateHiddenInput();
                 });
             }
         </script>
