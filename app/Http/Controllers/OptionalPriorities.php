@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use App\Models\Optional_priorities;
+use App\Models\OptionalPriorities;
 
 class OptionalPriorities extends Controller
 {

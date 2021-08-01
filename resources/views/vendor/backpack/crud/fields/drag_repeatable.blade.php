@@ -25,7 +25,13 @@
   @if (isset($field['hint']))
       <p class="help-block text-muted text-sm">{!! $field['hint'] !!}</p>
   @endif
-
+ <br><div class="unpadded hidden-label card-body row">
+@foreach($field['fields'] as $subfield)
+    @if (isset($subfield['lclass']))
+    <div id="labelspan" class="hidden-label {!!$subfield['lclass']!!}">{!!$subfield['label']!!}</div>
+    @endif
+@endforeach
+  </div>
 
 
 <div class="container-repeatable-elements">
@@ -92,6 +98,9 @@
             display:none !important;            
         }
         
+        .unpadded{
+            padding: 0;
+        }
         .hidden-label{
             margin: 0;
         }

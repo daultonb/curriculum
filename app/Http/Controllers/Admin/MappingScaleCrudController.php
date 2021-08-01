@@ -69,18 +69,27 @@ class MappingScaleCrudController extends CrudController
     {
         $this->crud->addField([
             'name' => 'title',
-            'label' => 'Title',
-            'type' => 'text'
+            'label' => 'Title&nbsp;&nbsp;<span style=color:red>*</span>',
+            'type' => 'valid_text',
+            'attributes' => [
+                    'req' => true
+            ]
         ]);
         $this->crud->addField([
             'name' => 'abbreviation',
-            'label' => 'Abbreviation',
-            'type' => 'text'
+            'label' => 'Abbreviation&nbsp;&nbsp;<span style=color:red>*</span>',
+            'type' => 'text',
+            'attributes' => [
+                    'req' => true
+            ]
         ]);
         $this->crud->addField([
             'name' => 'description',
-            'label' => 'Description',
-            'type' => 'text'
+            'label' => 'Description&nbsp;&nbsp;<span style=color:red>*</span>',
+            'type' => 'text',
+            'attributes' => [
+                    'req' => true
+            ]
         ]);
         $this->crud->addField([
             'name' => 'colour',
@@ -106,18 +115,27 @@ class MappingScaleCrudController extends CrudController
         //$this->setupCreateOperation();
         $this->crud->addField([
             'name' => 'title',
-            'label' => 'Title',
-            'type' => 'text'
+            'label' => 'Title&nbsp;&nbsp;<span style=color:red>*</span>',
+            'type' => 'text',
+            'attributes' => [
+                    'req' => true
+            ]
         ]);
         $this->crud->addField([
             'name' => 'abbreviation',
-            'label' => 'Abbreviation',
-            'type' => 'text'
+            'label' => 'Abbreviation&nbsp;&nbsp;<span style=color:red>*</span>',
+            'type' => 'text',
+            'attributes' => [
+                    'req' => true
+            ]
         ]);
         $this->crud->addField([
             'name' => 'description',
-            'label' => 'Description',
-            'type' => 'text'
+            'label' => 'Description&nbsp;&nbsp;<span style=color:red>*</span>',
+            'type' => 'text',
+            'attributes' => [
+                    'req' => true
+            ]
         ]);
         $this->crud->addField([
             'name' => 'colour',

@@ -62,7 +62,7 @@ class MappingScaleCategoryCrudController extends CrudController
 
        $this->crud->addField([
             'name' => 'msc_title', // The db column name
-            'label' => "Category name", // Table column heading
+            'label' => "Category name&nbsp;&nbsp;<span style=color:red>*</span>", // Table column heading
             'type' => 'valid_text',
             'attributes' => [
                         'req' => 'true',
@@ -71,7 +71,7 @@ class MappingScaleCategoryCrudController extends CrudController
 
          $this->crud->addField([
             'name' => 'description', // The db column name
-            'label' => "Description", // Table column heading
+            'label' => "Description&nbsp;&nbsp;<span style=color:red>*</span>", // Table column heading
             'type' => 'textarea',
              'attributes' => [
                         'req' => 'true',
@@ -111,7 +111,7 @@ class MappingScaleCategoryCrudController extends CrudController
                 ],
                 [
                     'name' => 'title',
-                    'label' => 'Title',
+                    'label' => 'Title&nbsp;&nbsp;<span style=\"color:red\">*</span>',
                     'type' => 'text',
                     'attributes' => [
                         'req' => 'true',
@@ -120,7 +120,7 @@ class MappingScaleCategoryCrudController extends CrudController
                 ],
                 [
                     'name' => 'abbreviation',
-                    'label' => 'Abbreviation',
+                    'label' => 'Abbreviation&nbsp;&nbsp;<span style=\"color:red\">*</span>',
                     'type' => 'text',
                     'attributes' => [
                         'req' => 'true',
@@ -135,7 +135,7 @@ class MappingScaleCategoryCrudController extends CrudController
                 ],
                 [
                     'name' => 'description',
-                    'label' => 'Description',
+                    'label' => 'Description&nbsp;&nbsp;<span style=\"color:red\">*</span>',
                     'type' => 'text',
                     'attributes' => [
                         'req' => 'true',

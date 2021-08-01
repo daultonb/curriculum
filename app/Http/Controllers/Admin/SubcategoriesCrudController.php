@@ -107,7 +107,7 @@ class SubcategoriesCrudController extends CrudController
 
         $this->crud->addField([
             'name'=>'subcat_name',
-            'label'=>'Subcategory Name',
+            'label'=>'Subcategory Name&nbsp;&nbsp;<span style=color:red>*</span>',
             'type'=>'valid_textarea',
             'req' => 'true',
             'attributes' => [ 'req' => 'true']
@@ -115,7 +115,7 @@ class SubcategoriesCrudController extends CrudController
 
         $this->crud->addField([
             'name'=>'subcat_desc',
-            'label'=>'Subcategory Description',
+            'label'=>'Subcategory Description&nbsp;&nbsp;<span style=color:red>*</span>',
             'type'=>'textarea',
             'req' => 'true',
             'attributes' => [ 'req' => 'true']
@@ -165,14 +165,14 @@ class SubcategoriesCrudController extends CrudController
         
         $this->crud->addField([
             'name'=>'subcat_name',
-            'label'=>'Subcategory Name',
+            'label'=>'Subcategory Name&nbsp;&nbsp;<span style=color:red>*</span>',
             'type'=>'valid_textarea',
             'attributes' => [ 'req' => 'true']
         ]);
 
         $this->crud->addField([
             'name'=>'subcat_desc',
-            'label'=>'Subcategory Description',
+            'label'=>'Subcategory Description&nbsp;&nbsp;<span style=color:red>*</span>',
             'type'=>'textarea',
             'attributes' => [ 'req' => 'true']
         ]);

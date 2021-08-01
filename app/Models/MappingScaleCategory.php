@@ -15,7 +15,7 @@ class MappingScaleCategory extends Model
 
     protected $primaryKey = 'mapping_scale_categories_id';
 
-    protected $fillable = ['title', 'description', 'Mappingtable'];
+    protected $fillable = ['title', 'description', 'Mappingtable', 'msc_title'];
 
     public function mappingScales() {
         return $this->hasMany(MappingScale::class, 'mapping_scale_categories_id', 'mapping_scale_categories_id');

@@ -39,13 +39,13 @@ class LearningOutcomeCrudController extends CrudController{
         
          $this->crud->addField([
             'name' => 'clo_shortphrase', // The db column name
-            'label' => "CLO Shortphrase", // Table column heading
+            'label' => "CLO Shortphrase&nbsp;&nbsp;<span style=\"color:red\">*</span>", // Table column heading
             'type' => 'Text'
          ]);
          
          $this->crud->addField([
             'name' => 'l_outcome', // The db column name
-            'label' => "Learning Outcome", // Table column heading
+            'label' => "Learning Outcome&nbsp;&nbsp;<span style=\"color:red\">*</span>", // Table column heading
             'type' => 'Text'
          ]);
         
@@ -57,13 +57,13 @@ class LearningOutcomeCrudController extends CrudController{
         
          $this->crud->addField([
             'name' => 'clo_shortphrase', // The db column name
-            'label' => "CLO Shortphrase", // Table column heading
+            'label' => "CLO Shortphrase&nbsp;&nbsp;<span style=\"color:red\">*</span>", // Table column heading
             'type' => 'Text'
          ]);
          
          $this->crud->addField([
             'name' => 'l_outcome', // The db column name
-            'label' => "Learning Outcome", // Table column heading
+            'label' => "Learning Outcome&nbsp;&nbsp;<span style=\"color:red\">*</span>", // Table column heading
             'type' => 'Text'
          ]);         
          $req =  $this->crud->getRequest()->request->all();

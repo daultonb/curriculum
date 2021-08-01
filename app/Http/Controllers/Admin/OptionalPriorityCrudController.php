@@ -109,7 +109,7 @@ class OptionalPriorityCrudController extends CrudController
         ]);*/
         $this->crud->addField([
             'name' => 'optional_priority', // The db column name
-            'label' => "Optional Priority",// Table column heading
+            'label' => "Optional Priority&nbsp;&nbsp;<span style=\"color:red\">*</span>",// Table column heading
             'type' => 'valid_textarea',
             'attributes' => [ 'req' => 'true']
         ]);
@@ -169,7 +169,7 @@ class OptionalPriorityCrudController extends CrudController
         ]);
         $this->crud->addField([
             'name' => 'optional_priority', // The db column name
-            'label' => "Optional Priority",// Table column heading
+            'label' => "Optional Priority&nbsp;&nbsp;<span style=\"color:red\">*</span>",// Table column heading
             'type' => 'valid_textarea',
             'attributes' => [ 'req' => 'true']
         ]);

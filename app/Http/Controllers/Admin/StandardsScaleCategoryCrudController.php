@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Requests\StandardsScaleCategoryRequest;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
-
+use Illuminate\Support\Facades\DB;
 /**
  * Class StandardsScaleCategoryCrudController
  * @package App\Http\Controllers\Admin
@@ -64,7 +64,7 @@ class StandardsScaleCategoryCrudController extends CrudController
 
         $this->crud->addField([
             'name' => 'name', // The db column name
-            'label' => "Standard Scale Category Name", // Table column heading
+            'label' => "Standard Scale Category Name&nbsp;&nbsp;<span style=color:red>*</span>", // Table column heading
             'type' => 'valid_text',
             'attributes' => [
                         'req' => 'true',
@@ -73,7 +73,7 @@ class StandardsScaleCategoryCrudController extends CrudController
 
          $this->crud->addField([
             'name' => 'description', // The db column name
-            'label' => "Description", // Table column heading
+            'label' => "Description&nbsp;&nbsp;<span style=color:red>*</span>", // Table column heading
             'type' => 'textarea',
              'attributes' => [
                         'req' => 'true',
@@ -96,7 +96,7 @@ class StandardsScaleCategoryCrudController extends CrudController
     {
               $this->crud->addField([
             'name' => 'name', // The db column name
-            'label' => "Standard Scale Category Name", // Table column heading
+            'label' => "Standard Scale Category Name&nbsp;&nbsp;<span style=color:red>*</span>", // Table column heading
             'type' => 'valid_text',
             'attributes' => [
                   'req' => 'true',
@@ -126,7 +126,7 @@ class StandardsScaleCategoryCrudController extends CrudController
                 [
                     'name'    => 'title',
                     'type'    => 'Text',
-                    'label'   => 'Title',
+                    'label'   => 'Title&nbsp;&nbsp;<span style=color:red>*</span>',
                     'attributes' => [
                         'req' => 'true',
                         ],
@@ -135,7 +135,7 @@ class StandardsScaleCategoryCrudController extends CrudController
                 [
                     'name'    => 'abbreviation',
                     'type'    => 'text',
-                    'label'   => 'Abbreviation',
+                    'label'   => 'Abbreviation&nbsp;&nbsp;<span style=color:red>*</span>',
                     'attributes' => [
                         'req' => 'true',
                         ],
@@ -159,7 +159,10 @@ class StandardsScaleCategoryCrudController extends CrudController
                 [
                     'name'    => 'description',
                     'type'    => 'textarea',
-                    'label'   => 'Description',  
+                    'label'   => 'Description&nbsp;&nbsp;<span style=color:red>*</span>',  
+                    'attributes' => [
+                        'req' => 'true',
+                        ],
                 ], 
             ],
 

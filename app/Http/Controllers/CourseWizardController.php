@@ -303,12 +303,7 @@ class CourseWizardController extends Controller
                                         ->with('lo_count',$lo_count)->with('am_count', $am_count)->with('la_count', $la_count)->with('oAct', $oAct)->with('oAss', $oAss)->with('outcomeMapsCount', $outcomeMapsCount)
                                         ->with('optional_priorities',$op)->with('optional_PLOs',$optional_PLOs)
                                         ->with('standard_outcomes', $standard_outcomes);
-        
-        /*return view('courses.wizard.step6')->with('l_outcomes', $l_outcomes)->with('course', $course)->with('mappingScales', $mappingScales)->with('courseUsers', $courseUsers)->with('user', $user)
-                                        ->with('lo_count',$lo_count)->with('am_count', $am_count)->with('la_count', $la_count)->with('oAct', $oAct)->with('oAss', $oAss)->with('outcomeMapsCount', $outcomeMapsCount)
-                                        ->with('optional_priorities',$optional_priorities[1])->with('shaping_ubc',$optional_priorities[2])->with('ubc_mandate_letters',$optional_priorities[0])->with('okanagan_2040_outlook',$optional_priorities[3])
-                                        ->with('ubc_indigenous_plan',$optional_priorities[4])->with('ubc_climate_priorities',$optional_priorities[5])->with('optional_PLOs',$optional_PLOs)
-                                        ->with('standard_outcomes', $standard_outcomes);*/
+       
     }
     
     public function step7($course_id)
@@ -406,7 +401,7 @@ class CourseWizardController extends Controller
                                 ->join('learning_outcomes', 'outcome_maps.l_outcome_id', '=', 'learning_outcomes.l_outcome_id' )
                                 ->select('outcome_maps.map_scale_value','outcome_maps.pl_outcome_id','program_learning_outcomes.pl_outcome','outcome_maps.l_outcome_id', 'learning_outcomes.l_outcome')
                                 ->where('learning_outcomes.course_id','=',$course_id)->get();
-        $optional_PLOs = Optional_priorities::where('course_id', $course_id)->get();
+        $optional_PLOs = DB::table('course_optional_priorities')->where('course_id', $course_id)->get();
 
         $assessmentMethodsTotal = 0;
         foreach ($a_methods as $a_method) {

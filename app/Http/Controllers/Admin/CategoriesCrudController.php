@@ -90,7 +90,7 @@ class CategoriesCrudController extends CrudController
 
         $this->crud->addField([
             'name'=>'cat_name',
-            'label'=>'Category Name',
+            'label'=>'Category Name&nbsp;&nbsp;<span style=color:red>*</span>',
             'type' =>'valid_text',
             'attributes' => [ 'req' => 'true']
         ]);
@@ -120,7 +120,7 @@ class CategoriesCrudController extends CrudController
 
         $this->crud->addField([
             'name'=>'cat_name',
-            'label'=>'Category Name',
+            'label'=>'Category Name&nbsp;&nbsp;<span style=color:red>*</span>',
             'type' =>'valid_text',
             'attributes' => [ 'req' => 'true']
         ]);

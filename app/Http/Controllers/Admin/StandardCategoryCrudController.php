@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Requests\StandardCategoryRequest;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
+use Illuminate\Support\Facades\DB;
 
 
 /**
@@ -64,7 +65,7 @@ class StandardCategoryCrudController extends CrudController
         
         $this->crud->addField([
             'name' => 'sc_name', // The db column name
-            'label' => "Standard Category Name", // Table column heading
+            'label' => "Standard Category Name&nbsp;&nbsp;<span style=color:red>*</span>", // Table column heading
             'type' => 'valid_text',
             'attributes' => [
                         'req' => 'true',
@@ -85,7 +86,7 @@ class StandardCategoryCrudController extends CrudController
         
         $this->crud->addField([
             'name' => 'sc_name', // The db column name
-            'label' => "Standard Category Name", // Table column heading
+            'label' => "Standard Category Name&nbsp;&nbsp;<span style=color:red>*</span>", // Table column heading
             'attributes' => [
                         'req' => 'true',
                         ],
@@ -110,7 +111,7 @@ class StandardCategoryCrudController extends CrudController
                 [
                     'name'    => 's_shortphrase',
                     'type'    => 'text',
-                    'label'   => 'Standard Shortphrase',
+                    'label'   => 'Standard Shortphrase&nbsp;&nbsp;<span style=color:red>*</span>',
                     'attributes' => [
                         'req' => 'true',
                         ],
@@ -119,7 +120,7 @@ class StandardCategoryCrudController extends CrudController
                 [
                     'name'    => 's_outcome',
                     'type'    => 'textarea',
-                    'label'   => 'Standard Outcome', 
+                    'label'   => 'Standard Outcome&nbsp;&nbsp;<span style=color:red>*</span>', 
                     'attributes' => [
                         'req' => 'true',
                         ],

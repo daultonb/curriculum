@@ -121,7 +121,7 @@ class CourseCrudController extends CrudController
 
        $this->crud->addField([
             'name' => 'course_code', // The db column name
-            'label' => "Course<br>Code", // Table column heading
+            'label' => "Course<br>Code&nbsp;&nbsp;<span style=\"color:red\">*</span>", // Table column heading
             'type' => 'Text',
             'attributes' => [ 'req' => 'true',
                             'size' => '4',
@@ -131,7 +131,7 @@ class CourseCrudController extends CrudController
 
         $this->crud->addField([
             'name' => 'course_num', // The db column name
-            'label' => "Course<br>Number", // Table column heading
+            'label' => "Course<br>Number&nbsp;&nbsp;<span style=\"color:red\">*</span>", // Table column heading
             'type' => 'number',
             'attributes' => [ 'req' => 'true',
                             'size' => '3',
@@ -150,7 +150,7 @@ class CourseCrudController extends CrudController
         
         $this->crud->addField([
             'name' => 'course_title', // The db column name
-            'label' => "Course Title", // Table column heading
+            'label' => "Course Title&nbsp;&nbsp;<span style=\"color:red\">*</span>", // Table column heading
             'type' => 'valid_text',
              'attributes' => [ 'req' => 'true' ],
             'wrapper' => ['class' => 'form-group col-md-12'],
@@ -338,8 +338,8 @@ class CourseCrudController extends CrudController
               'name' => 'CLOtable', //name of the getter/setter in course model 
              'columns' => [     
                  'l_outcome_id' => 'id-hidden',
-                 'l_outcome'    => 'Learning Outcome (Shortphrase)-text-req',   
-                 'clo_shortphrase'    => 'Course Learning Outcome-text-req',
+                 'l_outcome'    => 'Learning Outcome (Shortphrase)-text-req-30',   //4th arguement sets the columnspan of the column
+                 'clo_shortphrase'    => 'Course Learning Outcome-text-req-70',
              ],
              
              'max'     => 20,
@@ -390,20 +390,22 @@ class CourseCrudController extends CrudController
                  ],
                  [
                    'name' => 'a_method',
-                   'label' => 'Assessment Method',
+                   'label' => 'Assessment Method&nbsp;&nbsp;<span style=color:red>*</span>',
                    'type' => 'list_select', 
                    'model' => 'App\Models\Custom_assessment_methods',
                    'attribute' => 'custom_methods',
-                   'foreign-ref' => 'custom_methods',
+                   'foreign-ref' => 'custom_methods', //the column from which the strings are pulled
                    'attributes' => [ 'req' => 'true' ],  //this is actually an input, not a select. 
-                   'wrapper' => ['class' => 'hidden-label form-group col-sm-9']
+                   'wrapper' => ['class' => 'hidden-label form-group col-sm-9'],
+                   'lclass' => 'form-group col-sm-9', //label class
                  ],
                  [
                    'name' => 'weight',
-                   'label' => 'Weight (%)',
+                   'label' => 'Weight (%)&nbsp;&nbsp;<span style=color:red>*</span>',
                    'type' => 'number',
                    'attributes' => [ 'req' => 'true' ],
-                   'wrapper' => ['class' => 'totaled_weight_ hidden-label form-group col-sm-3']
+                   'wrapper' => ['class' => 'totaled_weight_ hidden-label form-group col-sm-3'],
+                     'lclass' => 'form-group col-sm-3', //label class
                  ],                 
              ],
              
@@ -437,7 +439,7 @@ class CourseCrudController extends CrudController
              'ajax' => true,  
              'columns' => [     
                  'l_activity_id' => 'id-hidden',
-                 'l_activity'        => 'Teaching and Learning Activities-text-req',                
+                 'l_activity'        => 'Teaching and Learning Activity-text-req',                
              ],
              
              'max'     => 20,
@@ -457,7 +459,7 @@ class CourseCrudController extends CrudController
                    . "<tr><th>Course Learning Outcomes or Competencies</th><th>Student Assessment Methods</th><th>Teaching and Learning Activities</th></tr>";
                      
            //by getting the set of ids for la and am, i can query only those oas and oac that belong to this course (not referenced directly by courseID)
-           
+           $chkStyle = "style=\"outline:1px double black;\"";
            $OAS = DB::table('outcome_assessments')->whereIn('a_method_id',  $setOfAM)->get();
            $OAC = DB::table('outcome_activities')->whereIn('l_activity_id', $setOfLA)->get();
            foreach($CLOs as $clo){
@@ -471,7 +473,7 @@ class CourseCrudController extends CrudController
                    $amID = $am->a_method_id;
                    $oas = $OAS->where('a_method_id', '=', $amID)->where('l_outcome_id', '=', $cID);
                    $ckd = (count($oas)> 0)?"checked":"";
-                   $amStr .= "<li>". $am->a_method ."<input type=\"checkbox\" name=\"outcomea-oas-$cID-$amID\" $ckd></li>";
+                   $amStr .= "<li>". $am->a_method ."&nbsp;&nbsp;<input type=\"checkbox\" $chkStyle name=\"outcomea-oas-$cID-$amID\" $ckd></li>";
                }
                $tRow .= "<td id=\am-$cID\">$amStr</td>";
                //now the outcome_activities
@@ -480,7 +482,7 @@ class CourseCrudController extends CrudController
                    $laID = $la->l_activity_id;
                    $oac = $OAC->where('l_activity_id', '=', $laID)->where('l_outcome_id', '=', $cID);
                    $ckd = (count($oac)> 0)?"checked":"";
-                   $laStr .= "<li>". $la->l_activity ."<input type=\"checkbox\" name=\"outcomea-oac-$cID-$laID\" $ckd></li>";
+                   $laStr .= "<li>". $la->l_activity ."&nbsp;&nbsp;<input type=\"checkbox\" $chkStyle name=\"outcomea-oac-$cID-$laID\" $ckd></li>";
                }
                $tRow .= "<td id=\am-$cID\">$laStr</ul></td></tr>";
                $custHTML .= $tRow;  
@@ -547,8 +549,8 @@ class CourseCrudController extends CrudController
                 foreach($MScP as $msp)array_push($setOfMScP,$msp->map_scale_id);
                 $MScales = DB::table('mapping_scales')->whereIn('map_scale_id', $setOfMScP)->get();
                 $msStr = "";
-                foreach($MScales as $scale)$msStr .= "<th title=\"".$scale->description."\">". $scale->abbreviation."</th>";
-                $msStr .= "<th title=\"Not Applicable\">N/A</th>";
+                foreach($MScales as $scale)$msStr .= "<th width=\"6%\" title=\"".$scale->description."\">". $scale->abbreviation."</th>";
+                $msStr .= "<th width=\"6%\" title=\"Not Applicable\">N/A</th>";
                 foreach($CLOs as $clo){
                     $custHTML .= "<tr><th colspan=\"5\">$clo->clo_shortphrase</th></tr><tr><th>" . 
                             $program->program .
@@ -561,7 +563,7 @@ class CourseCrudController extends CrudController
                                     ($i == $MScales->count()+1 && $map->count() != 0 && $map->first()->map_scale_value == 0))?"checked" : "";
                             $val = "value=\"0\"";
                             if($i <= $MScales->count())$val = "value=\"".$MScales[$i-1]->map_scale_id."\"";
-                            $custHTML.="<td><input type=\"radio\" name=\"map_".$clo->l_outcome_id."_".$plo->pl_outcome_id."[]\" $chk $val></td>";
+                            $custHTML.="<td width=\"6%\"><input type=\"radio\" name=\"map_".$clo->l_outcome_id."_".$plo->pl_outcome_id."[]\" $chk $val></td>";
                         }
                     }
                 }
@@ -612,8 +614,8 @@ class CourseCrudController extends CrudController
                 $custHTML .= "<div $PFunc><div class=\"accBar\" style=\"$buttonClass1\"><h3 class=\"crudribbon\">$standardsCat->sc_name (using $scaleCat->name)</h3></div></div>"
                            . "<table id=\"minmap\" class=\"table table-sm table-striped m-b-0\" hidden>";
                 $msStr = "";
-                foreach($MScales as $scale)$msStr .= "<th title=\"".$scale->description."\">". $scale->abbreviation."</th>";
-                $msStr .= "<th title=\"Not Applicable\">N/A</th>";
+                foreach($MScales as $scale)$msStr .= "<th width=\"6%\" title=\"".$scale->description."\">". $scale->abbreviation."</th>";
+                $msStr .= "<th width=\"6%\" title=\"Not Applicable\">N/A</th>";
                 
                 foreach($CLOs as $clo){
                     $custHTML .= "<tr><th colspan=\"5\">$clo->clo_shortphrase</th></tr><tr><th>" . 
@@ -627,7 +629,7 @@ class CourseCrudController extends CrudController
                                     ($i == $MScales->count()+1 && $map->count() != 0 && $map->first()->map_scale_value == 0))?"checked" : "";
                             $val = "value=\"0\"";
                             if($i <= $MScales->count())$val = "value=\"".$MScales[$i-1]->standard_scale_id."\"";
-                            $custHTML.="<td><input type=\"radio\" name=\"min_".$clo->l_outcome_id."_".$std->standard_id."[]\" $chk $val></td>";
+                            $custHTML.="<td width=\"6%\"><input type=\"radio\" name=\"min_".$clo->l_outcome_id."_".$std->standard_id."[]\" $chk $val></td>";
                         }
                     }
                 }
@@ -676,20 +678,22 @@ class CourseCrudController extends CrudController
                 //create header for cat
                 $setSubCat = DB::table('optional_priority_subcategories')->where('cat_id', $cat->cat_id)->get();
                 foreach($setSubCat as $subcat){
-                    $subcatFunc = $accFoo1."subcategory_".$subcat->subcat_id.$accFoo2;                            
+                    $subcatFunc = $accFoo1."wrap_subcategory_".$subcat->subcat_id.$accFoo2;                            
                     $custHTML .= "<div $subcatFunc><div style=\"$buttonClass2\"><h4 class=\"crudribbon\" >$subcat->subcat_name</h4></div></div>"
-                            . "<table id=\"subcategory_".$subcat->subcat_id."\" class=\"table table-sm table-striped m-b-0\"  hidden>";                              
+                            . "<div id=\"wrap_subcategory_".$subcat->subcat_id."\" hidden>"
+                            . "<table id=\"subcategory_".$subcat->subcat_id."\" class=\"table table-sm table-striped m-b-0\" >";                              
                     //create header for subcat
                     $scop = DB::table('optional_priorities')->where('subcat_id',$subcat->subcat_id)->get();
                     foreach($scop as $op){
                         //create row with checkbox for each OP
                         $opid = $op->op_id;
                         $chk = (count($setOpPr->where('op_id', $opid)) > 0) ? "checked" : "";
-                        $custHTML .= "<tr><td><input type=\"checkbox\" name=\"opp_$opid\" $chk></td><td >". $op->optional_priority."</td></tr>";
-                        
-                    }
+                        $custHTML .= "<tr><td><input type=\"checkbox\" name=\"opp_$opid\" $chk></td><td >". $op->optional_priority."</td></tr>";                        
+                    }                    
                     $custHTML .= "</table>";
-                }
+                    $custHTML .= (property_exists($subcat, "subcat_postamble")) ? $subcat->subcat_postamble : "";
+                    $custHTML .= "</div>";
+                }                
                 $custHTML .= "</div>";
             }
             $custHTML .= "</div>";

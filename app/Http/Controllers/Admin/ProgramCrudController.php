@@ -115,7 +115,7 @@ class ProgramCrudController extends CrudController
 
         $this->crud->addField([
             'name' => 'program', // The db column name
-            'label' => "Program Title", // Table column heading
+            'label' => "Program Title&nbsp;&nbsp;<span style=\"color:red\">*</span>", // Table column heading
             'type' => 'valid_text',
             'attributes' => [ 'req' => 'true']
           ]);
@@ -240,7 +240,7 @@ class ProgramCrudController extends CrudController
                     'fields' => [
                         [
                             'name' => 'plo_category_id',
-                            'label' => 'Category',
+                            'label' => 'Category&nbsp;&nbsp;<span style=color:red>*</span>',
                             'type'  => 'text',
                             'attributes' => [
                                             'hidden' => 'true',
@@ -252,8 +252,7 @@ class ProgramCrudController extends CrudController
                             'label' => 'Name:',
                             'type'  => 'valid_text',
                             'except' => "Uncategorized", //If the heading is uncategorized disable it to prevent user errors with the string
-                            'attributes' => [ 'req' => 'true',  //need to add this to a custom repeatable view
-                                              
+                            'attributes' => [ 'req' => 'true',  //need to add this to a custom repeatable view                                              
                                             ],
                             'wrapper' => ['class' => 'hidden-label form-group col-sm-8'],
                         ],
