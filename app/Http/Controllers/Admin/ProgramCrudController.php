@@ -276,10 +276,11 @@ class ProgramCrudController extends CrudController
         
         $this->crud->addField([
                     'name'    => 'MappingScaleLevels',
-                    'type'    => 'check_details',
+                    'type'    => 'check_mapping_scales',
                     'label'   => 'Map Scales',
                     'entity'    => 'mappingScaleLevels', // the method that defines the relationship in your Model
                     'model'     => "App\Models\MappingScale", // foreign key model
+                    'model_categories' => "App\Models\MappingScaleCategory",
                     'attribute' => [
                         'title', // foreign key attribute that is shown to user
                         'colour',
