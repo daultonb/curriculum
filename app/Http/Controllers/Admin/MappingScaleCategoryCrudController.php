@@ -30,6 +30,7 @@ class MappingScaleCategoryCrudController extends CrudController
         CRUD::setModel(\App\Models\MappingScaleCategory::class);
         CRUD::setRoute(config('backpack.base.route_prefix') . '/mapping-scale-category');
         CRUD::setEntityNameStrings('mapping scale category', 'mapping scale categories');
+        $this->crud->denyAccess('show');
     }
 
     /**
