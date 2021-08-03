@@ -414,7 +414,7 @@ class CourseCrudController extends CrudController
              'min'     => 0,
              
            ]);
-           
+           $total = DB::table('assessment_methods')->select('weight')->where('course_id',$crsID)->sum('weight');
            
             $this->crud->addField([   // the total for the assessment methods field. required for the script in the assess_repeatable
              'label' => "Total Weight",
@@ -422,7 +422,7 @@ class CourseCrudController extends CrudController
              'type' => "number",
              
              'name' => 'totalweight', //name of the getter/setter in course model 
-                
+             'default' => $total,
              'wrapper' => ['class' => 'total_weight_ form-group col-sm-3']
             ]);
             
