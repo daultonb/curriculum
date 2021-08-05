@@ -523,7 +523,7 @@ class CourseCrudController extends CrudController
             $textClass2 = "color:rgb(151, 212, 233,1.0)"; //light blue
            // $textClass1 = "color:rgb(255, 255, 255,1.0)"; //white
             
-            $custHTML = "<div><label>Program Objective Mapping</label>";           
+            $custHTML = "<div><label>Program Outcome Mapping</label>";           
             //standards are roughly analogous to program outcomes, but there is one standard category per course. 
             //the scales are categorized in the standards versus select any from list with PLOs
             $Progs = DB::table('course_programs')->where('course_id', $crsID)
@@ -596,7 +596,7 @@ class CourseCrudController extends CrudController
             
             //Ministry Standard Mapping
             //***************
-             $custHTML = "<div><label>Standards Objective Mapping</label>";           
+             $custHTML = "<div><label>Standards Outcome Mapping</label>";           
             //standards are roughly analogous to program outcomes, but there is one standard category per course. 
             //the scales are categorized in the standards versus select any from list with PLOs
            
