@@ -11,3 +11,5 @@
 <li class='nav-item'><a class='nav-link' href='{{ backpack_url('mapping-scales') }}'><i class='nav-icon la la-question'></i> Program Mapping Scales</a></li>
 
 <li class='nav-item'><a class='nav-link' href='{{ backpack_url('mapping-scale-category') }}'><i class='nav-icon la la-question'></i> Mapping Scale Categories</a></li>
+<li class='nav-item'><a class='nav-link' href='{{ backpack_url('custom-assessment-methods') }}'><i class='nav-icon la la-question'></i> Custom Assessment Methods</a></li>
+<li class='nav-item'><a class='nav-link' href='{{ backpack_url('custom-learning-activities') }}'><i class='nav-icon la la-question'></i> Custom Learning Activities</a></li>

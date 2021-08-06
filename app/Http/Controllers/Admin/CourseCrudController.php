@@ -536,7 +536,12 @@ class CourseCrudController extends CrudController
                             . "let ch = document.getElementById(&quot;";
             $accFoo2 = "&quot;);\n"
                             . "ch.hidden = !(ch.hidden);\n"
-                          . "})();\"";            
+                          . "})();\"";      
+            $delFoo1 = "onClick=\"(function(){\n"
+                            . "$(&quot;tr[id=cp_";
+            $delFoo2 = "_";
+            $delFoo3 = "] td input&quot;).prop(&quot;checked&quot;, false)\n"
+                          . "})();\"";
             
             foreach ($Progs as $program){ 
                 $PFunc = $accFoo1."plomap_".$program->program_id.$accFoo2;
@@ -556,7 +561,7 @@ class CourseCrudController extends CrudController
                             $program->program .
                             "</th>" . $msStr . "</tr>";
                     foreach($PLOs as $plo){
-                        $custHTML .= "<tr><td title=\"" . $plo->pl_outcome. "\">". $plo->plo_shortphrase."</td>";
+                        $custHTML .= "<tr id=\"cp_".$clo->l_outcome_id."_".$plo->pl_outcome_id."\"><td title=\"" . $plo->pl_outcome. "\">". $plo->plo_shortphrase."</td>";
                         for($i = 1; $i <= $MScales->count()+1; $i++){
                             $map = $OCmaps->where('l_outcome_id', $clo->l_outcome_id)->where('pl_outcome_id', $plo->pl_outcome_id);                        
                             $chk = (($i <= $MScales->count() && $map->count() != 0 && $map->first()->map_scale_value == $MScales[$i-1]->map_scale_id) || 
@@ -565,6 +570,12 @@ class CourseCrudController extends CrudController
                             if($i <= $MScales->count())$val = "value=\"".$MScales[$i-1]->map_scale_id."\"";
                             $custHTML.="<td width=\"6%\"><input type=\"radio\" name=\"map_".$clo->l_outcome_id."_".$plo->pl_outcome_id."[]\" $chk $val></td>";
                         }
+                        $delBstr = $delFoo1.$clo->l_outcome_id.$delFoo2.$plo->pl_outcome_id.$delFoo3;
+                        $custHTML.="<td width=\"4%\">"
+                                . "<button class=\"btn btn-sm btn-light removeItem\" type=\"button\" $delBstr>"
+                                . "<span class=\"sr-only\">delete item</span>"
+                                . "<i class=\"la la-trash\" role=\"presentation\" aria-hidden=\"true\"></i>"
+                                . "</button></td>";
                     }
                 }
                 $custHTML .= "</table>";
@@ -581,17 +592,24 @@ class CourseCrudController extends CrudController
                 $chk = array_filter($_POST, function($element) {
                     return  !(false===strpos($element, "map"));
                 },ARRAY_FILTER_USE_KEY);
+                $setDelcp = DB::table("outcome_maps")->whereIn("l_outcome_id",$setOfCLO)->get()->toArray();
                 foreach($chk as $key => $val){
                     $exKey = explode('_',$key);
                     $map = $OCmaps->where('l_outcome_id', $exKey[1])->where('pl_outcome_id', $exKey[2]);
                     //if not entry already exists in DB, enter it. otherwise update it, as the value may have changed
                     if(!($map->count() > 0))
                         DB::table('outcome_maps')->insert(['l_outcome_id'=>$exKey[1],'pl_outcome_id'=>$exKey[2],'map_scale_value'=>$val[0]]);
-                    else
+                    else{
                         \App\Models\OutcomeMap::where('l_outcome_id', $exKey[1])
                                                 ->where('pl_outcome_id', $exKey[2])
                                                 ->update(['map_scale_value'=>$val[0]]);
-                }
+                    foreach($setDelcp as $key => $val)
+                        if($val->l_outcome_id == $exKey[1] && $val->pl_outcome_id == $exKey[2])
+                            unset ($setDelcp[$key]); //this list is then deleted after those buttons checked are updated 
+                        
+                    }
+                }                
+                foreach($setDelcp as $val)DB::table("outcome_maps")->where("l_outcome_id", $val->l_outcome_id)->where("pl_outcome_id", $val->pl_outcome_id)->delete();
             }
             
             //Ministry Standard Mapping
@@ -790,7 +808,7 @@ class CourseCrudController extends CrudController
          ]);        
     }
     
-    use \Backpack\CRUD\app\Http\Controllers\Operations\DeleteOperation { destroy as traitDestroy; }
+    //use \Backpack\CRUD\app\Http\Controllers\Operations\DeleteOperation { destroy as traitDestroy; }
 
     public function destroy($id)
     {

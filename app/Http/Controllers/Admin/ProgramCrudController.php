@@ -356,4 +356,25 @@ class ProgramCrudController extends CrudController
             'model'        => App\Models\User::class, // foreign key model
          ]);
     }
+    
+    public function destroy($id)
+    {
+        $this->crud->hasAccessOrFail('delete');
+        //delete all children starting with the leafmost objects. they have to be accessed using the id's of their parent records however (either the cloID or the courseID in this case)
+        $prgID = filter_input(INPUT_SERVER,'PATH_INFO');        
+        $prgID = explode("/",$prgID)[3];
+        //first get the relevant ids
+        $PLOs =  \App\Models\ProgramLearningOutcome::where('program_id', '=', $prgID)->get();        
+        $setOfPLO = [];
+        foreach($PLOs as $plo)array_push($setOfPLO,$plo->pl_outcome_id);        
+        //deleting records
+        $r = DB::table('mapping_scale_programs')->where('program_id', $prgID)->delete();
+        $r = DB::table('p_l_o_categories')->where('program_id',  $prgID)->delete();
+        $r = DB::table('program_learning_outcomes')->where('program_id',  $prgID)->delete();        
+        $r = DB::table('course_programs')->where('program_id', $prgID)->delete();  
+        $r = DB::table('outcome_maps')->whereIn('pl_outcome_id',  $setOfPLO)->delete();        
+        $r = DB::table('program_users')->where('program_id', '=', $prgID)->delete();
+        //this deletes the program record itself.
+        return $this->crud->delete($id);
+    }
 }
