@@ -7,25 +7,26 @@
   array_push($identifiable_attributes,$key_attribute);
  // $identifiable_attributes = rtrim($identifiable_attributes,",");
   // calculate the checklist options
+  $temp = [];
   if (!isset($field['options'])) {
       if(isset($field['category_relation'])){
         $words = explode("-", $field['category_relation']);
-        $catTable = array_shift($words);
-        
+        $catTable = array_shift($words);        
         $field['options']['categories'] = DB::table($catTable)->select($words)->get()->toArray();
         foreach($field['options']['categories'] as $catkey => $cat){
-            $field['options']['categories'][$catkey] = $field['model']::where($words[0], $cat->{$words[0]})->select($identifiable_attributes)->get()->toArray();        
-        }
+            $temp[$cat->msc_title] = $field['model']::where($words[0], $cat->{$words[0]})->select($identifiable_attributes)->get()->toArray();                  
+        }        
       }
       else if(isset($field['category_attribute'])){
         $field['options']['categories'] = $field['model']::select($field['category_attribute'])->distinct()->get()->toArray();
         foreach($field['options']['categories'] as $catkey => $cat){
-            $field['options']['categories'][$catkey] = $field['model']::where($field['category_attribute'], $cat)->select($identifiable_attributes)->get()->toArray();        
+            $temp[$cat->msc_title] = $field['model']::where($field['category_attribute'], $cat)->select($identifiable_attributes)->get()->toArray();        
         }
-      }
+      }      
       else{
         $field['options']['categories'] = $field['model']::select($identifiable_attributes)->get()->toArray();
       }
+      $field['options']['categories'] = $temp;
   } else {
       $field['options']['categories'] = call_user_func($field['options'], $field['model']::query());
   }
@@ -52,7 +53,7 @@
     @endphp
     <div class="row">
         @foreach ($field['options']['categories'] as $catname => $category)
-        <div class="col-sm-12 category"><h5 style="margin:5px 0 0 0;">{{ $field['model_categories']::where('mapping_scale_categories_id', $catname+1)->first()->msc_title }}</h5>
+        <div class="col-sm-12 category"><h5 style="margin:5px 0 0 0;">{{ $catname }}</h5>
             <div class="bg-light">
                 <label class="font-weight-normal">
                     <input type="checkbox" name="select_all"> Select all
