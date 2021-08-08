@@ -540,7 +540,7 @@ class CourseCrudController extends CrudController
             $delFoo1 = "onClick=\"(function(){\n"
                             . "$(&quot;tr[id=cp_";
             $delFoo2 = "_";
-            $delFoo3 = "] td input&quot;).prop(&quot;checked&quot;, false);\n";
+            $delFoo3 = "] td input&quot;).prop(&quot;checked&quot;, false).prop(&quot;disabled&quot;, true);\n";
             $delFoo4 = "$(&quot;tr[id=cp_";
             $delFoo5 = "]&quot;).css(&quot;text-decoration&quot;, &quot;line-through&quot;);n"
                           . "})();\"";
