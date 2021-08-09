@@ -221,8 +221,10 @@
                                                     @endforeach
                                                 </tbody>
                                             </table>
+
                                             {!! $subop['subcat_postamble'] !!}
                                             @endforeach
+
                                         </div>
                                     </div>                                                                            
                                 </div>
@@ -316,9 +318,6 @@
         //             });
         //         }
         //     });
-
-
-
 
         // });
     });

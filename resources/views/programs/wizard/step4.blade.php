@@ -30,16 +30,44 @@
                             @else
                                 <table class="table table-light table-bordered table" style="width: 95%; margin: auto; table-layout:auto;">
                                     <tr class="table-primary">
-                                        <th colspan="1">#</th>
-                                        <th class="text-left" colspan="1">Program Learning Outcome</th>
+                                        <th class="text-left" colspan="2">Program Learning Outcome</th>
                                     </tr>
                                     <tbody>
-                                        @foreach ($plos as $i => $plo)
+                                        <!--Categorized PLOs -->
+                                        @foreach ($ploCategories as $plo)
+                                            @if ($plo->plo_category != NULL)
+                                                @if ($plo->plos->count() > 0)
+                                                    <tr class="table-secondary">
+                                                        <th colspan="1">#</th>
+                                                        <th class="text-left">{{$plo->plo_category}}</th>
+                                                    </tr>
+                                                @endif
+                                            @endif
+                                            @foreach($ploProgramCategories as $index => $ploCat)
+                                                @if ($plo->plo_category_id == $ploCat->plo_category_id)
+                                                    <tr>
+                                                        <td class="text-center align-middle">{{$index + 1}}</td>
+                                                        <td>
+                                                            <span style="font-weight: bold;">{{$ploCat->plo_shortphrase}}</span><br>
+                                                            {{$ploCat->pl_outcome}}
+                                                        </td>
+                                                    </tr>
+                                                @endif
+                                            @endforeach
+                                        @endforeach
+                                        <!--UnCategorized PLOs -->
+                                        @if($hasUncategorized)
+                                            <tr class="table-secondary">
+                                                <th colspan="1">#</th>
+                                                <th class="text-left">UnCategorized</th>
+                                            </tr>
+                                        @endif
+                                        @foreach($unCategorizedPLOS as $unCatIndex => $unCatplo)
                                             <tr>
-                                                <td class="text-center align-middle">{{$i + 1}}</td>
+                                                <td class="text-center align-middle">{{count($ploProgramCategories) + $unCatIndex + 1}}</td>
                                                 <td>
-                                                    <span style="font-weight: bold;">{{$plo->plo_shortphrase}}</span><br>
-                                                    {{$plo->pl_outcome}}
+                                                    <span style="font-weight: bold;">{{$unCatplo->plo_shortphrase}}</span><br>
+                                                    {{$unCatplo->pl_outcome}}
                                                 </td>
                                             </tr>
                                         @endforeach
@@ -116,18 +144,25 @@
 
                                     <tr>
                                         <th colspan='1' style="background-color: rgba(0, 0, 0, 0.03);"></th>
-                                        <!-- Categorized PLOs -->
-                                        @foreach($ploProgramCategories as $plo)
-                                            @if ($plo->plo_category != NULL)
-                                                <th style="background-color: rgba(0, 0, 0, 0.03);">{{$plo->plo_shortphrase}}</th>
-                                            @endif
-                                        @endforeach
-                                        <!-- Uncategorized PLOs -->
-                                        @foreach($plos as $plo)
-                                            @if ($plo->plo_category == NULL)
-                                                <th style="background-color: rgba(0, 0, 0, 0.03);">{{$plo->plo_shortphrase}}</th>
-                                            @endif
-                                        @endforeach
+                                        <!-- If there are less than 7 PLOs, use the short-phrase, else use PLO at index + 1 -->
+                                        @if (count($plos) < 7) 
+                                            <!-- Categorized PLOs -->
+                                            @foreach($ploProgramCategories as $plo)
+                                                @if ($plo->plo_category != NULL)
+                                                    <th style="background-color: rgba(0, 0, 0, 0.03);">{{$plo->plo_shortphrase}}</th>
+                                                @endif
+                                            @endforeach
+                                            <!-- Uncategorized PLOs -->
+                                            @foreach($plos as $plo)
+                                                @if ($plo->plo_category == NULL)
+                                                    <th style="background-color: rgba(0, 0, 0, 0.03);">{{$plo->plo_shortphrase}}</th>
+                                                @endif
+                                            @endforeach
+                                        @else
+                                            @foreach($plos as $index => $plo)
+                                                <th style="background-color: rgba(0, 0, 0, 0.03);">PLO: {{$index + 1}}</th>
+                                            @endforeach
+                                        @endif
                                     </tr>
                                     <!-- Show all courses associated to the program -->
                                     @foreach($programCourses as $course)
@@ -149,7 +184,6 @@
                                                         @if(isset($testArr[$plo->pl_outcome_id][$course->course_id]['map_scale_value_tie']))
                                                             <td class="text-center align-middle" style="background:repeating-linear-gradient(45deg, transparent, transparent 8px, #ccc 8px, #ccc 16px), linear-gradient( to bottom, #fff, #999);" data-toggle="tooltip" data-html="true" data-bs-placement="right" title="@foreach($testArr[$plo->pl_outcome_id][$course->course_id]['frequencies'] as $index => $freq) {{$index}}: {{$freq}}<br> @endforeach">
                                                                 <span style="color: black;">
-                                                                    <span style="font-weight: bold;">Tie:</span><br>
                                                                     {{$testArr[$plo->pl_outcome_id][$course->course_id]['map_scale_value']}}
                                                                 </span>
                                                             </td>
@@ -177,7 +211,6 @@
                                                         @if(isset($testArr[$plo->pl_outcome_id][$course->course_id]['map_scale_value_tie']))
                                                             <td class="text-center align-middle" style="background:repeating-linear-gradient( 45deg, transparent, transparent 10px, #ccc 10px, #ccc 20px), linear-gradient( to bottom, #eee, #999);" data-toggle="tooltip" data-html="true" data-bs-placement="right" title="@foreach($testArr[$plo->pl_outcome_id][$course->course_id]['frequencies'] as $index => $freq) {{$index}}: {{$freq}}<br> @endforeach">
                                                                 <span style="color: black;">
-                                                                    <span style="font-weight: bold;">Tie:</span><br>
                                                                     {{$testArr[$plo->pl_outcome_id][$course->course_id]['map_scale_value']}}
                                                                 </span>
                                                             </td>
@@ -199,8 +232,42 @@
                                         </tr>
                                     @endforeach
                                 </table>
-                        </div>  
+
+                                <table class="table table-bordered table-sm" style="width: 95%; margin:auto; table-layout: fixed; border: 1px solid white; color: black; table-layout:auto;">
+                                    <tr class="table-primary" style="background-color: rgba(0, 0, 0, 0.03);">
+                                        <th colspan="2" class="text-left">Legend</th>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <span class="mr-2" style="font-weight: bold;">Tie</span>
+                                            <div class="float-right" style="background:repeating-linear-gradient(45deg, transparent, transparent 4px, #ccc 4px, #ccc 8px), linear-gradient( to bottom, #fff, #999); height: 50px; width: 50px;"></div>
+                                        </td>
+                                        <td>
+                                            Occurs when two or more CLO's map to a PLO an equal amount of times.
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <span class="mr-2" style="font-weight: bold;">Incomplete</span>
+                                            <div class="float-right p-2" style="background-color:#FFFFFF; height: 50px; border:0.25px solid grey;">Incomplete</div>
+                                        </td>
+                                        <td>
+                                            Occurs when a course has not yet been mapped to the set of PLO's.
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <span class="mr-2" style="font-weight: bold;">N/A</span><br>
+                                            <small>(Not Applicable)</small>
+                                            <div class="float-right text-center align-middle p-2" style="background-color:#FFFFFF; height: 50px; width: 50px; border:0.25px solid grey;">N/A</div>
+                                        </td>
+                                        <td>
+                                            Occurs when a course instructor has listed a program learning outcome as being not applicable for a program learning outcome.
+                                        </td>
+                                    </tr>
+                                </table>
                             @endif
+                        </div>  
                     </div>
             </div>
         </div>
