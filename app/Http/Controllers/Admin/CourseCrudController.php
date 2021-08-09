@@ -540,9 +540,7 @@ class CourseCrudController extends CrudController
             $delFoo1 = "onClick=\"(function(){\n"
                             . "$(&quot;tr[id=cp_";
             $delFoo2 = "_";
-            $delFoo3 = "] td input&quot;).prop(&quot;checked&quot;, false).prop(&quot;disabled&quot;, true);\n";
-            $delFoo4 = "$(&quot;tr[id=cp_";
-            $delFoo5 = "]&quot;).css(&quot;text-decoration&quot;, &quot;line-through&quot;);n"
+            $delFoo3 = "] td input&quot;).prop(&quot;checked&quot;, false)\n"
                           . "})();\"";
             
             foreach ($Progs as $program){ 
@@ -572,7 +570,7 @@ class CourseCrudController extends CrudController
                             if($i <= $MScales->count())$val = "value=\"".$MScales[$i-1]->map_scale_id."\"";
                             $custHTML.="<td width=\"6%\"><input type=\"radio\" name=\"map_".$clo->l_outcome_id."_".$plo->pl_outcome_id."[]\" $chk $val></td>";
                         }
-                        $delBstr = $delFoo1.$clo->l_outcome_id.$delFoo2.$plo->pl_outcome_id.$delFoo3.$delFoo4.$clo->l_outcome_id.$delFoo2.$plo->pl_outcome_id.$delFoo5;
+                        $delBstr = $delFoo1.$clo->l_outcome_id.$delFoo2.$plo->pl_outcome_id.$delFoo3;
                         $custHTML.="<td width=\"4%\">"
                                 . "<button class=\"btn btn-sm btn-light removeItem\" type=\"button\" $delBstr>"
                                 . "<span class=\"sr-only\">delete item</span>"
