@@ -52,7 +52,7 @@ class CourseCrudController extends CrudController
             'searchLogic' => function($query, $column, $searchTerm){
                 $query ->orWhere('course_code', 'like', '%'.$searchTerm.'%');
             }
-          ]);
+        ]);
 
         $this->crud->addColumn([
             'name' => 'course_num', // The db column name
@@ -61,7 +61,7 @@ class CourseCrudController extends CrudController
             'searchLogic' => function($query, $column, $searchTerm){
                 $query ->orWhere('course_num', 'like', '%'.$searchTerm.'%');
             }
-          ]);
+        ]);
         
         $this->crud->addColumn([
             'name' => 'course_title', // The db column name
@@ -70,7 +70,7 @@ class CourseCrudController extends CrudController
             'searchLogic' => function($query, $column, $searchTerm){
                 $query ->orWhere('course_title', 'like', '%'.$searchTerm.'%');
             }
-          ]);
+        ]);
 
         /*$this->crud->addColumn([
             // 1-n relationship
@@ -80,7 +80,7 @@ class CourseCrudController extends CrudController
             'entity'    => 'programs', // the method that defines the relationship in your Model
             'attribute' => 'program', // foreign key attribute that is shown to user
             'model'     => "App\Models\Program", // foreign key model
-          ]);*/
+        ]);*/
 
         $this->crud->addColumn([   // radio
             'name'        => 'status', // the name of the db column
@@ -118,7 +118,7 @@ class CourseCrudController extends CrudController
     {
         CRUD::setValidation(CourseRequest::class);
 
-       $this->crud->addField([
+        $this->crud->addField([
             'name' => 'course_code', // The db column name
             'label' => "Course<br>Code", // Table column heading
             'type' => 'Text',
@@ -126,7 +126,7 @@ class CourseCrudController extends CrudController
                             'size' => '4',
                             'maxlength' => '4'],            
             'wrapper' => ['class' => 'form-group col-md-3'],
-         ]);
+        ]);
 
         $this->crud->addField([
             'name' => 'course_num', // The db column name
@@ -136,14 +136,14 @@ class CourseCrudController extends CrudController
                             'size' => '3',
                             'maxlength' => '3'],
             'wrapper' => ['class' => 'form-group col-md-3'],
-          ]);
+        ]);
         
         $this->crud->addField([
             'name'        => 'section',
             'label'       => 'Section<br>ID',
             'type'        => 'text', 
-             'attributes' => [ 'size' => '3',
-                             'maxlength' => '3'],
+            'attributes' => [ 'size' => '3',
+                            'maxlength' => '3'],
             'wrapper' => ['class' => 'form-group col-md-3'],
         ]); 
         
@@ -151,12 +151,12 @@ class CourseCrudController extends CrudController
             'name' => 'course_title', // The db column name
             'label' => "Course Title", // Table column heading
             'type' => 'valid_text',
-             'attributes' => [ 'req' => 'true' ],
+            'attributes' => [ 'req' => 'true' ],
             'wrapper' => ['class' => 'form-group col-md-12'],
             
-          ]);
-          
-          $this->crud->addField([
+        ]);
+        
+        $this->crud->addField([
             // n-n relationship //this is necesary to accommodate the new course_program relationship
             'label'     => 'Program', // Table column heading
             'type'      => 'select2_multiple',
@@ -166,8 +166,8 @@ class CourseCrudController extends CrudController
             'model'     => "App\Models\Program", // foreign key model
             'placeholder' => "Select a program", // placeholder for the select2 input
             'pivot'     => true,
-          ]);    
-          
+        ]);    
+        
         $this->crud->addField([   // radio
             'name'        => 'status', // the name of the db column
             'label'       => 'Status', // the input label
@@ -184,26 +184,18 @@ class CourseCrudController extends CrudController
         
         $this->crud->addField([   // relationship
             'label' => "Assigned Instructors",
-
             'type' => "select2_multiple",
-
             'name' => 'users', // the method on your model that defines the relationship
 
             // OPTIONALS:
-            
             'entity' => 'users', // the method that defines the relationship in your Model
-        
             'attribute' => "email", // foreign key attribute that is shown to user (identifiable attribute)
-
             'model' => "App\Models\User", // foreign key Eloquent model
-
             'placeholder' => "Select a user", // placeholder for the select2 input
-
             'pivot'     => true,
-
             'select_all' => true,
 
-         ]);       
+        ]);       
         
 
          $this->crud->addField([   // radio
@@ -215,7 +207,7 @@ class CourseCrudController extends CrudController
                 -1 => "No",
                 1 => "Yes"
             ],
-             'default'     => '-1',
+            'default'     => '-1',
             // optional
             'inline'      => true, // show the radios all on the same line?
         ]);
@@ -251,24 +243,20 @@ class CourseCrudController extends CrudController
             'label' => "Ministry Standards<br>Category", // Table column heading
             'type' => 'select',
             'entity' => 'ministryStandardCategory', // the method that defines the relationship in your Model
-        
             'attribute' => "sc_name", // foreign key attribute that is shown to user (identifiable attribute)
-
             'model' => "App\Models\StandardCategory", // foreign key Eloquent model         
             'wrapper' => ['class' => 'form-group col-md-5'],
-          ]);
+            ]);
         
         $this->crud->addField([
             'name' => 'scale_category_id', // The db column name
             'label' => "Standards Scale<br>Category", // Table column heading
             'type' => 'select',
             'entity' => 'scalesCategory', // the method that defines the relationship in your Model
-        
             'attribute' => "name", // foreign key attribute that is shown to user (identifiable attribute)
-
             'model' => "App\Models\StandardsScaleCategory", // foreign key Eloquent model         
             'wrapper' => ['class' => 'form-group col-md-5'],
-          ]);
+            ]);
         
           //added this block as fix for bug03 (MD)
         $this->crud->addField([   // radio
@@ -311,137 +299,120 @@ class CourseCrudController extends CrudController
     protected function setupUpdateOperation()
     {   
         $this->setupCreateOperation();
-      
+        
       //following part is only available once the course record is created        
-           
+
         $crsID = filter_input(INPUT_SERVER,'PATH_INFO');
         
-           $crsID = explode("/",$crsID)[3];
-           $crsData = Course::where('course_id', '=', $crsID)->get()[0];
-           $CLOs =  \App\Models\LearningOutcome::where('course_id', '=', $crsID)->get();
-           $AMs = DB::table('assessment_methods')->where('course_id', '=', $crsID)->get();
-           $LAs = DB::table('learning_activities')->where('course_id', '=', $crsID)->get();
-           $setOfCLO = [];
-           foreach($CLOs as $clo)array_push($setOfCLO,$clo->l_outcome_id);
-           $setOfAM = [];
-           foreach($AMs as $am)array_push($setOfAM,$am->a_method_id);
-           $setOfLA = [];
-           foreach($LAs as $la)array_push($setOfLA,$la->l_activity_id); 
-           
+            $crsID = explode("/",$crsID)[3];
+            $crsData = Course::where('course_id', '=', $crsID)->get()[0];
+            $CLOs =  \App\Models\LearningOutcome::where('course_id', '=', $crsID)->get();
+            $AMs = DB::table('assessment_methods')->where('course_id', '=', $crsID)->get();
+            $LAs = DB::table('learning_activities')->where('course_id', '=', $crsID)->get();
+            $setOfCLO = [];
+            foreach($CLOs as $clo)array_push($setOfCLO,$clo->l_outcome_id);
+            $setOfAM = [];
+            foreach($AMs as $am)array_push($setOfAM,$am->a_method_id);
+            $setOfLA = [];
+            foreach($LAs as $la)array_push($setOfLA,$la->l_activity_id); 
+            
             $this->crud->addField([   // relationship
-             'label' => "Course Learning Outcomes",
-
-             'type' => "match_table",
-
-             //'name' => 'learningOutcomes', // the method on your model that defines the relationship   
-              'name' => 'CLOtable', //name of the getter/setter in course model 
-             'columns' => [     
-                 'l_outcome_id' => 'id-hidden',
-                 'l_outcome'    => 'Learning Outcome (Shortphrase)-text-req',   
-                 'clo_shortphrase'    => 'Course Learning Outcome-text-req',
-             ],
-             
-             'max'     => 20,
-             
-             'min'     => 0,
-             
-           ]);
-           
-          
+                'label' => "Course Learning Outcomes",
+                'type' => "match_table",
+                //'name' => 'learningOutcomes', // the method on your model that defines the relationship   
+                'name' => 'CLOtable', //name of the getter/setter in course model 
+                'columns' => [     
+                    'l_outcome_id' => 'id-hidden',
+                    'l_outcome'    => 'Learning Outcome (Shortphrase)-text-req',   
+                    'clo_shortphrase'    => 'Course Learning Outcome-text-req',
+                ],
+                'max'     => 20,
+                'min'     => 0,
+                
+            ]);
+            
+            
            $this->crud->addField([   // relationship
-             'label' => "Assessment Methods",
-
-             'type' => "assess_table",
-
+                'label' => "Assessment Methods",
+                'type' => "assess_table",
              //'name' => 'assessmentMethods', // the method on your model that defines the relationship
              'name' => 'AMtable', //name of the getter/setter in course model 
-             'default' => 'testing default string',
-             
-             'ajax' => true,  
-             'columns' => [   
-                 'a_method_id' => 'id-hidden',
-                 'a_method'        => 'Assessment Method-text-req',
-                 'weight'          => 'Weight (%)-number-req',
-             ],
-             
-             'max'     => 20,
-             
-             'min'     => 0,
-             
-           ]);
-             
+                'default' => 'testing default string',
+                'ajax' => true,  
+                'columns' => [   
+                    'a_method_id' => 'id-hidden',
+                    'a_method'        => 'Assessment Method-text-req',
+                    'weight'          => 'Weight (%)-number-req',
+                ],
+                'max'     => 20,
+                'min'     => 0,
+                
+            ]);
+                
             $this->crud->addField([   // relationship
-             'label' => "Teaching and Learning Activities",
-
-             'type' => "match_table",
-
+                'label' => "Teaching and Learning Activities",
+                'type' => "match_table",
              //'name' => 'learningActivities', // the method on your model that defines the relationship
              'name' => 'LAtable', //name of the getter/setter in course model  
-             'default' => 'testing default string',
-             
-             'ajax' => true,  
-             'columns' => [     
-                 'l_activity_id' => 'id-hidden',
-                 'l_activity'        => 'Teaching and Learning Activities-text-req',                
-             ],
-             
-             'max'     => 20,
-             
-             'min'     => 0,
-             
-           ]);
-                      
-           $req =  $this->crud->getRequest()->request->all();
+                'default' => 'testing default string',
+                'ajax' => true,  
+                'columns' => [     
+                    'l_activity_id' => 'id-hidden',
+                    'l_activity'        => 'Teaching and Learning Activities-text-req',                
+                ],
+                'max'     => 20,
+                'min'     => 0,
+                
+            ]);
+                        
+            $req =  $this->crud->getRequest()->request->all();
            //course alignment
            //create a table, fill the fields using custom code. each checkbox has a name with (oas|oac)-cID-aID (where aID is the other ID type)
            ///start with a row for each CLO
-           $custHTML = "<fieldset name=\"alignfields\"><label>Course Alignment</label>"
-                   . "<br><label style=\"font-size:.8em;\">Changes made to the Course Learning Outcomes, Learning Activities and Assessment Methods"
-                   . " will be be reflected in this table only after saving and reloading the form</label>"                   
-                   . "<table class=\"table table-sm table-striped m-b-0\" id=\"align-t\">"
-                   . "<tr><th>Course Learning Outcomes or Competencies</th><th>Student Assessment Methods</th><th>Teaching and Learning Activities</th></tr>";
-                     
+            $custHTML = "<fieldset name=\"alignfields\"><label>Course Alignment</label>"
+                    . "<br><label style=\"font-size:.8em;\">Changes made to the Course Learning Outcomes, Learning Activities and Assessment Methods"
+                    . " will be be reflected in this table only after saving and reloading the form</label>"                   
+                    . "<table class=\"table table-sm table-striped m-b-0\" id=\"align-t\">"
+                    . "<tr><th>Course Learning Outcomes or Competencies</th><th>Student Assessment Methods</th><th>Teaching and Learning Activities</th></tr>";
+                        
            //by getting the set of ids for la and am, i can query only those oas and oac that belong to this course (not referenced directly by courseID)
-           
-           $OAS = DB::table('outcome_assessments')->whereIn('a_method_id',  $setOfAM)->get();
-           $OAC = DB::table('outcome_activities')->whereIn('l_activity_id', $setOfLA)->get();
-           foreach($CLOs as $clo){
-               $cID = $clo->l_outcome_id;
-               $tRow = "<tr class=\"alignrow\" id=\"align-$cID\"><td id=\clo-$cID\">".$clo->clo_shortphrase."</td>";
+            
+            $OAS = DB::table('outcome_assessments')->whereIn('a_method_id',  $setOfAM)->get();
+            $OAC = DB::table('outcome_activities')->whereIn('l_activity_id', $setOfLA)->get();
+            foreach($CLOs as $clo){
+                $cID = $clo->l_outcome_id;
+                $tRow = "<tr class=\"alignrow\" id=\"align-$cID\"><td id=\clo-$cID\">".$clo->clo_shortphrase."</td>";
                //now a column with checkboxes for the outcome assessments and for the outcome activities
                //each row in the db on either of those tables is a box that is ticked on this html table
                //outcome_assessments
-               $amStr = "<ul>";
-               foreach($AMs as $am){                   
-                   $amID = $am->a_method_id;
-                   $oas = $OAS->where('a_method_id', '=', $amID)->where('l_outcome_id', '=', $cID);
-                   $ckd = (count($oas)> 0)?"checked":"";
-                   $amStr .= "<li>". $am->a_method ."<input type=\"checkbox\" name=\"outcomea-oas-$cID-$amID\" $ckd></li>";
-               }
-               $tRow .= "<td id=\am-$cID\">$amStr</td>";
+                $amStr = "<ul>";
+                foreach($AMs as $am){                   
+                    $amID = $am->a_method_id;
+                    $oas = $OAS->where('a_method_id', '=', $amID)->where('l_outcome_id', '=', $cID);
+                    $ckd = (count($oas)> 0)?"checked":"";
+                    $amStr .= "<li>". $am->a_method ."<input type=\"checkbox\" name=\"outcomea-oas-$cID-$amID\" $ckd></li>";
+                }
+                $tRow .= "<td id=\am-$cID\">$amStr</td>";
                //now the outcome_activities
-               $laStr = "<ul>";
-               foreach($LAs as $la){                   
-                   $laID = $la->l_activity_id;
-                   $oac = $OAC->where('l_activity_id', '=', $laID)->where('l_outcome_id', '=', $cID);
-                   $ckd = (count($oac)> 0)?"checked":"";
-                   $laStr .= "<li>". $la->l_activity ."<input type=\"checkbox\" name=\"outcomea-oac-$cID-$laID\" $ckd></li>";
-               }
-               $tRow .= "<td id=\am-$cID\">$laStr</ul></td></tr>";
-               $custHTML .= $tRow;  
-           }
-           $custHTML .= "</table></fieldset>";
-           
+                $laStr = "<ul>";
+                foreach($LAs as $la){                   
+                    $laID = $la->l_activity_id;
+                    $oac = $OAC->where('l_activity_id', '=', $laID)->where('l_outcome_id', '=', $cID);
+                    $ckd = (count($oac)> 0)?"checked":"";
+                    $laStr .= "<li>". $la->l_activity ."<input type=\"checkbox\" name=\"outcomea-oac-$cID-$laID\" $ckd></li>";
+                    }
+                $tRow .= "<td id=\am-$cID\">$laStr</ul></td></tr>";
+                $custHTML .= $tRow;  
+            }
+            $custHTML .= "</table></fieldset>";
+            
            $this->crud->addField([   // relationship
-             'label' => 'Course Alignment',
-
-             'type' => 'custom_html',
-               
-             'name' => 'align_table',
-               
-             'value' => $custHTML,
+            'label' => 'Course Alignment',
+            'type' => 'custom_html',
+            'name' => 'align_table',
+            'value' => $custHTML,
             ]);           
-           
+            
             if($req && count($req)){
                 $r = DB::table('outcome_assessments')->whereIn('l_outcome_id',  $setOfCLO)->delete();
                 $r = DB::table('outcome_activities')->whereIn('l_outcome_id',  $setOfCLO)->delete();
@@ -454,7 +425,7 @@ class CourseCrudController extends CrudController
                 foreach($chk as $bx => $val){
                     $ids = explode("-",$bx);
                     ($ids[1] == "oas")? array_push($newOAS,['l_outcome_id' => $ids[2], 'a_method_id' => $ids[3]]) 
-                                      : array_push($newOAC,['l_outcome_id' => $ids[2], 'l_activity_id' => $ids[3]]) ;
+                                        : array_push($newOAC,['l_outcome_id' => $ids[2], 'l_activity_id' => $ids[3]]);
                 }
                 if(count($newOAS))$r = DB::table('outcome_assessments')->insert($newOAS);
                 if(count($newOAC))$r = DB::table('outcome_activities')->insert($newOAC);
@@ -470,21 +441,21 @@ class CourseCrudController extends CrudController
             //standards are roughly analogous to program outcomes, but there is one standard category per course. 
             //the scales are categorized in the standards versus select any from list with PLOs
             $Progs = DB::table('course_programs')->where('course_id', $crsID)
-                             ->join('programs', 'programs.program_id', '=', 'course_programs.program_id')
-                             ->select('programs.program_id','programs.program')
-                             ->get();
+                            ->join('programs', 'programs.program_id', '=', 'course_programs.program_id')
+                            ->select('programs.program_id','programs.program')
+                            ->get();
             //this all needs to happen per program as these can be related optionally many to one with the course
             //function for opening and closing accordions
             $accFoo1 = "onClick=\"(function(){\n"
                             . "let ch = document.getElementById(&quot;";
             $accFoo2 = "&quot;);\n"
                             . "ch.hidden = !(ch.hidden);\n"
-                          . "})();\"";            
+                            . "})();\"";            
             
             foreach ($Progs as $program){ 
                 $PFunc = $accFoo1."plomap_".$program->program_id.$accFoo2;
                 $custHTML .= "<div $PFunc><div style=\"$buttonClass1\"><h3 class=\"crudribbon\">$program->program</h3></div></div>"
-                           . "<table id=\"plomap_$program->program_id\" class=\"table table-sm table-striped m-b-0\" hidden>";
+                            . "<table id=\"plomap_$program->program_id\" class=\"table table-sm table-striped m-b-0\" hidden>";
                 $PLOs = DB::table('program_learning_outcomes')->where('program_id', $program->program_id)->get();
                 $OCmaps = DB::table('outcome_maps')->whereIn('l_outcome_id', $setOfCLO)->get();
                 $MScP = DB::table('mapping_scale_programs')->where('program_id',$program->program_id)->get();
@@ -502,8 +473,8 @@ class CourseCrudController extends CrudController
                         $custHTML .= "<tr><td title=\"" . $plo->pl_outcome. "\">". $plo->plo_shortphrase."</td>";
                         for($i = 1; $i <= $MScales->count()+1; $i++){
                             $map = $OCmaps->where('l_outcome_id', $clo->l_outcome_id)->where('pl_outcome_id', $plo->pl_outcome_id);                        
-                            $chk = (($i <= $MScales->count() && $map->count() != 0 && $map->first()->map_scale_value == $MScales[$i-1]->map_scale_id) || 
-                                    ($i == $MScales->count()+1 && $map->count() != 0 && $map->first()->map_scale_value == 0))?"checked" : "";
+                            $chk = (($i <= $MScales->count() && $map->count() != 0 && $map->first()->map_scale_id == $MScales[$i-1]->map_scale_id) || 
+                                    ($i == $MScales->count()+1 && $map->count() != 0 && $map->first()->map_scale_id == 0))?"checked" : "";
                             $val = "value=\"0\"";
                             if($i <= $MScales->count())$val = "value=\"".$MScales[$i-1]->map_scale_id."\"";
                             $custHTML.="<td><input type=\"radio\" name=\"map_".$clo->l_outcome_id."_".$plo->pl_outcome_id."[]\" $chk $val></td>";
@@ -514,7 +485,7 @@ class CourseCrudController extends CrudController
             }            
             $custHTML .= "</div>";
             $this->crud->addField([
-               'label' => 'Outcome Mappings',
+                'label' => 'Outcome Mappings',
                 'name' => 'outcome_mapping',
                 'type' => 'custom_html',   
                 'value' => $custHTML,
@@ -529,21 +500,19 @@ class CourseCrudController extends CrudController
                     $map = $OCmaps->where('l_outcome_id', $exKey[1])->where('pl_outcome_id', $exKey[2]);
                     //if not entry already exists in DB, enter it. otherwise update it, as the value may have changed
                     if(!($map->count() > 0))
-                        DB::table('outcome_maps')->insert(['l_outcome_id'=>$exKey[1],'pl_outcome_id'=>$exKey[2],'map_scale_value'=>$val[0]]);
+                        DB::table('outcome_maps')->insert(['l_outcome_id'=>$exKey[1],'pl_outcome_id'=>$exKey[2],'map_scale_id'=>$val[0]]);
                     else
                         \App\Models\OutcomeMap::where('l_outcome_id', $exKey[1])
                                                 ->where('pl_outcome_id', $exKey[2])
-                                                ->update(['map_scale_value'=>$val[0]]);
+                                                ->update(['map_scale_id'=>$val[0]]);
                 }
             }
             
             //Ministry Standard Mapping
             //***************
-             $custHTML = "<div><label>Standards Outcome Mapping</label>";           
+            $custHTML = "<div><label>Standards Outcome Mapping</label>";           
             //standards are roughly analogous to program outcomes, but there is one standard category per course. 
             //the scales are categorized in the standards versus select any from list with PLOs
-           
-           
                 
                 $SOCmaps = DB::table('standards_outcome_maps')->whereIn('l_outcome_id', $setOfCLO)->get();   
                 $crs = Course::where('course_id',$crsID)->get();
@@ -555,7 +524,7 @@ class CourseCrudController extends CrudController
                 $standards =  DB::table('standards')->where('standard_category_id',$standId)->get();
                 $PFunc = $accFoo1."minmap"."".$accFoo2;
                 $custHTML .= "<div $PFunc><div class=\"accBar\" style=\"$buttonClass1\"><h3 class=\"crudribbon\">$standardsCat->sc_name (using $scaleCat->name)</h3></div></div>"
-                           . "<table id=\"minmap\" class=\"table table-sm table-striped m-b-0\" hidden>";
+                            . "<table id=\"minmap\" class=\"table table-sm table-striped m-b-0\" hidden>";
                 $msStr = "";
                 foreach($MScales as $scale)$msStr .= "<th title=\"".$scale->description."\">". $scale->abbreviation."</th>";
                 $msStr .= "<th title=\"Not Applicable\">N/A</th>";
@@ -567,9 +536,10 @@ class CourseCrudController extends CrudController
                     foreach($standards as $std){
                         $custHTML .= "<tr><td title=\"" . $std->s_outcome. "\">". $std->s_shortphrase."</td>";
                         for($i = 1; $i <= $MScales->count()+1; $i++){
-                            $map = $SOCmaps->where('l_outcome_id', $clo->l_outcome_id)->where('standard_id', $std->standard_id);                        
-                            $chk = (($i <= $MScales->count() && $map->count() != 0 && $map->first()->map_scale_value == $MScales[$i-1]->standard_scale_id) || 
-                                    ($i == $MScales->count()+1 && $map->count() != 0 && $map->first()->map_scale_value == 0))?"checked" : "";
+                            $map = $SOCmaps->where('l_outcome_id', $clo->l_outcome_id)->where('standard_id', $std->standard_id);      
+                            //dd($map);                  
+                            $chk = (($i <= $MScales->count() && $map->count() != 0 && $map->first()->standard_scale_id == $MScales[$i-1]->standard_scale_id) || 
+                                    ($i == $MScales->count()+1 && $map->count() != 0 && $map->first()->standard_scale_id == 0))?"checked" : "";
                             $val = "value=\"0\"";
                             if($i <= $MScales->count())$val = "value=\"".$MScales[$i-1]->standard_scale_id."\"";
                             $custHTML.="<td><input type=\"radio\" name=\"min_".$clo->l_outcome_id."_".$std->standard_id."[]\" $chk $val></td>";
@@ -579,14 +549,14 @@ class CourseCrudController extends CrudController
                 $custHTML .= "</table>";                       
                 $custHTML .= "</div>";
             $this->crud->addField([
-               'label' => 'Ministry Standard Mappings',
+                'label' => 'Ministry Standard Mappings',
                 'name' => 'std_outcome_mapping',
                 'type' => 'custom_html',   
                 'value' => $custHTML,
             ]);
             //Ministry Standards CRUD
             //****************
-              if($req && count($req)){                
+            if($req && count($req)){                
                 $chk = array_filter($_POST, function($element) {
                     return  !(false===strpos($element, "min"));
                 },ARRAY_FILTER_USE_KEY);
@@ -595,11 +565,11 @@ class CourseCrudController extends CrudController
                     $map = $SOCmaps->where('l_outcome_id', $exKey[1])->where('standard_id', $exKey[2]);
                     //if not entry already exists in DB, enter it. otherwise update it, as the value may have changed
                     if(!($map->count() > 0))
-                        DB::table('standards_outcome_maps')->insert(['l_outcome_id'=>$exKey[1],'standard_id'=>$exKey[2],'map_scale_value'=>$val[0]]);
+                        DB::table('standards_outcome_maps')->insert(['l_outcome_id'=>$exKey[1],'standard_id'=>$exKey[2],'standard_scale_id'=>$val[0]]);
                     else
                         \App\Models\StandardsOutcomeMap::where('l_outcome_id', $exKey[1])
                                                 ->where('standard_id', $exKey[2])
-                                                ->update(['map_scale_value'=>$val[0]]);
+                                                ->update(['standard_scale_id'=>$val[0]]);
                 }
             }
             
@@ -607,11 +577,11 @@ class CourseCrudController extends CrudController
             //***********************
             $setOpPr = DB::table('course_optional_priorities')->where('course_id', $crsID)->get();                         
             $setOfOpPr = DB::table('optional_priorities')
-                         ->join('optional_priority_subcategories', 'optional_priorities.subcat_id', '=', 'optional_priority_subcategories.subcat_id')
-                         ->join('optional_priority_categories', 'optional_priority_categories.cat_id', '=', 'optional_priority_subcategories.cat_id')
-                         ->select('optional_priorities.op_id as id','optional_priorities.optional_priority as op', 'optional_priority_categories.cat_id as cat_id','optional_priority_subcategories.subcat_id as subcat_id',
-                                  'optional_priority_categories.cat_name as cat_name', 'optional_priority_subcategories.subcat_name as subcat_name', 'optional_priority_subcategories.subcat_desc as subcat_desc')
-                         ->get();
+                            ->join('optional_priority_subcategories', 'optional_priorities.subcat_id', '=', 'optional_priority_subcategories.subcat_id')
+                            ->join('optional_priority_categories', 'optional_priority_categories.cat_id', '=', 'optional_priority_subcategories.cat_id')
+                            ->select('optional_priorities.op_id as id','optional_priorities.optional_priority as op', 'optional_priority_categories.cat_id as cat_id','optional_priority_subcategories.subcat_id as subcat_id',
+                                    'optional_priority_categories.cat_name as cat_name', 'optional_priority_subcategories.subcat_name as subcat_name', 'optional_priority_subcategories.subcat_desc as subcat_desc')
+                            ->get();
             $setCat = DB::table('optional_priority_categories')->get();
             //loop x3 to create hierarchical html
             $custHTML = "<div><label>Optional Priorities</label>";  
@@ -639,7 +609,7 @@ class CourseCrudController extends CrudController
             }
             $custHTML .= "</div>";
             $this->crud->addField([
-               'label' => 'Optional Priorities',
+                'label' => 'Optional Priorities',
                 'name' => 'optional_priorities',
                 'type' => 'custom_html',   
                 'value' => $custHTML,
@@ -671,19 +641,19 @@ class CourseCrudController extends CrudController
             'name' => 'course_code', // The db column name
             'label' => "Course Code", // Table column heading
             'type' => 'Text'
-          ]);
+        ]);
 
         $this->crud->addColumn([
             'name' => 'course_num', // The db column name
             'label' => "Course Number", // Table column heading
             'type' => 'number'
-          ]);
+        ]);
         
         $this->crud->addColumn([
             'name' => 'course_title', // The db column name
             'label' => "Course Title", // Table column heading
             'type' => 'Text'
-          ]);
+        ]);
 
         $this->crud->addColumn([
             // 1-n relationship
@@ -693,7 +663,7 @@ class CourseCrudController extends CrudController
             'entity'    => 'programs', // the method that defines the relationship in your Model
             'attribute' => 'program', // foreign key attribute that is shown to user
             'model'     => App\Models\Program::class, // foreign key model
-          ]);
+        ]);
         
         $this->crud->addColumn([   // radio
             'name'        => 'status', // the name of the db column
@@ -728,7 +698,7 @@ class CourseCrudController extends CrudController
             'entity'       => 'users', // the method that defines the relationship in your Model
             'attribute'    => 'email', // foreign key attribute that is shown to user
             'model'        => App\Models\User::class, // foreign key model
-         ]);        
+        ]);        
     }
     
     use \Backpack\CRUD\app\Http\Controllers\Operations\DeleteOperation { destroy as traitDestroy; }

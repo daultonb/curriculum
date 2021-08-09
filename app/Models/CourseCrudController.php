@@ -687,8 +687,8 @@ class CourseCrudController extends CrudController
                         $custHTML .= "<tr><td title=\"" . $plo->pl_outcome. "\">". $plo->plo_shortphrase."</td>";
                         for($i = 1; $i <= $MScales->count()+1; $i++){
                             $map = $OCmaps->where('l_outcome_id', $clo->l_outcome_id)->where('pl_outcome_id', $plo->pl_outcome_id);                        
-                            $chk = (($map->count() != 0 && $map->first()->map_scale_value == $i) || 
-                                    ($i == $MScales->count()+1 && $map->count() != 0 && $map->first()->map_scale_value == 0))?"checked" : "";
+                            $chk = (($map->count() != 0 && $map->first()->map_scale_id == $i) || 
+                                    ($i == $MScales->count()+1 && $map->count() != 0 && $map->first()->map_scale_id == 0))?"checked" : "";
                             $val = "value=\"0\"";
                             if($i <= $MScales->count())$val = "value=\"".$MScales[$i-1]->map_scale_id."\"";
                             $custHTML.="<td><input type=\"radio\" name=\"map_".$clo->l_outcome_id."_".$plo->pl_outcome_id."[]\" $chk $val></td>";
@@ -714,11 +714,11 @@ class CourseCrudController extends CrudController
                     $map = $OCmaps->where('l_outcome_id', $exKey[1])->where('pl_outcome_id', $exKey[2]);
                     //if not entry already exists in DB, enter it. otherwise update it, as the value may have changed
                     if(!($map->count() > 0))
-                        DB::table('outcome_maps')->insert(['l_outcome_id'=>$exKey[1],'pl_outcome_id'=>$exKey[2],'map_scale_value'=>$val[0]]);
+                        DB::table('outcome_maps')->insert(['l_outcome_id'=>$exKey[1],'pl_outcome_id'=>$exKey[2],'map_scale_id'=>$val[0]]);
                     else
                         \App\Models\OutcomeMap::where('l_outcome_id', $exKey[1])
                                                 ->where('pl_outcome_id', $exKey[2])
-                                                ->update(['map_scale_value'=>$val[0]]);
+                                                ->update(['map_scale_id'=>$val[0]]);
                 }
             }
     

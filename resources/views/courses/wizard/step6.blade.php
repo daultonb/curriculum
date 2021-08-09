@@ -129,14 +129,18 @@
                                                                                                                         @foreach($mappingScales as $mappingScaleLevel)
                                                                                                                             <td>
                                                                                                                                 <div class="form-check">
-                                                                                                                                    <input class="form-check-input position-static" type="radio" name="map[{{$courseLearningOutcome->l_outcome_id}}][{{$standard_outcome->standard_id}}]" value="{{$mappingScaleLevel->abbreviation}}" @if(isset($courseLearningOutcome->standardOutcomeMap->find($standard_outcome->standard_id)->pivot)) @if($courseLearningOutcome->standardOutcomeMap->find($standard_outcome->standard_id)->pivot->map_scale_value == $mappingScaleLevel->abbreviation) checked=checked @endif @endif>
+                                                                                                                                    <input class="form-check-input position-static" type="radio" name="map[{{$courseLearningOutcome->l_outcome_id}}][{{$standard_outcome->standard_id}}]" value="{{$mappingScaleLevel->abbreviation}}" 
+                                                                                                                                    @if(isset($courseLearningOutcome->standardOutcomeMap->find($standard_outcome->standard_id)->pivot)) 
+                                                                                                                                    @if($courseLearningOutcome->standardOutcomeMap->find($standard_outcome->standard_id)->pivot->standard_scale_id == $mappingScaleLevel->standard_scale_id) checked=checked @endif @endif>
                                                                                                                                 </div>
                                                                                                                             </td>
                                                                                                                         @endforeach
 
                                                                                                                         <td>
                                                                                                                             <div class="form-check">
-                                                                                                                                <input class="form-check-input position-static" type="radio" name="map[{{$courseLearningOutcome->l_outcome_id}}][{{$standard_outcome->standard_id}}]" value="N/A" @if(isset($courseLearningOutcome->standardOutcomeMap->find($standard_outcome->standard_id)->pivot)) @if($courseLearningOutcome->standardOutcomeMap->find($standard_outcome->standard_id)->pivot->map_scale_value =='N/A') checked=checked @endif @endif required>
+                                                                                                                                <input class="form-check-input position-static" type="radio" name="map[{{$courseLearningOutcome->l_outcome_id}}][{{$standard_outcome->standard_id}}]" value="N/A" 
+                                                                                                                                @if(isset($courseLearningOutcome->standardOutcomeMap->find($standard_outcome->standard_id)->pivot)) 
+                                                                                                                                @if($courseLearningOutcome->standardOutcomeMap->find($standard_outcome->standard_id)->pivot->standard_scale_id =='N/A') checked=checked @endif @endif required>
                                                                                                                             </div>
                                                                                                                         </td>
 
@@ -222,14 +226,15 @@
 
                                                     </td>
                                                     <td>
-                                                        {{$letter}}
+                                                        {!!$letter!!}
+                                                        <!--
                                                         @if($index == 0)
                                                             <a href="http://trc.ca/assets/pdf/Calls_to_Action_English2.pdf" target="_blank">( <i class="bi bi-box-arrow-up-right"></i> More Information can be found here)</a>
                                                         @elseif($index == 1)
                                                             <a href="https://cleanbc.gov.bc.ca/" target="_blank">( <i class="bi bi-box-arrow-up-right"></i> More Information can be found here)</a>
                                                         @elseif($index == 6)
                                                             <a href="https://www.workbc.ca/getmedia/18214b5d-b338-4bbd-80bf-b04e48a11386/BC_Labour_Market_Outlook_2019.pdf.aspx" target="_blank">( <i class="bi bi-box-arrow-up-right"></i> More Information can be found here)</a>
-                                                        @endif
+                                                        @endif-->
                                                     </td>
                                                     </tr>
                                                     @endforeach

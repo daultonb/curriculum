@@ -40,13 +40,13 @@ class StandardsOutcomeMapController extends Controller
         $courseStandardOutcomes = Course::find($request->input('course_id'))->courseStandardOutcomes;
         // get the program learning outcomes for this program
         //$programLearningOutcomes = Program::find($request->input('program_id'))->programLearningOutcomes;
-        // courseToProgramOutcome is a 2-D array => map[CLO][standard] = map_scale_value
+        // courseToProgramOutcome is a 2-D array => map[CLO][standard] = standard_scale_id
         $courseToProgramOutcome = $request->input('map');
 
         foreach($courseStandardOutcomes as $courseStandardOutcome){
             $outcomeMap = DB::table('standards_outcome_maps')->updateOrInsert(
             ['standard_id' =>$courseStandardOutcome->standard_id , 'l_outcome_id' => $l_outcome->l_outcome_id ],
-            ['map_scale_value' => $courseToProgramOutcome[$l_outcome->l_outcome_id][$courseStandardOutcome->standard_id]]
+            ['standard_scale_id' => $courseToProgramOutcome[$l_outcome->l_outcome_id][$courseStandardOutcome->standard_id]]
             );
         }
 
