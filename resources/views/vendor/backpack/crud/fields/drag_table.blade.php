@@ -68,14 +68,14 @@
                     <?php $details = explode('-', $label);                    
                     $isreq = (isset($details[2])) ? "treq=true" : "" ?>
                     <td>
-                        <input class="form-control form-control-sm" <?php   $typ =  "type=" . explode('-',$label)[1]; ?> {{ $typ }} {{ $isreq }} data-cell-name="item.{{ $column }}">
+                        <span><input draggable="true" ondragstart="notDragged(event)" class="form-control form-control-sm" <?php   $typ =  "type=" . explode('-',$label)[1]; ?> {{ $typ }} {{ $isreq }} data-cell-name="item.{{ $column }}"></span>
                     </td>
                     @endforeach
                     <td>
-                        <span class="btn btn-sm btn-light sort-handle pull-right"><span class="sr-only">sort item</span><i class="la la-sort" role="presentation" aria-hidden="true"></i></span>
+                        <span><span draggable="true" ondragstart="notDragged(event)" class="btn btn-sm btn-light sort-handle pull-right"><span class="sr-only">sort item</span><i class="la la-sort" role="presentation" aria-hidden="true"></i></span></span>
                     </td>
                     <td>
-                        <button class="btn btn-sm btn-light removeItem" type="button"><span class="sr-only">delete item</span><i class="la la-trash" role="presentation" aria-hidden="true"></i></button>
+                        <span><button draggable="true" ondragstart="notDragged(event)" class="btn btn-sm btn-light removeItem" type="button"><span class="sr-only">delete item</span><i class="la la-trash" role="presentation" aria-hidden="true"></i></button></span>
                     </td>
                 </tr>
 
@@ -229,6 +229,12 @@
         <script>
             function allowDrop(ev) {
               ev.preventDefault();
+            }
+            
+            function notDragged(ev){
+              //triggers when child element gets dragged (object is to prevent it)
+              ev.preventDefault();
+              let test = 0;
             }
 
             function drag(ev) {
