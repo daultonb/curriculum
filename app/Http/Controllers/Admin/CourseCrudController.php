@@ -453,7 +453,7 @@ class CourseCrudController extends CrudController
            //create a table, fill the fields using custom code. each checkbox has a name with (oas|oac)-cID-aID (where aID is the other ID type)
            ///start with a row for each CLO
            $custHTML = "<fieldset name=\"alignfields\"><label>Course Alignment</label>"
-                   . "<br><label style=\"font-size:.8em;\">Changes made to the Course Learning Objectives, Learning Activities and Assessment Methods"
+                   . "<br><label style=\"font-size:.8em;\">Changes made to the Course Learning Outcomes, Learning Activities and Assessment Methods"
                    . " will be be reflected in this table only after saving and reloading the form</label>"                   
                    . "<table class=\"table table-sm table-striped m-b-0\" id=\"align-t\">"
                    . "<tr><th>Course Learning Outcomes or Competencies</th><th>Student Assessment Methods</th><th>Teaching and Learning Activities</th></tr>";
@@ -523,7 +523,7 @@ class CourseCrudController extends CrudController
             $textClass2 = "color:rgb(151, 212, 233,1.0)"; //light blue
            // $textClass1 = "color:rgb(255, 255, 255,1.0)"; //white
             
-            $custHTML = "<div><label>Program Objective Mapping</label>";           
+            $custHTML = "<div><label>Program Outcome Mapping</label>";           
             //standards are roughly analogous to program outcomes, but there is one standard category per course. 
             //the scales are categorized in the standards versus select any from list with PLOs
             $Progs = DB::table('course_programs')->where('course_id', $crsID)
@@ -614,7 +614,7 @@ class CourseCrudController extends CrudController
             
             //Ministry Standard Mapping
             //***************
-             $custHTML = "<div><label>Standards Objective Mapping</label>";           
+             $custHTML = "<div><label>Standards Outcome Mapping</label>";           
             //standards are roughly analogous to program outcomes, but there is one standard category per course. 
             //the scales are categorized in the standards versus select any from list with PLOs
            

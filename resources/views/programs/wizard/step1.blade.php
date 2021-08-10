@@ -10,7 +10,7 @@
             <div class="card">
 
                 <h3 class="card-header wizard" >
-                    Program Learning Outcomes
+                    Program Learning Outcomes (PLOs)
                 </h3>
 
                 <div class="card-body">
