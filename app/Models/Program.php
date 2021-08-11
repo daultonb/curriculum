@@ -27,7 +27,7 @@ class Program extends Model
         return $this->belongsToMany(Course::class, 'course_programs', 'program_id', 'course_id')->withPivot('course_required', 'instructor_assigned', 'map_status')->withTimestamps();
     }
 
-   /* public function mappingScaleLevels()
+    /* public function mappingScaleLevels()
     {
         return $this->hasManyThrough(MappingScale::Class, MappingScaleProgram::Class);
     }*/
@@ -37,12 +37,12 @@ class Program extends Model
         return $this->belongsToMany(MappingScale::class, 'mapping_scale_programs', 'program_id', 'map_scale_id')->withTimestamps();
     }
     
-     public function mappingScalePrograms()
+    public function mappingScalePrograms()
     {
         return $this->hasMany(MappingScaleProgram::class, 'program_id', 'program_id');
     }
     
-   /* public function newPivot(Model $parent, array $attributes, $table, $exists, $using = NULL) {
+    /* public function newPivot(Model $parent, array $attributes, $table, $exists, $using = NULL) {
         if ($parent instanceof Program) {
             return new MappingScaleProgram($parent, $attributes, $table, $exists, $using = NULL);
         }
@@ -57,7 +57,6 @@ class Program extends Model
     public function programLearningOutcomes() {
         return $this->hasMany(ProgramLearningOutcome::class, 'program_id', 'program_id');
     }
-    
     public function getProgramOCAttribute(){
         $prgID = filter_input(INPUT_SERVER,'PATH_INFO');
         $prgID = explode("/",$prgID)[3];

@@ -9,7 +9,7 @@
                     Online
                     @break
                 @case('B')
-                    Hybrid
+                    Blended
                     @break
                 @default
                     In-person
@@ -150,7 +150,7 @@
                                                 name="delivery_modality" required autofocus>
                                                     <option @if($course->delivery_modality === 'O') selected @endif value="O">online</option>
                                                     <option @if($course->delivery_modality === 'I') selected @endif value="I">in-person</option>
-                                                    <option @if($course->delivery_modality === 'B') selected @endif value="B">Hybrid</option>
+                                                    <option @if($course->delivery_modality === 'B') selected @endif value="B">Blended</option>
 
                                                 @error('delivery_modality')
                                                 <span class="invalid-feedback" role="alert">

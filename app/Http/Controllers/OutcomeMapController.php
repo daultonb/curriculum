@@ -51,13 +51,13 @@ class OutcomeMapController extends Controller
         $l_outcome = LearningOutcome::where('l_outcome_id', $request->input('l_outcome_id'))->first();
         // get the program learning outcomes for this program
         $programLearningOutcomes = Program::find($request->input('program_id'))->programLearningOutcomes;
-        // courseToProgamOutcome is a 2-D array => map[CLO][PLO] = map_scale_value
+        // courseToProgamOutcome is a 2-D array => map[CLO][PLO] = map_scale_id
         $courseToProgramOutcome = $request->input('map');
 
         foreach($programLearningOutcomes as $programLearningOutcome){
             $outcomeMap = DB::table('outcome_maps')->updateOrInsert(
                 ['pl_outcome_id' =>$programLearningOutcome->pl_outcome_id , 'l_outcome_id' => $l_outcome->l_outcome_id ],
-                ['map_scale_value' => $courseToProgramOutcome[$l_outcome->l_outcome_id][$programLearningOutcome->pl_outcome_id]]
+                ['map_scale_id' => $courseToProgramOutcome[$l_outcome->l_outcome_id][$programLearningOutcome->pl_outcome_id]]
             );
         }
 

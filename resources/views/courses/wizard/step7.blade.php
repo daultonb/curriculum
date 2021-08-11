@@ -262,7 +262,7 @@
                                                                 <td>
                                                                     <div style="background-color:{{$programMappingScale->colour}}; height: 10px; width: 10px;"></div>
                                                                     {{$programMappingScale->title}}<br>
-                                                                    ({{$programMappingScale->abbreviation}})
+                                                                    ({{$programMappingScale->map_scale_id}})
                                                                 </td>
                                                                 <td>
                                                                     {{$programMappingScale->description}}
@@ -484,9 +484,9 @@
                                             @for($j = 0; $j < count($standard_outcomes); $j++)
                                                 @foreach ($standardsOutcomeMap as $om)
                                                     @if( $om->standard_id == $standard_outcomes[$j]->standard_id && $om->l_outcome_id == $l_outcomes[$i]->l_outcome_id )
-                                                        <td @foreach($standardsMappingScales as $ms) @if($ms->abbreviation == $om->map_scale_value) style="background-color:{{$ms->colour}}" @endif @endforeach class="text-center align-middle" >
-                                                            <span @if($om->map_scale_value == 'A') style="color:white" @endif>
-                                                                {{$om->map_scale_value}}
+                                                        <td @foreach($standardsMappingScales as $ms) @if($ms->standard_scale_id == $om->standard_scale_id) style="background-color:{{$ms->colour}}" @endif @endforeach class="text-center align-middle" >
+                                                            <span @if($om->standard_scale_id == 'A') style="color:white" @endif>
+                                                                {{$om->map_scale_id}}
                                                             </span>
                                                         </td>
                                                     @endif
