@@ -409,7 +409,7 @@ class CourseCrudController extends CrudController
                  ],                 
              ],
              
-             'max'     => 5,
+             'max'     => 10,
              
              'min'     => 0,
              
@@ -431,12 +431,40 @@ class CourseCrudController extends CrudController
             $this->crud->addField([   // relationship
              'label' => "Teaching and Learning Activities",
 
-             'type' => "match_table",
+             'type' => "assess_repeatable",
 
              //'name' => 'learningActivities', // the method on your model that defines the relationship
              'name' => 'LAtable', //name of the getter/setter in course model  
+                
+              'ajax' => true,  
+             'fields' => [  
+                 [
+                   'name' => 'l_activity_id',
+                   'label' => 'ID',
+                   'type' => 'hidden',
+                   
+                 ],
+                 [
+                   'name' => 'l_activity',
+                   'label' => 'learning Activity&nbsp;&nbsp;<span style=color:red>*</span>',
+                   'type' => 'list_select', 
+                   'model' => 'App\Models\Custom_learning_activities',
+                   'attribute' => 'custom_activities',
+                   'foreign-ref' => 'custom_activities', //the column from which the strings are pulled
+                   'attributes' => [ 'req' => 'true' ],  //works because this is actually an input, not a select. 
+                   'wrapper' => ['class' => 'hidden-label form-group col-sm-10'],
+                   'lclass' => 'form-group col-sm-10', //label class
+                 ],
+                                
+             ],
+             
+             'max'     => 10,
+             
+             'min'     => 0,
+             
+           ]);
                          
-             'ajax' => true,  
+             /*'ajax' => true,  
              'columns' => [     
                  'l_activity_id' => 'id-hidden',
                  'l_activity'        => 'Teaching and Learning Activity-text-req',                
@@ -446,14 +474,14 @@ class CourseCrudController extends CrudController
              
              'min'     => 0,
              
-           ]);
+           ]);*/
                       
            $req =  $this->crud->getRequest()->request->all();
            //course alignment
            //create a table, fill the fields using custom code. each checkbox has a name with (oas|oac)-cID-aID (where aID is the other ID type)
            ///start with a row for each CLO
            $custHTML = "<fieldset name=\"alignfields\"><label>Course Alignment</label>"
-                   . "<br><label style=\"font-size:.8em;\">Changes made to the Course Learning Outcomes, Learning Activities and Assessment Methods"
+                   . "<br><label style=\"font-size:.8em;\">Changes made to the Course Learning Objectives, Learning Activities and Assessment Methods"
                    . " will be be reflected in this table only after saving and reloading the form</label>"                   
                    . "<table class=\"table table-sm table-striped m-b-0\" id=\"align-t\">"
                    . "<tr><th>Course Learning Outcomes or Competencies</th><th>Student Assessment Methods</th><th>Teaching and Learning Activities</th></tr>";
@@ -523,7 +551,7 @@ class CourseCrudController extends CrudController
             $textClass2 = "color:rgb(151, 212, 233,1.0)"; //light blue
            // $textClass1 = "color:rgb(255, 255, 255,1.0)"; //white
             
-            $custHTML = "<div><label>Program Outcome Mapping</label>";           
+            $custHTML = "<div><label>Program Objective Mapping</label>";           
             //standards are roughly analogous to program outcomes, but there is one standard category per course. 
             //the scales are categorized in the standards versus select any from list with PLOs
             $Progs = DB::table('course_programs')->where('course_id', $crsID)
@@ -614,7 +642,7 @@ class CourseCrudController extends CrudController
             
             //Ministry Standard Mapping
             //***************
-             $custHTML = "<div><label>Standards Outcome Mapping</label>";           
+             $custHTML = "<div><label>Standards Objective Mapping</label>";           
             //standards are roughly analogous to program outcomes, but there is one standard category per course. 
             //the scales are categorized in the standards versus select any from list with PLOs
            

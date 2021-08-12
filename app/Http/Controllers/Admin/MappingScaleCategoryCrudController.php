@@ -112,7 +112,7 @@ class MappingScaleCategoryCrudController extends CrudController
                 ],
                 [
                     'name' => 'title',
-                    'label' => 'Title&nbsp;&nbsp;<span style=\"color:red\">*</span>',
+                    'label' => 'Title&nbsp;&nbsp;<span style=color:red>*</span>',
                     'type' => 'text',
                     'attributes' => [
                         'req' => 'true',
@@ -121,7 +121,7 @@ class MappingScaleCategoryCrudController extends CrudController
                 ],
                 [
                     'name' => 'abbreviation',
-                    'label' => 'Abbreviation&nbsp;&nbsp;<span style=\"color:red\">*</span>',
+                    'label' => 'Abbreviation&nbsp;&nbsp;<span style=color:red>*</span>',
                     'type' => 'text',
                     'attributes' => [
                         'req' => 'true',
@@ -136,7 +136,7 @@ class MappingScaleCategoryCrudController extends CrudController
                 ],
                 [
                     'name' => 'description',
-                    'label' => 'Description&nbsp;&nbsp;<span style=\"color:red\">*</span>',
+                    'label' => 'Description&nbsp;&nbsp;<span style=color:red>*</span>',
                     'type' => 'text',
                     'attributes' => [
                         'req' => 'true',
