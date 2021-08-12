@@ -216,6 +216,7 @@
                                                     </td>
                                                     <td>
                                                         {!! $letter['optional_priority'] !!}                                                        
+
                                                     </td>
                                                     </tr>
                                                     @endforeach

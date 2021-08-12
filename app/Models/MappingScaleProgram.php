@@ -18,7 +18,7 @@ class MappingScaleProgram extends Model
         return $this->belongsTo(MappingScale::Class);
     }
     
-     public function programs()
+    public function programs()
     {
         return $this->belongsTo(Program::Class);
     }
